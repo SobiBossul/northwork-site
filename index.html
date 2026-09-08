@@ -13,12 +13,29 @@
   --shadow:0 24px 80px rgba(0,0,0,.35);
 }
 *{box-sizing:border-box}
-html{scroll-behavior:smooth}
+
+html{
+  scroll-behavior:smooth;
+  scrollbar-width:none;
+}
+
+html::-webkit-scrollbar{
+  width:0;
+  height:0;
+}
+
 body{
   margin:0;
   background:radial-gradient(circle at 50% -20%,rgba(255,255,255,.07),transparent 34%),linear-gradient(180deg,var(--bg),var(--bg2));
   color:var(--text);
   font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  overflow-x:hidden;
+  scrollbar-width:none;
+}
+
+body::-webkit-scrollbar{
+  width:0;
+  height:0;
 }
 button,a{font:inherit} a{color:inherit;text-decoration:none}
 .wrap{width:min(1160px,calc(100% - 36px));margin:auto}
@@ -204,7 +221,7 @@ const CONFIG = {
 // can remain a single file. Northwork Assistant updates this object through the
 // GitHub Contents API when staff register games, programs, bots, or site events.
 /* NORTHWORK_SITE_DATA_START */
-window.NORTHWORK_SITE_DATA = {"games":[{"slug":"vibration-tester","placeId":"96605909078674","universeId":"10080820428","url":"https://www.roblox.com/games/96605909078674/Vibration-Tester","name":"Vibration Tester","description":"Vibration Tester is a game where u can test your device's vibration!\n\nYou have plenty of stuff where u can test your device's vibration!\n    Different parts with different vibration systems!\n\n[FOR MORE COOL VIBRATION SYSTEMS, CONSIDER UNLOCKING VIP!]","thumbnail":"https://tr.rbxcdn.com/180DAY-b6a70701148167c5e71bb0bb360ba0e4/512/512/Image/Png/noFilter","visits":4577,"likes":30,"dislikes":5,"favorites":15,"playing":0,"creator":"Northwork Experiments","creatorType":"Group"}],"bots":[{"id":"assistant","discordId":"1454980640238735441","name":"Northwork Assistant","description":"Utility, AI, moderation and community tools.","status":"down","avatar":"https://cdn.discordapp.com/avatars/1454980640238735441/685f578da5a0791d6d4597f615a4f706.png?size=256","activities":[{"title":"Assistant went down","description":"testing 2","date":"2026-09-08T03:00:00.000Z"},{"title":"Assistant issue reported","description":"testing","date":"2026-09-08T03:00:00.000Z"}],"incidents":[{"type":"down","date":"2026-09-08T03:00:00.000Z","description":"testing 2"},{"type":"issue","date":"2026-09-08T03:00:00.000Z","description":"testing"}]},{"id":"northwork-security","discordId":"1495884555624911118","name":"Northwork Security","description":"Northwork Security — a Northwork bot.","status":"operational","avatar":"https://cdn.discordapp.com/avatars/1495884555624911118/9aa984ec8b8f5dcbaf0ae02009cf1afb.png?size=256","activities":[],"incidents":[]}],"programs":[{"id":"vantacore","name":"VantaCore","description":"VantaCore is a Windows hardware monitoring tool for GPU, CPU, and HDD/SSD diagnostics.  Features: - GPU monitoring - CPU monitoring - HDD/SSD drive details - CHKDSK scan/repair tools ","repo":"https://github.com/NorthworkDev/VantaCore","download":"https://github.com/NorthworkDev/VantaCore/archive/refs/heads/main.zip","version":"main"}]};
+window.NORTHWORK_SITE_DATA = {"games":[],"bots":[],"programs":[]};
 /* NORTHWORK_SITE_DATA_END */
 
 const GAMES = window.NORTHWORK_SITE_DATA.games || [];
