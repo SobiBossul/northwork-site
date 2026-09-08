@@ -61,34 +61,177 @@ h1{font-size:clamp(52px,8vw,92px);line-height:.95;letter-spacing:-.065em;margin:
 .btn.primary{background:#f3f4f5;color:#08090a;border-color:#f3f4f5;font-weight:700}.btn.primary:hover{background:#fff}
 
 .community-card{
-  position:relative;overflow:hidden;display:block;min-height:330px;padding:22px;
-  border:1px solid var(--line);border-radius:18px;background:linear-gradient(180deg,#101419,#0b0d10);
-  box-shadow:var(--shadow);transition:.22s;color:var(--text)
+  position:relative;
+  overflow:hidden;
+  display:block;
+  min-height:430px;
+  padding:22px;
+  border:1px solid var(--line);
+  border-radius:18px;
+  background:linear-gradient(180deg,#101419,#0b0d10);
+  box-shadow:var(--shadow);
+  transition:.22s;
+  color:var(--text)
 }
-.community-card:hover{transform:translateY(-3px);border-color:#363d46}
+
+.community-card:hover{
+  transform:translateY(-3px);
+  border-color:#363d46
+}
+
 .community-glow{
-  position:absolute;width:260px;height:260px;right:-90px;top:-90px;border-radius:50%;
-  background:radial-gradient(circle,rgba(255,255,255,.12),transparent 68%);pointer-events:none
+  position:absolute;
+  width:260px;
+  height:260px;
+  right:-90px;
+  top:-90px;
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(255,255,255,.12),transparent 68%);
+  pointer-events:none
 }
-.community-head{display:flex;align-items:center;gap:15px;position:relative;z-index:2}
-.community-icon-wrap{width:74px;height:74px;border-radius:20px;padding:1px;background:#1a1e24;border:1px solid #303640;flex:none}
-.community-icon{width:100%;height:100%;object-fit:cover;border-radius:19px;display:block;background:#15191f}
-.community-title h2{margin:4px 0 4px;font-size:25px;letter-spacing:-.035em}
-.community-status{display:inline-flex;align-items:center;gap:7px;color:#8f96a1;font-size:12px}
-.community-divider{height:1px;background:var(--line);margin:20px 0 17px}
-.staff-head{display:flex;justify-content:space-between;align-items:center;color:#aeb5bf;font-size:12px;text-transform:uppercase;letter-spacing:.1em}
-.staff-count{color:#dfe2e6}
-.staff-list{display:flex;flex-direction:column;gap:8px;margin-top:12px;max-height:155px;overflow:auto;padding-right:2px}
+
+.community-head{
+  display:flex;
+  align-items:center;
+  gap:15px;
+  position:relative;
+  z-index:2
+}
+
+.community-icon-wrap{
+  width:74px;
+  height:74px;
+  border-radius:20px;
+  padding:1px;
+  background:#1a1e24;
+  border:1px solid #303640;
+  flex:none
+}
+
+.community-icon{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  border-radius:19px;
+  display:block;
+  background:#15191f
+}
+
+.community-title h2{
+  margin:4px 0 4px;
+  font-size:25px;
+  letter-spacing:-.035em
+}
+
+.community-status{
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+  color:#8f96a1;
+  font-size:12px
+}
+
+.community-divider{
+  height:1px;
+  background:var(--line);
+  margin:20px 0 17px
+}
+
+.staff-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  color:#aeb5bf;
+  font-size:12px;
+  text-transform:uppercase;
+  letter-spacing:.1em
+}
+
+.staff-count{
+  color:#dfe2e6
+}
+
+.staff-list{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+  margin-top:12px;
+  max-height:300px;
+  overflow-y:auto;
+  overflow-x:hidden;
+  padding-right:4px;
+
+  scrollbar-width:none;
+  -ms-overflow-style:none;
+}
+
+.staff-list::-webkit-scrollbar{
+  display:none;
+}
+
 .staff-row{
-  display:flex;align-items:center;gap:10px;padding:9px 10px;border:1px solid #1f242b;
-  border-radius:10px;background:#0f1216
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:9px 10px;
+  border:1px solid #1f242b;
+  border-radius:10px;
+  background:#0f1216
 }
-.staff-avatar{width:31px;height:31px;border-radius:50%;object-fit:cover;background:#1a1e24}
-.staff-name{font-size:13px;font-weight:650;line-height:1.2}.staff-role{font-size:11px;color:#737b86;margin-top:2px}
-.staff-empty{padding:12px 10px;color:#6f7782;font-size:12px;border:1px dashed #252b33;border-radius:10px}
-.staff-row{transition:.18s}.staff-row:hover{border-color:#333943;background:#12161b;transform:translateY(-1px)}
-.community-open{position:absolute;left:22px;right:22px;bottom:18px;color:#bfc4cb;font-size:12px}
-@media(max-width:900px){.community-card{min-height:290px}}
+
+.staff-avatar{
+  width:31px;
+  height:31px;
+  border-radius:50%;
+  object-fit:cover;
+  background:#1a1e24
+}
+
+.staff-name{
+  font-size:13px;
+  font-weight:650;
+  line-height:1.2
+}
+
+.staff-role{
+  font-size:11px;
+  color:#737b86;
+  margin-top:2px
+}
+
+.staff-empty{
+  padding:12px 10px;
+  color:#6f7782;
+  font-size:12px;
+  border:1px dashed #252b33;
+  border-radius:10px
+}
+
+.staff-row{
+  transition:.18s
+}
+
+.staff-row:hover{
+  border-color:#333943;
+  background:#12161b;
+  transform:translateY(-1px)
+}
+
+.community-open{
+  position:relative;
+  left:auto;
+  right:auto;
+  bottom:auto;
+  margin-top:14px;
+  color:#bfc4cb;
+  font-size:12px
+}
+
+@media(max-width:900px){
+  .community-card{
+    min-height:400px
+  }
+}
 
 .section-head{display:flex;align-items:end;justify-content:space-between;gap:20px;margin-bottom:24px}
 .section-head h2{font-size:32px;letter-spacing:-.04em;margin:0}.section-head p{margin:4px 0 0;color:var(--muted);font-size:14px}
@@ -538,7 +681,7 @@ const CONFIG = {
 // can remain a single file. Northwork Assistant updates this object through the
 // GitHub Contents API when staff register games, programs, bots, site events, or staff.
 /* NORTHWORK_SITE_DATA_START */
-window.NORTHWORK_SITE_DATA = {"games":[],"bots":[],"programs":[],"staff":[{"userId":"438702447683174402","name":"RyTexh","username":"rytexh","role":"Northwork Administrator","roleId":"1454991773393748071","avatar":"https://cdn.discordapp.com/avatars/438702447683174402/504990f67f4b66ecdaade9783ef6c977.png?size=256"},{"userId":"808324602350403595","name":"Claudivania ❤🖤","username":"claudivania_lasukal","role":"Northwork Manager","roleId":"1467663817403007200","avatar":"https://cdn.discordapp.com/avatars/808324602350403595/45b0ffe4b44d862744807717fdfba197.png?size=256"},{"userId":"1149747147600834570","name":"desired","username":"desiredfornobody","role":"Northwork Moderators","roleId":"1454992580109668382","avatar":"https://cdn.discordapp.com/avatars/1149747147600834570/7757b1607e7f8dd157bb290b502d6831.png?size=256"},{"userId":"1206331959266246728","name":"John Northwork","username":"gurtingsgurtieisnotyogurt","role":"Northwork Moderators","roleId":"1454992580109668382","avatar":"https://cdn.discordapp.com/avatars/1206331959266246728/a2af452f9a1f4153cbbdb76487df5ac1.png?size=256"},{"userId":"1104551220951134218","name":"Meh3D","username":"mm_3d","role":"Northwork Moderators","roleId":"1454992580109668382","avatar":"https://cdn.discordapp.com/avatars/1104551220951134218/67617f9cc313c431b03cc9b0c53e2b46.png?size=256"},{"userId":"557596135175356418","name":"ᴱᵒⁿAimee","username":"aimee2569","role":"Northwork Moderators","roleId":"1454992580109668382","avatar":"https://cdn.discordapp.com/avatars/557596135175356418/165eabde0682dd879f5c852a804cba75.png?size=256"},{"userId":"1102261479517978745","name":"Heisenburg","username":"figure2266","role":"Northwork Moderators","roleId":"1454992580109668382","avatar":"https://cdn.discordapp.com/avatars/1102261479517978745/c3700e07f68989588c597ef0af06290b.png?size=256"},{"userId":"1089267764289605663","name":"Kuro","username":"123calebb","role":"Northwork Moderators","roleId":"1454992580109668382","avatar":"https://cdn.discordapp.com/avatars/1089267764289605663/5f37ea64ecb94ff89dfd14a7dc0e2b8e.png?size=256"},{"userId":"1003178163259576371","name":"𝐕𝐄𝐑𝐀","username":"vegupatra","role":"BALENCIAGA GURL 💅","roleId":"1475639115906158642","avatar":"https://cdn.discordapp.com/avatars/1003178163259576371/6b17869a708603fd14a49067eaa727d9.png?size=256"}]};
+window.NORTHWORK_SITE_DATA = {"games":[],"bots":[],"programs":[],"staff":[]};
 /* NORTHWORK_SITE_DATA_END */
 
 const GAMES = window.NORTHWORK_SITE_DATA.games || [];
