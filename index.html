@@ -86,6 +86,7 @@ h1{font-size:clamp(52px,8vw,92px);line-height:.95;letter-spacing:-.065em;margin:
 .staff-avatar{width:31px;height:31px;border-radius:50%;object-fit:cover;background:#1a1e24}
 .staff-name{font-size:13px;font-weight:650;line-height:1.2}.staff-role{font-size:11px;color:#737b86;margin-top:2px}
 .staff-empty{padding:12px 10px;color:#6f7782;font-size:12px;border:1px dashed #252b33;border-radius:10px}
+.staff-row{transition:.18s}.staff-row:hover{border-color:#333943;background:#12161b;transform:translateY(-1px)}
 .community-open{position:absolute;left:22px;right:22px;bottom:18px;color:#bfc4cb;font-size:12px}
 @media(max-width:900px){.community-card{min-height:290px}}
 
@@ -130,7 +131,7 @@ footer{border-top:1px solid var(--line);padding:30px 0 42px;color:#666e78;font-s
 /* ================= NORTHWORK POLICY ================= */
 
 .policy-shell{
-  max-width:1080px;
+  max-width:940px;
   margin:0 auto;
 }
 
@@ -139,7 +140,7 @@ footer{border-top:1px solid var(--line);padding:30px 0 42px;color:#666e78;font-s
   overflow:hidden;
   border:1px solid var(--line);
   border-radius:20px;
-  padding:38px;
+  padding:34px;
   background:
     radial-gradient(circle at 100% 0%,rgba(255,255,255,.08),transparent 32%),
     linear-gradient(180deg,#11151a,#0c0f12);
@@ -149,28 +150,109 @@ footer{border-top:1px solid var(--line);padding:30px 0 42px;color:#666e78;font-s
 .policy-hero:after{
   content:"";
   position:absolute;
-  width:260px;
-  height:260px;
-  right:-100px;
-  bottom:-130px;
+  width:240px;
+  height:240px;
+  right:-90px;
+  bottom:-120px;
   border-radius:50%;
   background:radial-gradient(circle,rgba(255,255,255,.07),transparent 68%);
   pointer-events:none;
 }
 
 .policy-hero h1{
-  font-size:clamp(46px,7vw,78px);
-  line-height:.96;
-  letter-spacing:-.065em;
-  margin:16px 0 14px;
+  font-size:clamp(44px,7vw,74px);
+  margin:14px 0 12px;
 }
 
 .policy-hero p{
-  max-width:780px;
+  max-width:760px;
   color:var(--muted);
   font-size:15px;
-  line-height:1.8;
+  line-height:1.75;
   margin:0;
+}
+
+.policy-badge{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  border:1px solid #2a3038;
+  background:#0c1014;
+  color:#cdd2d8;
+  padding:7px 10px;
+  border-radius:999px;
+  font-size:11px;
+  text-transform:uppercase;
+  letter-spacing:.12em;
+}
+
+.policy-grid{
+  display:grid;
+  gap:14px;
+  margin-top:16px;
+}
+
+.policy-card{
+  border:1px solid var(--line);
+  background:linear-gradient(180deg,#101419,#0d1013);
+  border-radius:15px;
+  padding:24px;
+  box-shadow:0 10px 35px rgba(0,0,0,.12);
+  animation:policyCardIn .45s ease both;
+}
+
+.policy-card:nth-child(2){animation-delay:.04s}
+.policy-card:nth-child(3){animation-delay:.08s}
+.policy-card:nth-child(4){animation-delay:.12s}
+.policy-card:nth-child(5){animation-delay:.16s}
+.policy-card:nth-child(6){animation-delay:.20s}
+.policy-card:nth-child(7){animation-delay:.24s}
+.policy-card:nth-child(8){animation-delay:.28s}
+
+.policy-card h2{
+  margin:0 0 10px;
+  font-size:21px;
+  letter-spacing:-.025em;
+}
+
+.policy-card h3{
+  margin:18px 0 7px;
+  font-size:14px;
+}
+
+.policy-card p{
+  margin:0;
+  color:var(--muted);
+  line-height:1.72;
+  font-size:13px;
+}
+
+.policy-card p + p{
+  margin-top:10px;
+}
+
+.policy-list{
+  margin:10px 0 0;
+  padding-left:20px;
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.72;
+}
+
+.policy-list li + li{
+  margin-top:7px;
+}
+
+.policy-contact{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin-top:16px;
+}
+
+.policy-contact .pill{
+  display:inline-flex;
+  align-items:center;
 }
 
 .policy-updated{
@@ -179,170 +261,41 @@ footer{border-top:1px solid var(--line);padding:30px 0 42px;color:#666e78;font-s
   font-size:12px;
 }
 
-.policy-layout{
-  display:grid;
-  grid-template-columns:220px minmax(0,1fr);
-  gap:18px;
+.policy-warning{
+  border-color:#332d1d;
+  background:linear-gradient(180deg,#17150f,#12110e);
+}
+
+.policy-footer-note{
   margin-top:18px;
-  align-items:start;
-}
-
-.policy-sidebar{
-  position:sticky;
-  top:88px;
-  display:flex;
-  flex-direction:column;
-  gap:4px;
-  padding:13px;
-  border:1px solid var(--line);
-  border-radius:15px;
-  background:rgba(12,15,18,.82);
-  backdrop-filter:blur(14px);
-}
-
-.policy-sidebar strong{
-  padding:4px 8px 9px;
-  color:#dfe3e8;
-  font-size:11px;
-  text-transform:uppercase;
-  letter-spacing:.1em;
-}
-
-.policy-sidebar button{
-  width:100%;
-  text-align:left;
-  border:1px solid transparent;
-  background:transparent;
-  color:#89919c;
-  padding:8px 9px;
-  border-radius:9px;
-  cursor:pointer;
-  font-size:12px;
-  transition:.18s ease;
-}
-
-.policy-sidebar button:hover{
-  color:var(--text);
-  background:#12161b;
-  border-color:#252b33;
-  transform:translateX(2px);
-}
-
-.policy-content{
-  display:flex;
-  flex-direction:column;
-  gap:12px;
-}
-
-.policy-section{
-  scroll-margin-top:92px;
-  border:1px solid var(--line);
-  background:linear-gradient(180deg,#101419,#0d1013);
-  border-radius:15px;
-  padding:25px;
-  box-shadow:0 10px 35px rgba(0,0,0,.12);
-  opacity:0;
-  transform:translateY(12px);
-  animation:policySectionIn .5s ease forwards;
-}
-
-.policy-section:nth-child(2){animation-delay:.04s}
-.policy-section:nth-child(3){animation-delay:.08s}
-.policy-section:nth-child(4){animation-delay:.12s}
-.policy-section:nth-child(5){animation-delay:.16s}
-.policy-section:nth-child(6){animation-delay:.20s}
-.policy-section:nth-child(7){animation-delay:.24s}
-.policy-section:nth-child(8){animation-delay:.28s}
-.policy-section:nth-child(9){animation-delay:.32s}
-
-.policy-section h2{
-  margin:0 0 11px;
-  font-size:21px;
-  letter-spacing:-.025em;
-}
-
-.policy-section h3{
-  margin:19px 0 7px;
-  font-size:14px;
-}
-
-.policy-section p{
-  margin:0;
-  color:var(--muted);
-  line-height:1.75;
-  font-size:13px;
-}
-
-.policy-section p + p{margin-top:10px}
-
-.policy-section ul{
-  margin:11px 0 0;
-  padding-left:20px;
-  color:var(--muted);
-  font-size:13px;
-  line-height:1.75;
-}
-
-.policy-section li + li{margin-top:7px}
-
-.policy-section strong{color:#eef0f3}
-
-.policy-section code{
-  font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;
-  font-size:.92em;
-  color:#d9dee5;
-}
-
-.policy-note{
-  margin-top:15px;
-  padding:14px 15px;
-  border:1px solid #2a3038;
-  border-radius:11px;
-  background:#0d1115;
-  color:#afb6bf;
-}
-
-.policy-note p{color:#aeb5bf}
-
-.policy-contact a{
-  color:#e5e8ec;
-  text-decoration:underline;
-  text-decoration-color:#454c55;
-  text-underline-offset:3px;
-}
-
-.policy-contact a:hover{text-decoration-color:#8d96a1}
-
-.policy-page-note{
-  margin-top:16px;
-  padding:15px 16px;
+  padding:16px;
   border:1px solid var(--line);
   border-radius:12px;
   background:#0d1013;
   color:#747c86;
   font-size:12px;
-  line-height:1.7;
+  line-height:1.65;
 }
 
-@keyframes policySectionIn{
+@keyframes policyCardIn{
+  from{
+    opacity:0;
+    transform:translateY(10px);
+  }
   to{
     opacity:1;
     transform:none;
   }
 }
 
-@media(max-width:850px){
-  .policy-layout{grid-template-columns:1fr}
-  .policy-sidebar{position:relative;top:auto;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:5px}
-  .policy-sidebar strong{grid-column:1/-1}
+.view[data-view="/policy"]{
+  animation-duration:.5s;
 }
 
 @media(max-width:650px){
   .policy-hero{padding:24px}
-  .policy-section{padding:20px}
-  .policy-sidebar{grid-template-columns:1fr}
+  .policy-card{padding:20px}
 }
-
 
 </style>
 </head>
@@ -390,11 +343,11 @@ footer{border-top:1px solid var(--line);padding:30px 0 42px;color:#666e78;font-s
   </div>
   <div class="community-divider"></div>
   <div class="staff-head">
-    <span>Staff online</span>
+    <span>Our Staff</span>
     <span id="staffCount" class="staff-count">0</span>
   </div>
   <div id="staffList" class="staff-list">
-    <div class="staff-empty">Checking staff presence…</div>
+    <div class="staff-empty">Loading staff…</div>
   </div>
   <div class="community-open">Open Discord ↗</div>
 </a>
@@ -406,6 +359,7 @@ footer{border-top:1px solid var(--line);padding:30px 0 42px;color:#666e78;font-s
       <div class="card" data-route="/games"><div class="eyebrow">Games</div><h3>Our Games</h3><p>See our active Roblox experiences, stats, thumbnails and creators.</p></div>
       <div class="card" data-route="/bots"><div class="eyebrow">Bots</div><h3>Our Bots</h3><p>Check bot status, recent changes, incidents and downtime history.</p></div>
       <div class="card" data-route="/programs"><div class="eyebrow">Programs</div><h3>Our Programs</h3><p>Tools and software built by Northwork, with direct download links.</p></div>
+      
     </div>
   </div>
 </section>
@@ -428,184 +382,140 @@ footer{border-top:1px solid var(--line);padding:30px 0 42px;color:#666e78;font-s
 
     <div class="policy-shell">
       <div class="policy-hero">
-        <div class="eyebrow">Community policies</div>
-        <h1>Policies &amp;<br>service conditions.</h1>
+        <span class="policy-badge">Northwork · Policies</span>
+        <h1>Policies & Privacy</h1>
         <p>
-          A straightforward overview of how Northwork handles Roblox and Discord
-          information, what our bots do, and the rules for contributing assets to
-          our games.
+          This page explains what Northwork may collect, why it is used,
+          how Roblox and Discord-related information is handled, and how
+          Northwork features such as bots, verification, moderation and AI
+          are operated.
         </p>
-        <div class="policy-updated">Last updated · September 7, 2026 · Contact: northworksupport@gmail.com</div>
+        <div class="policy-updated">Northwork policy page · Contact: northworksupport@gmail.com</div>
       </div>
 
-      <div class="policy-layout">
-        <aside class="policy-sidebar">
-          <strong>On this page</strong>
-          <button type="button" data-policy-anchor="privacy">Privacy</button>
-          <button type="button" data-policy-anchor="roblox">Roblox &amp; community data</button>
-          <button type="button" data-policy-anchor="bots">Northwork bots</button>
-          <button type="button" data-policy-anchor="models">Game models</button>
-          <button type="button" data-policy-anchor="terms">Terms</button>
-          <button type="button" data-policy-anchor="services">Service conditions</button>
-          <button type="button" data-policy-anchor="security">Security &amp; moderation</button>
-          <button type="button" data-policy-anchor="changes">Policy changes</button>
-          <button type="button" data-policy-anchor="contact">Contact</button>
-        </aside>
+      <div class="policy-grid">
 
-        <div class="policy-content">
-          <section class="policy-section" id="privacy">
-            <h2>1. Privacy</h2>
-            <p>
-              Northwork may handle information needed to run its Discord community,
-              Roblox-related systems, games, and bots.
-            </p>
-            <ul>
-              <li>Discord user IDs, usernames, server IDs, roles, and similar community information.</li>
-              <li>Roblox usernames, user IDs, display names, and verification information.</li>
-              <li>Feature data such as reminders, AFK status, ranks, XP, settings, or moderation records.</li>
-              <li>Messages or commands when they are required for a feature, moderation, or security function.</li>
-              <li>Basic technical information needed to keep services working and prevent abuse.</li>
-            </ul>
-            <p>
-              This information is used for community features, Roblox verification,
-              moderation, security, abuse prevention, and technical fixes.
-              Northwork does not sell personal information.
-            </p>
-          </section>
+        <article class="policy-card">
+          <h2>1. Information We Collect</h2>
+          <p>
+            Northwork may process information needed to operate its Discord,
+            Roblox, website and software features.
+          </p>
+          <ul class="policy-list">
+            <li>Discord user IDs, usernames, server IDs, roles and related community information.</li>
+            <li>Roblox usernames, user IDs, display names and verification-related information.</li>
+            <li>Feature data such as reminders, AFK status, ranks, XP, settings and moderation data.</li>
+            <li>Messages and command input when a feature requires the information to function.</li>
+            <li>Technical information needed to keep services working, secure and reliable.</li>
+          </ul>
+        </article>
 
-          <section class="policy-section" id="roblox">
-            <h2>2. Roblox &amp; community data</h2>
-            <p>
-              Roblox information may be used for verification, development,
-              ranks, game features, or other Northwork-related services.
-              Discord information may be used for roles, commands, moderation,
-              and community systems.
-            </p>
-            <div class="policy-note">
-              <p><strong>Never send passwords, Roblox cookies, authentication tokens, or other sensitive credentials to Northwork.</strong></p>
-            </div>
-          </section>
+        <article class="policy-card">
+          <h2>2. How Information Is Used</h2>
+          <p>
+            Information is used to provide requested features, maintain services,
+            troubleshoot problems, enforce community rules, improve reliability
+            and prevent abuse.
+          </p>
+          <p>
+            Northwork does not use collected information for unrelated purposes
+            simply because it is available.
+          </p>
+        </article>
 
-          <section class="policy-section" id="bots">
-            <h2>3. Northwork bots</h2>
-            <p>
-              Northwork bots exist to make the community easier to manage and use.
-              Their features may change over time.
-            </p>
-            <ul>
-              <li><strong>Northwork Assistant</strong> — utility commands, AI features, reminders, AFK, moderation, ranks, music, and community tools.</li>
-              <li><strong>Northlink</strong> — Roblox verification and related community features.</li>
-              <li><strong>Security features</strong> — moderation, protection, logging, and anti-abuse systems where enabled.</li>
-            </ul>
+        <article class="policy-card">
+          <h2>3. Roblox & Verification</h2>
+          <p>
+            Roblox information may be used for verification, profile lookups,
+            game-related features and community systems connected to Northwork.
+          </p>
+          <p>
+            Verification information is used to connect the appropriate Discord
+            and Roblox identities for the requested Northwork feature. Northwork
+            does not ask users to provide Roblox passwords or other account
+            credentials through its bots.
+          </p>
+        </article>
 
-            <h3>AI chat history</h3>
-            <p>
-              When the <code>/ask</code> command is used, the conversation may be
-              saved for AI history, moderation, troubleshooting, and service
-              improvement. Saved entries may contain the messages exchanged in
-              the conversation, such as <code>User: "hi"</code> and
-              <code>Bot: "hi there"</code>.
-            </p>
-            <p>
-              The saved chat records are not intended to publicly identify the
-              person who used the command. Do not send passwords, authentication
-              tokens, personal secrets, or other sensitive information through
-              <code>/ask</code>.
-            </p>
-            <p>
-              A feature may be changed, temporarily unavailable, or removed without notice.
-            </p>
-          </section>
+        <article class="policy-card">
+          <h2>4. Discord, Community & Moderation</h2>
+          <p>
+            Northwork bots may process server, role, member and moderation data
+            so commands and safety systems can work correctly.
+          </p>
+          <p>
+            Moderation-related information may be retained when necessary to
+            investigate incidents, enforce server rules, prevent repeated abuse
+            or maintain service history.
+          </p>
+        </article>
 
-          <section class="policy-section" id="models">
-            <h2>4. Providing game models</h2>
-            <p>
-              Northwork may accept Roblox models and other game assets from community
-              members. Contributors may be paid in Robux depending on the asset's
-              quality, size, complexity, and work involved. Free contributions are
-              also welcome.
-            </p>
-            <h3>Requirements</h3>
-            <ul>
-              <li>Models must not be AI-generated.</li>
-              <li>Models must not be inappropriate, stolen, malicious, or intentionally misleading.</li>
-              <li>If reasonable fixes are requested, the creator may have up to two weeks to make them.</li>
-              <li>If an asset is falsely represented or unusable, Northwork may request a refund.</li>
-            </ul>
-            <p>
-              Assets can be submitted through the designated Northwork Discord forum.
-              Accepted contributors may receive the community contributor role.
-            </p>
-            <div class="policy-note">
-              <p>
-                These rules are intended to protect the community and developers from
-                misleading assets and disputes over paid work.
-              </p>
-            </div>
-          </section>
+        <article class="policy-card">
+          <h2>5. AI / <code>/ask</code></h2>
+          <p>
+            Northwork's AI features may process the prompts and context required
+            to generate a response.
+          </p>
+          <p>
+            AI chat history may be saved when the feature is designed to keep
+            conversation history. Do not send passwords, tokens, recovery codes,
+            private keys or other credentials through <code>/ask</code>.
+          </p>
+        </article>
 
-          <section class="policy-section" id="terms">
-            <h2>5. Terms of service</h2>
-            <ul>
-              <li>Use Northwork services responsibly and follow Discord, Roblox, and community rules.</li>
-              <li>Do not abuse, exploit, spam, or intentionally damage Northwork services.</li>
-              <li>Do not impersonate others or claim ownership of someone else's work.</li>
-              <li>Do not use Northwork services for scams, phishing, malware, or other harmful activity.</li>
-              <li>Northwork may restrict access when necessary to protect the community or its services.</li>
-            </ul>
-          </section>
+        <article class="policy-card">
+          <h2>6. Games, Programs & Community Contributions</h2>
+          <p>
+            Northwork may store information about registered games, programs,
+            bots and other community projects so those resources can be displayed
+            on the public Northwork website.
+          </p>
+          <p>
+            Project and game data may include public links, names, descriptions,
+            thumbnails, status information, activity history and other data
+            needed to display the resource.
+          </p>
+        </article>
 
-          <section class="policy-section" id="services">
-            <h2>6. Service conditions</h2>
-            <p>
-              Northwork services are provided as available. Bugs, maintenance,
-              Discord or Roblox changes, outages, and other technical issues can
-              affect features.
-            </p>
-            <p>
-              Northwork may add, change, pause, or remove features as its games
-              and community develop.
-            </p>
-          </section>
+        <article class="policy-card">
+          <h2>7. Security & Data Handling</h2>
+          <p>
+            Northwork uses reasonable technical and operational measures intended
+            to protect stored information from unauthorized access, alteration,
+            loss or misuse.
+          </p>
+          <p>
+            No online service can guarantee absolute security. Northwork may
+            change technical systems, storage providers or security practices as
+            the ecosystem develops.
+          </p>
+        </article>
 
-          <section class="policy-section" id="security">
-            <h2>7. Security &amp; moderation</h2>
-            <p>
-              Automated and manual systems may be used to detect abuse, protect
-              the community, and investigate incidents. Automated systems can make
-              mistakes, and serious moderation decisions may be reviewed when appropriate.
-            </p>
-            <p>
-              Attempts to bypass security, exploit systems, or intentionally cause
-              damage may result in removal or other community action.
-            </p>
-          </section>
+        <article class="policy-card policy-warning">
+          <h2>8. Terms, Changes & Contact</h2>
+          <p>
+            Using Northwork features means you are expected to follow the
+            applicable Discord server rules, feature rules and project-specific
+            requirements.
+          </p>
+          <p>
+            Northwork may update these policies as services change. Significant
+            policy changes may be reflected on this page or the public policy
+            page.
+          </p>
 
-          <section class="policy-section" id="changes">
-            <h2>8. Policy changes</h2>
-            <p>
-              These policies may be updated when Northwork changes its games,
-              bots, community systems, or the way they operate.
-            </p>
-          </section>
+          <div class="policy-contact">
+            <a class="pill" href="mailto:northworksupport@gmail.com">northworksupport@gmail.com</a>
+            <a class="pill" href="https://northworkdev.github.io/northwork-policy/" target="_blank" rel="noreferrer">Open full policy ↗</a>
+          </div>
+        </article>
 
-          <section class="policy-section" id="contact">
-            <h2>9. Contact</h2>
-            <p>
-              For questions about these policies, contact the Northwork staff
-              through the official Northwork community.
-            </p>
-            <p class="policy-contact">
-              For further questions, support requests, or other matters that need
-              staff attention, contact
-              <a href="mailto:northworksupport@gmail.com">northworksupport@gmail.com</a>.
-            </p>
-            <div class="policy-page-note">
-              These policies are part of the Northwork website and apply across
-              Northwork community services, bots, games, and related systems as described above.
-            </div>
-          </section>
-        </div>
+      </div>
+
+      <div class="policy-footer-note">
+        This embedded page is part of the Northwork site and is intended to
+        provide a quick in-site reference to the policies. The linked full policy
+        page remains available for the latest published version.
       </div>
     </div>
   </div>
@@ -622,19 +532,19 @@ const CONFIG = {
   discordInvite: "https://discord.gg/",
   discordServerName: "Northwork",
   discordServerIcon: "",
-  communityDataUrl: "./community.json"
 };
 
 // This object is intentionally embedded in index.html so the whole public site
 // can remain a single file. Northwork Assistant updates this object through the
-// GitHub Contents API when staff register games, programs, bots, or site events.
+// GitHub Contents API when staff register games, programs, bots, site events, or staff.
 /* NORTHWORK_SITE_DATA_START */
-window.NORTHWORK_SITE_DATA = {"games":[],"bots":[{"id":"northwork-assistant","discordId":"1454980640238735441","name":"Northwork Assistant","description":"Northwork Assistant — a Northwork bot.","status":"operational","avatar":"https://cdn.discordapp.com/avatars/1454980640238735441/685f578da5a0791d6d4597f615a4f706.png?size=256","activities":[],"incidents":[]},{"id":"northwork-security","discordId":"1495884555624911118","name":"Northwork Security","description":"Northwork Security — a Northwork bot.","status":"operational","avatar":"https://cdn.discordapp.com/avatars/1495884555624911118/9aa984ec8b8f5dcbaf0ae02009cf1afb.png?size=256","activities":[],"incidents":[]}],"programs":[]};
+window.NORTHWORK_SITE_DATA = {"games":[],"bots":[],"programs":[],"staff":[]};
 /* NORTHWORK_SITE_DATA_END */
 
 const GAMES = window.NORTHWORK_SITE_DATA.games || [];
 const BOTS_FALLBACK = window.NORTHWORK_SITE_DATA.bots || [];
 const PROGRAMS = window.NORTHWORK_SITE_DATA.programs || [];
+const STAFF = window.NORTHWORK_SITE_DATA.staff || [];
 let statusData = {bots:BOTS_FALLBACK};
 
 function fmtNumber(value){
@@ -681,11 +591,62 @@ async function getGameInfo(game){
   }
 }
 function renderGameCard(game){
-  return `<div class="card game-card" data-game="${game.slug}"><div class="game-bg" style="${game.thumbnail?`background-image:url('${game.thumbnail}')`:""}"></div><div class="game-content"><div class="card-top"><img class="game-icon" src="${game.thumbnail||""}" alt=""><span class="status"><span class="dot"></span>Active</span></div><div class="eyebrow" style="margin-top:22px">Roblox</div><h3>${escapeHtml(game.name)}</h3><p>${escapeHtml(game.description||"")}</p></div></div>`;
+  return `<div class="card game-card" data-game="${game.slug}">
+    <div class="game-bg" style="${game.thumbnail?`background-image:url('${game.thumbnail}')`:""}"></div>
+    <div class="game-content">
+      <div class="card-top">
+        <img class="game-icon" src="${game.thumbnail||""}" alt="">
+        <span class="status"><span class="dot"></span>Active</span>
+      </div>
+      <div class="eyebrow" style="margin-top:22px">Roblox</div>
+      <h3>${escapeHtml(game.name)}</h3>
+      <p>Northwork experience</p>
+    </div>
+  </div>`;
 }
 function renderGameDetail(game){
-  const stats=[["Visits",fmtNumber(game.visits)],["Likes",fmtNumber(game.likes)],["Dislikes",fmtNumber(game.dislikes)],["Favorites",fmtNumber(game.favorites)],["Players",fmtNumber(game.playing)],["Holder",game.creator||"—"]];
-  return `<div class="details"><div class="detail-main"><img class="large-icon" src="${game.thumbnail||""}" alt=""><h1 style="font-size:clamp(40px,6vw,66px);margin:22px 0 10px;letter-spacing:-.055em">${escapeHtml(game.name)}</h1><p class="muted">${escapeHtml(game.description||"No description available.")}</p><div class="meta"><span class="pill">Roblox</span><span class="pill">${escapeHtml(game.creator||"Unknown creator")}</span><a class="pill" href="${game.url}" target="_blank" rel="noreferrer">Open on Roblox ↗</a></div><div class="stats">${stats.map(([k,v])=>`<div class="stat"><span>${k}</span><strong>${escapeHtml(String(v))}</strong></div>`).join("")}</div>${game.error?`<div class="notice" style="margin-top:16px">${escapeHtml(game.error)}</div>`:""}</div><div class="detail-side"><div class="bg" style="${game.thumbnail?`background-image:url('${game.thumbnail}')`:""}"></div><div class="detail-side-content"><div class="eyebrow" style="width:max-content">Experience</div><h2 style="font-size:28px;margin:10px 0 4px">${escapeHtml(game.name)}</h2><p class="muted" style="margin:0">Roblox stats are shown here and can be switched to live API data once the Northwork proxy is connected.</p></div></div></div>`;
+  const stats=[
+    ["Visits",fmtNumber(game.visits)],
+    ["Likes",fmtNumber(game.likes)],
+    ["Dislikes",fmtNumber(game.dislikes)],
+    ["Favorites",fmtNumber(game.favorites)],
+    ["Players",fmtNumber(game.playing)],
+    ["Creator",game.creator||"—"]
+  ];
+
+  return `<div class="details">
+    <div class="detail-main">
+      <img class="large-icon" src="${game.thumbnail||""}" alt="">
+      <h1 style="font-size:clamp(40px,6vw,66px);margin:22px 0 10px;letter-spacing:-.055em">${escapeHtml(game.name)}</h1>
+
+      <div class="meta">
+        <span class="pill">Roblox</span>
+        <span class="pill">Northwork</span>
+        <span class="pill">${escapeHtml(game.creator||"Unknown creator")}</span>
+        <a class="pill" href="${game.url}" target="_blank" rel="noreferrer">Open on Roblox ↗</a>
+      </div>
+
+      <div class="stats">
+        ${stats.map(([k,v])=>`
+          <div class="stat">
+            <span>${k}</span>
+            <strong>${escapeHtml(String(v))}</strong>
+          </div>
+        `).join("")}
+      </div>
+
+      ${game.error?`<div class="notice" style="margin-top:16px">${escapeHtml(game.error)}</div>`:""}
+    </div>
+
+    <div class="detail-side">
+      <div class="bg" style="${game.thumbnail?`background-image:url('${game.thumbnail}')`:""}"></div>
+      <div class="detail-side-content">
+        <div class="eyebrow" style="width:max-content">Northwork Game</div>
+        <h2 style="font-size:28px;margin:10px 0 4px">${escapeHtml(game.name)}</h2>
+        <p class="muted" style="margin:0">A Northwork Roblox experience.</p>
+      </div>
+    </div>
+  </div>`;
 }
 function renderBots(){
   const bots = statusData.bots || [];
@@ -755,16 +716,17 @@ const FALLBACK_COMMUNITY = {
   invite: CONFIG.discordInvite,
   serverName: CONFIG.discordServerName,
   icon: CONFIG.discordServerIcon || document.getElementById("discordIcon")?.src || "",
-  staff: []
+  staff: STAFF
 };
 
 function normalizeCommunity(data){
   const source = data || {};
+
   return {
     invite: source.invite || CONFIG.discordInvite,
     serverName: source.serverName || CONFIG.discordServerName,
     icon: source.icon || CONFIG.discordServerIcon,
-    staff: Array.isArray(source.staff) ? source.staff : []
+    staff: Array.isArray(source.staff) ? source.staff : STAFF
   };
 }
 
@@ -778,6 +740,7 @@ function renderCommunity(data){
   const list = document.getElementById("staffList");
 
   if(card) card.href = community.invite || "#";
+
   if(icon){
     if(community.icon){
       icon.src = community.icon;
@@ -787,56 +750,46 @@ function renderCommunity(data){
       icon.style.display = "none";
     }
   }
+
   if(name) name.textContent = community.serverName;
 
+  // Show EVERY staff member, not only people currently online.
   const staff = community.staff
-    .filter(person => person && person.online)
-    .sort((a,b) => String(a.name || "").localeCompare(String(b.name || "")));
+    .filter(person => person)
+    .sort((a,b) =>
+      String(a.name || "").localeCompare(String(b.name || ""))
+    );
 
   if(count) count.textContent = String(staff.length);
 
   if(!list) return;
 
   if(!staff.length){
-    list.innerHTML = `<div class="staff-empty">No staff are currently shown as online.</div>`;
+    list.innerHTML = `<div class="staff-empty">No staff are currently listed.</div>`;
     return;
   }
 
   list.innerHTML = staff.map(person => `
     <div class="staff-row">
-      <img class="staff-avatar" src="${escapeHtml(person.avatar || "")}" alt="">
+      <img
+        class="staff-avatar"
+        src="${escapeHtml(person.avatar || "")}"
+        alt=""
+      >
       <div>
-        <div class="staff-name">${escapeHtml(person.name || "Northwork Staff")}</div>
-        <div class="staff-role">${escapeHtml(person.role || "Staff")}</div>
+        <div class="staff-name">
+          ${escapeHtml(person.name || "Northwork Staff")}
+        </div>
+        <div class="staff-role">
+          ${escapeHtml(person.role || "Staff")}
+        </div>
       </div>
     </div>
   `).join("");
 }
 
-async function loadCommunity(){
+function loadCommunity(){
   renderCommunity(FALLBACK_COMMUNITY);
-
-  try{
-    const response = await fetch(CONFIG.communityDataUrl, {cache:"no-store"});
-    if(!response.ok) throw new Error("community.json " + response.status);
-
-    const data = await response.json();
-    renderCommunity(data);
-  }catch(error){
-    console.warn("Community data unavailable:", error);
-  }
-}
-
-function bindPolicyAnchors(){
-  document.querySelectorAll("[data-policy-anchor]").forEach(button=>{
-    button.addEventListener("click",()=>{
-      const id=button.getAttribute("data-policy-anchor");
-      const target=document.getElementById(id);
-      if(target){
-        target.scrollIntoView({behavior:"smooth",block:"start"});
-      }
-    });
-  });
 }
 
 function bindCardClicks(){document.querySelectorAll("[data-route]").forEach(el=>el.addEventListener("click",e=>{const route=el.getAttribute("data-route");if(route){e.preventDefault();go(route);}}));}
@@ -865,7 +818,7 @@ document.addEventListener("click",e=>{
 });
 document.getElementById("menuBtn").addEventListener("click",()=>document.getElementById("nav").classList.toggle("open"));
 window.addEventListener("popstate",renderRoute);window.addEventListener("hashchange",renderRoute);
-bindCardClicks();bindPolicyAnchors();loadStatus();loadCommunity();renderRoute();
+bindCardClicks();loadStatus();loadCommunity();renderRoute();
 </script>
 </body>
 </html>
