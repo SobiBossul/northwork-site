@@ -1411,7 +1411,26 @@ renderAccountArea();
 
   const currentVersion=String(window.NORTHWORK_SITE_DATA?.siteVersion||"");
 
+  function getCurrentRoute(){
+    return location.hash.replace(/^#/,'').split('?')[0] || "/";
+  }
+
+  function isAccountRoute(){
+    const route=getCurrentRoute();
+    return route==="/profile" || route==="/settings";
+  }
+
+  function hideNotice(){
+    notice.classList.remove("visible","expanded");
+    toggle.textContent="⌄";
+  }
+
   async function checkSiteVersion(){
+    if(isAccountRoute()){
+      hideNotice();
+      return;
+    }
+
     try{
       const r=await fetch(nwApi("/api/site-version"),{
         method:"GET",
@@ -1424,6 +1443,8 @@ renderAccountArea();
 
       if(String(data.version)!==currentVersion){
         notice.classList.add("visible");
+      }else{
+        hideNotice();
       }
     }catch{}
   }
@@ -1436,6 +1457,8 @@ renderAccountArea();
   refresh.addEventListener("click",()=>{
     window.location.reload();
   });
+
+  window.addEventListener("hashchange",checkSiteVersion);
 
   setTimeout(checkSiteVersion,5000);
   setInterval(checkSiteVersion,30000);
