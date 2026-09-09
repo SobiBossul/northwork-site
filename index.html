@@ -440,6 +440,14 @@ footer{border-top:1px solid var(--line);padding:30px 0 42px;color:#666e78;font-s
   .policy-card{padding:20px}
 }
 
+
+/* ================= NORTHWORK ACCOUNT / PROFILE ================= */
+.account-area{position:relative;flex:none}.account-login{display:inline-flex;align-items:center;gap:8px;padding:9px 13px;border:1px solid var(--line);background:var(--panel);border-radius:9px;color:var(--text);cursor:pointer;font-size:13px}.account-login:hover{border-color:#3a424d;background:#14181d}.account-user{display:flex;align-items:center;gap:9px;border:1px solid var(--line);background:#101317;color:var(--text);border-radius:10px;padding:4px 9px 4px 4px;cursor:pointer}.account-user:hover{border-color:#383f48}.account-user-avatar{width:30px;height:30px;border-radius:50%;object-fit:cover;background:#181c22}.account-user-name{max-width:130px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:13px;font-weight:650}.account-chevron{color:#737b86;font-size:12px}.account-dropdown{position:absolute;right:0;top:48px;width:205px;padding:6px;background:#0f1216;border:1px solid #2a3038;border-radius:12px;box-shadow:0 24px 70px rgba(0,0,0,.55);display:none;z-index:80}.account-dropdown.open{display:block;animation:accountDrop .16s ease both}.account-dropdown .account-menu-user{padding:10px 10px 12px;border-bottom:1px solid #22272f;margin-bottom:4px}.account-menu-user strong{display:block;font-size:13px}.account-menu-user span{display:block;color:#6f7782;font-size:11px;margin-top:2px}.account-dropdown button{width:100%;display:block;text-align:left;padding:10px;border:0;background:transparent;color:#cbd0d7;border-radius:8px;cursor:pointer}.account-dropdown button:hover{background:#171b20}.account-dropdown .account-logout{color:#ef626c}.account-dropdown .account-logout:hover{background:rgba(239,98,108,.08)}@keyframes accountDrop{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
+.profile-shell{padding:58px 0 90px}.profile-cover{position:relative;height:310px;border:1px solid var(--line);border-radius:20px 20px 0 0;overflow:hidden;background:linear-gradient(115deg,#171b21,#090b0e)}.profile-cover-image{position:absolute;inset:0;background-position:center;background-size:cover;transition:.25s}.profile-cover-image:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.04),rgba(0,0,0,.58))}.profile-edit{position:absolute;z-index:3;right:18px;top:18px;width:40px;height:40px;border-radius:10px;border:1px solid #3a4048;background:rgba(8,10,13,.72);color:#fff;cursor:pointer;backdrop-filter:blur(12px)}.profile-edit:hover{background:#15191f}.profile-info{position:relative;margin-top:-67px;padding:0 28px 28px;display:flex;align-items:end;gap:18px;z-index:4}.profile-avatar-wrap{width:132px;height:132px;border-radius:50%;padding:5px;background:#0b0d10;border:1px solid #262c33;flex:none}.profile-avatar{width:100%;height:100%;border-radius:50%;object-fit:cover;border:1px solid #3a4048;background:#161a20}.profile-name h1{font-size:32px;margin:0 0 3px;letter-spacing:-.045em}.profile-name p{margin:0;color:#7f8791;font-size:13px}.profile-content{border:1px solid var(--line);border-top:0;border-radius:0 0 20px 20px;background:#0b0d10;padding:0 28px 30px}.profile-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.profile-panel{border:1px solid var(--line);background:linear-gradient(180deg,#101419,#0d1013);border-radius:14px;padding:20px}.profile-panel.wide{grid-column:1/-1}.profile-panel-title{text-transform:uppercase;letter-spacing:.12em;font-size:10px;color:#707883;font-weight:800;margin-bottom:12px}.profile-joined{font-size:15px;color:#e2e5e9}.profile-roles{display:flex;gap:7px;flex-wrap:wrap}.profile-role{font-size:12px;padding:7px 10px;border:1px solid #303640;background:#12161b;border-radius:7px;color:#cbd0d7}.profile-ticket{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid #1e2329;font-size:13px}.profile-ticket:last-child{border-bottom:0}.ticket-status{font-size:11px;color:var(--green)}.profile-empty{color:#727a85;font-size:13px}.profile-warning{border:1px solid #65232d;background:linear-gradient(180deg,#180d10,#120b0d);padding:14px;border-radius:10px;margin-bottom:8px;box-shadow:0 0 22px rgba(239,98,108,.08)}.profile-warning strong{color:#ff6c76;font-size:13px}.profile-warning p{color:#c5a7ab;margin:5px 0 0;font-size:12px}.profile-warning small{display:block;color:#777f89;margin-top:7px}.profile-warnings.has-warning{border-color:#6c252f;box-shadow:0 0 30px rgba(239,98,108,.08)}
+.profile-editor-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.68);backdrop-filter:blur(8px);display:none;place-items:center;padding:20px;z-index:100}.profile-editor-backdrop.open{display:grid}.profile-editor{width:min(570px,100%);background:#0d1014;border:1px solid #2b3139;border-radius:15px;box-shadow:0 30px 100px rgba(0,0,0,.7);padding:20px}.profile-editor-head{display:flex;justify-content:space-between;align-items:flex-start}.profile-editor-head h2{margin:5px 0 18px;font-size:21px}.profile-close{border:0;background:transparent;color:#777f89;font-size:25px;cursor:pointer}.profile-dropzone{border:1px dashed #48505a;border-radius:11px;padding:28px;text-align:center;color:#b2b8c0;cursor:pointer;transition:.18s}.profile-dropzone:hover,.profile-dropzone.drag{background:#13171c;border-color:#777f89}.profile-dropzone input{display:none}.profile-dropzone .upload-icon{font-size:25px;margin-bottom:7px}.profile-dropzone span{display:block;color:#6e7680;font-size:11px;margin-top:5px}.profile-preview{height:145px;margin:15px 0;border-radius:10px;overflow:hidden;background:#080a0c;position:relative;border:1px solid #242a31}.profile-preview-bg{position:absolute;inset:0;background-position:center;background-size:cover;transition:.1s}.profile-control{display:flex;align-items:center;gap:14px;color:#8f96a1;font-size:12px}.profile-control input{flex:1}.profile-editor-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:18px}.profile-save{font-weight:700}.profile-note{color:#686f79;font-size:11px;line-height:1.55;margin-top:12px}.profile-settings-list{display:grid;gap:10px}.profile-setting-row{display:flex;justify-content:space-between;align-items:center;border:1px solid var(--line);background:#101419;padding:15px;border-radius:11px}.profile-setting-row span{color:#7e8690;font-size:12px}.profile-setting-row strong{font-size:13px}@media(max-width:700px){.account-user-name{display:none}.profile-cover{height:240px}.profile-info{padding:0 17px 22px;gap:13px}.profile-avatar-wrap{width:100px;height:100px}.profile-name h1{font-size:25px}.profile-content{padding:0 17px 24px}.profile-grid{grid-template-columns:1fr}.profile-panel.wide{grid-column:auto}}
+
+
+.account-link{display:block;width:100%;padding:10px 11px;border:0;background:transparent;color:#cbd0d7;text-decoration:none;text-align:left;border-radius:8px;cursor:pointer}.account-link:hover{background:#15191f}.account-logout{color:#ef626c!important}
 </style>
 </head>
 <body>
@@ -453,6 +461,7 @@ footer{border-top:1px solid var(--line);padding:30px 0 42px;color:#666e78;font-s
       <button data-route="/programs">Our Programs</button>
       <button class="btn" type="button" data-route="/policy">Policy</button>
     </div>
+    <div class="account-area" id="accountArea"></div>
     <button class="menu" id="menuBtn">Menu</button>
   </div>
 </header>
@@ -663,6 +672,50 @@ footer{border-top:1px solid var(--line);padding:30px 0 42px;color:#666e78;font-s
     </div>
   </div>
 </section>
+
+
+<section class="view" data-view="/profile">
+  <div class="profile-shell">
+    <div class="back"><button data-route="/">← Northwork</button></div>
+    <div class="profile-cover">
+      <div class="profile-cover-image" id="profileCoverImage"></div>
+      <button class="profile-edit" id="profileEditButton" title="Edit profile">✎</button>
+    </div>
+    <div class="profile-info">
+      <div class="profile-avatar-wrap"><img class="profile-avatar" id="profileAvatar" alt="Discord profile picture"></div>
+      <div class="profile-name"><h1 id="profileDisplayName">Northwork User</h1><p id="profileUsername">@username</p></div>
+    </div>
+    <div class="profile-content">
+      <div class="profile-grid">
+        <section class="profile-panel"><div class="profile-panel-title">Member since</div><div class="profile-joined" id="profileJoined">—</div></section>
+        <section class="profile-panel"><div class="profile-panel-title">Roles</div><div class="profile-roles" id="profileRoles"></div></section>
+        <section class="profile-panel wide"><div class="profile-panel-title">Active tickets</div><div id="profileTickets"></div></section>
+        <section class="profile-panel wide profile-warnings" id="profileWarningsPanel"><div class="profile-panel-title">Warnings</div><div id="profileWarnings"></div></section>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="view" data-view="/settings">
+  <div class="page">
+    <div class="back"><button data-route="/">← Northwork</button></div>
+    <div class="page-title"><h1>Settings</h1><p>Manage your Northwork account preferences.</p></div>
+    <div class="profile-settings-list">
+      <div class="profile-setting-row"><div><strong>Discord account</strong><br><span id="settingsAccount">Connected account</span></div><span>Connected</span></div>
+      <div class="profile-setting-row"><div><strong>Profile background</strong><br><span>Use your Discord banner or a custom image.</span></div><button class="btn" type="button" id="settingsEditProfile">Edit profile</button></div>
+      <div class="profile-setting-row"><div><strong>Session</strong><br><span>Sign out of this Northwork account.</span></div><button class="btn" style="color:var(--red)" type="button" id="settingsLogout">Log out</button></div>
+    </div>
+  </div>
+</section>
+<div class="profile-editor-backdrop" id="profileEditorBackdrop">
+  <div class="profile-editor">
+    <div class="profile-editor-head"><div><div class="eyebrow">PROFILE</div><h2>Edit profile background</h2></div><button class="profile-close" id="profileEditorClose">×</button></div>
+    <div class="profile-dropzone" id="profileDropzone"><input id="profileImageInput" type="file" accept="image/png,image/jpeg,image/webp,image/gif"><div class="upload-icon">↥</div><strong>Drag your image here</strong><span>or click to choose one</span></div>
+    <div class="profile-preview"><div class="profile-preview-bg" id="profilePreviewBg"></div></div>
+    <div class="profile-control"><span>Scale</span><input id="profileScale" type="range" min=".5" max="3" step=".01" value="1"><span id="profileScaleValue">1.00×</span></div>
+    <div class="profile-editor-actions"><button class="btn" id="profileEditorCancel">Cancel</button><button class="btn primary profile-save" id="profileEditorSave">Save changes</button></div>
+    <div class="profile-note">Your Discord banner is used automatically until you upload a custom background. The crop/scale preference is saved locally in this single-file site.</div>
+  </div>
+</div>
 
 </main>
 
@@ -959,9 +1012,285 @@ document.addEventListener("click",e=>{
   const bot=e.target.closest("[data-bot]");if(bot){history.pushState({}, "", "#/bot/"+bot.dataset.bot);renderRoute();}
   const program=e.target.closest("[data-program]");if(program){history.pushState({}, "", "#/program/"+program.dataset.program);renderRoute();}
 });
+
+async function loadAuth(){
+  const box=document.getElementById("authBox");
+  if(!box)return;
+  try{
+    const r=await fetch("/api/me",{credentials:"include"});
+    if(!r.ok)throw new Error("auth api unavailable");
+    const data=await r.json();
+    if(!data.loggedIn){
+      box.innerHTML=`<a class="btn" href="/auth/discord" style="white-space:nowrap">Login with Discord</a>`;
+      return;
+    }
+    const u=data.user;
+    const avatar=u.avatar_url || "https://cdn.discordapp.com/embed/avatars/0.png";
+    box.innerHTML=`<div style="position:relative"><button id="accountBtn" class="btn" style="padding:5px 9px 5px 5px;gap:8px"><img src="${escapeHtml(avatar)}" style="width:30px;height:30px;border-radius:50%;object-fit:cover"><span>${escapeHtml(u.global_name||u.username)}</span><span style="color:#777">⌄</span></button><div id="accountMenu" style="display:none;position:absolute;right:0;top:48px;width:190px;padding:6px;background:#0f1216;border:1px solid #22272f;border-radius:12px;box-shadow:0 20px 60px #000b;z-index:100"><a href="#/profile" class="account-link">Go to Profile</a><a href="#/settings" class="account-link">Settings</a><button id="logoutBtn" class="account-link account-logout">Log out</button></div></div>`;
+    const menu=document.getElementById("accountMenu");
+    document.getElementById("accountBtn").onclick=()=>menu.style.display=menu.style.display==="block"?"none":"block";
+    document.getElementById("logoutBtn").onclick=async()=>{await fetch("/auth/logout",{method:"POST",credentials:"include"});location.reload()};
+  }catch(e){
+    box.innerHTML=`<a class="btn" href="/auth/discord" style="white-space:nowrap">Login with Discord</a>`;
+  }
+}
+
 document.getElementById("menuBtn").addEventListener("click",()=>document.getElementById("nav").classList.toggle("open"));
+loadAuth();
 window.addEventListener("popstate",renderRoute);window.addEventListener("hashchange",renderRoute);
 bindCardClicks();loadStatus();loadCommunity();renderRoute();
+
+
+/* ================= NORTHWORK DISCORD ACCOUNT ================= */
+const NORTHWORK_AUTH = {
+  // If the Assistant serves this same site, leave this as "".
+  // If the website is hosted separately, put the Assistant URL here.
+  apiBase: ""
+};
+
+function nwApi(path){
+  return `${NORTHWORK_AUTH.apiBase}${path}`;
+}
+
+let northworkCurrentUser = null;
+
+function accountAvatar(user){
+  if(user?.avatar_url) return user.avatar_url;
+  if(user?.avatar && /^https?:\/\//i.test(user.avatar)) return user.avatar;
+  if(user?.id && user?.avatar) return `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png?size=256`;
+  return "https://cdn.discordapp.com/embed/avatars/0.png";
+}
+
+function accountBanner(user){
+  if(user?.banner_url) return user.banner_url;
+  if(user?.banner && /^https?:\/\//i.test(user.banner)) return user.banner;
+  if(user?.id && user?.banner) return `https://cdn.discordapp.com/banners/${user.id}/${user.banner}.png?size=1024`;
+  return "";
+}
+
+function escapeHtml(value){
+  return String(value ?? "")
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+}
+
+async function getNorthworkUser(){
+  try{
+    const r=await fetch(nwApi("/api/me"),{credentials:"include"});
+    if(!r.ok){northworkCurrentUser=null;return null}
+    const payload=await r.json();
+    if(!payload?.loggedIn || !payload?.user){northworkCurrentUser=null;return null}
+    northworkCurrentUser=payload.user;
+    return northworkCurrentUser;
+  }catch(e){
+    northworkCurrentUser=null;
+    return null;
+  }
+}
+
+async function renderAccountArea(){
+  const area=document.getElementById("accountArea");
+  if(!area)return;
+
+  const user=await getNorthworkUser();
+
+  if(!user){
+    area.innerHTML=`<a class="account-login" href="${nwApi("/auth/discord")}">Login with Discord</a>`;
+    return;
+  }
+
+  const name=escapeHtml(user.global_name||user.username||"Northwork User");
+  const username=escapeHtml(user.username||"");
+
+  area.innerHTML=`
+    <button class="account-user" id="accountUserButton" type="button">
+      <img class="account-user-avatar" src="${escapeHtml(accountAvatar(user))}" alt="">
+      <span class="account-user-name">${name}</span>
+      <span class="account-chevron">⌄</span>
+    </button>
+    <div class="account-dropdown" id="accountDropdown">
+      <div class="account-menu-user">
+        <strong>${name}</strong>
+        <span>@${username}</span>
+      </div>
+      <button data-account-route="/profile">Go to Profile</button>
+      <button data-account-route="/settings">Settings</button>
+      <button class="account-logout" id="accountLogout" type="button">Log out</button>
+    </div>`;
+
+  document.getElementById("accountUserButton")?.addEventListener("click",e=>{
+    e.stopPropagation();
+    document.getElementById("accountDropdown")?.classList.toggle("open");
+  });
+
+  document.querySelectorAll("[data-account-route]").forEach(btn=>{
+    btn.addEventListener("click",()=>{
+      document.getElementById("accountDropdown")?.classList.remove("open");
+      go(btn.dataset.accountRoute);
+    });
+  });
+
+  document.getElementById("accountLogout")?.addEventListener("click",async()=>{
+    await fetch(nwApi("/auth/logout"),{method:"POST",credentials:"include"}).catch(()=>{});
+    northworkCurrentUser=null;
+    await renderAccountArea();
+    go("/");
+  });
+}
+
+document.addEventListener("click",e=>{
+  if(!e.target.closest(".account-area")) document.getElementById("accountDropdown")?.classList.remove("open");
+});
+
+async function renderNorthworkProfile(){
+  const user=await getNorthworkUser();
+  if(!user){go("/");return}
+
+  const avatar=document.getElementById("profileAvatar");
+  if(avatar)avatar.src=accountAvatar(user);
+
+  const displayName=document.getElementById("profileDisplayName");
+  const username=document.getElementById("profileUsername");
+  const joined=document.getElementById("profileJoined");
+  const rolesEl=document.getElementById("profileRoles");
+  const ticketsEl=document.getElementById("profileTickets");
+  const warningsPanel=document.getElementById("profileWarningsPanel");
+  const warningsEl=document.getElementById("profileWarnings");
+
+  if(displayName)displayName.textContent=user.global_name||user.username||"Northwork User";
+  if(username)username.textContent="@"+(user.username||"");
+  if(joined)joined.textContent=user.joined_at?new Date(user.joined_at).toLocaleDateString(undefined,{year:"numeric",month:"long",day:"numeric"}):"Northwork member";
+
+  const roles=Array.isArray(user.roles)&&user.roles.length?user.roles:["Member"];
+  if(rolesEl)rolesEl.innerHTML=roles.map(r=>`<span class="profile-role">${escapeHtml(r)}</span>`).join("");
+
+  const tickets=Array.isArray(user.tickets)?user.tickets:[];
+  if(ticketsEl)ticketsEl.innerHTML=tickets.length
+    ?tickets.map(t=>`<div class="profile-ticket"><span>#${escapeHtml(t.id||"")} &nbsp; ${escapeHtml(t.title||"Support ticket")}</span><span class="ticket-status">${escapeHtml(t.status||"Open")}</span></div>`).join("")
+    :`<div class="profile-empty">You have no active tickets.</div>`;
+
+  const warnings=Array.isArray(user.warnings)?user.warnings:[];
+  if(warnings.length){
+    warningsPanel?.classList.add("has-warning");
+    if(warningsEl)warningsEl.innerHTML=warnings.map((w,i)=>`<div class="profile-warning"><strong>⚠ Warning ${i+1}</strong><p>${escapeHtml(w.reason||"Community warning")}</p><small>${w.createdAt?new Date(w.createdAt).toLocaleDateString():"Active warning"}</small></div>`).join("");
+  }else{
+    warningsPanel?.classList.remove("has-warning");
+    if(warningsEl)warningsEl.innerHTML=`<div class="profile-empty">U have no warnings :)</div>`;
+  }
+
+  const saved=await loadSavedProfile();
+  const custom=saved?.background||accountBanner(user);
+  const cover=document.getElementById("profileCoverImage");
+  if(cover){
+    cover.style.backgroundImage=custom?`url("${custom}")`:"none";
+    cover.style.backgroundSize="cover";
+    cover.style.backgroundPosition="center";
+  }
+
+  const settingsAccount=document.getElementById("settingsAccount");
+  if(settingsAccount)settingsAccount.textContent=`${user.global_name||user.username||"Discord user"} · @${user.username||""}`;
+}
+
+async function loadSavedProfile(){
+  try{
+    const r=await fetch(nwApi("/api/profile"),{credentials:"include"});
+    if(!r.ok)return {};
+    return await r.json();
+  }catch{return {}}
+}
+
+async function saveNorthworkProfile(data){
+  try{
+    const r=await fetch(nwApi("/api/profile"),{
+      method:"POST",
+      credentials:"include",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify(data)
+    });
+    return r.ok;
+  }catch{return false}
+}
+
+async function openProfileEditor(){
+  const modal=document.getElementById("profileEditorBackdrop");
+  if(!modal)return;
+  const saved=await loadSavedProfile();
+  const user=northworkCurrentUser||await getNorthworkUser();
+  const bg=saved.background||accountBanner(user);
+  document.getElementById("profileScale").value=saved.scale||1;
+  document.getElementById("profileScaleValue").textContent=(Number(saved.scale||1)).toFixed(2)+"×";
+  document.getElementById("profilePreviewBg").style.backgroundImage=bg?`url("${bg}")`:"none";
+  document.getElementById("profilePreviewBg").style.transform=`scale(${saved.scale||1})`;
+  modal.classList.add("open");
+}
+
+function closeProfileEditor(){document.getElementById("profileEditorBackdrop")?.classList.remove("open")}
+
+function updateProfilePreview(){
+  const scale=Number(document.getElementById("profileScale").value);
+  document.getElementById("profileScaleValue").textContent=scale.toFixed(2)+"×";
+  document.getElementById("profilePreviewBg").style.transform=`scale(${scale})`;
+}
+
+function initProfileEditor(){
+  document.getElementById("profileEditButton")?.addEventListener("click",openProfileEditor);
+  document.getElementById("settingsEditProfile")?.addEventListener("click",()=>{go("/profile").then(openProfileEditor)});
+  document.getElementById("profileEditorClose")?.addEventListener("click",closeProfileEditor);
+  document.getElementById("profileEditorCancel")?.addEventListener("click",closeProfileEditor);
+  document.getElementById("profileScale")?.addEventListener("input",updateProfilePreview);
+
+  const drop=document.getElementById("profileDropzone");
+  const input=document.getElementById("profileImageInput");
+  drop?.addEventListener("click",()=>input?.click());
+  ["dragenter","dragover"].forEach(ev=>drop?.addEventListener(ev,e=>{e.preventDefault();drop.classList.add("drag")}));
+  ["dragleave","drop"].forEach(ev=>drop?.addEventListener(ev,e=>{e.preventDefault();drop.classList.remove("drag")}));
+  drop?.addEventListener("drop",e=>previewProfileImage(e.dataTransfer.files[0]));
+  input?.addEventListener("change",e=>previewProfileImage(e.target.files[0]));
+
+  document.getElementById("profileEditorSave")?.addEventListener("click",async()=>{
+    const old=await loadSavedProfile();
+    old.scale=Number(document.getElementById("profileScale").value);
+    const pending=document.getElementById("profilePreviewBg")?._pendingBackground;
+    if(pending) old.background=pending;
+    const ok=await saveNorthworkProfile(old);
+    if(ok){closeProfileEditor();await renderNorthworkProfile();}
+    else alert("Could not save your profile right now.");
+  });
+
+  document.getElementById("settingsLogout")?.addEventListener("click",async()=>{
+    await fetch(nwApi("/auth/logout"),{method:"POST",credentials:"include"}).catch(()=>{});
+    northworkCurrentUser=null;
+    await renderAccountArea();
+    go("/");
+  });
+}
+
+function previewProfileImage(file){
+  if(!file||!file.type.startsWith("image/"))return;
+  if(file.size>5*1024*1024){alert("Please use an image smaller than 5 MB.");return;}
+  const reader=new FileReader();
+  reader.onload=()=>{
+    const preview=document.getElementById("profilePreviewBg");
+    if(preview)preview.style.backgroundImage=`url("${reader.result}")`;
+    preview._pendingBackground=reader.result;
+  };
+  reader.readAsDataURL(file);
+}
+
+const northworkOldRenderRoute=renderRoute;
+renderRoute=async function(){
+  await northworkOldRenderRoute();
+  const path=location.hash.replace(/^#/,'').split('?')[0]||'/';
+  if(path==="/profile")await renderNorthworkProfile();
+  if(path==="/settings"&&!await getNorthworkUser())await go("/");
+  await renderAccountArea();
+};
+
+initProfileEditor();
+renderAccountArea();
 </script>
 </body>
 </html>
