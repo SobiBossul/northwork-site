@@ -1237,32 +1237,10 @@ document.addEventListener("click",e=>{
   const program=e.target.closest("[data-program]");if(program){history.pushState({}, "", "#/program/"+program.dataset.program);renderRoute();}
 });
 
-async function loadAuth(){
-  const box=document.getElementById("authBox");
-  if(!box)return;
-  try{
-    const r=await fetch("/api/me",{credentials:"include"});
-    if(!r.ok)throw new Error("auth api unavailable");
-    const data=await r.json();
-    if(!data.loggedIn){
-      box.innerHTML=`<a class="btn" href="/auth/discord" style="white-space:nowrap">Login with Discord</a>`;
-      return;
-    }
-    const u=data.user;
-    const avatar=u.avatar_url || "https://cdn.discordapp.com/embed/avatars/0.png";
-    box.innerHTML=`<div style="position:relative"><button id="accountBtn" class="btn" style="padding:5px 9px 5px 5px;gap:8px"><img src="${escapeHtml(avatar)}" style="width:30px;height:30px;border-radius:50%;object-fit:cover"><span>${escapeHtml(u.global_name||u.username)}</span><span style="color:#777">⌄</span></button><div id="accountMenu" style="display:none;position:absolute;right:0;top:48px;width:190px;padding:6px;background:#0f1216;border:1px solid #22272f;border-radius:12px;box-shadow:0 20px 60px #000b;z-index:100"><a href="#/profile" class="account-link">Go to Profile</a><a href="#/settings" class="account-link">Settings</a><button id="logoutBtn" class="account-link account-logout">Log out</button></div></div>`;
-    const menu=document.getElementById("accountMenu");
-    document.getElementById("accountBtn").onclick=()=>menu.style.display=menu.style.display==="block"?"none":"block";
-    document.getElementById("logoutBtn").onclick=async()=>{await fetch("/auth/logout",{method:"POST",credentials:"include"});location.reload()};
-  }catch(e){
-    box.innerHTML=`<a class="btn" href="/auth/discord" style="white-space:nowrap">Login with Discord</a>`;
-  }
-}
-
-document.getElementById("menuBtn").addEventListener("click",()=>document.getElementById("nav").classList.toggle("open"));
-loadAuth();
-window.addEventListener("popstate",renderRoute);window.addEventListener("hashchange",renderRoute);
-bindCardClicks();loadStatus();loadCommunity();renderRoute();
+document.getElementById("menuBtn")?.addEventListener("click",()=>document.getElementById("nav")?.classList.toggle("open"));
+bindCardClicks();
+loadStatus();
+loadCommunity();
 
 
 /* ================= NORTHWORK DISCORD ACCOUNT ================= */
@@ -1369,10 +1347,189 @@ document.addEventListener("click",e=>{
   if(!e.target.closest(".account-area")) document.getElementById("accountDropdown")?.classList.remove("open");
 });
 
+function northworkSiteBaseUrl(){
+  const pathname=location.pathname||"/";
+  const base=pathname.endsWith("/")
+    ? pathname
+    : pathname.slice(0,pathname.lastIndexOf("/")+1);
+  return `${location.origin}${base}`;
+}
+
+function getCurrentRoute(){
+  let route=location.hash.replace(/^#/,'').split('?')[0]||'/';
+  if(route.length>1) route=route.replace(/\/+$/,'');
+  return route||'/';
+}
+
+const NORTHWORK_USER_CACHE_KEY="northwork.cached.user";
+let northworkAccountRenderId=0;
+let northworkPendingProfileBackground=null;
+
+function ensureAccountArea(){
+  let area=document.getElementById("accountArea");
+  if(area) return area;
+
+  const nav=document.getElementById("nav");
+  if(!nav) return null;
+
+  area=document.createElement("div");
+  area.className="account-area";
+  area.id="accountArea";
+
+  const menu=document.getElementById("menuBtn");
+  if(menu) nav.insertBefore(area,menu);
+  else nav.appendChild(area);
+
+  return area;
+}
+
+function readCachedNorthworkUser(){
+  try{
+    const value=localStorage.getItem(NORTHWORK_USER_CACHE_KEY);
+    if(!value)return null;
+    const user=JSON.parse(value);
+    return user?.id?user:null;
+  }catch{
+    return null;
+  }
+}
+
+function cacheNorthworkUser(user){
+  try{
+    if(user?.id) localStorage.setItem(NORTHWORK_USER_CACHE_KEY,JSON.stringify(user));
+    else localStorage.removeItem(NORTHWORK_USER_CACHE_KEY);
+  }catch{}
+}
+
+async function fetchWithTimeout(url,options={},timeout=12000){
+  const controller=new AbortController();
+  const timer=setTimeout(()=>controller.abort(),timeout);
+  try{
+    return await fetch(url,{...options,signal:controller.signal});
+  }finally{
+    clearTimeout(timer);
+  }
+}
+
+async function getNorthworkUser(options={}){
+  const cached=readCachedNorthworkUser();
+  if(cached) northworkCurrentUser=cached;
+
+  try{
+    const r=await fetchWithTimeout(nwApi("/api/me"),{
+      credentials:"include",
+      cache:"no-store"
+    },options.timeout||12000);
+
+    if(!r.ok)throw new Error(`Auth API returned ${r.status}`);
+
+    const payload=await r.json();
+
+    if(!payload?.loggedIn||!payload?.user){
+      northworkCurrentUser=null;
+      cacheNorthworkUser(null);
+      return null;
+    }
+
+    northworkCurrentUser=payload.user;
+    cacheNorthworkUser(northworkCurrentUser);
+    return northworkCurrentUser;
+  }catch(error){
+    if(cached)return cached;
+    northworkCurrentUser=null;
+    return null;
+  }
+}
+
+async function renderAccountArea(){
+  const area=ensureAccountArea();
+  if(!area)return;
+
+  const renderId=++northworkAccountRenderId;
+  const cached=readCachedNorthworkUser();
+
+  if(cached){
+    northworkCurrentUser=cached;
+    renderAccountUser(area,cached);
+  }else{
+    area.innerHTML=`<a class="account-login" href="${nwApi("/auth/discord")}">Login with Discord</a>`;
+  }
+
+  const user=await getNorthworkUser({timeout:12000});
+  if(renderId!==northworkAccountRenderId)return;
+
+  if(!user){
+    area.innerHTML=`<a class="account-login" href="${nwApi("/auth/discord")}">Login with Discord</a>`;
+    return;
+  }
+
+  renderAccountUser(area,user);
+}
+
+function renderAccountUser(area,user){
+  const name=escapeHtml(user.global_name||user.username||"Northwork User");
+  const username=escapeHtml(user.username||"");
+  const avatar=escapeHtml(accountAvatar(user));
+
+  area.innerHTML=`
+    <button class="account-user" id="accountUserButton" type="button">
+      <img class="account-user-avatar" src="${avatar}" alt="">
+      <span class="account-user-name">${name}</span>
+      <span class="account-chevron">⌄</span>
+    </button>
+    <div class="account-dropdown" id="accountDropdown">
+      <div class="account-menu-user">
+        <strong>${name}</strong>
+        <span>@${username}</span>
+      </div>
+      <button data-account-route="/profile" type="button">Go to Profile</button>
+      <button data-account-route="/settings" type="button">Settings</button>
+      <button class="account-logout" id="accountLogout" type="button">Log out</button>
+    </div>`;
+
+  document.getElementById("accountUserButton")?.addEventListener("click",e=>{
+    e.stopPropagation();
+    document.getElementById("accountDropdown")?.classList.toggle("open");
+  });
+
+  document.querySelectorAll("[data-account-route]").forEach(btn=>{
+    btn.addEventListener("click",()=>{
+      document.getElementById("accountDropdown")?.classList.remove("open");
+      go(btn.dataset.accountRoute||"/");
+    });
+  });
+
+  document.getElementById("accountLogout")?.addEventListener("click",async()=>{
+    try{
+      await fetchWithTimeout(nwApi("/auth/logout"),{
+        method:"POST",
+        credentials:"include"
+      },8000);
+    }catch{}
+
+    northworkCurrentUser=null;
+    cacheNorthworkUser(null);
+    document.getElementById("accountDropdown")?.classList.remove("open");
+    await renderAccountArea();
+    await go("/");
+  });
+}
+
+document.addEventListener("click",e=>{
+  if(!e.target.closest(".account-area")){
+    document.getElementById("accountDropdown")?.classList.remove("open");
+  }
+});
+
 async function renderNorthworkProfile(){
-  const user=await getNorthworkUser();
-  if(!user){go("/");return}
-  await renderProfileData(user, true);
+  const user=northworkCurrentUser||await getNorthworkUser();
+  if(!user){
+    await go("/");
+    return;
+  }
+
+  const saved=await loadSavedProfile();
+  await renderProfileData(user,true,saved);
 }
 
 async function showProfileNotFound(){
@@ -1383,6 +1540,9 @@ async function showProfileNotFound(){
   const roles=document.getElementById("profileRoles");
   const tickets=document.getElementById("profileTickets");
   const warnings=document.getElementById("profileWarnings");
+  const cover=document.getElementById("profileCoverImage");
+  const edit=document.getElementById("profileEditButton");
+  const share=document.getElementById("profileShareButton");
 
   if(displayName)displayName.textContent="Profile not found";
   if(username)username.textContent="This Northwork member could not be found.";
@@ -1394,26 +1554,35 @@ async function showProfileNotFound(){
   if(roles)roles.innerHTML="";
   if(tickets)tickets.innerHTML=`<div class="profile-empty">This profile isn't available.</div>`;
   if(warnings)warnings.innerHTML=`<div class="profile-empty">This profile isn't available.</div>`;
+  if(cover)cover.style.backgroundImage="none";
   document.getElementById("profileWarningsPanel")?.classList.remove("has-warning");
-  document.getElementById("profileEditButton")?.style.setProperty("display","none");
-  document.getElementById("profileShareButton")?.style.setProperty("display","none");
+  if(edit)edit.style.display="none";
+  if(share)share.style.display="none";
 }
 
 async function renderPublicProfile(userId){
   try{
-    const current=northworkCurrentUser||await getNorthworkUser();
-
-    // When opening your OWN public/share link, use the authenticated
-    // account data so the profile is identical to /profile.
-    if(current?.id===String(userId)){
-      await renderProfileData(current, true);
+    const cleanId=decodeURIComponent(String(userId||"")).trim();
+    if(!/^\d{15,25}$/.test(cleanId)){
+      await showProfileNotFound();
       return;
     }
 
-    const r=await fetch(nwApi(`/api/profile/${encodeURIComponent(userId)}`),{
-      credentials:"include",
-      cache:"no-store"
-    });
+    const current=northworkCurrentUser||await getNorthworkUser();
+
+    if(current?.id===cleanId){
+      const saved=await loadSavedProfile();
+      await renderProfileData(current,true,saved);
+      return;
+    }
+
+    const r=await fetchWithTimeout(
+      nwApi(`/api/profile/${encodeURIComponent(cleanId)}`),
+      {
+        credentials:"include",
+        cache:"no-store"
+      },12000
+    );
 
     if(!r.ok){
       await showProfileNotFound();
@@ -1421,24 +1590,20 @@ async function renderPublicProfile(userId){
     }
 
     const payload=await r.json();
-
-    if(!payload?.user){
-      throw new Error("Invalid profile response");
-    }
+    if(!payload?.user)throw new Error("Invalid profile response");
 
     await renderProfileData(
       payload.user,
       false,
       payload.profile||{}
     );
-
   }catch(error){
     console.error("Public profile load error:",error);
     await showProfileNotFound();
   }
 }
 
-async function renderProfileData(user, isOwnProfile, suppliedProfile=null){
+async function renderProfileData(user,isOwnProfile,suppliedProfile=null){
   const avatar=document.getElementById("profileAvatar");
   if(avatar){
     avatar.onerror=()=>{
@@ -1463,7 +1628,9 @@ async function renderProfileData(user, isOwnProfile, suppliedProfile=null){
 
   if(displayName)displayName.textContent=user.global_name||user.username||"Northwork User";
   if(username)username.textContent="@"+(user.username||"");
-  if(joined)joined.textContent=user.joined_at?new Date(user.joined_at).toLocaleDateString(undefined,{year:"numeric",month:"long",day:"numeric"}):"Northwork member";
+  if(joined)joined.textContent=user.joined_at
+    ?new Date(user.joined_at).toLocaleDateString(undefined,{year:"numeric",month:"long",day:"numeric"})
+    :"Northwork member";
 
   const roles=Array.isArray(user.roles)&&user.roles.length?user.roles:["Member"];
   if(rolesEl)rolesEl.innerHTML=roles.map(r=>`<span class="profile-role">${escapeHtml(r)}</span>`).join("");
@@ -1482,21 +1649,26 @@ async function renderProfileData(user, isOwnProfile, suppliedProfile=null){
     if(warningsEl)warningsEl.innerHTML=`<div class="profile-empty">${isOwnProfile?"U have no warnings :)":"Warning information is private."}</div>`;
   }
 
-  const saved=suppliedProfile||await loadSavedProfile();
-  const custom=saved?.background||accountBanner(user);
+  let savedProfile=suppliedProfile;
+  if(!savedProfile && isOwnProfile)savedProfile=await loadSavedProfile();
+  savedProfile=savedProfile&&typeof savedProfile==="object"?savedProfile:{};
+
+  const custom=savedProfile.background||accountBanner(user);
   const cover=document.getElementById("profileCoverImage");
   if(cover){
-    cover.style.backgroundImage=custom?`url("${custom}")`:"none";
+    cover.style.backgroundImage=custom?`url("${String(custom).replace(/"/g,"%22")}")`:"none";
     cover.style.backgroundSize="cover";
     cover.style.backgroundPosition="center";
   }
 
   const settingsAccount=document.getElementById("settingsAccount");
-  if(settingsAccount&&isOwnProfile)settingsAccount.textContent=`${user.global_name||user.username||"Discord user"} · @${user.username||""}`;
+  if(settingsAccount&&isOwnProfile){
+    settingsAccount.textContent=`${user.global_name||user.username||"Discord user"} · @${user.username||""}`;
+  }
 
   if(shareButton){
     shareButton.onclick=async()=>{
-      const profileUrl=`${location.origin}${location.pathname}#/profile/${encodeURIComponent(user.id)}`;
+      const profileUrl=`${northworkSiteBaseUrl()}#/profile/${encodeURIComponent(user.id)}`;
       try{
         await navigator.clipboard.writeText(profileUrl);
         const old=shareButton.textContent;
@@ -1508,150 +1680,352 @@ async function renderProfileData(user, isOwnProfile, suppliedProfile=null){
     };
   }
 }
+
 async function loadSavedProfile(){
   try{
-    const r=await fetch(nwApi("/api/profile"),{credentials:"include"});
+    const r=await fetchWithTimeout(nwApi("/api/profile"),{
+      credentials:"include",
+      cache:"no-store"
+    },12000);
     if(!r.ok)return {};
-    return await r.json();
-  }catch{return {}}
+    const data=await r.json();
+    return data&&typeof data==="object"?data:{};
+  }catch{
+    return {};
+  }
 }
 
 async function saveNorthworkProfile(data){
   try{
-    const r=await fetch(nwApi("/api/profile"),{
+    const r=await fetchWithTimeout(nwApi("/api/profile"),{
       method:"POST",
       credentials:"include",
       headers:{"Content-Type":"application/json"},
       body:JSON.stringify(data)
-    });
-    return r.ok;
-  }catch{return false}
+    },15000);
+    if(!r.ok){
+      console.error("Profile save failed:",r.status);
+      return false;
+    }
+    return true;
+  }catch(error){
+    console.error("Profile save error:",error);
+    return false;
+  }
 }
 
 async function openProfileEditor(){
+  const user=northworkCurrentUser||await getNorthworkUser();
+  if(!user){
+    alert("Please log in with Discord before editing your profile.");
+    return;
+  }
+
   const modal=document.getElementById("profileEditorBackdrop");
   if(!modal)return;
+
   const saved=await loadSavedProfile();
-  const user=northworkCurrentUser||await getNorthworkUser();
+  northworkPendingProfileBackground=null;
+
+  const scaleInput=document.getElementById("profileScale");
+  const scaleValue=document.getElementById("profileScaleValue");
+  const preview=document.getElementById("profilePreviewBg");
   const bg=saved.background||accountBanner(user);
-  document.getElementById("profileScale").value=saved.scale||1;
-  document.getElementById("profileScaleValue").textContent=(Number(saved.scale||1)).toFixed(2)+"×";
-  document.getElementById("profilePreviewBg").style.backgroundImage=bg?`url("${bg}")`:"none";
-  document.getElementById("profilePreviewBg").style.transform=`scale(${saved.scale||1})`;
+  const scale=Number(saved.scale||1);
+
+  if(scaleInput)scaleInput.value=scale;
+  if(scaleValue)scaleValue.textContent=scale.toFixed(2)+"×";
+  if(preview){
+    preview.style.backgroundImage=bg?`url("${String(bg).replace(/"/g,"%22")}")`:"none";
+    preview.style.transform=`scale(${scale})`;
+    preview._pendingBackground=null;
+  }
+
   modal.classList.add("open");
 }
 
-function closeProfileEditor(){document.getElementById("profileEditorBackdrop")?.classList.remove("open")}
-
-function updateProfilePreview(){
-  const scale=Number(document.getElementById("profileScale").value);
-  document.getElementById("profileScaleValue").textContent=scale.toFixed(2)+"×";
-  document.getElementById("profilePreviewBg").style.transform=`scale(${scale})`;
+function closeProfileEditor(){
+  document.getElementById("profileEditorBackdrop")?.classList.remove("open");
+  northworkPendingProfileBackground=null;
 }
 
+function updateProfilePreview(){
+  const scale=Number(document.getElementById("profileScale")?.value||1);
+  const value=document.getElementById("profileScaleValue");
+  const preview=document.getElementById("profilePreviewBg");
+  if(value)value.textContent=scale.toFixed(2)+"×";
+  if(preview)preview.style.transform=`scale(${scale})`;
+}
+
+function fileToDataUrl(file){
+  return new Promise((resolve,reject)=>{
+    const reader=new FileReader();
+    reader.onload=()=>resolve(String(reader.result||""));
+    reader.onerror=()=>reject(reader.error||new Error("Could not read image."));
+    reader.readAsDataURL(file);
+  });
+}
+
+async function previewProfileImage(file){
+  if(!file||!file.type.startsWith("image/"))return;
+
+  if(file.size>5*1024*1024){
+    alert("Please use an image smaller than 5 MB.");
+    return;
+  }
+
+  try{
+    const source=await fileToDataUrl(file);
+    const image=new Image();
+
+    await new Promise((resolve,reject)=>{
+      image.onload=resolve;
+      image.onerror=()=>reject(new Error("Could not decode the image."));
+      image.src=source;
+    });
+
+    const maxWidth=2000;
+    const maxHeight=1100;
+    const ratio=Math.min(
+      1,
+      maxWidth/image.naturalWidth,
+      maxHeight/image.naturalHeight
+    );
+
+    const width=Math.max(1,Math.round(image.naturalWidth*ratio));
+    const height=Math.max(1,Math.round(image.naturalHeight*ratio));
+
+    let result=source;
+
+    if(width!==image.naturalWidth||height!==image.naturalHeight||file.size>2*1024*1024){
+      const canvas=document.createElement("canvas");
+      canvas.width=width;
+      canvas.height=height;
+      const ctx=canvas.getContext("2d");
+      if(!ctx)throw new Error("Canvas is unavailable.");
+      ctx.drawImage(image,0,0,width,height);
+      result=canvas.toDataURL("image/webp",0.88);
+      if(!result.startsWith("data:image/webp")){
+        result=canvas.toDataURL("image/png");
+      }
+    }
+
+    const preview=document.getElementById("profilePreviewBg");
+    if(preview){
+      preview.style.backgroundImage=`url("${result}")`;
+      preview._pendingBackground=result;
+    }
+    northworkPendingProfileBackground=result;
+  }catch(error){
+    console.error("Profile image preview error:",error);
+    alert("Could not load that image. Please try another PNG, JPG, WebP, or GIF.");
+  }
+}
+
+let northworkProfileEditorInitialized=false;
 function initProfileEditor(){
-  document.getElementById("profileEditButton")?.addEventListener("click",openProfileEditor);
-  document.getElementById("settingsEditProfile")?.addEventListener("click",()=>{go("/profile").then(openProfileEditor)});
-  document.getElementById("profileEditorClose")?.addEventListener("click",closeProfileEditor);
-  document.getElementById("profileEditorCancel")?.addEventListener("click",closeProfileEditor);
+  if(northworkProfileEditorInitialized)return;
+  northworkProfileEditorInitialized=true;
+
+  document.addEventListener("click",e=>{
+    const edit=e.target.closest("#profileEditButton");
+    if(edit){
+      e.preventDefault();
+      openProfileEditor();
+      return;
+    }
+
+    const settingsEdit=e.target.closest("#settingsEditProfile");
+    if(settingsEdit){
+      e.preventDefault();
+      go("/profile").then(openProfileEditor);
+      return;
+    }
+
+    if(e.target.closest("#profileEditorClose")||e.target.closest("#profileEditorCancel")){
+      e.preventDefault();
+      closeProfileEditor();
+      return;
+    }
+
+    if(e.target.id==="profileDropzone"||e.target.closest("#profileDropzone")){
+      if(e.target.id!=="profileImageInput"){
+        document.getElementById("profileImageInput")?.click();
+      }
+    }
+  });
+
+  const modal=document.getElementById("profileEditorBackdrop");
+  modal?.addEventListener("click",e=>{
+    if(e.target===modal)closeProfileEditor();
+  });
+
   document.getElementById("profileScale")?.addEventListener("input",updateProfilePreview);
 
   const drop=document.getElementById("profileDropzone");
   const input=document.getElementById("profileImageInput");
-  drop?.addEventListener("click",()=>input?.click());
-  ["dragenter","dragover"].forEach(ev=>drop?.addEventListener(ev,e=>{e.preventDefault();drop.classList.add("drag")}));
-  ["dragleave","drop"].forEach(ev=>drop?.addEventListener(ev,e=>{e.preventDefault();drop.classList.remove("drag")}));
-  drop?.addEventListener("drop",e=>previewProfileImage(e.dataTransfer.files[0]));
-  input?.addEventListener("change",e=>previewProfileImage(e.target.files[0]));
+
+  ["dragenter","dragover"].forEach(ev=>drop?.addEventListener(ev,e=>{
+    e.preventDefault();
+    drop.classList.add("drag");
+  }));
+
+  ["dragleave","drop"].forEach(ev=>drop?.addEventListener(ev,e=>{
+    e.preventDefault();
+    drop.classList.remove("drag");
+  }));
+
+  drop?.addEventListener("drop",e=>{
+    const file=e.dataTransfer?.files?.[0];
+    previewProfileImage(file);
+  });
+
+  input?.addEventListener("change",e=>{
+    const file=e.target?.files?.[0];
+    previewProfileImage(file);
+  });
 
   document.getElementById("profileEditorSave")?.addEventListener("click",async()=>{
+    const button=document.getElementById("profileEditorSave");
+    if(!button)return;
+
     const old=await loadSavedProfile();
-    old.scale=Number(document.getElementById("profileScale").value);
-    const pending=document.getElementById("profilePreviewBg")?._pendingBackground;
-    if(pending) old.background=pending;
-    const ok=await saveNorthworkProfile(old);
+    const next={...old};
+    next.scale=Number(document.getElementById("profileScale")?.value||1);
+
+    const pending=northworkPendingProfileBackground || document.getElementById("profilePreviewBg")?._pendingBackground;
+    if(pending)next.background=pending;
+
+    const oldScale=Number(old.scale||1);
+    const oldBackground=String(old.background||"");
+    const changed=
+      next.scale!==oldScale||
+      String(next.background||"")!==oldBackground;
+
+    if(!changed){
+      closeProfileEditor();
+      return;
+    }
+
+    button.disabled=true;
+    const oldLabel=button.textContent;
+    button.textContent="Saving...";
+
+    const ok=await saveNorthworkProfile(next);
+
+    button.disabled=false;
+    button.textContent=oldLabel;
+
     if(ok){
+      northworkPendingProfileBackground=null;
       closeProfileEditor();
       await renderNorthworkProfile();
       showProfileChangeNotice();
     }else{
-      alert("Could not save your profile right now.");
+      alert("Could not save your profile right now. Please try again.");
     }
   });
 
   document.getElementById("settingsLogout")?.addEventListener("click",async()=>{
-    await fetch(nwApi("/auth/logout"),{method:"POST",credentials:"include"}).catch(()=>{});
+    try{
+      await fetchWithTimeout(nwApi("/auth/logout"),{
+        method:"POST",
+        credentials:"include"
+      },8000);
+    }catch{}
     northworkCurrentUser=null;
+    cacheNorthworkUser(null);
     await renderAccountArea();
-    go("/");
+    await go("/");
+  });
+
+  document.addEventListener("keydown",e=>{
+    if(e.key==="Escape")closeProfileEditor();
   });
 }
 
-function previewProfileImage(file){
-  if(!file||!file.type.startsWith("image/"))return;
-  if(file.size>5*1024*1024){alert("Please use an image smaller than 5 MB.");return;}
-  const reader=new FileReader();
-  reader.onload=()=>{
-    const preview=document.getElementById("profilePreviewBg");
-    if(preview)preview.style.backgroundImage=`url("${reader.result}")`;
-    preview._pendingBackground=reader.result;
-  };
-  reader.readAsDataURL(file);
+function hideProfileChangeNotice(){
+  const notice=document.getElementById("profileUpdateNotice");
+  const toggle=document.getElementById("profileUpdateToggle");
+  notice?.classList.remove("visible","expanded");
+  if(toggle)toggle.textContent="⌄";
 }
-
-const northworkOldRenderRoute=renderRoute;
-renderRoute=async function(){
-  await northworkOldRenderRoute();
-  const path=location.hash.replace(/^#/,'').split('?')[0]||'/';
-  if(path==="/profile")await renderNorthworkProfile();
-  else if(path.startsWith("/profile/")){
-    const userId=decodeURIComponent(path.slice("/profile/".length));
-    document.querySelectorAll(".view").forEach(v=>v.classList.toggle("active",v.dataset.view==="/profile"));
-    await renderPublicProfile(userId);
-  }
-  if(path==="/settings"&&!await getNorthworkUser())await go("/");
-  await renderAccountArea();
-};
-
-initProfileChangeNotice();
-initProfileEditor();
-renderAccountArea();
-
-
-/* ================= PROFILE CHANGE NOTICE ================= */
-let northworkProfileChangeNotice=null;
-let northworkProfileChangeToggle=null;
-let northworkProfileChangeRefresh=null;
 
 function initProfileChangeNotice(){
-  northworkProfileChangeNotice=document.getElementById("profileUpdateNotice");
-  northworkProfileChangeToggle=document.getElementById("profileUpdateToggle");
-  northworkProfileChangeRefresh=document.getElementById("profileUpdateRefresh");
+  const notice=document.getElementById("profileUpdateNotice");
+  const toggle=document.getElementById("profileUpdateToggle");
+  const refresh=document.getElementById("profileUpdateRefresh");
+  if(!notice||!toggle||!refresh)return;
 
-  if(
-    !northworkProfileChangeNotice||
-    !northworkProfileChangeToggle||
-    !northworkProfileChangeRefresh
-  )return;
-
-  northworkProfileChangeToggle.addEventListener("click",()=>{
-    const expanded=
-      northworkProfileChangeNotice.classList.toggle("expanded");
-
-    northworkProfileChangeToggle.textContent=
-      expanded?"⌃":"⌄";
+  toggle.addEventListener("click",()=>{
+    const expanded=notice.classList.toggle("expanded");
+    toggle.textContent=expanded?"⌃":"⌄";
   });
 
-  northworkProfileChangeRefresh.addEventListener("click",()=>{
+  refresh.addEventListener("click",()=>{
     window.location.reload();
   });
 }
 
 function showProfileChangeNotice(){
-  if(!northworkProfileChangeNotice)return;
-
-  northworkProfileChangeNotice.classList.add("visible");
+  const notice=document.getElementById("profileUpdateNotice");
+  if(!notice||!getCurrentRoute().startsWith("/profile"))return;
+  notice.classList.add("visible");
 }
+
+const northworkOldRenderRoute=renderRoute;
+renderRoute=async function(){
+  await northworkOldRenderRoute();
+
+  const path=getCurrentRoute();
+
+  if(path==="/profile"){
+    await renderNorthworkProfile();
+  }else if(path.startsWith("/profile/")){
+    const userId=decodeURIComponent(path.slice("/profile/".length));
+    document.querySelectorAll(".view").forEach(v=>
+      v.classList.toggle("active",v.dataset.view==="/profile")
+    );
+    await renderPublicProfile(userId);
+  }
+
+  if(path==="/settings"){
+    const user=await getNorthworkUser();
+    if(!user){
+      await go("/");
+      return;
+    }
+
+    const settingsAccount=document.getElementById("settingsAccount");
+    if(settingsAccount){
+      settingsAccount.textContent=`${user.global_name||user.username||"Discord user"} · @${user.username||""}`;
+    }
+  }
+
+  if(!path.startsWith("/profile"))hideProfileChangeNotice();
+  await renderAccountArea();
+};
+
+initProfileChangeNotice();
+initProfileEditor();
+
+window.addEventListener("popstate",()=>renderRoute().catch(console.error));
+window.addEventListener("hashchange",()=>renderRoute().catch(console.error));
+window.addEventListener("pageshow",()=>renderAccountArea().catch(console.error));
+
+(async function bootNorthwork(){
+  try{
+    await renderRoute();
+  }catch(error){
+    console.error("Northwork initial route render failed:",error);
+  }
+  try{
+    await renderAccountArea();
+  }catch(error){
+    console.error("Northwork account render failed:",error);
+  }
+})();
+
 
 /* ================= SITE UPDATE DETECTOR ================= */
 (function initSiteUpdateDetector(){
@@ -1662,11 +2036,6 @@ function showProfileChangeNotice(){
 
   const currentVersion=String(window.NORTHWORK_SITE_DATA?.siteVersion||"");
   const allowedRoutes=new Set(["/","/games","/bots","/programs","/policy"]);
-  let hasChecked=false;
-
-  function getCurrentRoute(){
-    return location.hash.replace(/^#/,'').split('?')[0] || "/";
-  }
 
   function canShowNotice(){
     return allowedRoutes.has(getCurrentRoute());
@@ -1678,21 +2047,20 @@ function showProfileChangeNotice(){
   }
 
   async function checkSiteVersion(){
-    if(hasChecked)return;
-    hasChecked=true;
-
     if(!canShowNotice()){
       hideNotice();
       return;
     }
 
     try{
-      const r=await fetch(nwApi("/api/site-version"),{
+      const r=await fetchWithTimeout(nwApi("/api/site-version"),{
         method:"GET",
         credentials:"include",
         cache:"no-store"
-      });
+      },10000);
+
       if(!r.ok)return;
+
       const data=await r.json();
       if(!data?.version||!currentVersion)return;
 
@@ -1713,11 +2081,12 @@ function showProfileChangeNotice(){
     window.location.reload();
   });
 
+  setTimeout(checkSiteVersion,5000);
+  setInterval(checkSiteVersion,30000);
+
   window.addEventListener("hashchange",()=>{
     if(!canShowNotice())hideNotice();
   });
-
-  setTimeout(checkSiteVersion,5000);
 })();
 </script>
 </body>
