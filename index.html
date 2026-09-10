@@ -484,96 +484,6 @@ body.nw-profile-gradient .topbar{
 }
 
 
-/* ================= SITE UPDATE NOTICE ================= */
-.site-update-notice{
-  position:fixed;
-  top:18px;
-  right:18px;
-  width:min(405px,calc(100vw - 36px));
-  z-index:99999;
-  border:1px solid rgba(255,255,255,.09);
-  border-radius:14px;
-  background:rgba(14,17,20,.96);
-  box-shadow:0 20px 70px rgba(0,0,0,.55);
-  backdrop-filter:blur(18px);
-  overflow:hidden;
-  opacity:0;
-  transform:translateY(-10px) scale(.985);
-  pointer-events:none;
-  transition:opacity .2s ease,transform .2s ease;
-}
-.site-update-notice.visible{
-  opacity:1;
-  transform:none;
-  pointer-events:auto;
-}
-.site-update-row{
-  display:flex;
-  align-items:center;
-  gap:12px;
-  padding:13px 14px;
-}
-.site-update-indicator{
-  width:8px;
-  height:8px;
-  flex:none;
-  border-radius:50%;
-  background:var(--green);
-  box-shadow:0 0 10px rgba(86,210,138,.28);
-}
-.site-update-copy{min-width:0;flex:1}
-.site-update-title{
-  color:var(--text);
-  font-size:13px;
-  font-weight:700;
-  letter-spacing:-.015em;
-}
-.site-update-subtitle{
-  margin-top:3px;
-  color:#727a85;
-  font-size:11px;
-}
-.site-update-toggle{
-  width:30px;
-  height:30px;
-  flex:none;
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  border:1px solid #252b33;
-  border-radius:8px;
-  background:#101317;
-  color:#aeb5bf;
-  cursor:pointer;
-  transition:.16s;
-}
-.site-update-toggle:hover{border-color:#39414b;background:#161a1f;color:var(--text)}
-.site-update-details{
-  display:none;
-  padding:0 14px 14px;
-  border-top:1px solid rgba(255,255,255,.06);
-}
-.site-update-notice.expanded .site-update-details{display:block}
-.site-update-message{
-  padding-top:12px;
-  color:#9ba2ac;
-  font-size:12px;
-  line-height:1.55;
-}
-.site-update-refresh{
-  width:100%;
-  margin-top:11px;
-  padding:9px 12px;
-  border:1px solid #dfe2e6;
-  border-radius:9px;
-  background:#f3f4f5;
-  color:#090a0c;
-  font-size:12px;
-  font-weight:700;
-  cursor:pointer;
-  transition:.16s;
-}
-.site-update-refresh:hover{background:#fff;transform:translateY(-1px)}
 /* ================= PROFILE UPDATE NOTICE ================= */
 .profile-update-notice{
   position:fixed;
@@ -1065,21 +975,6 @@ body.nw-profile-gradient .topbar{
 
 </main>
 
-<!-- ================= SITE UPDATE NOTICE ================= -->
-<div id="siteUpdateNotice" class="site-update-notice" aria-live="polite">
-  <div class="site-update-row">
-    <span class="site-update-indicator" aria-hidden="true"></span>
-    <div class="site-update-copy">
-      <div class="site-update-title">The site updated!</div>
-      <div class="site-update-subtitle">A newer version of Northwork is available.</div>
-    </div>
-    <button id="siteUpdateToggle" class="site-update-toggle" type="button" aria-label="Show update details">⌄</button>
-  </div>
-  <div id="siteUpdateDetails" class="site-update-details">
-    <div class="site-update-message">The site has gotten an update, and ur still sitting at the old version, refresh to apply the update!</div>
-    <button id="siteUpdateRefresh" class="site-update-refresh" type="button">Refresh</button>
-  </div>
-</div>
 <div id="profileUpdateNotice" class="profile-update-notice" aria-live="polite">
   <div class="profile-update-row">
     <span class="profile-update-indicator" aria-hidden="true"></span>
@@ -2191,73 +2086,7 @@ function showProfileChangeNotice(){
   northworkProfileChangeNotice.classList.add("visible");
 }
 
-/* ================= SITE UPDATE DETECTOR ================= */
-(function initSiteUpdateDetector(){
-  const notice=document.getElementById("siteUpdateNotice");
-  const toggle=document.getElementById("siteUpdateToggle");
-  const refresh=document.getElementById("siteUpdateRefresh");
-  if(!notice||!toggle||!refresh)return;
-
-  const currentVersion=String(window.NORTHWORK_SITE_DATA?.siteVersion||"");
-  const allowedRoutes=new Set(["/","/games","/bots","/programs","/policy"]);
-  let hasChecked=false;
-
-  function getCurrentRoute(){
-    return location.hash.replace(/^#/,'').split('?')[0] || "/";
-  }
-
-  function canShowNotice(){
-    return allowedRoutes.has(getCurrentRoute());
-  }
-
-  function hideNotice(){
-    notice.classList.remove("visible","expanded");
-    toggle.textContent="⌄";
-  }
-
-  async function checkSiteVersion(){
-    if(hasChecked)return;
-    hasChecked=true;
-
-    if(!canShowNotice()){
-      hideNotice();
-      return;
-    }
-
-    try{
-      const r=await fetch(nwApi("/api/site-version"),{
-        method:"GET",
-        credentials:"include",
-        cache:"no-store"
-      });
-      if(!r.ok)return;
-      const data=await r.json();
-      if(!data?.version||!currentVersion)return;
-
-      if(String(data.version)!==currentVersion){
-        notice.classList.add("visible");
-      }else{
-        hideNotice();
-      }
-    }catch{}
-  }
-
-  toggle.addEventListener("click",()=>{
-    const expanded=notice.classList.toggle("expanded");
-    toggle.textContent=expanded?"⌃":"⌄";
-  });
-
-  refresh.addEventListener("click",()=>{
-    window.location.reload();
-  });
-
-  window.addEventListener("hashchange",()=>{
-    if(!canShowNotice())hideNotice();
-  });
-
-  setTimeout(checkSiteVersion,5000);
-})();
-
+/* Site update notice disabled. Version checking remains available on the backend, but the toast is intentionally hidden. */
 // Boot only after every Northwork function exists. This prevents direct
 // profile refreshes from running the router before profile functions are loaded.
 window.addEventListener("popstate",()=>renderRoute());
