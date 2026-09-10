@@ -540,6 +540,106 @@ footer{border-top:1px solid var(--line);padding:30px 0 42px;color:#666e78;font-s
   transition:.16s;
 }
 .site-update-refresh:hover{background:#fff;transform:translateY(-1px)}
+/* ================= PROFILE UPDATE NOTICE ================= */
+.profile-update-notice{
+  position:fixed;
+  top:92px;
+  right:18px;
+  width:min(405px,calc(100vw - 36px));
+  z-index:99998;
+  border:1px solid rgba(255,255,255,.09);
+  border-radius:14px;
+  background:rgba(14,17,20,.96);
+  box-shadow:0 20px 70px rgba(0,0,0,.55);
+  backdrop-filter:blur(18px);
+  overflow:hidden;
+  opacity:0;
+  transform:translateY(-10px) scale(.985);
+  pointer-events:none;
+  transition:opacity .2s ease,transform .2s ease;
+}
+.profile-update-notice.visible{
+  opacity:1;
+  transform:none;
+  pointer-events:auto;
+}
+.profile-update-row{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:13px 14px;
+}
+.profile-update-indicator{
+  width:8px;
+  height:8px;
+  flex:none;
+  border-radius:50%;
+  background:#63a4ff;
+  box-shadow:0 0 10px rgba(99,164,255,.4);
+}
+.profile-update-copy{min-width:0;flex:1}
+.profile-update-title{
+  color:var(--text);
+  font-size:13px;
+  font-weight:700;
+  letter-spacing:-.015em;
+}
+.profile-update-subtitle{
+  margin-top:3px;
+  color:#727a85;
+  font-size:11px;
+}
+.profile-update-toggle{
+  width:30px;
+  height:30px;
+  flex:none;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  border:1px solid #252b33;
+  border-radius:8px;
+  background:#101317;
+  color:#aeb5bf;
+  cursor:pointer;
+  transition:.16s;
+}
+.profile-update-toggle:hover{
+  border-color:#39414b;
+  background:#161a1f;
+  color:var(--text);
+}
+.profile-update-details{
+  display:none;
+  padding:0 14px 14px;
+  border-top:1px solid rgba(255,255,255,.06);
+}
+.profile-update-notice.expanded .profile-update-details{
+  display:block;
+}
+.profile-update-message{
+  padding-top:12px;
+  color:#9ba2ac;
+  font-size:12px;
+  line-height:1.55;
+}
+.profile-update-refresh{
+  width:100%;
+  margin-top:11px;
+  padding:9px 12px;
+  border:1px solid #8bb8ff;
+  border-radius:9px;
+  background:#e7f0ff;
+  color:#0a1019;
+  font-size:12px;
+  font-weight:700;
+  cursor:pointer;
+  transition:.16s;
+}
+.profile-update-refresh:hover{
+  background:#fff;
+  transform:translateY(-1px);
+}
+
 
 </style>
 </head>
@@ -807,7 +907,7 @@ footer{border-top:1px solid var(--line);padding:30px 0 42px;color:#666e78;font-s
     <div class="profile-preview"><div class="profile-preview-bg" id="profilePreviewBg"></div></div>
     <div class="profile-control"><span>Scale</span><input id="profileScale" type="range" min=".5" max="3" step=".01" value="1"><span id="profileScaleValue">1.00×</span></div>
     <div class="profile-editor-actions"><button class="btn" id="profileEditorCancel">Cancel</button><button class="btn primary profile-save" id="profileEditorSave">Save changes</button></div>
-    <div class="profile-note">Your Discord banner is used automatically until you upload a custom background. The crop/scale preference is saved locally in this single-file site.</div>
+    <div class="profile-note">Your Discord banner is used automatically until you upload a custom background. Your background and crop/scale preference are saved to your Northwork account.</div>
   </div>
 </div>
 
@@ -826,6 +926,20 @@ footer{border-top:1px solid var(--line);padding:30px 0 42px;color:#666e78;font-s
   <div id="siteUpdateDetails" class="site-update-details">
     <div class="site-update-message">The site has gotten an update, and ur still sitting at the old version, refresh to apply the update!</div>
     <button id="siteUpdateRefresh" class="site-update-refresh" type="button">Refresh</button>
+  </div>
+</div>
+<div id="profileUpdateNotice" class="profile-update-notice" aria-live="polite">
+  <div class="profile-update-row">
+    <span class="profile-update-indicator" aria-hidden="true"></span>
+    <div class="profile-update-copy">
+      <div class="profile-update-title">You changed your profile!</div>
+      <div class="profile-update-subtitle">Your profile changes have been saved.</div>
+    </div>
+    <button id="profileUpdateToggle" class="profile-update-toggle" type="button" aria-label="Show profile update details">⌄</button>
+  </div>
+  <div id="profileUpdateDetails" class="profile-update-details">
+    <div class="profile-update-message">You changed something on your Northwork profile. A refresh is needed so the updated profile appears everywhere on the site.</div>
+    <button id="profileUpdateRefresh" class="profile-update-refresh" type="button">Refresh</button>
   </div>
 </div>
 
@@ -1261,35 +1375,78 @@ async function renderNorthworkProfile(){
   await renderProfileData(user, true);
 }
 
+async function showProfileNotFound(){
+  const displayName=document.getElementById("profileDisplayName");
+  const username=document.getElementById("profileUsername");
+  const avatar=document.getElementById("profileAvatar");
+  const joined=document.getElementById("profileJoined");
+  const roles=document.getElementById("profileRoles");
+  const tickets=document.getElementById("profileTickets");
+  const warnings=document.getElementById("profileWarnings");
+
+  if(displayName)displayName.textContent="Profile not found";
+  if(username)username.textContent="This Northwork member could not be found.";
+  if(avatar){
+    avatar.onerror=null;
+    avatar.src=accountAvatar({});
+  }
+  if(joined)joined.textContent="—";
+  if(roles)roles.innerHTML="";
+  if(tickets)tickets.innerHTML=`<div class="profile-empty">This profile isn't available.</div>`;
+  if(warnings)warnings.innerHTML=`<div class="profile-empty">This profile isn't available.</div>`;
+  document.getElementById("profileWarningsPanel")?.classList.remove("has-warning");
+  document.getElementById("profileEditButton")?.style.setProperty("display","none");
+  document.getElementById("profileShareButton")?.style.setProperty("display","none");
+}
+
 async function renderPublicProfile(userId){
   try{
+    const current=northworkCurrentUser||await getNorthworkUser();
+
+    // When opening your OWN public/share link, use the authenticated
+    // account data so the profile is identical to /profile.
+    if(current?.id===String(userId)){
+      await renderProfileData(current, true);
+      return;
+    }
+
     const r=await fetch(nwApi(`/api/profile/${encodeURIComponent(userId)}`),{
       credentials:"include",
       cache:"no-store"
     });
+
     if(!r.ok){
-      document.getElementById("profileDisplayName").textContent="Profile not found";
-      document.getElementById("profileUsername").textContent="This Northwork member could not be found.";
-      document.getElementById("profileAvatar").src=accountAvatar({});
-      document.getElementById("profileJoined").textContent="—";
-      document.getElementById("profileRoles").innerHTML="";
-      document.getElementById("profileTickets").innerHTML=`<div class="profile-empty">This profile isn't available.</div>`;
-      document.getElementById("profileWarnings").innerHTML=`<div class="profile-empty">This profile isn't available.</div>`;
-      document.getElementById("profileEditButton")?.style.setProperty("display","none");
-      document.getElementById("profileShareButton")?.style.setProperty("display","none");
+      await showProfileNotFound();
       return;
     }
+
     const payload=await r.json();
-    if(!payload?.user){throw new Error("Invalid profile response")}
-    await renderProfileData(payload.user, false, payload.profile||{});
+
+    if(!payload?.user){
+      throw new Error("Invalid profile response");
+    }
+
+    await renderProfileData(
+      payload.user,
+      false,
+      payload.profile||{}
+    );
+
   }catch(error){
     console.error("Public profile load error:",error);
+    await showProfileNotFound();
   }
 }
 
 async function renderProfileData(user, isOwnProfile, suppliedProfile=null){
   const avatar=document.getElementById("profileAvatar");
-  if(avatar)avatar.src=accountAvatar(user);
+  if(avatar){
+    avatar.onerror=()=>{
+      avatar.onerror=null;
+      avatar.src=accountAvatar({});
+    };
+    avatar.src=accountAvatar(user);
+  }
 
   const displayName=document.getElementById("profileDisplayName");
   const username=document.getElementById("profileUsername");
@@ -1413,8 +1570,13 @@ function initProfileEditor(){
     const pending=document.getElementById("profilePreviewBg")?._pendingBackground;
     if(pending) old.background=pending;
     const ok=await saveNorthworkProfile(old);
-    if(ok){closeProfileEditor();await renderNorthworkProfile();}
-    else alert("Could not save your profile right now.");
+    if(ok){
+      closeProfileEditor();
+      await renderNorthworkProfile();
+      showProfileChangeNotice();
+    }else{
+      alert("Could not save your profile right now.");
+    }
   });
 
   document.getElementById("settingsLogout")?.addEventListener("click",async()=>{
@@ -1451,9 +1613,45 @@ renderRoute=async function(){
   await renderAccountArea();
 };
 
+initProfileChangeNotice();
 initProfileEditor();
 renderAccountArea();
 
+
+/* ================= PROFILE CHANGE NOTICE ================= */
+let northworkProfileChangeNotice=null;
+let northworkProfileChangeToggle=null;
+let northworkProfileChangeRefresh=null;
+
+function initProfileChangeNotice(){
+  northworkProfileChangeNotice=document.getElementById("profileUpdateNotice");
+  northworkProfileChangeToggle=document.getElementById("profileUpdateToggle");
+  northworkProfileChangeRefresh=document.getElementById("profileUpdateRefresh");
+
+  if(
+    !northworkProfileChangeNotice||
+    !northworkProfileChangeToggle||
+    !northworkProfileChangeRefresh
+  )return;
+
+  northworkProfileChangeToggle.addEventListener("click",()=>{
+    const expanded=
+      northworkProfileChangeNotice.classList.toggle("expanded");
+
+    northworkProfileChangeToggle.textContent=
+      expanded?"⌃":"⌄";
+  });
+
+  northworkProfileChangeRefresh.addEventListener("click",()=>{
+    window.location.reload();
+  });
+}
+
+function showProfileChangeNotice(){
+  if(!northworkProfileChangeNotice)return;
+
+  northworkProfileChangeNotice.classList.add("visible");
+}
 
 /* ================= SITE UPDATE DETECTOR ================= */
 (function initSiteUpdateDetector(){
