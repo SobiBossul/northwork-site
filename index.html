@@ -645,129 +645,94 @@ body.nw-profile-gradient .topbar{
 @media(max-width:700px){.profile-hero-main{padding:0 17px 20px;flex-wrap:wrap}.profile-action-row{margin-left:0;width:100%;justify-content:flex-start}.profile-stat-row{grid-template-columns:1fr}.profile-account-grid{grid-template-columns:1fr}.profile-gradient-grid{grid-template-columns:1fr}}
 
 
-/* Site-wide search */
-.search-trigger{
-  min-width:84px;
+/* People search */
+.people-search{
+  position:relative;
+  width:min(250px,28vw);
+  min-width:180px;
 }
-.search-backdrop{
-  position:fixed;
-  inset:0;
-  z-index:200;
-  display:none;
-  align-items:flex-start;
-  justify-content:center;
-  padding:90px 18px 24px;
-  background:rgba(0,0,0,.62);
-  backdrop-filter:blur(10px);
-}
-.search-backdrop.open{display:flex}
-.search-panel{
-  width:min(720px,100%);
-  max-height:min(78vh,760px);
-  overflow:hidden;
-  border:1px solid #2a3038;
-  border-radius:18px;
-  background:#0d1014;
-  box-shadow:0 30px 100px rgba(0,0,0,.58);
-}
-.search-head{
+.people-search-input-wrap{
   display:flex;
   align-items:center;
-  gap:10px;
-  padding:16px;
-  border-bottom:1px solid var(--line);
-}
-.search-input-wrap{
-  display:flex;
-  align-items:center;
-  flex:1;
   gap:9px;
-  min-width:0;
+  height:38px;
+  padding:0 12px;
+  border:1px solid var(--line);
+  border-radius:10px;
+  background:#11151a;
+  transition:border-color .16s ease,background .16s ease,box-shadow .16s ease;
 }
-.search-icon{color:#727a85;font-size:17px;flex:none}
-.search-input{
+.people-search-input-wrap:focus-within{
+  border-color:#3a434d;
+  background:#14181d;
+  box-shadow:0 0 0 3px rgba(255,255,255,.035);
+}
+.people-search-icon{color:#727a85;font-size:16px;line-height:1;flex:none}
+.people-search-input{
   width:100%;
+  min-width:0;
   border:0;
   outline:0;
   background:transparent;
   color:var(--text);
-  font-size:17px;
+  font:inherit;
+  font-size:13px;
 }
-.search-input::placeholder{color:#6f7782}
-.search-close{
-  width:36px;
-  height:36px;
-  border:1px solid var(--line);
-  border-radius:9px;
-  background:#14181d;
-  color:#aeb4bd;
-  cursor:pointer;
-}
-.search-close:hover{color:#fff;border-color:#363d46}
-.search-results{
-  max-height:calc(min(78vh,760px) - 78px);
+.people-search-input::placeholder{color:#6f7782}
+.people-search-results{
+  position:absolute;
+  top:calc(100% + 8px);
+  left:0;
+  right:0;
+  z-index:250;
+  max-height:420px;
   overflow:auto;
-  padding:8px;
+  padding:6px;
+  border:1px solid #2a3038;
+  border-radius:14px;
+  background:#0d1014;
+  box-shadow:0 24px 70px rgba(0,0,0,.52);
+  display:none;
 }
-.search-result{
+.people-search-results.open{display:block}
+.people-search-result{
   width:100%;
   display:flex;
-  align-items:flex-start;
-  gap:12px;
-  padding:12px;
+  align-items:center;
+  gap:10px;
+  padding:9px;
   border:1px solid transparent;
-  border-radius:12px;
+  border-radius:10px;
   background:transparent;
   color:var(--text);
   text-align:left;
   cursor:pointer;
 }
-.search-result:hover,.search-result:focus-visible{
+.people-search-result:hover,.people-search-result:focus-visible{
   background:#14181d;
   border-color:#242b33;
   outline:0;
 }
-.search-result-icon{
+.people-search-avatar,
+.people-search-avatar-fallback{
   width:38px;
   height:38px;
-  display:grid;
-  place-items:center;
   flex:none;
+  border-radius:50%;
+  object-fit:cover;
   border:1px solid #2a3038;
-  border-radius:10px;
-  background:#11151a;
-  color:#aeb5bf;
-  overflow:hidden;
+  background:#151a20;
 }
-.search-result-icon img{width:100%;height:100%;object-fit:cover}
-.search-result-main{min-width:0;flex:1}
-.search-result-top{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
-.search-result-title{font-weight:700}
-.search-result-type{
-  padding:3px 7px;
-  border:1px solid #2a3038;
-  border-radius:999px;
-  color:#89919c;
-  font-size:11px;
+.people-search-avatar-fallback{display:grid;place-items:center;color:#8d96a1;font-size:15px}
+.people-search-main{min-width:0;flex:1}
+.people-search-name{font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.people-search-username{margin-top:2px;color:#7d8691;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.people-search-empty{padding:18px 12px;color:#7f8792;text-align:center;font-size:13px}
+@media(max-width:950px){.people-search{width:210px;min-width:150px}}
+@media(max-width:700px){
+  .people-search{width:100%;min-width:0;order:4}
+  .people-search-results{position:fixed;top:74px;left:10px;right:10px;width:auto;max-height:55vh}
 }
-.search-result-desc{
-  margin-top:4px;
-  color:#858d97;
-  font-size:13px;
-  line-height:1.45;
-  overflow:hidden;
-  display:-webkit-box;
-  -webkit-line-clamp:2;
-  -webkit-box-orient:vertical;
-}
-.search-empty{padding:28px 16px;color:#7f8792;text-align:center}
-.search-hint{padding:0 16px 12px;color:#69717b;font-size:12px}
-@media(max-width:650px){
-  .search-backdrop{padding:74px 10px 12px}
-  .search-panel{border-radius:15px}
-  .search-trigger{min-width:0}
-}
-
 </style>
 </head>
 <body>
@@ -779,7 +744,13 @@ body.nw-profile-gradient .topbar{
       <button data-route="/games">Our Games</button>
       <button data-route="/bots">Our Bots</button>
       <button data-route="/programs">Our Programs</button>
-      <button class="search-trigger" id="searchOpen" type="button">Search</button>
+      <div class="people-search" id="peopleSearch">
+        <div class="people-search-input-wrap">
+          <span class="people-search-icon" aria-hidden="true">⌕</span>
+          <input id="peopleSearchInput" class="people-search-input" type="search" autocomplete="off" spellcheck="false" placeholder="Search people..." aria-label="Search people">
+        </div>
+        <div id="peopleSearchResults" class="people-search-results" role="listbox" aria-label="People search results"></div>
+      </div>
       <button class="btn" type="button" data-route="/policy">Policy</button>
     </div>
     <div class="account-area" id="accountArea"></div>
@@ -787,19 +758,7 @@ body.nw-profile-gradient .topbar{
   </div>
 </header>
 
-<div class="search-backdrop" id="searchBackdrop" aria-hidden="true">
-  <div class="search-panel" role="dialog" aria-modal="true" aria-labelledby="searchDialogTitle">
-    <div class="search-head">
-      <div class="search-input-wrap">
-        <span class="search-icon" aria-hidden="true">⌕</span>
-        <input id="searchInput" class="search-input" type="search" autocomplete="off" spellcheck="false" placeholder="Search Northwork..." aria-label="Search Northwork">
-      </div>
-      <button class="search-close" id="searchClose" type="button" aria-label="Close search">✕</button>
-    </div>
-    <div id="searchDialogTitle" class="search-hint">Search games, bots, programs, staff, and site sections.</div>
-    <div id="searchResults" class="search-results"></div>
-  </div>
-</div>
+
 
 <main class="wrap">
 <section class="view active" data-view="/">
@@ -1200,180 +1159,132 @@ async function getGameInfo(game){
     return fallback;
   }
 }
-/* ================= SITE SEARCH ================= */
-let northworkSearchIndex = null;
+/* ================= PEOPLE SEARCH ================= */
+let northworkPeopleSearchTimer=null;
+let northworkPeopleSearchRequest=null;
+let northworkPeopleSearchLastQuery="";
 
-function buildNorthworkSearchIndex(){
-  if(northworkSearchIndex)return northworkSearchIndex;
-
-  const pages=[
-    {type:"Page",title:"Home",description:"Northwork home page and community overview.",route:"/"},
-    {type:"Page",title:"Our Games",description:"Northwork Roblox experiences, stats, thumbnails and creators.",route:"/games"},
-    {type:"Page",title:"Our Bots",description:"Northwork bots, service status, activity, incidents and downtime history.",route:"/bots"},
-    {type:"Page",title:"Our Programs",description:"Northwork tools and software with download links.",route:"/programs"},
-    {type:"Page",title:"Policy",description:"Northwork community policy and guidelines.",route:"/policy"}
-  ];
-
-  const games=(GAMES||[]).map(game=>({
-    type:"Game",
-    title:game.name||"Untitled Game",
-    description:game.description||"Northwork Roblox experience.",
-    route:"/games",
-    target:{kind:"game",slug:game.slug}
-  }));
-
-  const bots=(BOTS_FALLBACK||[]).map(bot=>({
-    type:"Bot",
-    title:bot.name||"Untitled Bot",
-    description:bot.description||"Northwork bot.",
-    route:"/bots",
-    target:{kind:"bot",id:bot.id}
-  }));
-
-  const programs=(PROGRAMS||[]).map(program=>({
-    type:"Program",
-    title:program.name||"Untitled Program",
-    description:program.description||"Northwork program.",
-    route:"/programs",
-    target:{kind:"program",id:program.id}
-  }));
-
-  const staff=(STAFF||[]).map(person=>({
-    type:"Staff",
-    title:person.name||person.username||"Northwork Staff",
-    description:`@${person.username||"unknown"} · ${person.role||"Staff"}`,
-    route:`/profile/${person.userId}`,
-    icon:person.avatar||""
-  }));
-
-  northworkSearchIndex=[...pages,...games,...bots,...programs,...staff];
-  return northworkSearchIndex;
+function closePeopleSearchResults(){
+  const box=document.getElementById("peopleSearchResults");
+  if(box){box.classList.remove("open");box.innerHTML="";}
 }
 
-function searchNorthwork(query){
-  const q=String(query||"").trim().toLowerCase();
-  const index=buildNorthworkSearchIndex();
-  if(!q)return index.slice(0,12);
-
-  const terms=q.split(/\s+/).filter(Boolean);
-  return index
-    .map(item=>{
-      const haystack=`${item.title} ${item.description} ${item.type}`.toLowerCase();
-      let score=0;
-      if(haystack===q)score+=100;
-      if(String(item.title).toLowerCase()===q)score+=80;
-      if(String(item.title).toLowerCase().includes(q))score+=45;
-      if(String(item.type).toLowerCase().includes(q))score+=18;
-      for(const term of terms){
-        if(String(item.title).toLowerCase().includes(term))score+=24;
-        else if(haystack.includes(term))score+=9;
-      }
-      return {...item,score};
-    })
-    .filter(item=>item.score>0)
-    .sort((a,b)=>b.score-a.score || a.title.localeCompare(b.title))
-    .slice(0,20);
-}
-
-function renderNorthworkSearchResults(query){
-  const box=document.getElementById("searchResults");
+function renderPeopleSearchResults(users, query){
+  const box=document.getElementById("peopleSearchResults");
   if(!box)return;
-  const results=searchNorthwork(query);
 
-  if(!results.length){
-    box.innerHTML=`<div class="search-empty">No results found for <strong>${escapeHtml(String(query||"").trim())}</strong>.</div>`;
+  if(!query){
+    closePeopleSearchResults();
     return;
   }
 
-  box.innerHTML=results.map((item,index)=>{
-    const icon=item.icon
-      ? `<img src="${escapeHtml(item.icon)}" alt="" loading="lazy" decoding="async">`
-      : `<span>${item.type==="Game"?"🎮":item.type==="Bot"?"🤖":item.type==="Program"?"▣":item.type==="Staff"?"●":"⌂"}</span>`;
-    return `<button class="search-result" type="button" data-search-index="${index}">
-      <span class="search-result-icon">${icon}</span>
-      <span class="search-result-main">
-        <span class="search-result-top">
-          <span class="search-result-title">${escapeHtml(item.title)}</span>
-          <span class="search-result-type">${escapeHtml(item.type)}</span>
-        </span>
-        <span class="search-result-desc">${escapeHtml(item.description)}</span>
+  if(!users?.length){
+    box.innerHTML=`<div class="people-search-empty">No people found for <strong>${escapeHtml(query)}</strong>.</div>`;
+    box.classList.add("open");
+    return;
+  }
+
+  box.innerHTML=users.map((user,index)=>{
+    const display=String(user.global_name||user.username||"Unknown user");
+    const username=user.username?`@${user.username}`:"";
+    const avatar=user.avatar_url||"";
+    const icon=avatar
+      ? `<img class="people-search-avatar" src="${escapeHtml(avatar)}" alt="" loading="lazy" decoding="async">`
+      : `<span class="people-search-avatar-fallback">●</span>`;
+    return `<button class="people-search-result" type="button" data-people-index="${index}">
+      ${icon}
+      <span class="people-search-main">
+        <span class="people-search-name">${escapeHtml(display)}</span>
+        <span class="people-search-username">${escapeHtml(username)}</span>
       </span>
     </button>`;
   }).join("");
 
-  box.querySelectorAll("[data-search-index]").forEach(button=>{
+  box.classList.add("open");
+  box.querySelectorAll("[data-people-index]").forEach(button=>{
     button.addEventListener("click",()=>{
-      const item=results[Number(button.dataset.searchIndex)];
-      if(!item)return;
-      closeNorthworkSearch();
-
-      if(item.target?.kind==="game"){
-        const game=(GAMES||[]).find(x=>x.slug===item.target.slug);
-        if(game){
-          document.getElementById("gameDetail").innerHTML=renderGameDetail(game);
-          go("/game-detail");
-        }
-        return;
-      }
-
-      if(item.target?.kind==="bot"){
-        go(`/bot/${encodeURIComponent(item.target.id)}`);
-        return;
-      }
-
-      if(item.target?.kind==="program"){
-        go(`/program/${encodeURIComponent(item.target.id)}`);
-        return;
-      }
-
-      go(item.route);
+      const user=users[Number(button.dataset.peopleIndex)];
+      if(!user?.id)return;
+      const input=document.getElementById("peopleSearchInput");
+      if(input)input.value="";
+      closePeopleSearchResults();
+      go(`/profile/${encodeURIComponent(user.id)}`);
     });
   });
 }
 
-function openNorthworkSearch(){
-  const backdrop=document.getElementById("searchBackdrop");
-  const input=document.getElementById("searchInput");
-  if(!backdrop||!input)return;
-  backdrop.classList.add("open");
-  backdrop.setAttribute("aria-hidden","false");
-  document.body.style.overflow="hidden";
-  renderNorthworkSearchResults(input.value);
-  requestAnimationFrame(()=>input.focus());
-}
+async function searchNorthworkPeople(query){
+  const q=String(query||"").trim();
+  if(q.length<2){
+    northworkPeopleSearchLastQuery="";
+    if(northworkPeopleSearchRequest){northworkPeopleSearchRequest=null;}
+    renderPeopleSearchResults([],"");
+    return;
+  }
 
-function closeNorthworkSearch(){
-  const backdrop=document.getElementById("searchBackdrop");
-  if(!backdrop)return;
-  backdrop.classList.remove("open");
-  backdrop.setAttribute("aria-hidden","true");
-  document.body.style.removeProperty("overflow");
-}
-
-function initNorthworkSearch(){
-  const openButton=document.getElementById("searchOpen");
-  const closeButton=document.getElementById("searchClose");
-  const backdrop=document.getElementById("searchBackdrop");
-  const input=document.getElementById("searchInput");
-  if(!openButton||!closeButton||!backdrop||!input)return;
-
-  openButton.addEventListener("click",openNorthworkSearch);
-  closeButton.addEventListener("click",closeNorthworkSearch);
-  input.addEventListener("input",()=>renderNorthworkSearchResults(input.value));
-  input.addEventListener("keydown",event=>{
-    if(event.key==="Escape")closeNorthworkSearch();
+  northworkPeopleSearchLastQuery=q;
+  const request=fetch(nwApi(`/api/search/users?q=${encodeURIComponent(q)}`),{
+    credentials:"include",
+    cache:"no-store"
+  }).then(async response=>{
+    if(!response.ok)throw new Error("People search failed");
+    return response.json();
   });
-  backdrop.addEventListener("click",event=>{
-    if(event.target===backdrop)closeNorthworkSearch();
+
+  northworkPeopleSearchRequest=request;
+  try{
+    const payload=await request;
+    if(northworkPeopleSearchLastQuery!==q)return;
+    renderPeopleSearchResults(payload?.users||[],q);
+  }catch(error){
+    if(northworkPeopleSearchLastQuery!==q)return;
+    const box=document.getElementById("peopleSearchResults");
+    if(box){
+      box.innerHTML=`<div class="people-search-empty">People search is temporarily unavailable.</div>`;
+      box.classList.add("open");
+    }
+  }finally{
+    if(northworkPeopleSearchRequest===request)northworkPeopleSearchRequest=null;
+  }
+}
+
+function initNorthworkPeopleSearch(){
+  const input=document.getElementById("peopleSearchInput");
+  const wrapper=document.getElementById("peopleSearch");
+  if(!input||!wrapper)return;
+
+  input.addEventListener("input",()=>{
+    clearTimeout(northworkPeopleSearchTimer);
+    const q=input.value.trim();
+    if(q.length<2){
+      renderPeopleSearchResults([],"");
+      return;
+    }
+    northworkPeopleSearchTimer=setTimeout(()=>searchNorthworkPeople(q),180);
+  });
+
+  input.addEventListener("focus",()=>{
+    if(input.value.trim().length>=2)searchNorthworkPeople(input.value);
+  });
+
+  input.addEventListener("keydown",event=>{
+    if(event.key==="Escape"){
+      input.value="";
+      closePeopleSearchResults();
+      input.blur();
+    }
+  });
+
+  document.addEventListener("click",event=>{
+    if(!wrapper.contains(event.target))closePeopleSearchResults();
   });
 
   document.addEventListener("keydown",event=>{
     const isSearchShortcut=(event.ctrlKey||event.metaKey)&&event.key.toLowerCase()==="k";
     if(isSearchShortcut){
       event.preventDefault();
-      openNorthworkSearch();
-    }else if(event.key==="Escape" && backdrop.classList.contains("open")){
-      closeNorthworkSearch();
+      input.focus();
+      input.select();
     }
   });
 }
@@ -2479,7 +2390,7 @@ window.addEventListener("popstate",()=>renderRoute());
 window.addEventListener("hashchange",()=>renderRoute());
 
 bindCardClicks();
-initNorthworkSearch();
+initNorthworkPeopleSearch();
 loadStatus();
 loadCommunity();
 initProfileChangeNotice();
