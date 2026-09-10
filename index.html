@@ -644,6 +644,130 @@ body.nw-profile-gradient .topbar{
 .profile-editor .profile-note strong{color:#aeb5bf}
 @media(max-width:700px){.profile-hero-main{padding:0 17px 20px;flex-wrap:wrap}.profile-action-row{margin-left:0;width:100%;justify-content:flex-start}.profile-stat-row{grid-template-columns:1fr}.profile-account-grid{grid-template-columns:1fr}.profile-gradient-grid{grid-template-columns:1fr}}
 
+
+/* Site-wide search */
+.search-trigger{
+  min-width:84px;
+}
+.search-backdrop{
+  position:fixed;
+  inset:0;
+  z-index:200;
+  display:none;
+  align-items:flex-start;
+  justify-content:center;
+  padding:90px 18px 24px;
+  background:rgba(0,0,0,.62);
+  backdrop-filter:blur(10px);
+}
+.search-backdrop.open{display:flex}
+.search-panel{
+  width:min(720px,100%);
+  max-height:min(78vh,760px);
+  overflow:hidden;
+  border:1px solid #2a3038;
+  border-radius:18px;
+  background:#0d1014;
+  box-shadow:0 30px 100px rgba(0,0,0,.58);
+}
+.search-head{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:16px;
+  border-bottom:1px solid var(--line);
+}
+.search-input-wrap{
+  display:flex;
+  align-items:center;
+  flex:1;
+  gap:9px;
+  min-width:0;
+}
+.search-icon{color:#727a85;font-size:17px;flex:none}
+.search-input{
+  width:100%;
+  border:0;
+  outline:0;
+  background:transparent;
+  color:var(--text);
+  font-size:17px;
+}
+.search-input::placeholder{color:#6f7782}
+.search-close{
+  width:36px;
+  height:36px;
+  border:1px solid var(--line);
+  border-radius:9px;
+  background:#14181d;
+  color:#aeb4bd;
+  cursor:pointer;
+}
+.search-close:hover{color:#fff;border-color:#363d46}
+.search-results{
+  max-height:calc(min(78vh,760px) - 78px);
+  overflow:auto;
+  padding:8px;
+}
+.search-result{
+  width:100%;
+  display:flex;
+  align-items:flex-start;
+  gap:12px;
+  padding:12px;
+  border:1px solid transparent;
+  border-radius:12px;
+  background:transparent;
+  color:var(--text);
+  text-align:left;
+  cursor:pointer;
+}
+.search-result:hover,.search-result:focus-visible{
+  background:#14181d;
+  border-color:#242b33;
+  outline:0;
+}
+.search-result-icon{
+  width:38px;
+  height:38px;
+  display:grid;
+  place-items:center;
+  flex:none;
+  border:1px solid #2a3038;
+  border-radius:10px;
+  background:#11151a;
+  color:#aeb5bf;
+  overflow:hidden;
+}
+.search-result-icon img{width:100%;height:100%;object-fit:cover}
+.search-result-main{min-width:0;flex:1}
+.search-result-top{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.search-result-title{font-weight:700}
+.search-result-type{
+  padding:3px 7px;
+  border:1px solid #2a3038;
+  border-radius:999px;
+  color:#89919c;
+  font-size:11px;
+}
+.search-result-desc{
+  margin-top:4px;
+  color:#858d97;
+  font-size:13px;
+  line-height:1.45;
+  overflow:hidden;
+  display:-webkit-box;
+  -webkit-line-clamp:2;
+  -webkit-box-orient:vertical;
+}
+.search-empty{padding:28px 16px;color:#7f8792;text-align:center}
+.search-hint{padding:0 16px 12px;color:#69717b;font-size:12px}
+@media(max-width:650px){
+  .search-backdrop{padding:74px 10px 12px}
+  .search-panel{border-radius:15px}
+  .search-trigger{min-width:0}
+}
+
 </style>
 </head>
 <body>
@@ -655,12 +779,27 @@ body.nw-profile-gradient .topbar{
       <button data-route="/games">Our Games</button>
       <button data-route="/bots">Our Bots</button>
       <button data-route="/programs">Our Programs</button>
+      <button class="search-trigger" id="searchOpen" type="button">Search</button>
       <button class="btn" type="button" data-route="/policy">Policy</button>
     </div>
     <div class="account-area" id="accountArea"></div>
     <button class="menu" id="menuBtn">Menu</button>
   </div>
 </header>
+
+<div class="search-backdrop" id="searchBackdrop" aria-hidden="true">
+  <div class="search-panel" role="dialog" aria-modal="true" aria-labelledby="searchDialogTitle">
+    <div class="search-head">
+      <div class="search-input-wrap">
+        <span class="search-icon" aria-hidden="true">⌕</span>
+        <input id="searchInput" class="search-input" type="search" autocomplete="off" spellcheck="false" placeholder="Search Northwork..." aria-label="Search Northwork">
+      </div>
+      <button class="search-close" id="searchClose" type="button" aria-label="Close search">✕</button>
+    </div>
+    <div id="searchDialogTitle" class="search-hint">Search games, bots, programs, staff, and site sections.</div>
+    <div id="searchResults" class="search-results"></div>
+  </div>
+</div>
 
 <main class="wrap">
 <section class="view active" data-view="/">
@@ -1061,6 +1200,184 @@ async function getGameInfo(game){
     return fallback;
   }
 }
+/* ================= SITE SEARCH ================= */
+let northworkSearchIndex = null;
+
+function buildNorthworkSearchIndex(){
+  if(northworkSearchIndex)return northworkSearchIndex;
+
+  const pages=[
+    {type:"Page",title:"Home",description:"Northwork home page and community overview.",route:"/"},
+    {type:"Page",title:"Our Games",description:"Northwork Roblox experiences, stats, thumbnails and creators.",route:"/games"},
+    {type:"Page",title:"Our Bots",description:"Northwork bots, service status, activity, incidents and downtime history.",route:"/bots"},
+    {type:"Page",title:"Our Programs",description:"Northwork tools and software with download links.",route:"/programs"},
+    {type:"Page",title:"Policy",description:"Northwork community policy and guidelines.",route:"/policy"}
+  ];
+
+  const games=(GAMES||[]).map(game=>({
+    type:"Game",
+    title:game.name||"Untitled Game",
+    description:game.description||"Northwork Roblox experience.",
+    route:"/games",
+    target:{kind:"game",slug:game.slug}
+  }));
+
+  const bots=(BOTS_FALLBACK||[]).map(bot=>({
+    type:"Bot",
+    title:bot.name||"Untitled Bot",
+    description:bot.description||"Northwork bot.",
+    route:"/bots",
+    target:{kind:"bot",id:bot.id}
+  }));
+
+  const programs=(PROGRAMS||[]).map(program=>({
+    type:"Program",
+    title:program.name||"Untitled Program",
+    description:program.description||"Northwork program.",
+    route:"/programs",
+    target:{kind:"program",id:program.id}
+  }));
+
+  const staff=(STAFF||[]).map(person=>({
+    type:"Staff",
+    title:person.name||person.username||"Northwork Staff",
+    description:`@${person.username||"unknown"} · ${person.role||"Staff"}`,
+    route:`/profile/${person.userId}`,
+    icon:person.avatar||""
+  }));
+
+  northworkSearchIndex=[...pages,...games,...bots,...programs,...staff];
+  return northworkSearchIndex;
+}
+
+function searchNorthwork(query){
+  const q=String(query||"").trim().toLowerCase();
+  const index=buildNorthworkSearchIndex();
+  if(!q)return index.slice(0,12);
+
+  const terms=q.split(/\s+/).filter(Boolean);
+  return index
+    .map(item=>{
+      const haystack=`${item.title} ${item.description} ${item.type}`.toLowerCase();
+      let score=0;
+      if(haystack===q)score+=100;
+      if(String(item.title).toLowerCase()===q)score+=80;
+      if(String(item.title).toLowerCase().includes(q))score+=45;
+      if(String(item.type).toLowerCase().includes(q))score+=18;
+      for(const term of terms){
+        if(String(item.title).toLowerCase().includes(term))score+=24;
+        else if(haystack.includes(term))score+=9;
+      }
+      return {...item,score};
+    })
+    .filter(item=>item.score>0)
+    .sort((a,b)=>b.score-a.score || a.title.localeCompare(b.title))
+    .slice(0,20);
+}
+
+function renderNorthworkSearchResults(query){
+  const box=document.getElementById("searchResults");
+  if(!box)return;
+  const results=searchNorthwork(query);
+
+  if(!results.length){
+    box.innerHTML=`<div class="search-empty">No results found for <strong>${escapeHtml(String(query||"").trim())}</strong>.</div>`;
+    return;
+  }
+
+  box.innerHTML=results.map((item,index)=>{
+    const icon=item.icon
+      ? `<img src="${escapeHtml(item.icon)}" alt="" loading="lazy" decoding="async">`
+      : `<span>${item.type==="Game"?"🎮":item.type==="Bot"?"🤖":item.type==="Program"?"▣":item.type==="Staff"?"●":"⌂"}</span>`;
+    return `<button class="search-result" type="button" data-search-index="${index}">
+      <span class="search-result-icon">${icon}</span>
+      <span class="search-result-main">
+        <span class="search-result-top">
+          <span class="search-result-title">${escapeHtml(item.title)}</span>
+          <span class="search-result-type">${escapeHtml(item.type)}</span>
+        </span>
+        <span class="search-result-desc">${escapeHtml(item.description)}</span>
+      </span>
+    </button>`;
+  }).join("");
+
+  box.querySelectorAll("[data-search-index]").forEach(button=>{
+    button.addEventListener("click",()=>{
+      const item=results[Number(button.dataset.searchIndex)];
+      if(!item)return;
+      closeNorthworkSearch();
+
+      if(item.target?.kind==="game"){
+        const game=(GAMES||[]).find(x=>x.slug===item.target.slug);
+        if(game){
+          document.getElementById("gameDetail").innerHTML=renderGameDetail(game);
+          go("/game-detail");
+        }
+        return;
+      }
+
+      if(item.target?.kind==="bot"){
+        go(`/bot/${encodeURIComponent(item.target.id)}`);
+        return;
+      }
+
+      if(item.target?.kind==="program"){
+        go(`/program/${encodeURIComponent(item.target.id)}`);
+        return;
+      }
+
+      go(item.route);
+    });
+  });
+}
+
+function openNorthworkSearch(){
+  const backdrop=document.getElementById("searchBackdrop");
+  const input=document.getElementById("searchInput");
+  if(!backdrop||!input)return;
+  backdrop.classList.add("open");
+  backdrop.setAttribute("aria-hidden","false");
+  document.body.style.overflow="hidden";
+  renderNorthworkSearchResults(input.value);
+  requestAnimationFrame(()=>input.focus());
+}
+
+function closeNorthworkSearch(){
+  const backdrop=document.getElementById("searchBackdrop");
+  if(!backdrop)return;
+  backdrop.classList.remove("open");
+  backdrop.setAttribute("aria-hidden","true");
+  document.body.style.removeProperty("overflow");
+}
+
+function initNorthworkSearch(){
+  const openButton=document.getElementById("searchOpen");
+  const closeButton=document.getElementById("searchClose");
+  const backdrop=document.getElementById("searchBackdrop");
+  const input=document.getElementById("searchInput");
+  if(!openButton||!closeButton||!backdrop||!input)return;
+
+  openButton.addEventListener("click",openNorthworkSearch);
+  closeButton.addEventListener("click",closeNorthworkSearch);
+  input.addEventListener("input",()=>renderNorthworkSearchResults(input.value));
+  input.addEventListener("keydown",event=>{
+    if(event.key==="Escape")closeNorthworkSearch();
+  });
+  backdrop.addEventListener("click",event=>{
+    if(event.target===backdrop)closeNorthworkSearch();
+  });
+
+  document.addEventListener("keydown",event=>{
+    const isSearchShortcut=(event.ctrlKey||event.metaKey)&&event.key.toLowerCase()==="k";
+    if(isSearchShortcut){
+      event.preventDefault();
+      openNorthworkSearch();
+    }else if(event.key==="Escape" && backdrop.classList.contains("open")){
+      closeNorthworkSearch();
+    }
+  });
+}
+
 function renderGameCard(game){
   return `<div class="card game-card" data-game="${game.slug}">
     <div class="game-bg" style="${game.thumbnail?`background-image:url('${game.thumbnail}')`:""}"></div>
@@ -2162,6 +2479,7 @@ window.addEventListener("popstate",()=>renderRoute());
 window.addEventListener("hashchange",()=>renderRoute());
 
 bindCardClicks();
+initNorthworkSearch();
 loadStatus();
 loadCommunity();
 initProfileChangeNotice();
