@@ -1693,6 +1693,10 @@ function updateProfilePreview(){
 
 function initProfileEditor(){
   document.getElementById("profileEditButton")?.addEventListener("click",openProfileEditor);
+  document.addEventListener("click",e=>{
+    const editButton=e.target.closest("#profileEditButton");
+    if(editButton)openProfileEditor();
+  });
   document.getElementById("settingsEditProfile")?.addEventListener("click",()=>{go("/profile").then(openProfileEditor)});
   document.getElementById("profileEditorClose")?.addEventListener("click",closeProfileEditor);
   document.getElementById("profileEditorCancel")?.addEventListener("click",closeProfileEditor);
@@ -1782,10 +1786,6 @@ renderRoute=async function(){
   if(path==="/settings"&&!await getNorthworkUser())await go("/");
   await renderAccountArea();
 };
-
-initProfileChangeNotice();
-initProfileEditor();
-renderAccountArea();
 
 /* ================= PROFILE CHANGE NOTICE ================= */
 let northworkProfileChangeNotice=null;
@@ -1888,6 +1888,13 @@ function showProfileChangeNotice(){
 
   setTimeout(checkSiteVersion,5000);
 })();
+
+// Start profile/account systems after every function has been defined.
+// This prevents the profile editor from being skipped by a JavaScript
+// initialization error and keeps the pen button functional.
+initProfileChangeNotice();
+initProfileEditor();
+renderAccountArea();
 </script>
 </body>
 </html>
