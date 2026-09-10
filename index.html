@@ -449,6 +449,38 @@ footer{border-top:1px solid var(--line);padding:30px 0 42px;color:#666e78;font-s
 
 .account-link{display:block;width:100%;padding:10px 11px;border:0;background:transparent;color:#cbd0d7;text-decoration:none;text-align:left;border-radius:8px;cursor:pointer}.account-link:hover{background:#15191f}.account-logout{color:#ef626c!important}
 
+/* ================= SEAMLESS FULL-PAGE PROFILE BACKGROUNDS ================= */
+/* The gradient belongs to the entire page. No extra radial overlays are
+   added, so there are no visible "spots" or muddy patches in the gradient. */
+html,body{min-height:100%;}
+body.nw-profile-gradient{
+  background:var(--nw-profile-gradient,#070809);
+  background-attachment:fixed;
+  background-repeat:no-repeat;
+  background-size:cover;
+}
+body.nw-profile-gradient .topbar{
+  background:rgba(7,8,9,.58);
+  backdrop-filter:blur(18px);
+}
+.view[data-view="/profile"].profile-gradient-active{
+  position:relative;
+  min-height:calc(100vh - 70px);
+  background:transparent !important;
+  overflow:visible;
+}
+.view[data-view="/profile"].profile-gradient-active .profile-shell{
+  position:relative;
+  z-index:1;
+}
+.view[data-view="/profile"].profile-gradient-active .profile-content{
+  background:rgba(11,13,16,.84);
+  backdrop-filter:blur(8px);
+}
+.profile-cover-image{
+  background-repeat:no-repeat;
+}
+
 
 /* ================= SITE UPDATE NOTICE ================= */
 .site-update-notice{
@@ -642,54 +674,56 @@ footer{border-top:1px solid var(--line);padding:30px 0 42px;color:#666e78;font-s
 
 
 
-
-/* ================= FULL-PAGE PROFILE GRADIENT ================= */
-body.nw-profile-gradient{
-  background:var(--nw-profile-gradient,#070809);
-  background-attachment:fixed;
-}
-
-body.nw-profile-gradient .topbar{
-  background:rgba(7,8,9,.58);
-  backdrop-filter:blur(18px);
-}
-
-.view[data-view="/profile"].profile-gradient-active{
-  position:relative;
-  min-height:calc(100vh - 70px);
-  background:var(--profile-page-gradient,#070809);
-  border-radius:22px;
-  overflow:hidden;
-}
-
-.view[data-view="/profile"].profile-gradient-active:before{
-  content:"";
-  position:absolute;
-  inset:0;
-  background:
-    radial-gradient(circle at 20% 0%,rgba(255,255,255,.12),transparent 34%),
-    radial-gradient(circle at 100% 100%,rgba(255,255,255,.08),transparent 36%);
-  pointer-events:none;
-}
-
-.view[data-view="/profile"].profile-gradient-active .profile-shell{
-  position:relative;
-  z-index:1;
-}
-
-.view[data-view="/profile"].profile-gradient-active .profile-content,
-.view[data-view="/profile"].profile-gradient-active .profile-cover{
-  background-color:rgba(7,9,12,.62);
-  backdrop-filter:blur(10px);
-}
-
-.view[data-view="/profile"].profile-gradient-active .profile-cover-image{
-  opacity:.72;
-}
-
-.profile-cover-image{
-  background-repeat:no-repeat;
-}
+/* ================= PROFILE ENHANCEMENTS ================= */
+.profile-hero-main{display:flex;align-items:flex-end;gap:18px;position:relative;margin-top:-67px;padding:0 28px 24px;z-index:4}
+.profile-presence{display:flex;align-items:center;gap:7px;color:var(--muted);font-size:12px;margin-top:8px}
+.profile-presence-dot{width:8px;height:8px;border-radius:50%;background:#56d28a;box-shadow:0 0 10px rgba(86,210,138,.3)}
+.profile-action-row{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+.profile-action{min-width:124px}
+.profile-about{font-size:13px;line-height:1.7;color:#b7bec8;white-space:pre-wrap}
+.profile-add-bio{margin-top:12px}
+.profile-bio-editor{display:none;margin-top:12px}
+.profile-bio-editor.open{display:block}
+.profile-bio-editor textarea{width:100%;min-height:92px;resize:vertical;border:1px solid #2b3139;background:#0b0f13;color:var(--text);border-radius:10px;padding:12px;font:inherit;font-size:13px;outline:none}
+.profile-bio-editor textarea:focus{border-color:#4a5562}
+.profile-bio-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:8px}
+.profile-stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.profile-stat-button,.profile-stat-box{border:1px solid var(--line);background:#101419;border-radius:12px;padding:14px;text-align:left}
+.profile-stat-button{cursor:pointer;color:var(--text);transition:.18s}
+.profile-stat-button:hover{border-color:#39414b;background:#14181d;transform:translateY(-1px)}
+.profile-stat-label{display:block;color:#747c86;font-size:10px;text-transform:uppercase;letter-spacing:.1em}
+.profile-stat-value{display:block;margin-top:6px;font-size:22px;font-weight:700}
+.profile-stat-sub{display:block;margin-top:2px;color:#7e8792;font-size:11px}
+.profile-account-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.profile-account-item{border:1px solid var(--line);background:#0f1317;border-radius:11px;padding:13px}
+.profile-account-item span{display:block;color:#737b86;font-size:10px;text-transform:uppercase;letter-spacing:.09em}
+.profile-account-item strong{display:block;margin-top:5px;font-size:13px;word-break:break-word}
+.profile-follow-btn.following{background:#151a20;border-color:#56606c;color:#e2e5e9}
+.profile-followers-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.66);backdrop-filter:blur(8px);display:none;place-items:center;padding:20px;z-index:120}
+.profile-followers-backdrop.open{display:grid}
+.profile-followers-modal{width:min(560px,100%);max-height:min(680px,88vh);overflow:hidden;background:#0d1014;border:1px solid #2b3139;border-radius:15px;box-shadow:0 30px 100px rgba(0,0,0,.7);padding:18px}
+.profile-followers-head{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.profile-followers-head h2{margin:0;font-size:18px}
+.profile-followers-close{border:0;background:transparent;color:#7b838d;font-size:24px;cursor:pointer}
+.profile-followers-list{display:grid;gap:8px;margin-top:14px;max-height:540px;overflow:auto}
+.profile-follower-row{display:flex;align-items:center;gap:11px;border:1px solid var(--line);background:#101419;border-radius:10px;padding:10px;cursor:pointer;text-align:left;color:var(--text)}
+.profile-follower-row:hover{background:#151a20;border-color:#3a424c}
+.profile-follower-row img{width:38px;height:38px;border-radius:50%;object-fit:cover;background:#171b21}
+.profile-follower-row strong{display:block;font-size:13px}
+.profile-follower-row span{display:block;margin-top:2px;color:#737b86;font-size:11px}
+.profile-gradient-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.profile-gradient-stop{display:flex;align-items:center;gap:8px;border:1px solid var(--line);background:#101419;border-radius:10px;padding:8px}
+.profile-gradient-stop span{font-size:10px;color:#7b838d}
+.profile-gradient-stop input{width:100%;height:34px;padding:2px;border:0;background:transparent}
+.profile-gradient-angle{display:flex;align-items:center;gap:10px;margin-top:11px;color:#8f96a1;font-size:12px}
+.profile-gradient-angle input{flex:1}
+.profile-bg-tabs{display:flex;gap:7px;margin-top:14px}
+.profile-bg-tab{border:1px solid var(--line);background:#101419;color:#aeb5bf;border-radius:9px;padding:8px 11px;cursor:pointer;font-size:12px}
+.profile-bg-tab.active{border-color:#4a5562;background:#171c22;color:#fff}
+.profile-bg-pane{display:none;margin-top:10px}
+.profile-bg-pane.active{display:block}
+.profile-editor .profile-note strong{color:#aeb5bf}
+@media(max-width:700px){.profile-hero-main{padding:0 17px 20px;flex-wrap:wrap}.profile-action-row{margin-left:0;width:100%;justify-content:flex-start}.profile-stat-row{grid-template-columns:1fr}.profile-account-grid{grid-template-columns:1fr}.profile-gradient-grid{grid-template-columns:1fr}}
 
 </style>
 </head>
@@ -924,15 +958,52 @@ body.nw-profile-gradient .topbar{
       <div class="profile-cover-image" id="profileCoverImage"></div>
       <button class="profile-edit" id="profileEditButton" title="Edit profile">✎</button>
     </div>
-    <div class="profile-info">
+    <div class="profile-hero-main">
       <div class="profile-avatar-wrap"><img class="profile-avatar" id="profileAvatar" alt="Discord profile picture"></div>
-      <div class="profile-name"><h1 id="profileDisplayName">Northwork User</h1><p id="profileUsername">@username</p></div>
-      <button class="btn profile-share" id="profileShareButton" type="button">Share profile</button>
+      <div class="profile-name">
+        <h1 id="profileDisplayName">Northwork User</h1>
+        <p id="profileUsername">@username</p>
+        <div class="profile-presence"><span class="profile-presence-dot"></span><span id="profileMemberStatus">Northwork member</span></div>
+      </div>
+      <div class="profile-action-row">
+        <button class="btn profile-action" id="profileFollowButton" type="button" style="display:none">Follow</button>
+        <button class="btn profile-action" id="profileDiscordButton" type="button">Add On Discord</button>
+        <button class="btn profile-action" id="profileShareButton" type="button">Share profile</button>
+      </div>
     </div>
     <div class="profile-content">
       <div class="profile-grid">
-        <section class="profile-panel"><div class="profile-panel-title">Member since</div><div class="profile-joined" id="profileJoined">—</div></section>
-        <section class="profile-panel"><div class="profile-panel-title">Roles</div><div class="profile-roles" id="profileRoles"></div></section>
+        <section class="profile-panel wide">
+          <div class="profile-panel-title">About Me</div>
+          <div class="profile-about" id="profileBio">No bio yet.</div>
+          <button class="btn profile-add-bio" id="profileAddBio" type="button">Add Bio</button>
+          <div class="profile-bio-editor" id="profileBioEditor">
+            <textarea id="profileBioInput" maxlength="600" placeholder="Tell people a little about yourself..."></textarea>
+            <div class="profile-bio-actions"><button class="btn" id="profileBioCancel" type="button">Cancel</button><button class="btn primary" id="profileBioSave" type="button">Save Bio</button></div>
+          </div>
+        </section>
+
+        <section class="profile-panel wide">
+          <div class="profile-panel-title">Connections</div>
+          <div class="profile-stat-row">
+            <button class="profile-stat-button" id="profileFollowersButton" type="button"><span class="profile-stat-label">Followers</span><strong id="profileFollowersCount">0</strong><span class="profile-stat-sub">View followers</span></button>
+            <div class="profile-stat-box"><span class="profile-stat-label">Following</span><strong id="profileFollowingCount">0</strong><span class="profile-stat-sub">People they follow</span></div>
+            <div class="profile-stat-box"><span class="profile-stat-label">Member since</span><strong id="profileJoined">—</strong><span class="profile-stat-sub">Joined Northwork</span></div>
+          </div>
+        </section>
+
+        <section class="profile-panel">
+          <div class="profile-panel-title">Roles</div>
+          <div class="profile-roles" id="profileRoles"></div>
+        </section>
+        <section class="profile-panel">
+          <div class="profile-panel-title">Account</div>
+          <div class="profile-account-grid">
+            <div class="profile-account-item"><span>Discord</span><strong id="profileDiscordUsername">@username</strong></div>
+            <div class="profile-account-item"><span>Display name</span><strong id="profileDiscordDisplay">Northwork User</strong></div>
+          </div>
+        </section>
+
         <section class="profile-panel wide"><div class="profile-panel-title">Active tickets</div><div id="profileTickets"></div></section>
         <section class="profile-panel wide profile-warnings" id="profileWarningsPanel"><div class="profile-panel-title">Warnings</div><div id="profileWarnings"></div></section>
       </div>
@@ -952,12 +1023,33 @@ body.nw-profile-gradient .topbar{
 </section>
 <div class="profile-editor-backdrop" id="profileEditorBackdrop">
   <div class="profile-editor">
-    <div class="profile-editor-head"><div><div class="eyebrow">PROFILE</div><h2>Edit profile background</h2></div><button class="profile-close" id="profileEditorClose">×</button></div>
-    <div class="profile-dropzone" id="profileDropzone"><input id="profileImageInput" type="file" accept="image/png,image/jpeg,image/webp,image/gif"><div class="upload-icon">↥</div><strong>Drag your image here</strong><span>or click to choose one</span></div>
+    <div class="profile-editor-head"><div><div class="eyebrow">PROFILE</div><h2>Edit profile</h2></div><button class="profile-close" id="profileEditorClose">×</button></div>
+    <div class="profile-bg-tabs">
+      <button class="profile-bg-tab active" id="profileBgTabImage" type="button">Image</button>
+      <button class="profile-bg-tab" id="profileBgTabGradient" type="button">Gradient</button>
+    </div>
+    <div class="profile-bg-pane active" id="profileBgPaneImage">
+      <div class="profile-dropzone" id="profileDropzone"><input id="profileImageInput" type="file" accept="image/png,image/jpeg,image/webp,image/gif"><div class="upload-icon">↥</div><strong>Drag your background here</strong><span>PNG, JPG, GIF and WebP are supported · max 8 MB</span></div>
+    </div>
+    <div class="profile-bg-pane" id="profileBgPaneGradient">
+      <div class="profile-gradient-grid">
+        <label class="profile-gradient-stop"><span>1</span><input id="profileGradient1" type="color" value="#2f7fff"></label>
+        <label class="profile-gradient-stop"><span>2</span><input id="profileGradient2" type="color" value="#7b4dff"></label>
+        <label class="profile-gradient-stop"><span>3</span><input id="profileGradient3" type="color" value="#00c6ff"></label>
+      </div>
+      <div class="profile-gradient-angle"><span>Angle</span><input id="profileGradientAngle" type="range" min="0" max="360" step="1" value="135"><strong id="profileGradientAngleValue">135°</strong></div>
+    </div>
     <div class="profile-preview"><div class="profile-preview-bg" id="profilePreviewBg"></div></div>
     <div class="profile-control"><span>Scale</span><input id="profileScale" type="range" min=".5" max="3" step=".01" value="1"><span id="profileScaleValue">1.00×</span></div>
     <div class="profile-editor-actions"><button class="btn" id="profileEditorCancel">Cancel</button><button class="btn primary profile-save" id="profileEditorSave">Save changes</button></div>
-    <div class="profile-note">Your Discord banner is used automatically until you upload a custom background. PNG, JPG/JPEG, GIF, and WebP are supported. Gradients apply to the full profile page, while image uploads are used as the profile banner.</div>
+    <div class="profile-note"><strong>Backgrounds:</strong> PNG, JPG, GIF and WebP. GIFs stay animated. <strong>Gradient:</strong> pick up to three colours and adjust the angle. Your profile is saved to your Northwork account.</div>
+  </div>
+</div>
+
+<div class="profile-followers-backdrop" id="profileFollowersBackdrop">
+  <div class="profile-followers-modal">
+    <div class="profile-followers-head"><h2 id="profileFollowersTitle">Followers</h2><button class="profile-followers-close" id="profileFollowersClose">×</button></div>
+    <div class="profile-followers-list" id="profileFollowersList"></div>
   </div>
 </div>
 
@@ -1310,8 +1402,6 @@ async function loadAuth(){
 }
 
 document.getElementById("menuBtn").addEventListener("click",()=>document.getElementById("nav").classList.toggle("open"));
-
-
 /* ================= NORTHWORK DISCORD ACCOUNT ================= */
 const NORTHWORK_AUTH = {
   // If the Assistant serves this same site, leave this as "".
@@ -1349,15 +1439,28 @@ function escapeHtml(value){
 }
 
 async function getNorthworkUser(){
+  const cacheKey="northwork.cachedUser";
   try{
-    const r=await fetch(nwApi("/api/me"),{credentials:"include"});
-    if(!r.ok){northworkCurrentUser=null;return null}
+    const r=await fetch(nwApi("/api/me"),{credentials:"include",cache:"no-store"});
+    if(!r.ok)throw new Error("auth api unavailable");
     const payload=await r.json();
-    if(!payload?.loggedIn || !payload?.user){northworkCurrentUser=null;return null}
+    if(!payload?.loggedIn||!payload?.user){
+      northworkCurrentUser=null;
+      localStorage.removeItem(cacheKey);
+      return null;
+    }
     northworkCurrentUser=payload.user;
+    try{localStorage.setItem(cacheKey,JSON.stringify(payload.user));}catch{}
     return northworkCurrentUser;
   }catch(e){
-    northworkCurrentUser=null;
+    if(northworkCurrentUser)return northworkCurrentUser;
+    try{
+      const cached=JSON.parse(localStorage.getItem(cacheKey)||"null");
+      if(cached?.id){
+        northworkCurrentUser=cached;
+        return cached;
+      }
+    }catch{}
     return null;
   }
 }
@@ -1419,7 +1522,7 @@ document.addEventListener("click",e=>{
 async function renderNorthworkProfile(){
   const user=await getNorthworkUser();
   if(!user){go("/");return}
-  await renderProfileData(user, true);
+  await renderProfileData(user,true,null);
 }
 
 async function showProfileNotFound(){
@@ -1430,224 +1533,232 @@ async function showProfileNotFound(){
   const roles=document.getElementById("profileRoles");
   const tickets=document.getElementById("profileTickets");
   const warnings=document.getElementById("profileWarnings");
-
   if(displayName)displayName.textContent="Profile not found";
   if(username)username.textContent="This Northwork member could not be found.";
-  if(avatar){
-    avatar.onerror=null;
-    avatar.src=accountAvatar({});
-  }
+  if(avatar){avatar.onerror=null;avatar.src=accountAvatar({});}
   if(joined)joined.textContent="—";
   if(roles)roles.innerHTML="";
   if(tickets)tickets.innerHTML=`<div class="profile-empty">This profile isn't available.</div>`;
   if(warnings)warnings.innerHTML=`<div class="profile-empty">This profile isn't available.</div>`;
   document.getElementById("profileWarningsPanel")?.classList.remove("has-warning");
-  document.getElementById("profileEditButton")?.style.setProperty("display","none");
-  document.getElementById("profileShareButton")?.style.setProperty("display","none");
+  ["profileEditButton","profileFollowButton","profileDiscordButton","profileShareButton","profileAddBio","profileFollowersButton"].forEach(id=>document.getElementById(id)?.style.setProperty("display","none"));
+}
+
+async function fetchPublicProfile(userId){
+  const r=await fetch(nwApi(`/api/profile/${encodeURIComponent(userId)}`),{credentials:"include",cache:"no-store"});
+  if(!r.ok)throw new Error("Profile request failed");
+  const payload=await r.json();
+  if(!payload?.user)throw new Error("Invalid profile response");
+  return payload;
 }
 
 async function renderPublicProfile(userId){
   try{
+    const payload=await fetchPublicProfile(userId);
     const current=northworkCurrentUser||await getNorthworkUser();
-
-    // When opening your OWN public/share link, use the authenticated
-    // account data so the profile is identical to /profile.
-    if(current?.id===String(userId)){
-      await renderProfileData(current, true);
-      return;
-    }
-
-    const r=await fetch(nwApi(`/api/profile/${encodeURIComponent(userId)}`),{
-      credentials:"include",
-      cache:"no-store"
-    });
-
-    if(!r.ok){
-      await showProfileNotFound();
-      return;
-    }
-
-    const payload=await r.json();
-
-    if(!payload?.user){
-      throw new Error("Invalid profile response");
-    }
-
-    await renderProfileData(
-      payload.user,
-      false,
-      payload.profile||{}
-    );
-
+    await renderProfileData(payload.user,!!current&&current.id===String(userId),payload.profile||{});
   }catch(error){
     console.error("Public profile load error:",error);
     await showProfileNotFound();
   }
 }
 
-async function renderProfileData(user, isOwnProfile, suppliedProfile=null){
-  const avatar=document.getElementById("profileAvatar");
-  if(avatar){
-    avatar.onerror=()=>{
-      avatar.onerror=null;
-      avatar.src=accountAvatar({});
-    };
-    avatar.src=accountAvatar(user);
+function applyProfileBackground(profile,user){
+  const cover=document.getElementById("profileCoverImage");
+  const profileView=document.querySelector('.view[data-view="/profile"]');
+  const type=profile?.backgroundType||"image";
+  const scale=Math.min(3,Math.max(.5,Number(profile?.scale||1)));
+
+  // Reset page background first so navigating from a gradient profile to
+  // another route cannot leave the gradient behind.
+  document.body.classList.remove("nw-profile-gradient");
+  document.body.style.removeProperty("--nw-profile-gradient");
+  if(profileView){
+    profileView.classList.remove("profile-gradient-active");
+    profileView.style.removeProperty("--northwork-profile-gradient");
+    profileView.style.backgroundImage="none";
   }
 
+  if(type==="gradient" && profile?.gradient?.colors){
+    const colors=profile.gradient.colors
+      .filter(x=>/^#[0-9a-f]{6}$/i.test(String(x)))
+      .slice(0,3);
+    const angle=Math.min(360,Math.max(0,Number(profile.gradient.angle??135)));
+
+    if(colors.length===3){
+      const gradient=`linear-gradient(${angle}deg,${colors.join(",")})`;
+      document.body.classList.add("nw-profile-gradient");
+      document.body.style.setProperty("--nw-profile-gradient",gradient);
+      if(profileView){
+        profileView.classList.add("profile-gradient-active");
+        profileView.style.setProperty("--northwork-profile-gradient",gradient);
+      }
+    }
+  }
+
+  if(!cover)return;
+
+  // Custom image/GIF backgrounds stay in the banner. Gradients intentionally
+  // do not reuse an old uploaded image in the banner.
+  const bg=type==="image" ? (profile?.background||accountBanner(user)) : accountBanner(user);
+  cover.style.backgroundImage=bg?`url("${String(bg).replaceAll('"','%22')}")`:"none";
+  cover.style.backgroundSize="cover";
+  cover.style.backgroundPosition="center";
+  cover.style.transform=`scale(${scale})`;
+}
+
+async function renderProfileData(user,isOwnProfile,suppliedProfile=null){
+  const avatar=document.getElementById("profileAvatar");
+  if(avatar){avatar.onerror=()=>{avatar.onerror=null;avatar.src=accountAvatar({});};avatar.src=accountAvatar(user);}
   const displayName=document.getElementById("profileDisplayName");
   const username=document.getElementById("profileUsername");
+  const discordUsername=document.getElementById("profileDiscordUsername");
+  const discordDisplay=document.getElementById("profileDiscordDisplay");
   const joined=document.getElementById("profileJoined");
   const rolesEl=document.getElementById("profileRoles");
   const ticketsEl=document.getElementById("profileTickets");
   const warningsPanel=document.getElementById("profileWarningsPanel");
   const warningsEl=document.getElementById("profileWarnings");
   const editButton=document.getElementById("profileEditButton");
-  const shareButton=document.getElementById("profileShareButton");
-  const profileView=document.querySelector('.view[data-view="/profile"]');
-
-  if(editButton)editButton.style.display=isOwnProfile?"":"none";
-  if(shareButton)shareButton.style.display="";
+  const followButton=document.getElementById("profileFollowButton");
+  const addBioButton=document.getElementById("profileAddBio");
+  const bio=document.getElementById("profileBio");
+  const followersButton=document.getElementById("profileFollowersButton");
+  const followersCount=document.getElementById("profileFollowersCount");
+  const followingCount=document.getElementById("profileFollowingCount");
+  const memberStatus=document.getElementById("profileMemberStatus");
+  const saved=suppliedProfile||await loadSavedProfile();
 
   if(displayName)displayName.textContent=user.global_name||user.username||"Northwork User";
   if(username)username.textContent="@"+(user.username||"");
-  if(joined)joined.textContent=user.joined_at?new Date(user.joined_at).toLocaleDateString(undefined,{year:"numeric",month:"long",day:"numeric"}):"Northwork member";
+  if(discordUsername)discordUsername.textContent="@"+(user.username||"");
+  if(discordDisplay)discordDisplay.textContent=user.global_name||user.username||"Northwork User";
+  if(memberStatus)memberStatus.textContent="Northwork member";
+  if(joined)joined.textContent=user.joined_at?new Date(user.joined_at).toLocaleDateString(undefined,{year:"numeric",month:"short",day:"numeric"}):"—";
 
   const roles=Array.isArray(user.roles)&&user.roles.length?user.roles:["Member"];
   if(rolesEl)rolesEl.innerHTML=roles.map(r=>`<span class="profile-role">${escapeHtml(r)}</span>`).join("");
 
   const tickets=isOwnProfile&&Array.isArray(user.tickets)?user.tickets:[];
-  if(ticketsEl)ticketsEl.innerHTML=tickets.length
-    ?tickets.map(t=>`<div class="profile-ticket"><span>#${escapeHtml(t.id||"")} &nbsp; ${escapeHtml(t.title||"Support ticket")}</span><span class="ticket-status">${escapeHtml(t.status||"Open")}</span></div>`).join("")
-    :`<div class="profile-empty">${isOwnProfile?"You have no active tickets.":"Ticket information is private."}</div>`;
+  if(ticketsEl)ticketsEl.innerHTML=tickets.length?tickets.map(t=>`<div class="profile-ticket"><span>#${escapeHtml(t.id||"")} &nbsp; ${escapeHtml(t.title||"Support ticket")}</span><span class="ticket-status">${escapeHtml(t.status||"Open")}</span></div>`).join(""):`<div class="profile-empty">${isOwnProfile?"You have no active tickets.":"Ticket information is private."}</div>`;
 
   const warnings=isOwnProfile&&Array.isArray(user.warnings)?user.warnings:[];
-  if(warnings.length){
-    warningsPanel?.classList.add("has-warning");
-    if(warningsEl)warningsEl.innerHTML=warnings.map((w,i)=>`<div class="profile-warning"><strong>⚠ Warning ${i+1}</strong><p>${escapeHtml(w.reason||"Community warning")}</p><small>${w.createdAt?new Date(w.createdAt).toLocaleDateString():"Active warning"}</small></div>`).join("");
-  }else{
-    warningsPanel?.classList.remove("has-warning");
-    if(warningsEl)warningsEl.innerHTML=`<div class="profile-empty">${isOwnProfile?"U have no warnings :)":"Warning information is private."}</div>`;
-  }
+  if(warnings.length){warningsPanel?.classList.add("has-warning");if(warningsEl)warningsEl.innerHTML=warnings.map((w,i)=>`<div class="profile-warning"><strong>⚠ Warning ${i+1}</strong><p>${escapeHtml(w.reason||"Community warning")}</p><small>${w.createdAt?new Date(w.createdAt).toLocaleDateString():"Active warning"}</small></div>`).join("");}
+  else{warningsPanel?.classList.remove("has-warning");if(warningsEl)warningsEl.innerHTML=`<div class="profile-empty">${isOwnProfile?"U have no warnings :)":"Warning information is private."}</div>`;}
 
-  const saved=suppliedProfile||await loadSavedProfile();
-  const backgroundType=saved?.backgroundType||"image";
-  const cover=document.getElementById("profileCoverImage");
+  if(bio)bio.textContent=saved?.bio?String(saved.bio):"No bio yet.";
+  if(addBioButton)addBioButton.textContent=saved?.bio?"Edit Bio":"Add Bio";
+  applyProfileBackground(saved,user);
 
-  // The profile gradient belongs to the whole page, not the banner.
-  if(profileView){
-    const gradient=saved?.gradient;
-    const colors=Array.isArray(gradient?.colors)?gradient.colors.slice(0,3):[];
-    const validColors=colors.length===3&&colors.every(c=>/^#[0-9a-f]{6}$/i.test(String(c)));
-    const angle=Number(gradient?.angle ?? 135);
+  const profileFollowers=Number(user.followersCount||0);
+  const profileFollowing=Number(user.followingCount||0);
+  if(followersCount)followersCount.textContent=String(profileFollowers);
+  if(followingCount)followingCount.textContent=String(profileFollowing);
 
-    if(backgroundType==="gradient" && validColors && Number.isFinite(angle)){
-      const gradientCss=`linear-gradient(${Math.min(360,Math.max(0,angle))}deg, ${colors.map(c=>String(c)).join(", ")})`;
-      document.body.classList.add("nw-profile-gradient");
-      document.body.style.setProperty("--nw-profile-gradient",gradientCss);
-      profileView.classList.add("profile-gradient-active");
-      profileView.style.setProperty("--profile-page-gradient",gradientCss);
-    }else{
-      document.body.classList.remove("nw-profile-gradient");
-      document.body.style.removeProperty("--nw-profile-gradient");
-      profileView.classList.remove("profile-gradient-active");
-      profileView.style.removeProperty("--profile-page-gradient");
-    }
-  }
-
-  // The banner remains an image. A gradient never gets pushed into the banner.
-  const customImage=backgroundType==="image" ? (saved?.background||"") : "";
-  const banner=customImage||accountBanner(user);
-
-  if(cover){
-    cover.style.backgroundImage=banner?`url("${banner.replaceAll('"','\\"')}")`:"none";
-    cover.style.backgroundSize="cover";
-    cover.style.backgroundPosition="center";
-    cover.style.backgroundRepeat="no-repeat";
-  }
-
-  const settingsAccount=document.getElementById("settingsAccount");
-  if(settingsAccount&&isOwnProfile)settingsAccount.textContent=`${user.global_name||user.username||"Discord user"} · @${user.username||""}`;
-
-  if(shareButton){
-    shareButton.onclick=async()=>{
-      const profileUrl=`${location.origin}${location.pathname}#/profile/${encodeURIComponent(user.id)}`;
+  if(editButton)editButton.style.display=isOwnProfile?"":"none";
+  if(addBioButton)addBioButton.style.display=isOwnProfile?"":"none";
+  if(followButton){
+    followButton.style.display=isOwnProfile?"none":"";
+    followButton.classList.toggle("following",!!user.isFollowing);
+    followButton.textContent=user.isFollowing?"Following":"Follow";
+    followButton.onclick=async()=>{
       try{
-        await navigator.clipboard.writeText(profileUrl);
-        const old=shareButton.textContent;
-        shareButton.textContent="Copied!";
-        setTimeout(()=>{shareButton.textContent=old;},1400);
-      }catch{
-        window.prompt("Copy this profile link:",profileUrl);
-      }
+        if(!northworkCurrentUser){window.location.href=nwApi("/auth/discord");return;}
+        const r=await fetch(nwApi(`/api/profile/${encodeURIComponent(user.id)}/follow`),{method:"POST",credentials:"include"});
+        const payload=await r.json();
+        if(!r.ok)throw new Error(payload?.error||"Follow failed");
+        user.isFollowing=!!payload.following;
+        user.followersCount=Number(payload.followersCount||0);
+        await renderProfileData(user,false,saved);
+      }catch(error){alert(error.message||"Could not update follow status.");}
     };
   }
+
+  const discordButton=document.getElementById("profileDiscordButton");
+  if(discordButton){discordButton.style.display="";discordButton.onclick=()=>{const url=`https://discord.com/users/${encodeURIComponent(user.id)}`;try{window.open(`discord://-/users/${encodeURIComponent(user.id)}`,"_blank");setTimeout(()=>window.open(url,"_blank","noopener"),650);}catch{window.open(url,"_blank","noopener");}};}
+
+  if(followersButton){
+    followersButton.style.display="";
+    followersButton.onclick=()=>openFollowers(user.id,displayName?.textContent||"Followers");
+  }
+
+  const shareButton=document.getElementById("profileShareButton");
+  if(shareButton){shareButton.style.display="";shareButton.onclick=async()=>{const profileUrl=`${location.origin}${location.pathname}#/profile/${encodeURIComponent(user.id)}`;try{await navigator.clipboard.writeText(profileUrl);const old=shareButton.textContent;shareButton.textContent="Copied!";setTimeout(()=>{shareButton.textContent=old;},1400);}catch{window.prompt("Copy this profile link:",profileUrl);}};}
+
+  setupBioEditor(isOwnProfile,saved);
 }
+
 async function loadSavedProfile(){
-  try{
-    const r=await fetch(nwApi("/api/profile"),{credentials:"include"});
-    if(!r.ok)return {};
-    return await r.json();
-  }catch{return {}}
+  try{const r=await fetch(nwApi("/api/profile"),{credentials:"include",cache:"no-store"});if(!r.ok)return {};return await r.json();}catch{return {}}
 }
 
 async function saveNorthworkProfile(data){
-  try{
-    const r=await fetch(nwApi("/api/profile"),{
-      method:"POST",
-      credentials:"include",
-      headers:{"Content-Type":"application/json"},
-      body:JSON.stringify(data)
-    });
-    return r.ok;
-  }catch{return false}
+  try{const r=await fetch(nwApi("/api/profile"),{method:"POST",credentials:"include",headers:{"Content-Type":"application/json"},body:JSON.stringify(data)});if(!r.ok){const p=await r.json().catch(()=>({}));console.error("Profile save failed",p);return false;}return true;}catch(error){console.error("Profile save error",error);return false;}
 }
 
-async function openProfileEditor(){
+function setupBioEditor(isOwnProfile,saved){
+  const add=document.getElementById("profileAddBio"),editor=document.getElementById("profileBioEditor"),input=document.getElementById("profileBioInput"),cancel=document.getElementById("profileBioCancel"),save=document.getElementById("profileBioSave");
+  if(!add||!editor||!input||!save)return;
+  add.onclick=()=>{if(!isOwnProfile)return;input.value=saved?.bio||"";editor.classList.add("open");input.focus();};
+  if(cancel)cancel.onclick=()=>editor.classList.remove("open");
+  save.onclick=async()=>{const next=await loadSavedProfile();next.bio=String(input.value||"").trim().slice(0,600);const ok=await saveNorthworkProfile(next);if(ok){editor.classList.remove("open");await renderNorthworkProfile();showProfileChangeNotice();}else alert("Could not save your bio right now.");};
+}
+
+function openProfileEditor(){
   const modal=document.getElementById("profileEditorBackdrop");
   if(!modal)return;
-
-  const user=northworkCurrentUser||await getNorthworkUser();
-  if(!user){
-    window.location.href=nwApi("/auth/discord");
-    return;
-  }
-
-  const saved=await loadSavedProfile();
-  const type=saved?.backgroundType||"image";
-  const bg=type==="image" ? (saved?.background||accountBanner(user)) : "";
-
-  const scaleInput=document.getElementById("profileScale");
-  const scaleValue=document.getElementById("profileScaleValue");
-  const preview=document.getElementById("profilePreviewBg");
-
-  if(scaleInput)scaleInput.value=saved?.scale||1;
-  if(scaleValue)scaleValue.textContent=(Number(saved?.scale||1)).toFixed(2)+"×";
-
-  if(preview){
-    preview._pendingBackground=null;
-    preview.style.backgroundImage=bg?`url("${bg.replaceAll('"','\\"')}")`:"none";
-    preview.style.transform=`scale(${saved?.scale||1})`;
-  }
-
-  modal.classList.add("open");
+  loadSavedProfile().then(saved=>{
+    const user=northworkCurrentUser;
+    const bg=saved?.background||accountBanner(user);
+    document.getElementById("profileScale").value= saved?.scale||1;
+    document.getElementById("profileScaleValue").textContent=(Number(saved?.scale||1)).toFixed(2)+"×";
+    document.getElementById("profileGradient1").value=saved?.gradient?.colors?.[0]||"#2f7fff";
+    document.getElementById("profileGradient2").value=saved?.gradient?.colors?.[1]||"#7b4dff";
+    document.getElementById("profileGradient3").value=saved?.gradient?.colors?.[2]||"#00c6ff";
+    document.getElementById("profileGradientAngle").value=Number(saved?.gradient?.angle??135);
+    document.getElementById("profileGradientAngleValue").textContent=Number(saved?.gradient?.angle??135)+"°";
+    setProfileBgMode(saved?.backgroundType||"image");
+    updateProfilePreview();
+    const preview=document.getElementById("profilePreviewBg");
+    if(preview)preview._pendingBackground=undefined;
+    modal.classList.add("open");
+  });
 }
 
-function closeProfileEditor(){
-  document.getElementById("profileEditorBackdrop")?.classList.remove("open");
+function closeProfileEditor(){document.getElementById("profileEditorBackdrop")?.classList.remove("open")}
+
+function setProfileBgMode(mode){
+  document.getElementById("profileBgTabImage")?.classList.toggle("active",mode==="image");
+  document.getElementById("profileBgTabGradient")?.classList.toggle("active",mode==="gradient");
+  document.getElementById("profileBgPaneImage")?.classList.toggle("active",mode==="image");
+  document.getElementById("profileBgPaneGradient")?.classList.toggle("active",mode==="gradient");
+  const preview=document.getElementById("profilePreviewBg");
+  if(preview)preview._backgroundMode=mode;
+  updateProfilePreview();
 }
 
 function updateProfilePreview(){
-  const scale=Number(document.getElementById("profileScale")?.value||1);
-  const value=document.getElementById("profileScaleValue");
   const preview=document.getElementById("profilePreviewBg");
-  if(value)value.textContent=scale.toFixed(2)+"×";
-  if(preview)preview.style.transform=`scale(${scale})`;
+  if(!preview)return;
+  const mode=preview._backgroundMode||"image";
+  const scale=Number(document.getElementById("profileScale")?.value||1);
+  document.getElementById("profileScaleValue").textContent=scale.toFixed(2)+"×";
+  document.getElementById("profileGradientAngleValue").textContent=Number(document.getElementById("profileGradientAngle")?.value||135)+"°";
+  preview.style.transform=`scale(${scale})`;
+  if(mode==="gradient"){
+    const c1=document.getElementById("profileGradient1")?.value||"#2f7fff";
+    const c2=document.getElementById("profileGradient2")?.value||"#7b4dff";
+    const c3=document.getElementById("profileGradient3")?.value||"#00c6ff";
+    const angle=Number(document.getElementById("profileGradientAngle")?.value||135);
+    preview.style.backgroundImage=`linear-gradient(${angle}deg,${c1},${c2},${c3})`;
+  }else if(preview._pendingBackground){
+    preview.style.backgroundImage=`url("${preview._pendingBackground}")`;
+  }
+  preview.style.backgroundSize="cover";
+  preview.style.backgroundPosition="center";
 }
 
 function initProfileEditor(){
-  // Delegated click handler makes the pen work even when the profile view
-  // is recreated after hash navigation.
   if(!window.__northworkProfileEditorClicks){
     window.__northworkProfileEditorClicks=true;
     document.addEventListener("click",e=>{
@@ -1672,61 +1783,74 @@ function initProfileEditor(){
     });
   }
 
-  document.getElementById("profileScale")?.addEventListener("input",updateProfilePreview);
+  if(!window.__northworkProfileEditorInputs){
+    window.__northworkProfileEditorInputs=true;
+    document.addEventListener("input",e=>{
+      if(e.target.matches("#profileScale,#profileGradient1,#profileGradient2,#profileGradient3,#profileGradientAngle")){
+        updateProfilePreview();
+      }
+    });
+  }
+
+  if(!window.__northworkProfileEditorTabs){
+    window.__northworkProfileEditorTabs=true;
+    document.addEventListener("click",e=>{
+      const imageTab=e.target.closest("#profileBgTabImage");
+      const gradientTab=e.target.closest("#profileBgTabGradient");
+      if(imageTab){e.preventDefault();setProfileBgMode("image");}
+      if(gradientTab){e.preventDefault();setProfileBgMode("gradient");}
+    });
+  }
 
   const drop=document.getElementById("profileDropzone");
   const input=document.getElementById("profileImageInput");
-
   if(drop && !drop.__northworkBound){
     drop.__northworkBound=true;
-
     drop.addEventListener("click",e=>{
       if(e.target!==input)input?.click();
     });
-
     ["dragenter","dragover"].forEach(ev=>drop.addEventListener(ev,e=>{
       e.preventDefault();
       drop.classList.add("drag");
     }));
-
     ["dragleave","drop"].forEach(ev=>drop.addEventListener(ev,e=>{
       e.preventDefault();
       drop.classList.remove("drag");
     }));
-
-    drop.addEventListener("drop",e=>{
-      previewProfileImage(e.dataTransfer?.files?.[0]);
-    });
+    drop.addEventListener("drop",e=>previewProfileImage(e.dataTransfer?.files?.[0]));
   }
 
   if(input && !input.__northworkBound){
     input.__northworkBound=true;
-    input.addEventListener("change",e=>{
-      previewProfileImage(e.target?.files?.[0]);
-    });
+    input.addEventListener("change",e=>previewProfileImage(e.target?.files?.[0]));
   }
 
   const saveButton=document.getElementById("profileEditorSave");
   if(saveButton && !saveButton.__northworkBound){
     saveButton.__northworkBound=true;
-
     saveButton.addEventListener("click",async()=>{
       saveButton.disabled=true;
-
       try{
         const old=await loadSavedProfile();
         const preview=document.getElementById("profilePreviewBg");
-        const pending=preview?._pendingBackground;
-
+        const mode=preview?._backgroundMode||"image";
         old.scale=Number(document.getElementById("profileScale")?.value||1);
+        old.backgroundType=mode;
 
-        if(pending){
-          old.background=pending;
-          old.backgroundType="image";
+        if(mode==="image"){
+          if(preview?._pendingBackground)old.background=preview._pendingBackground;
+        }else{
+          old.gradient={
+            colors:[
+              document.getElementById("profileGradient1")?.value||"#2f7fff",
+              document.getElementById("profileGradient2")?.value||"#7b4dff",
+              document.getElementById("profileGradient3")?.value||"#00c6ff"
+            ],
+            angle:Number(document.getElementById("profileGradientAngle")?.value||135)
+          };
         }
 
         const ok=await saveNorthworkProfile(old);
-
         if(ok){
           closeProfileEditor();
           await renderNorthworkProfile();
@@ -1754,91 +1878,83 @@ function initProfileEditor(){
 
 function previewProfileImage(file){
   if(!file)return;
-
-  const allowedTypes=new Set([
-    "image/png",
-    "image/jpeg",
-    "image/gif",
-    "image/webp"
-  ]);
-
+  const allowedTypes=new Set(["image/png","image/jpeg","image/gif","image/webp"]);
   if(!allowedTypes.has(file.type)){
     alert("Please use a PNG, JPG/JPEG, GIF, or WebP image.");
     return;
   }
-
-  if(file.size>7*1024*1024){
-    alert("Please use an image smaller than 7 MB.");
+  if(file.size>8*1024*1024){
+    alert("Please use an image smaller than 8 MB.");
     return;
   }
 
   const reader=new FileReader();
-
   reader.onload=()=>{
     const preview=document.getElementById("profilePreviewBg");
     if(!preview)return;
-
-    preview.style.backgroundImage=`url("${String(reader.result).replaceAll('"','\\"')}")`;
     preview._pendingBackground=reader.result;
+    preview._backgroundMode="image";
+    setProfileBgMode("image");
+    updateProfilePreview();
   };
-
-  reader.onerror=()=>{
-    alert("Could not read that image.");
-  };
-
+  reader.onerror=()=>alert("Could not read that image.");
   reader.readAsDataURL(file);
 }
 
+async function openFollowers(userId,displayName){
+  const backdrop=document.getElementById("profileFollowersBackdrop");
+  const list=document.getElementById("profileFollowersList");
+  const title=document.getElementById("profileFollowersTitle");
+  if(!backdrop||!list)return;
+  title.textContent=`${displayName||"Profile"}'s followers`;
+  list.innerHTML=`<div class="profile-empty">Loading followers...</div>`;
+  backdrop.classList.add("open");
+  try{
+    const r=await fetch(nwApi(`/api/profile/${encodeURIComponent(userId)}/followers`),{credentials:"include",cache:"no-store"});
+    const payload=await r.json();
+    if(!r.ok)throw new Error(payload?.error||"Could not load followers.");
+    const followers=Array.isArray(payload.followers)?payload.followers:[];
+    if(!followers.length){list.innerHTML=`<div class="profile-empty">No followers yet.</div>`;return;}
+    list.innerHTML=followers.map(u=>`<button class="profile-follower-row" data-follower-id="${escapeHtml(u.id)}" type="button"><img src="${escapeHtml(accountAvatar(u))}" alt=""><span><strong>${escapeHtml(u.global_name||u.username||"Northwork User")}</strong><span>@${escapeHtml(u.username||"")}</span></span></button>`).join("");
+    list.querySelectorAll("[data-follower-id]").forEach(btn=>btn.addEventListener("click",()=>{closeFollowers();go(`/profile/${encodeURIComponent(btn.dataset.followerId)}`);}));
+  }catch(error){list.innerHTML=`<div class="profile-empty">${escapeHtml(error.message||"Could not load followers.")}</div>`;}
+}
+
+function closeFollowers(){document.getElementById("profileFollowersBackdrop")?.classList.remove("open")}
+document.getElementById("profileFollowersClose")?.addEventListener("click",closeFollowers);
+document.getElementById("profileFollowersBackdrop")?.addEventListener("click",e=>{if(e.target.id==="profileFollowersBackdrop")closeFollowers();});
+
 const northworkOldRenderRoute=renderRoute;
 renderRoute=async function(){
-  await northworkOldRenderRoute();
+  const rawPath=location.hash.replace(/^#/,'').split('?')[0]||'/';
+  const profileMatch=rawPath.match(/^\/profile(?:\/(\d{15,25}))?$/);
 
-  const path=location.hash.replace(/^#/,'').split('?')[0]||'/';
+  if(profileMatch){
+    document.querySelectorAll(".view").forEach(v=>v.classList.toggle("active",v.dataset.view==="/profile"));
+    document.querySelectorAll(".navlinks button[data-route]").forEach(b=>b.classList.toggle("active",b.dataset.route==="/profile"));
+    document.getElementById("nav")?.classList.remove("open");
 
-  if(path==="/profile"){
-    await renderNorthworkProfile();
-  }else if(path.startsWith("/profile/")){
-    const userId=decodeURIComponent(
-      path.slice("/profile/".length)
-    );
+    if(profileMatch[1]){
+      await renderPublicProfile(profileMatch[1]);
+    }else{
+      await renderNorthworkProfile();
+    }
 
-    document.querySelectorAll(".view").forEach(v=>
-      v.classList.toggle(
-        "active",
-        v.dataset.view==="/profile"
-      )
-    );
-
-    await renderPublicProfile(userId);
+    await renderAccountArea();
+    return;
   }
 
-  if(
-    path==="/settings" &&
-    !await getNorthworkUser()
-  ){
+  // Always let the original router render the normal site first.
+  await northworkOldRenderRoute();
+
+  if(rawPath==="/settings" && !await getNorthworkUser()){
     await go("/");
     return;
   }
 
-  // A gradient belongs only to profile routes.
-  if(!path.startsWith("/profile")){
-    document.body.classList.remove("nw-profile-gradient");
-    document.body.style.removeProperty("--nw-profile-gradient");
-  }
-
-  await renderAccountArea();
-};
-
-// Boot only AFTER all Northwork account/profile functions exist.
-window.addEventListener("popstate",()=>renderRoute());
-window.addEventListener("hashchange",()=>renderRoute());
-
-bindCardClicks();
-loadStatus();
-loadCommunity();
-initProfileEditor();
-renderAccountArea();
-renderRoute();
+  document.body.classList.remove("nw-profile-gradient");
+  document.body.style.removeProperty("--nw-profile-gradient");
+}
 
 /* ================= PROFILE CHANGE NOTICE ================= */
 let northworkProfileChangeNotice=null;
@@ -1941,6 +2057,19 @@ function showProfileChangeNotice(){
 
   setTimeout(checkSiteVersion,5000);
 })();
+
+// Boot only after every Northwork function exists. This prevents direct
+// profile refreshes from running the router before profile functions are loaded.
+window.addEventListener("popstate",()=>renderRoute());
+window.addEventListener("hashchange",()=>renderRoute());
+
+bindCardClicks();
+loadStatus();
+loadCommunity();
+initProfileChangeNotice();
+initProfileEditor();
+renderAccountArea();
+renderRoute();
 </script>
 </body>
 </html>
