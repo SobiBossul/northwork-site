@@ -755,19 +755,6 @@ body.nw-profile-gradient .topbar{
   .people-search{width:100%;min-width:0;order:4}
   .people-search-results{position:fixed;top:74px;left:10px;right:10px;width:auto;max-height:55vh}
 }
-
-/* Yellow policy cards */
-.policy-card-yellow{
-  border-color:rgba(230,190,91,.55) !important;
-  background:linear-gradient(180deg,rgba(40,31,10,.95),#11100c) !important;
-  box-shadow:0 10px 35px rgba(230,190,91,.10) !important;
-}
-.policy-card-yellow h2{
-  color:#f0cd73 !important;
-}
-.policy-card-yellow code{
-  color:#f0cd73 !important;
-}
 </style>
 </head>
 <body>
@@ -986,7 +973,7 @@ body.nw-profile-gradient .topbar{
           </p>
         </article>
 
-        <article class="policy-card policy-card-yellow">
+        <article class="policy-card">
           <h2>9. Storage, Providers & Retention</h2>
           <p>
             Northwork may use third-party infrastructure providers for hosting, authentication,
@@ -998,7 +985,7 @@ body.nw-profile-gradient .topbar{
           </p>
         </article>
 
-        <article class="policy-card policy-card-yellow">
+        <article class="policy-card">
           <h2>10. Cookies, Local Storage & Browser Data</h2>
           <p>
             Northwork may use cookies needed for authentication and session handling. The website
@@ -1921,6 +1908,7 @@ function getNorthworkMemberTitle(user){
   if(has(["northwork administrator","administrator","admin"]))return "Northwork Administrator";
   if(has(["northwork manager","manager"]))return "Northwork Manager";
   if(has(["northwork staff","staff"]))return "Northwork Staff";
+  if(has(["northwork site ideas lead","site ideas lead"]))return "Northwork Site Ideas Leader";
   if(has(["northwork mods","northwork mod","mods","moderator","moderators"]))return "Northwork Mods";
   if(has(["northwork contributor","contributor","contributors"]))return "Northwork Contributor";
   if(has(["northwork special people","special people"]))return "Northwork Special People";
