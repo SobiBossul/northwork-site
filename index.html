@@ -20,6 +20,7 @@
 
 html{
   scroll-behavior:smooth;
+  --nw-ui-scale:1;
   scrollbar-width:none;
 }
 
@@ -29,6 +30,7 @@ html::-webkit-scrollbar{
 }
 
 body{
+  zoom:var(--nw-ui-scale,1);
   margin:0;
   background:radial-gradient(circle at 50% -20%,rgba(255,255,255,.07),transparent 34%),linear-gradient(180deg,var(--bg),var(--bg2));
   color:var(--text);
@@ -356,6 +358,12 @@ footer{border-top:1px solid var(--line);padding:30px 0 42px;color:#666e78;font-s
 .policy-card:nth-child(7){animation-delay:.24s}
 .policy-card:nth-child(8){animation-delay:.28s}
 
+.policy-card:nth-child(1){border-color:rgba(239,98,108,.48);background:linear-gradient(180deg,rgba(42,14,18,.96),#0f1013);box-shadow:0 10px 35px rgba(239,98,108,.10)}
+.policy-card:nth-child(1) h2{color:#ff737d}
+.policy-card:nth-child(5){border-color:rgba(230,190,91,.55);background:linear-gradient(180deg,rgba(40,31,10,.95),#11100c);box-shadow:0 10px 35px rgba(230,190,91,.10)}
+.policy-card:nth-child(5) h2{color:#f0cd73}
+.policy-card:nth-child(5) code{color:#f0cd73}
+
 .policy-card h2{
   margin:0 0 10px;
   font-size:21px;
@@ -450,7 +458,21 @@ footer{border-top:1px solid var(--line);padding:30px 0 42px;color:#666e78;font-s
 .profile-shell{padding:58px 0 90px}.profile-cover{position:relative;height:310px;border:1px solid var(--line);border-radius:20px 20px 0 0;overflow:hidden;background:linear-gradient(115deg,#171b21,#090b0e)}.profile-cover-image{position:absolute;inset:0;background-position:center;background-size:cover;transition:.25s} .profile-banner-media{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;}.profile-cover-image:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.04),rgba(0,0,0,.58))}.profile-edit{position:absolute;z-index:3;right:18px;top:18px;width:40px;height:40px;border-radius:10px;border:1px solid #3a4048;background:rgba(8,10,13,.72);color:#fff;cursor:pointer;backdrop-filter:blur(12px)}.profile-edit:hover{background:#15191f}.profile-info{position:relative;margin-top:-67px;padding:0 28px 28px;display:flex;align-items:end;gap:18px;z-index:4}.profile-avatar-wrap{width:132px;height:132px;border-radius:50%;padding:5px;background:#0b0d10;border:1px solid #262c33;flex:none}.profile-avatar{width:100%;height:100%;border-radius:50%;object-fit:cover;border:1px solid #3a4048;background:#161a20}.profile-name h1{font-size:32px;margin:0 0 3px;letter-spacing:-.045em;display:flex;align-items:center;gap:7px;flex-wrap:wrap}.site-profile-badges{display:inline-flex;align-items:center;gap:0px;vertical-align:middle;margin-left:0px;flex:none}.site-profile-badge{width:31px;height:31px;object-fit:contain;display:inline-block;flex:none;vertical-align:middle;cursor:help;position:relative;top:0px}.profile-name p{margin:0;color:#7f8791;font-size:13px}.profile-activity{display:inline-flex;align-items:center;gap:7px;max-width:100%;margin:0 0 7px;padding:5px 8px;border:1px solid #2c333c;background:rgba(12,15,19,.82);border-radius:8px;backdrop-filter:blur(10px);box-shadow:0 8px 26px rgba(0,0,0,.18);font-size:11px;line-height:1.15}.profile-activity[hidden]{display:none}.profile-activity-icon{width:14px;height:14px;display:inline-flex;align-items:center;justify-content:center;color:#8ff0ad;font-size:11px;flex:none}.profile-activity-copy{display:flex;align-items:baseline;gap:6px;min-width:0;flex-wrap:wrap}.profile-activity-copy strong{color:#e7eaee;font-size:11px;font-weight:700}.profile-activity-copy span{color:#7f8994;font-size:10px}.profile-activity.spotify .profile-activity-icon{color:#8ff0ad}.profile-activity.game .profile-activity-icon{color:#8fb7ff}.profile-share{margin-left:auto;white-space:nowrap}.profile-content{border:1px solid var(--line);border-top:0;border-radius:0 0 20px 20px;background:#0b0d10;padding:0 28px 30px}.profile-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.profile-panel{border:1px solid var(--line);background:linear-gradient(180deg,#101419,#0d1013);border-radius:14px;padding:20px}.profile-panel.wide{grid-column:1/-1}.profile-panel-title{text-transform:uppercase;letter-spacing:.12em;font-size:10px;color:#707883;font-weight:800;margin-bottom:12px}.profile-joined{font-size:15px;color:#e2e5e9}.profile-roles{display:flex;gap:7px;flex-wrap:wrap} .profile-role{position:relative;font-size:12px;padding:7px 10px 9px;border:1px solid #303640;background:#12161b;border-radius:7px;color:#cbd0d7;overflow:hidden;--role-color:#5865f2}
 .profile-role:after{content:"";position:absolute;left:7px;right:7px;bottom:4px;height:2px;border-radius:999px;background:var(--role-color);opacity:.95}
 .profile-role.role-neutral:after{background:#4b535d;opacity:.7}.profile-ticket{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid #1e2329;font-size:13px}.profile-ticket:last-child{border-bottom:0}.ticket-status{font-size:11px;color:var(--green)}.profile-empty{color:#727a85;font-size:13px}.profile-warning{border:1px solid #65232d;background:linear-gradient(180deg,#180d10,#120b0d);padding:14px;border-radius:10px;margin-bottom:8px;box-shadow:0 0 22px rgba(239,98,108,.08)}.profile-warning strong{color:#ff6c76;font-size:13px}.profile-warning p{color:#c5a7ab;margin:5px 0 0;font-size:12px}.profile-warning small{display:block;color:#777f89;margin-top:7px}.profile-warnings.has-warning{border-color:#6c252f;box-shadow:0 0 30px rgba(239,98,108,.08)}
-.profile-editor-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.68);backdrop-filter:blur(8px);display:none;place-items:center;padding:20px;z-index:100}.profile-editor-backdrop.open{display:grid}.profile-editor{width:min(570px,100%);background:#0d1014;border:1px solid #2b3139;border-radius:15px;box-shadow:0 30px 100px rgba(0,0,0,.7);padding:20px}.profile-editor-head{display:flex;justify-content:space-between;align-items:flex-start}.profile-editor-head h2{margin:5px 0 18px;font-size:21px}.profile-close{border:0;background:transparent;color:#777f89;font-size:25px;cursor:pointer}.profile-dropzone{border:1px dashed #48505a;border-radius:11px;padding:28px;text-align:center;color:#b2b8c0;cursor:pointer;transition:.18s}.profile-dropzone:hover,.profile-dropzone.drag{background:#13171c;border-color:#777f89}.profile-dropzone input{display:none}.profile-dropzone .upload-icon{font-size:25px;margin-bottom:7px}.profile-dropzone span{display:block;color:#6e7680;font-size:11px;margin-top:5px}.profile-preview{height:145px;margin:15px 0;border-radius:10px;overflow:hidden;background:#080a0c;position:relative;border:1px solid #242a31}.profile-preview-bg{position:absolute;inset:0;background-position:center;background-size:cover;transition:.1s} .profile-preview-media{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;}.profile-control{display:flex;align-items:center;gap:14px;color:#8f96a1;font-size:12px}.profile-control input{flex:1}.profile-editor-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:18px}.profile-save{font-weight:700}.profile-note{color:#686f79;font-size:11px;line-height:1.55;margin-top:12px}.profile-settings-list{display:grid;gap:10px}.profile-setting-row{display:flex;justify-content:space-between;align-items:center;border:1px solid var(--line);background:#101419;padding:15px;border-radius:11px}.profile-setting-row span{color:#7e8690;font-size:12px}.profile-setting-row strong{font-size:13px}@media(max-width:700px){.account-user-name{display:none}.profile-cover{height:240px}.profile-info{padding:0 17px 22px;gap:13px;flex-wrap:wrap}.profile-avatar-wrap{width:100px;height:100px}.profile-name h1{font-size:25px}.profile-activity{max-width:calc(100vw - 150px)}.profile-share{margin-left:0;width:100%}.profile-content{padding:0 17px 24px}.profile-grid{grid-template-columns:1fr}.profile-panel.wide{grid-column:auto}}
+.profile-editor-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.68);backdrop-filter:blur(8px);display:none;place-items:center;padding:20px;z-index:100}.profile-editor-backdrop.open{display:grid}.profile-editor{width:min(570px,100%);background:#0d1014;border:1px solid #2b3139;border-radius:15px;box-shadow:0 30px 100px rgba(0,0,0,.7);padding:20px}.profile-editor-head{display:flex;justify-content:space-between;align-items:flex-start}.profile-editor-head h2{margin:5px 0 18px;font-size:21px}.profile-close{border:0;background:transparent;color:#777f89;font-size:25px;cursor:pointer}.profile-dropzone{border:1px dashed #48505a;border-radius:11px;padding:28px;text-align:center;color:#b2b8c0;cursor:pointer;transition:.18s}.profile-dropzone:hover,.profile-dropzone.drag{background:#13171c;border-color:#777f89}.profile-dropzone input{display:none}.profile-dropzone .upload-icon{font-size:25px;margin-bottom:7px}.profile-dropzone span{display:block;color:#6e7680;font-size:11px;margin-top:5px}.profile-preview{height:145px;margin:15px 0;border-radius:10px;overflow:hidden;background:#080a0c;position:relative;border:1px solid #242a31}.profile-preview-bg{position:absolute;inset:0;background-position:center;background-size:cover;transition:.1s} .profile-preview-media{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;}.profile-control{display:flex;align-items:center;gap:14px;color:#8f96a1;font-size:12px}.profile-control input{flex:1}.profile-editor-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:18px}.profile-save{font-weight:700}.profile-note{color:#686f79;font-size:11px;line-height:1.55;margin-top:12px}.profile-settings-list{display:grid;gap:10px}.profile-setting-row{display:flex;justify-content:space-between;align-items:center;border:1px solid var(--line);background:#101419;padding:15px;border-radius:11px}.profile-setting-row span{color:#7e8690;font-size:12px}.profile-setting-row strong{font-size:13px}
+.profile-setting-control{display:flex;align-items:center;gap:12px;min-width:220px;justify-content:flex-end}
+.profile-setting-control input[type="range"]{width:150px}
+.profile-setting-control output{display:inline-block;min-width:48px;text-align:right;color:#cbd0d7;font-size:12px;font-weight:700}
+.profile-toggle{position:relative;width:44px;height:24px;appearance:none;border:1px solid #3b434d;border-radius:999px;background:#1a1f25;cursor:pointer;transition:.18s;flex:none}
+.profile-toggle:after{content:"";position:absolute;top:3px;left:3px;width:16px;height:16px;border-radius:50%;background:#8a929c;transition:.18s}
+.profile-toggle:checked{background:#2e3742;border-color:#657180}
+.profile-toggle:checked:after{left:23px;background:#fff}
+.profile-toggle-label{display:flex;align-items:center;gap:10px}
+.profile-stat-button.is-hidden{opacity:.78}
+.profile-stat-button.is-hidden .profile-stat-sub{color:#b0b7c0}
+.profile-privacy-note{margin-top:8px;color:#727a85;font-size:11px;line-height:1.5}
+.nw-toast{position:fixed;left:50%;bottom:26px;transform:translate(-50%,14px);opacity:0;pointer-events:none;z-index:400;max-width:min(520px,calc(100vw - 30px));padding:11px 14px;border:1px solid #343b44;border-radius:11px;background:rgba(13,16,20,.96);box-shadow:0 18px 60px rgba(0,0,0,.45);color:#e2e5e9;font-size:12px;line-height:1.45;transition:.2s}
+.nw-toast.show{opacity:1;transform:translate(-50%,0)}
+@media(max-width:700px){.account-user-name{display:none}.profile-cover{height:240px}.profile-info{padding:0 17px 22px;gap:13px;flex-wrap:wrap}.profile-avatar-wrap{width:100px;height:100px}.profile-name h1{font-size:25px}.profile-activity{max-width:calc(100vw - 150px)}.profile-share{margin-left:0;width:100%}.profile-content{padding:0 17px 24px}.profile-grid{grid-template-columns:1fr}.profile-panel.wide{grid-column:auto}}
 
 
 .account-link{display:block;width:100%;padding:10px 11px;border:0;background:transparent;color:#cbd0d7;text-decoration:none;text-align:left;border-radius:8px;cursor:pointer}.account-link:hover{background:#15191f}.account-logout{color:#ef626c!important}
@@ -836,7 +858,7 @@ body.nw-profile-gradient .topbar{
           Northwork features such as bots, verification, moderation and AI
           are operated.
         </p>
-        <div class="policy-updated">Northwork policy page · Contact: northworksupport@gmail.com</div>
+        <div class="policy-updated">Full Northwork policy · Contact: northworksupport@gmail.com</div>
       </div>
 
       <div class="policy-grid">
@@ -937,8 +959,52 @@ body.nw-profile-gradient .topbar{
           </p>
         </article>
 
+        <article class="policy-card">
+          <h2>8. Accounts, Profiles & Social Features</h2>
+          <p>
+            Northwork profiles can include Discord identity information, profile artwork,
+            bios, follows, follower counts, following counts, onsite badges and profile settings.
+            Information shown on a public profile may be visible to other Northwork visitors.
+          </p>
+          <p>
+            Privacy controls may allow a user to hide their follower or following lists while
+            keeping the corresponding count visible. Northwork may still process the information
+            internally where needed to operate the feature.
+          </p>
+        </article>
+
+        <article class="policy-card">
+          <h2>9. Storage, Providers & Retention</h2>
+          <p>
+            Northwork may use third-party infrastructure providers for hosting, authentication,
+            network delivery, APIs and storage. Data may remain stored for as long as reasonably
+            necessary for the feature, security, moderation, troubleshooting or operational records.
+          </p>
+          <p>
+            Retention periods can vary by feature and may change as Northwork's systems evolve.
+          </p>
+        </article>
+
+        <article class="policy-card">
+          <h2>10. Cookies, Local Storage & Browser Data</h2>
+          <p>
+            Northwork may use cookies needed for authentication and session handling. The website
+            can also use browser local storage for convenience features such as cached account data
+            and display preferences.
+          </p>
+        </article>
+
+        <article class="policy-card">
+          <h2>11. Requests & Deletion</h2>
+          <p>
+            For account, privacy or data-handling questions, contact Northwork support. Northwork
+            may need enough information to identify the relevant account or feature before acting on
+            a request, and some records may need to be retained for security, moderation or legal reasons.
+          </p>
+        </article>
+
         <article class="policy-card policy-warning">
-          <h2>8. Terms, Changes & Contact</h2>
+          <h2>12. Terms, Changes & Contact</h2>
           <p>
             Using Northwork features means you are expected to follow the
             applicable Discord server rules, feature rules and project-specific
@@ -952,16 +1018,16 @@ body.nw-profile-gradient .topbar{
 
           <div class="policy-contact">
             <a class="pill" href="mailto:northworksupport@gmail.com">northworksupport@gmail.com</a>
-            <a class="pill" href="https://northworkdev.github.io/northwork-policy/" target="_blank" rel="noreferrer">Open full policy ↗</a>
+            
           </div>
         </article>
 
       </div>
 
       <div class="policy-footer-note">
-        This embedded page is part of the Northwork site and is intended to
-        provide a quick in-site reference to the policies. The linked full policy
-        page remains available for the latest published version.
+        This is the full Northwork policy page. Northwork may update these policies
+        when features, storage systems or community practices change. The version
+        shown here is the policy presented by the Northwork website itself.
       </div>
     </div>
   </div>
@@ -1010,10 +1076,11 @@ body.nw-profile-gradient .topbar{
         <section class="profile-panel wide">
           <div class="profile-panel-title">Connections</div>
           <div class="profile-stat-row">
-            <button class="profile-stat-button" id="profileFollowersButton" type="button"><span class="profile-stat-label">Followers</span><strong id="profileFollowersCount">0</strong><span class="profile-stat-sub">View followers</span></button>
-            <div class="profile-stat-box"><span class="profile-stat-label">Following</span><strong id="profileFollowingCount">0</strong><span class="profile-stat-sub">People they follow</span></div>
+            <button class="profile-stat-button" id="profileFollowersButton" type="button"><span class="profile-stat-label">Followers</span><strong id="profileFollowersCount">0</strong><span class="profile-stat-sub" id="profileFollowersSub">View followers</span></button>
+            <button class="profile-stat-button" id="profileFollowingButton" type="button"><span class="profile-stat-label">Following</span><strong id="profileFollowingCount">0</strong><span class="profile-stat-sub" id="profileFollowingSub">People they follow</span></button>
             <div class="profile-stat-box"><span class="profile-stat-label">Member since</span><strong id="profileJoined">—</strong><span class="profile-stat-sub">Joined Northwork</span></div>
           </div>
+          <div class="profile-privacy-note" id="profilePrivacyNote"></div>
         </section>
 
         <section class="profile-panel">
@@ -1038,6 +1105,9 @@ body.nw-profile-gradient .topbar{
     <div class="profile-settings-list">
       <div class="profile-setting-row"><div><strong>Discord account</strong><br><span id="settingsAccount">Connected account</span></div><span>Connected</span></div>
       <div class="profile-setting-row"><div><strong>Profile background</strong><br><span>Use a custom banner and/or a full-page gradient. They can be enabled together.</span></div><button class="btn" type="button" id="settingsEditProfile">Edit profile</button></div>
+      <div class="profile-setting-row"><div><strong>Hide followers</strong><br><span>People can still see your follower count, but they cannot open your follower list.</span></div><label class="profile-toggle-label"><input class="profile-toggle" id="settingsHideFollowers" type="checkbox" aria-label="Hide followers"><span id="settingsHideFollowersText">Off</span></label></div>
+      <div class="profile-setting-row"><div><strong>Hide following</strong><br><span>People can still see your following count, but they cannot open the people you follow.</span></div><label class="profile-toggle-label"><input class="profile-toggle" id="settingsHideFollowing" type="checkbox" aria-label="Hide following"><span id="settingsHideFollowingText">Off</span></label></div>
+      <div class="profile-setting-row"><div><strong>Text scale</strong><br><span>Increase the site's UI size for easier reading.</span></div><div class="profile-setting-control"><input id="settingsTextScale" type="range" min="90" max="135" step="5" value="100"><output id="settingsTextScaleValue">100%</output></div></div>
       <div class="profile-setting-row"><div><strong>Session</strong><br><span>Sign out of this Northwork account.</span></div><button class="btn" style="color:var(--red)" type="button" id="settingsLogout">Log out</button></div>
     </div>
   </div>
@@ -1069,10 +1139,11 @@ body.nw-profile-gradient .topbar{
 
 <div class="profile-followers-backdrop" id="profileFollowersBackdrop">
   <div class="profile-followers-modal">
-    <div class="profile-followers-head"><h2 id="profileFollowersTitle">Followers</h2><button class="profile-followers-close" id="profileFollowersClose">×</button></div>
+    <div class="profile-followers-head"><h2 id="profileFollowersTitle">Connections</h2><button class="profile-followers-close" id="profileFollowersClose">×</button></div>
     <div class="profile-followers-list" id="profileFollowersList"></div>
   </div>
 </div>
+<div class="nw-toast" id="nwToast" role="status" aria-live="polite"></div>
 
 
 </main>
@@ -1107,7 +1178,7 @@ const CONFIG = {
 // can remain a single file. Northwork Assistant updates this object through the
 // GitHub Contents API when staff register games, programs, bots, site events, or staff.
 /* NORTHWORK_SITE_DATA_START */
-window.NORTHWORK_SITE_DATA = {"games":[{"slug":"vibration-tester","placeId":"96605909078674","universeId":"10080820428","url":"https://www.roblox.com/games/96605909078674/Vibration-Tester","name":"Vibration Tester","description":"Vibration Tester is a game where u can test your device's vibration!\n\nYou have plenty of stuff where u can test your device's vibration!\n    Different parts with different vibration systems!\n\n[FOR MORE COOL VIBRATION SYSTEMS, CONSIDER UNLOCKING VIP!]","thumbnail":"https://tr.rbxcdn.com/180DAY-b6a70701148167c5e71bb0bb360ba0e4/512/512/Image/Png/noFilter","visits":4577,"likes":30,"dislikes":5,"favorites":15,"playing":0,"creator":"Northwork Experiments","creatorType":"Group"},{"slug":"title-unavailable","placeId":"76588596175038","universeId":"8006387443","url":"https://www.roblox.com/games/76588596175038/Spring-Dummies","name":"[TITLE UNAVAILABLE]","description":"[DESCRIPTION UNAVAILABLE]","thumbnail":"https://tr.rbxcdn.com/180DAY-b401cfb39ce70d50c50045625644c1c3/512/512/Image/Png/noFilter","visits":0,"likes":11,"dislikes":0,"favorites":6,"playing":0,"creator":"[UNKNOWN]","creatorType":"Group"},{"slug":"title-unavailable","placeId":"98066790398013","universeId":"10765556958","url":"https://www.roblox.com/games/98066790398013/Classic-Sword-Duel","name":"[TITLE UNAVAILABLE]","description":"[DESCRIPTION UNAVAILABLE]","thumbnail":"https://tr.rbxcdn.com/180DAY-5b410db20b251d348be1216279ba14e6/512/512/Image/Png/noFilter","visits":0,"likes":0,"dislikes":0,"favorites":0,"playing":0,"creator":"[UNKNOWN]","creatorType":"Group"}],"bots":[{"id":"northwork-assistant","discordId":"1454980640238735441","name":"Northwork Assistant","description":"Northwork Assistant — a Northwork bot.","status":"operational","avatar":"https://cdn.discordapp.com/avatars/1454980640238735441/685f578da5a0791d6d4597f615a4f706.png?size=256","activities":[],"incidents":[]},{"id":"northwork-security","discordId":"1495884555624911118","name":"Northwork Security","description":"Northwork Security — a Northwork bot.","status":"operational","avatar":"https://cdn.discordapp.com/avatars/1495884555624911118/9aa984ec8b8f5dcbaf0ae02009cf1afb.png?size=256","activities":[],"incidents":[]},{"id":"northlink","discordId":"1544354790329417738","name":"Northlink","description":"Northlink — a Northwork bot.","status":"operational","avatar":"https://cdn.discordapp.com/avatars/1544354790329417738/c6c008cc9bac090de07ffc53e6f0ccfb.png?size=256","activities":[],"incidents":[]}],"programs":[{"id":"vantacore","name":"VantaCore","description":"VantaCore is a Windows hardware monitoring tool for GPU, CPU, and HDD/SSD diagnostics.  Features: - GPU monitoring - CPU monitoring - HDD/SSD drive details - CHKDSK scan/repair tools ","repo":"https://github.com/NorthworkDev/VantaCore","download":"https://github.com/NorthworkDev/VantaCore/archive/refs/heads/main.zip","version":"main"}],"staff":[{"userId":"438702447683174402","name":"RyTexh","username":"rytexh","role":"Northwork Administrator","roleId":"1454991773393748071","avatar":"https://cdn.discordapp.com/avatars/438702447683174402/504990f67f4b66ecdaade9783ef6c977.png?size=256"},{"userId":"808324602350403595","name":"Claudivania ❤🖤","username":"claudivania_lasukal","role":"Northwork Manager","roleId":"1467663817403007200","avatar":"https://cdn.discordapp.com/avatars/808324602350403595/45b0ffe4b44d862744807717fdfba197.png?size=256"},{"userId":"1149747147600834570","name":"desired","username":"desiredfornobody","role":"Northwork Moderators","roleId":"1454992580109668382","avatar":"https://cdn.discordapp.com/avatars/1149747147600834570/7757b1607e7f8dd157bb290b502d6831.png?size=256"},{"userId":"1206331959266246728","name":"John Northwork","username":"gurtingsgurtieisnotyogurt","role":"Northwork Moderators","roleId":"1454992580109668382","avatar":"https://cdn.discordapp.com/avatars/1206331959266246728/a2af452f9a1f4153cbbdb76487df5ac1.png?size=256"},{"userId":"1104551220951134218","name":"Meh3D","username":"mm_3d","role":"Northwork Moderators","roleId":"1454992580109668382","avatar":"https://cdn.discordapp.com/avatars/1104551220951134218/67617f9cc313c431b03cc9b0c53e2b46.png?size=256"},{"userId":"557596135175356418","name":"ᴱᵒⁿAimee","username":"aimee2569","role":"Northwork Moderators","roleId":"1454992580109668382","avatar":"https://cdn.discordapp.com/avatars/557596135175356418/165eabde0682dd879f5c852a804cba75.png?size=256"},{"userId":"1102261479517978745","name":"Heisenburg","username":"figure2266","role":"Northwork Moderators","roleId":"1454992580109668382","avatar":"https://cdn.discordapp.com/avatars/1102261479517978745/c3700e07f68989588c597ef0af06290b.png?size=256"},{"userId":"1089267764289605663","name":"Kuro","username":"123calebb","role":"Northwork Moderators","roleId":"1454992580109668382","avatar":"https://cdn.discordapp.com/avatars/1089267764289605663/5f37ea64ecb94ff89dfd14a7dc0e2b8e.png?size=256"},{"userId":"1003178163259576371","name":"𝐕𝐄𝐑𝐀","username":"vegupatra","role":"BALENCIAGA GURL 💅","roleId":"1475639115906158642","avatar":"https://cdn.discordapp.com/avatars/1003178163259576371/6b17869a708603fd14a49067eaa727d9.png?size=256"},{"userId":"1398692198404591750","name":"MrChorap","username":"mrchorapings","role":"Northwork Trial Moderators","roleId":"1455223688084324362","avatar":"https://cdn.discordapp.com/avatars/1398692198404591750/66a381c600765992bbc9690dd015f7ae.png?size=256"}],"initialized":false,"siteVersion":"1789217020558-a41c9f76"};
+window.NORTHWORK_SITE_DATA = {"games":[{"slug":"vibration-tester","placeId":"96605909078674","universeId":"10080820428","url":"https://www.roblox.com/games/96605909078674/Vibration-Tester","name":"Vibration Tester","description":"Vibration Tester is a game where u can test your device's vibration!\n\nYou have plenty of stuff where u can test your device's vibration!\n    Different parts with different vibration systems!\n\n[FOR MORE COOL VIBRATION SYSTEMS, CONSIDER UNLOCKING VIP!]","thumbnail":"https://tr.rbxcdn.com/180DAY-b6a70701148167c5e71bb0bb360ba0e4/512/512/Image/Png/noFilter","visits":4577,"likes":30,"dislikes":5,"favorites":15,"playing":0,"creator":"Northwork Experiments","creatorType":"Group"},{"slug":"title-unavailable","placeId":"76588596175038","universeId":"8006387443","url":"https://www.roblox.com/games/76588596175038/Spring-Dummies","name":"[TITLE UNAVAILABLE]","description":"[DESCRIPTION UNAVAILABLE]","thumbnail":"https://tr.rbxcdn.com/180DAY-b401cfb39ce70d50c50045625644c1c3/512/512/Image/Png/noFilter","visits":0,"likes":11,"dislikes":0,"favorites":6,"playing":0,"creator":"[UNKNOWN]","creatorType":"Group"},{"slug":"title-unavailable","placeId":"98066790398013","universeId":"10765556958","url":"https://www.roblox.com/games/98066790398013/Classic-Sword-Duel","name":"[TITLE UNAVAILABLE]","description":"[DESCRIPTION UNAVAILABLE]","thumbnail":"https://tr.rbxcdn.com/180DAY-5b410db20b251d348be1216279ba14e6/512/512/Image/Png/noFilter","visits":0,"likes":0,"dislikes":0,"favorites":0,"playing":0,"creator":"[UNKNOWN]","creatorType":"Group"}],"bots":[{"id":"northwork-assistant","discordId":"1454980640238735441","name":"Northwork Assistant","description":"Northwork Assistant — a Northwork bot.","status":"down","avatar":"https://cdn.discordapp.com/avatars/1454980640238735441/685f578da5a0791d6d4597f615a4f706.png?size=256","activities":[{"title":"Bot needs some parts deleted","description":"Due to some parts not matching what we want, we gotta delete some important parts of the Bot's script, and rewrite them! We will try to bring the service back up soon!","date":"2026-09-09T11:06:00.000Z"},{"title":"Issue has been identified","description":"We are working on a fix, we'll be back shortly!","date":"2026-09-09T09:41:00.000Z"},{"title":"Unidentified Site Issues","description":"We are currently trying to investigate the issue...","date":"2026-09-09T09:36:00.000Z"}],"incidents":[{"type":"down","date":"2026-09-09T11:06:00.000Z","description":"Due to some parts not matching what we want, we gotta delete some important parts of the Bot's script, and rewrite them! We will try to bring the service back up soon!"},{"type":"issue","date":"2026-09-09T09:41:00.000Z","description":"We are working on a fix, we'll be back shortly!"},{"type":"issue","date":"2026-09-09T09:36:00.000Z","description":"We are currently trying to investigate the issue..."}]},{"id":"northwork-security","discordId":"1495884555624911118","name":"Northwork Security","description":"Northwork Security — a Northwork bot.","status":"operational","avatar":"https://cdn.discordapp.com/avatars/1495884555624911118/9aa984ec8b8f5dcbaf0ae02009cf1afb.png?size=256","activities":[],"incidents":[]},{"id":"northlink","discordId":"1544354790329417738","name":"Northlink","description":"Northlink — a Northwork bot.","status":"operational","avatar":"https://cdn.discordapp.com/avatars/1544354790329417738/c6c008cc9bac090de07ffc53e6f0ccfb.png?size=256","activities":[],"incidents":[]}],"programs":[{"id":"vantacore","name":"VantaCore","description":"VantaCore is a Windows hardware monitoring tool for GPU, CPU, and HDD/SSD diagnostics.  Features: - GPU monitoring - CPU monitoring - HDD/SSD drive details - CHKDSK scan/repair tools ","repo":"https://github.com/NorthworkDev/VantaCore","download":"https://github.com/NorthworkDev/VantaCore/archive/refs/heads/main.zip","version":"main"}],"staff":[{"userId":"438702447683174402","name":"RyTexh","username":"rytexh","role":"Northwork Administrator","roleId":"1454991773393748071","avatar":"https://cdn.discordapp.com/avatars/438702447683174402/504990f67f4b66ecdaade9783ef6c977.png?size=256"},{"userId":"808324602350403595","name":"Claudivania ❤🖤","username":"claudivania_lasukal","role":"Northwork Manager","roleId":"1467663817403007200","avatar":"https://cdn.discordapp.com/avatars/808324602350403595/45b0ffe4b44d862744807717fdfba197.png?size=256"},{"userId":"1149747147600834570","name":"desired","username":"desiredfornobody","role":"Northwork Moderators","roleId":"1454992580109668382","avatar":"https://cdn.discordapp.com/avatars/1149747147600834570/7757b1607e7f8dd157bb290b502d6831.png?size=256"},{"userId":"1206331959266246728","name":"John Northwork","username":"gurtingsgurtieisnotyogurt","role":"Northwork Moderators","roleId":"1454992580109668382","avatar":"https://cdn.discordapp.com/avatars/1206331959266246728/a2af452f9a1f4153cbbdb76487df5ac1.png?size=256"},{"userId":"1104551220951134218","name":"Meh3D","username":"mm_3d","role":"Northwork Moderators","roleId":"1454992580109668382","avatar":"https://cdn.discordapp.com/avatars/1104551220951134218/67617f9cc313c431b03cc9b0c53e2b46.png?size=256"},{"userId":"557596135175356418","name":"ᴱᵒⁿAimee","username":"aimee2569","role":"Northwork Moderators","roleId":"1454992580109668382","avatar":"https://cdn.discordapp.com/avatars/557596135175356418/165eabde0682dd879f5c852a804cba75.png?size=256"},{"userId":"1102261479517978745","name":"Heisenburg","username":"figure2266","role":"Northwork Moderators","roleId":"1454992580109668382","avatar":"https://cdn.discordapp.com/avatars/1102261479517978745/c3700e07f68989588c597ef0af06290b.png?size=256"},{"userId":"1089267764289605663","name":"Kuro","username":"123calebb","role":"Northwork Moderators","roleId":"1454992580109668382","avatar":"https://cdn.discordapp.com/avatars/1089267764289605663/5f37ea64ecb94ff89dfd14a7dc0e2b8e.png?size=256"},{"userId":"1003178163259576371","name":"𝐕𝐄𝐑𝐀","username":"vegupatra","role":"BALENCIAGA GURL 💅","roleId":"1475639115906158642","avatar":"https://cdn.discordapp.com/avatars/1003178163259576371/6b17869a708603fd14a49067eaa727d9.png?size=256"}],"initialized":false,"siteVersion":"1788990679954-de59230b"};
 /* NORTHWORK_SITE_DATA_END */
 
 const GAMES = window.NORTHWORK_SITE_DATA.games || [];
@@ -1578,7 +1649,7 @@ async function getNorthworkUser(){
   const cacheKey="northwork.cachedUser";
   const cacheTimeKey="northwork.cachedUserTime";
   const now=Date.now();
-  const CACHE_TTL=5000;
+  const CACHE_TTL=30000;
 
   // Reuse a recent result so route changes do not hammer the Render API.
   if(northworkCurrentUser && now-(Number(window.__northworkUserCacheTime)||0)<CACHE_TTL){
@@ -1696,7 +1767,9 @@ document.addEventListener("click",e=>{
 async function renderNorthworkProfile(){
   const user=await getNorthworkUser();
   if(!user){go("/");return}
-  await renderProfileData(user,true,null);
+  // /api/me now includes the profile payload, so opening your own profile
+  // no longer needs a second R2-backed request.
+  await renderProfileData(user,true,user.profile||null);
 }
 
 async function showProfileNotFound(){
@@ -1718,7 +1791,7 @@ async function showProfileNotFound(){
   if(tickets)tickets.innerHTML=`<div class="profile-empty">This profile isn't available.</div>`;
   if(warnings)warnings.innerHTML=`<div class="profile-empty">This profile isn't available.</div>`;
   document.getElementById("profileWarningsPanel")?.classList.remove("has-warning");
-  ["profileEditButton","profileFollowButton","profileDiscordButton","profileShareButton","profileAddBio","profileFollowersButton"].forEach(id=>document.getElementById(id)?.style.setProperty("display","none"));
+  ["profileEditButton","profileFollowButton","profileDiscordButton","profileShareButton","profileAddBio","profileFollowersButton","profileFollowingButton"].forEach(id=>document.getElementById(id)?.style.setProperty("display","none"));
 }
 
 async function fetchPublicProfile(userId){
@@ -1728,7 +1801,7 @@ async function fetchPublicProfile(userId){
   const now=Date.now();
   const cached=cache.get(id);
 
-  if(cached && now-cached.time<5000){
+  if(cached && now-cached.time<30000){
     return cached.data;
   }
 
@@ -2036,6 +2109,36 @@ async function renderProfileData(user,isOwnProfile,suppliedProfile=null){
   if(followersCount)followersCount.textContent=String(profileFollowers);
   if(followingCount)followingCount.textContent=String(profileFollowing);
 
+  const privacy={
+    hideFollowers:!!(saved?.privacy?.hideFollowers ?? user?.privacy?.hideFollowers ?? false),
+    hideFollowing:!!(saved?.privacy?.hideFollowing ?? user?.privacy?.hideFollowing ?? false)
+  };
+  const followersSub=document.getElementById("profileFollowersSub");
+  const followingSub=document.getElementById("profileFollowingSub");
+  const privacyNote=document.getElementById("profilePrivacyNote");
+  const isOwn=isOwnProfile;
+  if(followersButton){
+    followersButton.classList.toggle("is-hidden",!isOwn && privacy.hideFollowers);
+    if(followersSub)followersSub.textContent=!isOwn&&privacy.hideFollowers?"Followers are hidden":"View followers";
+    followersButton.onclick=()=>{
+      if(!isOwn&&privacy.hideFollowers){showNorthworkToast("This user has hidden their followers.");return;}
+      openConnectionList(user.id,"followers",user.global_name||user.username||"Profile");
+    };
+  }
+  const followingButton=document.getElementById("profileFollowingButton");
+  if(followingButton){
+    followingButton.style.display="";
+    followingButton.classList.toggle("is-hidden",!isOwn&&privacy.hideFollowing);
+    if(followingSub)followingSub.textContent=!isOwn&&privacy.hideFollowing?"Following is hidden":"People they follow";
+    followingButton.onclick=()=>{
+      if(!isOwn&&privacy.hideFollowing){showNorthworkToast("This user has hidden who they follow.");return;}
+      openConnectionList(user.id,"following",user.global_name||user.username||"Profile");
+    };
+  }
+  if(privacyNote){
+    privacyNote.textContent=isOwn?"Privacy settings are available in Settings.":"";
+  }
+
   if(editButton)editButton.style.display=isOwnProfile?"":"none";
   if(addBioButton)addBioButton.style.display=isOwnProfile?"":"none";
   if(followButton){
@@ -2051,6 +2154,19 @@ async function renderProfileData(user,isOwnProfile,suppliedProfile=null){
         user.isFollowing=!!payload.following;
         user.followersCount=Number(payload.followersCount ?? user.followersCount ?? 0);
         user.followingCount=Number(payload.followingCount ?? user.followingCount ?? 0);
+
+        // Keep the signed-in user's cached following count in sync so returning
+        // to your own profile never falls back to 0 or an older cached value.
+        if(northworkCurrentUser && String(northworkCurrentUser.id)!==String(user.id)){
+          northworkCurrentUser.followingCount=Number(payload.followingCount ?? northworkCurrentUser.followingCount ?? 0);
+          try{
+            localStorage.setItem("northwork.cachedUser",JSON.stringify(northworkCurrentUser));
+          }catch{}
+          window.__northworkUserCacheTime=Date.now();
+        }
+
+        const targetCache=window.__northworkProfileCache;
+        targetCache?.set(String(user.id),{time:Date.now(),data:{user:{...user},profile:saved||{}}});
 
         // Refresh both the target profile and our own account so counts do not revert to stale values.
         const freshTarget=await fetchPublicProfile(user.id).catch(()=>null);
@@ -2076,7 +2192,7 @@ async function renderProfileData(user,isOwnProfile,suppliedProfile=null){
 
   if(followersButton){
     followersButton.style.display="";
-    followersButton.onclick=()=>openFollowers(user.id,displayName?.textContent||"Followers");
+    followersButton.onclick=()=>openConnectionList(user.id,"followers",displayName?.textContent||"Followers");
   }
 
   const shareButton=document.getElementById("profileShareButton");
@@ -2172,6 +2288,71 @@ function updateProfilePreview(){
   }
   preview.style.backgroundSize="cover";
   preview.style.backgroundPosition="center";
+}
+
+function initNorthworkSettings(){
+  const hideFollowers=document.getElementById("settingsHideFollowers");
+  const hideFollowing=document.getElementById("settingsHideFollowing");
+  const hideFollowersText=document.getElementById("settingsHideFollowersText");
+  const hideFollowingText=document.getElementById("settingsHideFollowingText");
+  const scale=document.getElementById("settingsTextScale");
+  const scaleValue=document.getElementById("settingsTextScaleValue");
+
+  const readLocalScale=()=>Number(localStorage.getItem("northwork.textScale")||100);
+  const applyScale=value=>{
+    const n=Math.min(135,Math.max(90,Number(value)||100));
+    document.documentElement.style.setProperty("--nw-ui-scale",String(n/100));
+    if(scale)scale.value=String(n);
+    if(scaleValue)scaleValue.value=String(n)+"%";
+    if(scaleValue)scaleValue.textContent=String(n)+"%";
+    try{localStorage.setItem("northwork.textScale",String(n));}catch{}
+  };
+
+  applyScale(readLocalScale());
+
+  const syncText=()=>{
+    if(hideFollowersText)hideFollowersText.textContent=hideFollowers?.checked?"On":"Off";
+    if(hideFollowingText)hideFollowingText.textContent=hideFollowing?.checked?"On":"Off";
+  };
+
+  loadSavedProfile().then(profile=>{
+    const privacy=profile?.privacy||{};
+    if(hideFollowers)hideFollowers.checked=!!privacy.hideFollowers;
+    if(hideFollowing)hideFollowing.checked=!!privacy.hideFollowing;
+    syncText();
+  }).catch(()=>{});
+
+  async function savePrivacy(){
+    const current=await loadSavedProfile();
+    current.privacy={
+      ...(current.privacy||{}),
+      hideFollowers:!!hideFollowers?.checked,
+      hideFollowing:!!hideFollowing?.checked,
+    };
+    const ok=await saveNorthworkProfile(current);
+    if(!ok)alert("Could not save privacy settings right now.");
+    else{
+      syncText();
+      const cached=northworkCurrentUser;
+      if(cached){
+        cached.privacy={...current.privacy};
+        cached.profile={...(cached.profile||{}),privacy:{...current.privacy}};
+      }
+      await renderNorthworkProfile();
+    }
+  }
+
+  [hideFollowers,hideFollowing].forEach(el=>{
+    if(el&&!el.__nwBound){
+      el.__nwBound=true;
+      el.addEventListener("change",savePrivacy);
+    }
+  });
+
+  if(scale&&!scale.__nwBound){
+    scale.__nwBound=true;
+    scale.addEventListener("input",()=>applyScale(scale.value));
+  }
 }
 
 function initProfileEditor(){
@@ -2327,23 +2508,51 @@ function previewProfileImage(file){
   reader.readAsDataURL(file);
 }
 
-async function openFollowers(userId,displayName){
+function showNorthworkToast(message){
+  const toast=document.getElementById("nwToast");
+  if(!toast)return;
+  toast.textContent=String(message||"");
+  toast.classList.add("show");
+  clearTimeout(window.__nwToastTimer);
+  window.__nwToastTimer=setTimeout(()=>toast.classList.remove("show"),2800);
+}
+
+async function openConnectionList(userId,type,displayName){
   const backdrop=document.getElementById("profileFollowersBackdrop");
   const list=document.getElementById("profileFollowersList");
   const title=document.getElementById("profileFollowersTitle");
-  if(!backdrop||!list)return;
-  title.textContent=`${displayName||"Profile"}'s followers`;
-  list.innerHTML=`<div class="profile-empty">Loading followers...</div>`;
+  if(!backdrop||!list||!title)return;
+
+  const isFollowing=type==="following";
+  const label=isFollowing?"following":"followers";
+  title.textContent=`${displayName||"Profile"}'s ${label}`;
+  list.innerHTML=`<div class="profile-empty">Loading ${label}...</div>`;
   backdrop.classList.add("open");
+
   try{
-    const r=await fetch(nwApi(`/api/profile/${encodeURIComponent(userId)}/followers`),{credentials:"include",cache:"no-store"});
+    const endpoint=`/api/profile/${encodeURIComponent(userId)}/${label}`;
+    const r=await fetch(nwApi(endpoint),{credentials:"include",cache:"default"});
     const payload=await r.json();
-    if(!r.ok)throw new Error(payload?.error||"Could not load followers.");
-    const followers=Array.isArray(payload.followers)?payload.followers:[];
-    if(!followers.length){list.innerHTML=`<div class="profile-empty">No followers yet.</div>`;return;}
-    list.innerHTML=followers.map(u=>`<button class="profile-follower-row" data-follower-id="${escapeHtml(u.id)}" type="button"><img src="${escapeHtml(accountAvatar(u))}" alt="" loading="lazy" decoding="async"><span><strong>${escapeHtml(u.global_name||u.username||"Northwork User")}</strong><span>@${escapeHtml(u.username||"")}</span></span></button>`).join("");
+    if(!r.ok){
+      if(payload?.hidden){
+        showNorthworkToast(payload.error||`This user's ${label} are hidden.`);
+        closeFollowers();
+        return;
+      }
+      throw new Error(payload?.error||`Could not load ${label}.`);
+    }
+
+    const users=Array.isArray(payload[isFollowing?"following":"followers"]) ? payload[isFollowing?"following":"followers"] : [];
+    if(!users.length){
+      list.innerHTML=`<div class="profile-empty">No ${label} yet.</div>`;
+      return;
+    }
+
+    list.innerHTML=users.map(u=>`<button class="profile-follower-row" data-follower-id="${escapeHtml(u.id)}" type="button"><img src="${escapeHtml(accountAvatar(u))}" alt="" loading="lazy" decoding="async"><span><strong>${escapeHtml(u.global_name||u.username||"Northwork User")}</strong><span>@${escapeHtml(u.username||"")}</span></span></button>`).join("");
     list.querySelectorAll("[data-follower-id]").forEach(btn=>btn.addEventListener("click",()=>{closeFollowers();go(`/profile/${encodeURIComponent(btn.dataset.followerId)}`);}));
-  }catch(error){list.innerHTML=`<div class="profile-empty">${escapeHtml(error.message||"Could not load followers.")}</div>`;}
+  }catch(error){
+    list.innerHTML=`<div class="profile-empty">${escapeHtml(error.message||`Could not load ${label}.`)}</div>`;
+  }
 }
 
 function closeFollowers(){document.getElementById("profileFollowersBackdrop")?.classList.remove("open")}
@@ -2431,6 +2640,7 @@ loadStatus();
 loadCommunity();
 initProfileChangeNotice();
 initProfileEditor();
+initNorthworkSettings();
 renderAccountArea();
 renderRoute();
 </script>
