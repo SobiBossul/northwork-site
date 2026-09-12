@@ -997,7 +997,7 @@ body.nw-profile-gradient .topbar{
     <div class="chat-typing" id="chatModalTyping"></div>
     <form class="chat-composer" id="chatModalComposer">
       <textarea id="chatModalInput" maxlength="2000" placeholder="Write a message..." rows="1"></textarea>
-      <button id="chatModalSend" type="submit">Send</button>
+      <button id="chatModalSend" type="button">Send</button>
     </form>
   </div>
 </div>
@@ -1767,17 +1767,23 @@ async function initNorthworkChat(){
 
   if(!composer.__bound){
     composer.__bound=true;
-    composer.addEventListener("submit",async e=>{
-      e.preventDefault();
+    const sendMessage=async()=>{
       if(!northworkChatSelected)return;
       const input=document.getElementById("chatModalInput");
       const send=document.getElementById("chatModalSend");
-      if(!input||!send)return;
+      if(!input||!send||send.disabled)return;
       const value=input.value;
+      if(!String(value||"").trim())return;
       send.disabled=true;
-      await sendNorthworkChatMessage(northworkChatSelected.id,value,"modal");
-      send.disabled=false;
-    });
+      try{
+        await sendNorthworkChatMessage(northworkChatSelected.id,value,"modal");
+      }finally{
+        send.disabled=false;
+      }
+    };
+    const send=document.getElementById("chatModalSend");
+    if(send)send.addEventListener("click",sendMessage);
+    composer.addEventListener("submit",e=>{e.preventDefault();sendMessage();});
   }
 
   const input=document.getElementById("chatModalInput");
@@ -1785,7 +1791,7 @@ async function initNorthworkChat(){
     input.__bound=true;
     input.addEventListener("input",()=>{input.style.height="42px";input.style.height=Math.min(input.scrollHeight,130)+"px";queueNorthworkChatTyping(northworkChatSelected?.id,input);});
     input.addEventListener("blur",()=>{if(northworkChatSelected){northworkChatTypingActive=false;if(northworkChatTypingTimer)clearTimeout(northworkChatTypingTimer);setNorthworkChatTyping(northworkChatSelected.id,false);}});
-    input.addEventListener("keydown",e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();composer.requestSubmit();}});
+    input.addEventListener("keydown",e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();document.getElementById("chatModalSend")?.click();}});
   }
 
   if(modal&&!modal.__bound){
@@ -1835,24 +1841,32 @@ function openNorthworkChatPage(user){
     '<div class="chat-typing" id="chatPageTyping"></div>'+
     '<form class="chat-composer chat-page-composer" id="chatPageComposer">'+
       '<textarea id="chatPageInput" maxlength="2000" placeholder="Write a message..." rows="1"></textarea>'+
-      '<button type="submit" id="chatPageSend">Send</button>'+
+      '<button type="button" id="chatPageSend">Send</button>'+
     '</form>';
 
   const composer=document.getElementById("chatPageComposer");
   const input=document.getElementById("chatPageInput");
   if(composer){
-    composer.addEventListener("submit",async e=>{
-      e.preventDefault();
+    const sendMessage=async()=>{
       const send=document.getElementById("chatPageSend");
+      if(!send||send.disabled)return;
+      const value=input?.value||"";
+      if(!String(value).trim())return;
       send.disabled=true;
-      await sendNorthworkChatMessage(user.id,input.value,"page");
-      send.disabled=false;
-    });
+      try{
+        await sendNorthworkChatMessage(user.id,value,"page");
+      }finally{
+        send.disabled=false;
+      }
+    };
+    const send=document.getElementById("chatPageSend");
+    if(send)send.addEventListener("click",sendMessage);
+    composer.addEventListener("submit",e=>{e.preventDefault();sendMessage();});
   }
   if(input){
     input.addEventListener("input",()=>{input.style.height="42px";input.style.height=Math.min(input.scrollHeight,130)+"px";queueNorthworkChatTyping(user.id,input);});
     input.addEventListener("blur",()=>{northworkChatTypingActive=false;if(northworkChatTypingTimer)clearTimeout(northworkChatTypingTimer);setNorthworkChatTyping(user.id,false);});
-    input.addEventListener("keydown",e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();composer?.requestSubmit();}});
+    input.addEventListener("keydown",e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();document.getElementById("chatPageSend")?.click();}});
     input.focus();
   }
   startChatMessagePolling("page");
