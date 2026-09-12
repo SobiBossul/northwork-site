@@ -760,7 +760,7 @@ body.nw-profile-gradient .topbar{
 /* ================= NORTHWORK CHAT ================= */
 .chat-launcher{position:fixed;right:24px;bottom:24px;z-index:450}
 /* Keep the floating launcher completely out of the way while a chat window is open. */
-.chat-modal.open ~ .chat-launcher{display:none !important}
+.chat-launcher.chat-modal-open{display:none !important}
 .chat-launcher-btn{display:flex;align-items:center;gap:9px;border:1px solid #2b323b;background:rgba(15,18,22,.94);color:#eef1f4;border-radius:12px;padding:11px 14px;cursor:pointer;box-shadow:0 18px 60px rgba(0,0,0,.4);backdrop-filter:blur(18px);transition:.18s;font-size:13px;font-weight:700}
 .chat-launcher-btn:hover{transform:translateY(-1px);border-color:#454e59;background:rgba(20,24,29,.97)}
 .chat-launcher-icon{width:18px;height:18px;display:grid;place-items:center;color:#dbe0e5;font-size:15px}
@@ -1376,6 +1376,9 @@ let northworkChatSelected=null;
 let northworkChatMessagesTimer=null;
 let northworkChatListTimer=null;
 let northworkChatLoaded=false;
+let northworkChatListFetchedAt=0;
+let northworkChatListLoading=null;
+const NORTHWORK_CHAT_LIST_CACHE_MS=10000;
 
 const CHAT_SAFETY_TEXT="Chats are normally not moderated, but if you ever feel unsafe, your safety matters to us! Contact us via ticket!";
 
@@ -1440,28 +1443,58 @@ function renderChatListInto(box,mode="modal"){
   }));
 }
 
-async function loadNorthworkChatFollowing(){
+async function loadNorthworkChatFollowing(force=false){
   if(!northworkCurrentUser){
     northworkChatFollowing=[];
+    northworkChatLoaded=false;
+    northworkChatListFetchedAt=0;
     renderChatListInto(document.getElementById("chatPopoverList"),"modal");
     renderChatListInto(document.getElementById("chatPageList"),"page");
-    return;
+    return [];
   }
-  try{
-    const r=await fetch(nwApi(`/api/chats`),{credentials:"include",cache:"no-store"});
-    if(!r.ok)throw new Error("chat list unavailable");
-    const data=await r.json();
-    northworkChatFollowing=Array.isArray(data.following)?data.following:[];
-    northworkChatLoaded=true;
+
+  const fresh = northworkChatLoaded &&
+    (Date.now()-northworkChatListFetchedAt) < NORTHWORK_CHAT_LIST_CACHE_MS;
+
+  if(!force && fresh){
     renderChatListInto(document.getElementById("chatPopoverList"),"modal");
     renderChatListInto(document.getElementById("chatPageList"),"page");
-    if(northworkChatSelected){
-      const fresh=northworkChatFollowing.find(x=>String(x.id)===String(northworkChatSelected.id));
-      if(fresh)northworkChatSelected={...northworkChatSelected,...fresh};
+    return northworkChatFollowing;
+  }
+
+  if(northworkChatListLoading){
+    return northworkChatListLoading;
+  }
+
+  northworkChatListLoading=(async()=>{
+    try{
+      const r=await fetch(nwApi(`/api/chats`),{
+        credentials:"include",
+        cache:"no-store"
+      });
+      if(!r.ok)throw new Error("chat list unavailable");
+      const data=await r.json();
+      northworkChatFollowing=Array.isArray(data.following)?data.following:[];
+      northworkChatLoaded=true;
+      northworkChatListFetchedAt=Date.now();
+
+      if(northworkChatSelected){
+        const freshUser=northworkChatFollowing.find(x=>String(x.id)===String(northworkChatSelected.id));
+        if(freshUser)northworkChatSelected={...northworkChatSelected,...freshUser};
+      }
+
+      renderChatListInto(document.getElementById("chatPopoverList"),"modal");
+      renderChatListInto(document.getElementById("chatPageList"),"page");
+      return northworkChatFollowing;
+    }catch(error){
+      console.warn("Northwork chat list error:",error);
+      return northworkChatFollowing;
+    }finally{
+      northworkChatListLoading=null;
     }
-  }catch(error){
-    console.warn("Northwork chat list error:",error);
-  }
+  })();
+
+  return northworkChatListLoading;
 }
 
 function renderChatMessages(box,messages){
@@ -1559,37 +1592,40 @@ async function sendNorthworkChatMessage(userId,body,mode="modal"){
 }
 
 function openNorthworkChat(user){
-  const launcher=document.getElementById("chatLauncher");
-  const launcherBtn=document.getElementById("chatLauncherBtn");
-  const popover=document.getElementById("chatPopover");
-
-  // Selecting a person from the quick chat list should close the list first,
-  // then open only the conversation window.
-  if(popover)popover.classList.remove("open");
-  if(launcherBtn)launcherBtn.setAttribute("aria-expanded","false");
-
   if(!northworkCurrentUser){
     showNorthworkToast("Log in with Discord to use Northwork chats.");
     return;
   }
+
+  const launcher=document.getElementById("chatLauncher");
+  const launcherBtn=document.getElementById("chatLauncherBtn");
+  const popover=document.getElementById("chatPopover");
+  if(popover)popover.classList.remove("open");
+  if(launcherBtn)launcherBtn.setAttribute("aria-expanded","false");
+  if(launcher)launcher.classList.add("chat-modal-open");
+
   northworkChatSelected=user;
   renderChatListInto(document.getElementById("chatPopoverList"),"modal");
-  renderChatListInto(document.getElementById("chatPageList"),"page");
   setChatModalUser(user);
+
   const modal=document.getElementById("chatModal");
   if(modal){
     modal.classList.add("open");
     modal.setAttribute("aria-hidden","false");
   }
+
   bindChatModalClose();
   startChatMessagePolling("modal");
+
   const input=document.getElementById("chatModalInput");
   setTimeout(()=>input?.focus(),30);
 }
 
 function closeNorthworkChat(){
   const modal=document.getElementById("chatModal");
+  const launcher=document.getElementById("chatLauncher");
   if(modal){modal.classList.remove("open");modal.setAttribute("aria-hidden","true");}
+  if(launcher)launcher.classList.remove("chat-modal-open");
   stopChatMessagePolling();
 }
 
@@ -1615,7 +1651,7 @@ async function initNorthworkChat(){
     launcherBtn.addEventListener("click",async()=>{
       const open=popover.classList.toggle("open");
       launcherBtn.setAttribute("aria-expanded",String(open));
-      if(open)await loadNorthworkChatFollowing();
+      if(open)await loadNorthworkChatFollowing(false);
     });
   }
 
@@ -1653,16 +1689,9 @@ async function initNorthworkChat(){
     modal.addEventListener("click",e=>{if(e.target===modal)closeNorthworkChat();});
   }
 
-  launcher.addEventListener("click",e=>{
-    const person=e.target.closest("[data-chat-user]");
-    if(!person)return;
-    const user=northworkChatFollowing.find(x=>String(x.id)===String(person.dataset.chatUser));
-    if(user)openNorthworkChat(user);
-  });
-
-  loadNorthworkChatFollowing();
+  loadNorthworkChatFollowing(true);
   if(!northworkChatListTimer){
-    northworkChatListTimer=setInterval(()=>loadNorthworkChatFollowing(),5000);
+    northworkChatListTimer=setInterval(()=>loadNorthworkChatFollowing(true),10000);
   }
 }
 
@@ -1670,7 +1699,7 @@ async function initNorthworkChatPage(){
   const list=document.getElementById("chatPageList");
   const main=document.getElementById("chatPageMain");
   if(!list||!main)return;
-  await loadNorthworkChatFollowing();
+  await loadNorthworkChatFollowing(false);
 
   if(!northworkCurrentUser){
     list.innerHTML=`<div class="chat-person-empty">Log in with Discord to use Northwork chats.</div>`;
@@ -1682,8 +1711,9 @@ async function initNorthworkChatPage(){
 }
 
 function openNorthworkChatPage(user){
+  closeNorthworkChat();
   northworkChatSelected=user;
-  renderChatListInto(document.getElementById("chatPageList"));
+  renderChatListInto(document.getElementById("chatPageList"),"page");
   const main=document.getElementById("chatPageMain");
   if(!main)return;
   const avatar=chatAvatar(user);
@@ -2071,7 +2101,10 @@ async function renderRoute(){
   if(chatLauncher){
     chatLauncher.classList.toggle("chat-page-hidden", path==="/chat");
     const popover=document.getElementById("chatPopover");
-    if(path==="/chat" && popover)popover.classList.remove("open");
+    if(path==="/chat") {
+      if(popover)popover.classList.remove("open");
+      closeNorthworkChat();
+    }
   }
   if(path==="/games")await initGames();
   if(path==="/bots")renderBots();
