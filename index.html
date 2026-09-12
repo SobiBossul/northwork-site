@@ -772,7 +772,7 @@ body.nw-profile-gradient .topbar{
 .chat-person{width:100%;display:flex;align-items:center;gap:10px;padding:10px;border:1px solid transparent;border-radius:11px;background:transparent;color:var(--text);text-align:left;cursor:pointer;transition:.16s}
 .chat-person:hover{background:#14191f;border-color:#262d36}
 .chat-person.active{background:#171c22;border-color:#313945}
-.chat-person img{width:42px;height:42px;border-radius:50%;object-fit:cover;background:#171b21;border:1px solid #2b3139;flex:none}
+.chat-person img{width:36px;height:36px;border-radius:50%;object-fit:cover;background:#171b21;border:1px solid #2b3139;flex:none}
 .chat-person-main{min-width:0;flex:1}
 .chat-person-name{font-size:13px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .chat-person-preview{margin-top:3px;color:#6f7782;font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -783,7 +783,7 @@ body.nw-profile-gradient .topbar{
 .chat-modal.open{display:flex}
 .chat-window{width:min(455px,100%);height:min(690px,calc(100vh - 48px));border:1px solid #303740;border-radius:18px;background:rgba(11,14,18,.94);box-shadow:0 35px 120px rgba(0,0,0,.6);backdrop-filter:blur(24px);overflow:hidden;display:flex;flex-direction:column;animation:chatPopIn .18s ease both}
 .chat-window-head{padding:13px 15px;border-bottom:1px solid rgba(255,255,255,.06);display:flex;align-items:flex-start;gap:11px}
-.chat-window-head img{width:42px;height:42px;border-radius:50%;object-fit:cover;border:1px solid #2c333c;background:#171b21}
+.chat-window-head img{width:36px;height:36px;border-radius:50%;object-fit:cover;border:1px solid #2c333c;background:#171b21}
 .chat-window-head-main{min-width:0;flex:1}
 .chat-window-head-name{font-size:14px;font-weight:750;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .chat-window-head-user{margin-top:2px;color:#707883;font-size:11px}
@@ -815,13 +815,14 @@ body.nw-profile-gradient .topbar{
 .chat-page-empty{height:100%;display:grid;place-items:center;padding:30px;color:#68717c;text-align:center;font-size:12px}
 .chat-page-empty strong{display:block;color:#dfe3e8;font-size:16px;margin-bottom:6px}
 .chat-page-header{padding:15px 17px;border-bottom:1px solid rgba(255,255,255,.06);display:flex;align-items:flex-start;gap:11px}
-.chat-page-header img{width:43px;height:43px;border-radius:50%;object-fit:cover;border:1px solid #2c333c;background:#171b21}
+.chat-page-header img{width:36px;height:36px;border-radius:50%;object-fit:cover;border:1px solid #2c333c;background:#171b21}
 .chat-page-header-main{min-width:0;flex:1}
 .chat-page-header-name{font-size:14px;font-weight:750}
 .chat-page-header-user{margin-top:2px;color:#707883;font-size:11px}
 .chat-page-safety{margin:10px 14px 0}
 .chat-page-messages{flex:1;min-height:0}
 .chat-page-composer{padding:11px}
+.chat-person .site-profile-badge,.chat-page-header .site-profile-badge,.chat-window-head-name .site-profile-badge{width:20px;height:20px;top:0}.chat-person .site-profile-badges,.chat-page-header .site-profile-badges,.chat-window-head-name .site-profile-badges{gap:2px;margin-left:3px;}.chat-launcher.chat-page-hidden{display:none!important}
 @media(max-width:850px){.chat-page{grid-template-columns:240px 1fr}.chat-page-sidebar{display:block}}
 @media(max-width:700px){.chat-page-shell{padding:30px 0 50px}.chat-page{height:calc(100vh - 125px);min-height:0;grid-template-columns:1fr}.chat-page-sidebar{display:none}.chat-launcher{right:14px;bottom:14px}.chat-modal{padding:12px}.chat-window{height:calc(100vh - 24px);border-radius:15px}}
 
@@ -1418,7 +1419,7 @@ function renderChatPerson(user,active=false){
   '</button>';
 }
 
-function renderChatListInto(box){
+function renderChatListInto(box,mode="modal"){
   if(!box)return;
   if(!northworkCurrentUser){
     box.innerHTML=`<div class="chat-person-empty">Log in with Discord to use Northwork chats.</div>`;
@@ -1431,15 +1432,17 @@ function renderChatListInto(box){
   box.innerHTML=northworkChatFollowing.map(u=>renderChatPerson(u,String(u.id)===String(northworkChatSelected?.id))).join("");
   box.querySelectorAll("[data-chat-user]").forEach(btn=>btn.addEventListener("click",()=>{
     const user=northworkChatFollowing.find(x=>String(x.id)===String(btn.dataset.chatUser));
-    if(user)openNorthworkChat(user);
+    if(!user)return;
+    if(mode==="page") openNorthworkChatPage(user);
+    else openNorthworkChat(user);
   }));
 }
 
 async function loadNorthworkChatFollowing(){
   if(!northworkCurrentUser){
     northworkChatFollowing=[];
-    renderChatListInto(document.getElementById("chatPopoverList"));
-    renderChatListInto(document.getElementById("chatPageList"));
+    renderChatListInto(document.getElementById("chatPopoverList"),"modal");
+    renderChatListInto(document.getElementById("chatPageList"),"page");
     return;
   }
   try{
@@ -1448,8 +1451,8 @@ async function loadNorthworkChatFollowing(){
     const data=await r.json();
     northworkChatFollowing=Array.isArray(data.following)?data.following:[];
     northworkChatLoaded=true;
-    renderChatListInto(document.getElementById("chatPopoverList"));
-    renderChatListInto(document.getElementById("chatPageList"));
+    renderChatListInto(document.getElementById("chatPopoverList"),"modal");
+    renderChatListInto(document.getElementById("chatPageList"),"page");
     if(northworkChatSelected){
       const fresh=northworkChatFollowing.find(x=>String(x.id)===String(northworkChatSelected.id));
       if(fresh)northworkChatSelected={...northworkChatSelected,...fresh};
@@ -1559,8 +1562,8 @@ function openNorthworkChat(user){
     return;
   }
   northworkChatSelected=user;
-  renderChatListInto(document.getElementById("chatPopoverList"));
-  renderChatListInto(document.getElementById("chatPageList"));
+  renderChatListInto(document.getElementById("chatPopoverList"),"modal");
+  renderChatListInto(document.getElementById("chatPageList"),"page");
   setChatModalUser(user);
   const modal=document.getElementById("chatModal");
   if(modal){
@@ -1664,12 +1667,7 @@ async function initNorthworkChatPage(){
     return;
   }
 
-  renderChatListInto(list);
-
-  list.querySelectorAll("[data-chat-user]").forEach(btn=>btn.addEventListener("click",()=>{
-    const user=northworkChatFollowing.find(x=>String(x.id)===String(btn.dataset.chatUser));
-    if(user)openNorthworkChatPage(user);
-  }));
+  renderChatListInto(list,"page");
 }
 
 function openNorthworkChatPage(user){
@@ -2058,6 +2056,12 @@ async function renderRoute(){
   document.querySelectorAll(".view").forEach(v=>v.classList.toggle("active",v.dataset.view===path));
   document.querySelectorAll(".navlinks button[data-route]").forEach(b=>b.classList.toggle("active",b.dataset.route===path));
   document.getElementById("nav").classList.remove("open");
+  const chatLauncher=document.getElementById("chatLauncher");
+  if(chatLauncher){
+    chatLauncher.classList.toggle("chat-page-hidden", path==="/chat");
+    const popover=document.getElementById("chatPopover");
+    if(path==="/chat" && popover)popover.classList.remove("open");
+  }
   if(path==="/games")await initGames();
   if(path==="/bots")renderBots();
   if(path==="/programs")renderPrograms();
