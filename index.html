@@ -1401,6 +1401,72 @@ const NORTHWORK_CHAT_LIST_CACHE_MS=10000;
 
 const CHAT_SAFETY_TEXT="Chats are normally not moderated, but if you ever feel unsafe, your safety matters to us! Contact us via ticket!";
 
+let northworkChatTypingActive=false;
+let northworkChatTypingTimer=null;
+let northworkChatTypingRequest=null;
+
+async function setNorthworkChatTyping(userId,typing){
+  if(!northworkCurrentUser||!userId)return;
+
+  const targetId=String(userId);
+
+  try{
+    if(northworkChatTypingRequest){
+      try{northworkChatTypingRequest.abort();}catch{}
+    }
+
+    northworkChatTypingRequest=new AbortController();
+
+    await fetch(
+      nwApi(`/api/chats/${encodeURIComponent(targetId)}/typing`),
+      {
+        method:"POST",
+        credentials:"include",
+        headers:{"Content-Type":"application/json"},
+        body:JSON.stringify({typing:!!typing}),
+        signal:northworkChatTypingRequest.signal
+      }
+    );
+  }catch(error){
+    if(error?.name!=="AbortError"){
+      console.debug("Northwork typing update failed:",error);
+    }
+  }finally{
+    northworkChatTypingRequest=null;
+  }
+}
+
+function queueNorthworkChatTyping(userId,input){
+  if(!northworkCurrentUser||!userId||!input)return;
+
+  if(northworkChatTypingTimer){
+    clearTimeout(northworkChatTypingTimer);
+    northworkChatTypingTimer=null;
+  }
+
+  const hasText=String(input.value||"").trim().length>0;
+
+  if(!hasText){
+    if(northworkChatTypingActive){
+      northworkChatTypingActive=false;
+      setNorthworkChatTyping(userId,false);
+    }
+    return;
+  }
+
+  if(!northworkChatTypingActive){
+    northworkChatTypingActive=true;
+    setNorthworkChatTyping(userId,true);
+  }
+
+  // Stop showing the indicator shortly after the user stops typing.
+  northworkChatTypingTimer=setTimeout(()=>{
+    northworkChatTypingTimer=null;
+    northworkChatTypingActive=false;
+    setNorthworkChatTyping(userId,false);
+  },1800);
+}
+
 function chatEsc(v){return escapeHtml(String(v??""));}
 
 function chatAvatar(user){
