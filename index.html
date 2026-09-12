@@ -2046,6 +2046,16 @@ function renderSiteProfileBadges(badges){
     );
   }
 
+  if (source.siteIdeasLead === true) {
+    items.push(
+      '<img class="site-profile-badge" ' +
+      'src="./hammerlogo.png?v=1" ' +
+      'title="Northwork Site Ideas Leader" ' +
+      'aria-label="Northwork Site Ideas Leader" ' +
+      'alt="Site Ideas Leader">'
+    );
+  }
+
   return items.length
     ? `<span class="site-profile-badges">${items.join("")}</span>`
     : "";
