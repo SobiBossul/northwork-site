@@ -759,6 +759,8 @@ body.nw-profile-gradient .topbar{
 
 /* ================= NORTHWORK CHAT ================= */
 .chat-launcher{position:fixed;right:24px;bottom:24px;z-index:450}
+/* Keep the floating launcher completely out of the way while a chat window is open. */
+.chat-modal.open ~ .chat-launcher{display:none !important}
 .chat-launcher-btn{display:flex;align-items:center;gap:9px;border:1px solid #2b323b;background:rgba(15,18,22,.94);color:#eef1f4;border-radius:12px;padding:11px 14px;cursor:pointer;box-shadow:0 18px 60px rgba(0,0,0,.4);backdrop-filter:blur(18px);transition:.18s;font-size:13px;font-weight:700}
 .chat-launcher-btn:hover{transform:translateY(-1px);border-color:#454e59;background:rgba(20,24,29,.97)}
 .chat-launcher-icon{width:18px;height:18px;display:grid;place-items:center;color:#dbe0e5;font-size:15px}
@@ -1557,6 +1559,15 @@ async function sendNorthworkChatMessage(userId,body,mode="modal"){
 }
 
 function openNorthworkChat(user){
+  const launcher=document.getElementById("chatLauncher");
+  const launcherBtn=document.getElementById("chatLauncherBtn");
+  const popover=document.getElementById("chatPopover");
+
+  // Selecting a person from the quick chat list should close the list first,
+  // then open only the conversation window.
+  if(popover)popover.classList.remove("open");
+  if(launcherBtn)launcherBtn.setAttribute("aria-expanded","false");
+
   if(!northworkCurrentUser){
     showNorthworkToast("Log in with Discord to use Northwork chats.");
     return;
