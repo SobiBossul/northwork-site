@@ -24,19 +24,13 @@ html{
   scrollbar-width:none;
 }
 
-/* Accessible UI scale: use browser zoom so fixed-size UI elements
-   (buttons, labels, cards, etc.) all scale together without requiring
-   every individual component to be rewritten. */
-body{
-  zoom:var(--nw-ui-scale);
-}
-
 html::-webkit-scrollbar{
   width:0;
   height:0;
 }
 
 body{
+  zoom:var(--nw-ui-scale);
   margin:0;
   background:radial-gradient(circle at 50% -20%,rgba(255,255,255,.07),transparent 34%),linear-gradient(180deg,var(--bg),var(--bg2));
   color:var(--text);
@@ -2358,16 +2352,39 @@ function initNorthworkSettings(){
 
   if(scale&&!scale.__nwBound){
     scale.__nwBound=true;
-    scale.addEventListener("input",()=>{
-      const n=Math.min(135,Math.max(90,Number(scale.value)||100));
+
+    let pendingScale=null;
+
+    const updateScaleLabel=value=>{
+      const n=Math.min(135,Math.max(90,Number(value)||100));
       if(scaleValue){
         scaleValue.value=String(n)+"%";
         scaleValue.textContent=String(n)+"%";
       }
-      document.documentElement.style.setProperty("--nw-ui-scale",String(n/100));
+      pendingScale=n;
+    };
+
+    const commitScale=()=>{
+      if(pendingScale===null)return;
+      applyScale(pendingScale);
+      pendingScale=null;
+    };
+
+    // While dragging/scrolling, only update the percentage label.
+    // The actual site scale is committed when the user stops.
+    scale.addEventListener("input",()=>{
+      updateScaleLabel(scale.value);
     });
-    scale.addEventListener("change",()=>{
-      applyScale(scale.value);
+
+    // Mouse, touch, pen, and normal range-input changes.
+    scale.addEventListener("pointerup",commitScale);
+    scale.addEventListener("change",commitScale);
+
+    // Keyboard adjustments on the slider should commit too.
+    scale.addEventListener("keyup",e=>{
+      if(["ArrowLeft","ArrowRight","Home","End"].includes(e.key)){
+        commitScale();
+      }
     });
   }
 }
