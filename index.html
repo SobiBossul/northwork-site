@@ -794,12 +794,20 @@ body.nw-profile-gradient .topbar{
 .chat-safety{margin:0 13px 10px;padding:10px 11px;border:1px solid rgba(230,190,91,.26);border-radius:10px;background:linear-gradient(180deg,rgba(40,31,10,.45),rgba(20,17,10,.42));color:#9b927e;font-size:10px;line-height:1.55}
 .chat-safety strong{color:#f0cd73}
 .chat-messages{flex:1;overflow:auto;padding:14px;display:flex;flex-direction:column;gap:7px;background:linear-gradient(180deg,rgba(255,255,255,.008),transparent 28%)}
-.chat-message{display:flex;flex-direction:column;max-width:78%;gap:3px}
-.chat-message.mine{align-self:flex-end;align-items:flex-end}
-.chat-message.theirs{align-self:flex-start;align-items:flex-start}
+.chat-message{display:flex;max-width:82%;gap:7px;align-items:flex-end;animation:chatMessageIn .18s ease both}
+.chat-message.mine{flex-direction:row-reverse}
+.chat-message.theirs{flex-direction:row}
+.chat-message-avatar{width:28px;height:28px;border-radius:50%;object-fit:cover;background:#171b21;border:1px solid #2b323b;flex:none}
+.chat-message-main{display:flex;flex-direction:column;gap:3px;min-width:0}
+.chat-message.mine .chat-message-main{align-items:flex-end}
+.chat-message.theirs .chat-message-main{align-items:flex-start}
+@keyframes chatMessageIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+
 .chat-bubble{padding:9px 11px;border-radius:13px;border:1px solid #2c333c;background:#12171d;color:#dfe3e8;font-size:12px;line-height:1.5;white-space:pre-wrap;word-break:break-word}
 .chat-message.mine .chat-bubble{background:#e9edf1;color:#0a0c0f;border-color:#eef1f4}
 .chat-time{font-size:9px;color:#606975;padding:0 3px}
+.chat-status{font-size:9px;color:#68717c;padding:0 4px;min-height:12px}.chat-status.seen{color:#8f9baa}
+.chat-typing{display:flex;align-items:flex-end;gap:7px;padding:2px 0 4px;opacity:0;transform:translateY(4px);height:0;overflow:hidden;transition:opacity .2s ease,transform .2s ease,height .2s ease}.chat-typing.open{opacity:1;transform:none;height:34px}.chat-typing-avatar{width:28px;height:28px;border-radius:50%;object-fit:cover;border:1px solid #2b323b;background:#171b21;transform:translateX(-8px);transition:transform .24s cubic-bezier(.22,1,.36,1)}.chat-typing.open .chat-typing-avatar{transform:translateX(0)}.chat-typing-bubble{display:flex;align-items:center;gap:4px;min-width:42px;height:28px;padding:0 10px;border-radius:14px;border:1px solid #2c333c;background:#12171d;transform:translateX(-8px);transition:transform .24s cubic-bezier(.22,1,.36,1)}.chat-typing.open .chat-typing-bubble{transform:translateX(0)}.chat-typing-dot{width:5px;height:5px;border-radius:50%;background:#929aa5;animation:chatTypingDot 1.05s ease-in-out infinite}.chat-typing-dot:nth-child(2){animation-delay:.14s}.chat-typing-dot:nth-child(3){animation-delay:.28s}@keyframes chatTypingDot{0%,60%,100%{transform:translateY(0);opacity:.45}30%{transform:translateY(-4px);opacity:1}}
 .chat-composer{padding:11px;border-top:1px solid rgba(255,255,255,.06);display:flex;align-items:flex-end;gap:8px;background:rgba(10,13,16,.78)}
 .chat-composer textarea{flex:1;min-height:42px;max-height:130px;resize:none;border:1px solid #2c333c;border-radius:11px;background:#101419;color:var(--text);padding:10px 11px;font:inherit;font-size:12px;outline:none}
 .chat-composer textarea:focus{border-color:#495461}
@@ -976,6 +984,7 @@ body.nw-profile-gradient .topbar{
     </div>
     <div class="chat-safety"><strong>Safety matters.</strong> Chats are normally not moderated, but if you ever feel unsafe, your safety matters to us! Contact us via ticket!</div>
     <div class="chat-messages" id="chatModalMessages"></div>
+    <div class="chat-typing" id="chatModalTyping"></div>
     <form class="chat-composer" id="chatModalComposer">
       <textarea id="chatModalInput" maxlength="2000" placeholder="Write a message..." rows="1"></textarea>
       <button id="chatModalSend" type="submit">Send</button>
@@ -1505,14 +1514,25 @@ function renderChatMessages(box,messages){
     return;
   }
   const me=String(northworkCurrentUser?.id||"");
+  const myAvatar=chatAvatar(northworkCurrentUser);
+  const otherAvatar=chatAvatar(northworkChatSelected);
   box.innerHTML=list.map(msg=>{
     const mine=String(msg.senderId)===me;
-    return `<div class="chat-message ${mine?"mine":"theirs"}">
-      <div class="chat-bubble">${chatEsc(msg.body)}</div>
-      <div class="chat-time">${chatEsc(chatFormatTime(msg.createdAt))}</div>
-    </div>`;
+    const avatar=mine?myAvatar:otherAvatar;
+    const image=avatar?'<img class="chat-message-avatar" src="'+chatEsc(avatar)+'" alt="" loading="lazy" decoding="async">':'';
+    const status=mine ? '<div class="chat-status '+(msg.seenAt?'seen':'')+'">'+(msg.seenAt?'Seen':'Sent')+'</div>' : '';
+    return `<div class="chat-message ${mine?"mine":"theirs"}">${image}<div class="chat-message-main"><div class="chat-bubble">${chatEsc(msg.body)}</div><div class="chat-time">${chatEsc(chatFormatTime(msg.createdAt))}</div>${status}</div></div>`;
   }).join("");
   box.scrollTop=box.scrollHeight;
+}
+
+function renderChatTyping(mode,user){
+  const box=document.getElementById(mode==="page"?"chatPageTyping":"chatModalTyping");
+  if(!box)return;
+  if(!user){box.classList.remove("open");box.innerHTML="";return;}
+  const avatar=chatAvatar(user);
+  box.innerHTML=(avatar?'<img class="chat-typing-avatar" src="'+chatEsc(avatar)+'" alt="">':'')+'<div class="chat-typing-bubble"><span class="chat-typing-dot"></span><span class="chat-typing-dot"></span><span class="chat-typing-dot"></span></div>';
+  box.classList.add("open");
 }
 
 function chatHeaderHtml(user,kind){
@@ -1550,9 +1570,8 @@ async function loadNorthworkChatMessages(userId,mode="modal"){
     const data=await r.json();
     const box=document.getElementById(mode==="page"?"chatPageMessages":"chatModalMessages");
     renderChatMessages(box,data.messages||[]);
-  }catch(error){
-    console.warn("Northwork chat messages error:",error);
-  }
+    renderChatTyping(mode,data.typing?northworkChatSelected:null);
+  }catch(error){console.warn("Northwork chat messages error:",error);}
 }
 
 function stopChatMessagePolling(){
@@ -1565,10 +1584,11 @@ function startChatMessagePolling(mode="modal"){
   loadNorthworkChatMessages(northworkChatSelected.id,mode);
   northworkChatMessagesTimer=setInterval(()=>{
     if(northworkChatSelected)loadNorthworkChatMessages(northworkChatSelected.id,mode);
-  },1800);
+  },1200);
 }
 
 async function sendNorthworkChatMessage(userId,body,mode="modal"){
+  if(userId){northworkChatTypingActive=false;if(northworkChatTypingTimer)clearTimeout(northworkChatTypingTimer);setNorthworkChatTyping(userId,false);}
   const text=String(body||"").trim();
   if(!text||!northworkCurrentUser||!userId)return false;
   try{
@@ -1678,10 +1698,9 @@ async function initNorthworkChat(){
   const input=document.getElementById("chatModalInput");
   if(input&&!input.__bound){
     input.__bound=true;
-    input.addEventListener("input",()=>{input.style.height="42px";input.style.height=Math.min(input.scrollHeight,130)+"px";});
-    input.addEventListener("keydown",e=>{
-      if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();composer.requestSubmit();}
-    });
+    input.addEventListener("input",()=>{input.style.height="42px";input.style.height=Math.min(input.scrollHeight,130)+"px";queueNorthworkChatTyping(northworkChatSelected?.id,input);});
+    input.addEventListener("blur",()=>{if(northworkChatSelected){northworkChatTypingActive=false;if(northworkChatTypingTimer)clearTimeout(northworkChatTypingTimer);setNorthworkChatTyping(northworkChatSelected.id,false);}});
+    input.addEventListener("keydown",e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();composer.requestSubmit();}});
   }
 
   if(modal&&!modal.__bound){
@@ -1728,6 +1747,7 @@ function openNorthworkChatPage(user){
     '</div>'+
     '<div class="chat-safety chat-page-safety"><strong>Safety matters.</strong> '+chatEsc(CHAT_SAFETY_TEXT)+'</div>'+
     '<div class="chat-messages chat-page-messages" id="chatPageMessages"></div>'+
+    '<div class="chat-typing" id="chatPageTyping"></div>'+
     '<form class="chat-composer chat-page-composer" id="chatPageComposer">'+
       '<textarea id="chatPageInput" maxlength="2000" placeholder="Write a message..." rows="1"></textarea>'+
       '<button type="submit" id="chatPageSend">Send</button>'+
@@ -1745,7 +1765,8 @@ function openNorthworkChatPage(user){
     });
   }
   if(input){
-    input.addEventListener("input",()=>{input.style.height="42px";input.style.height=Math.min(input.scrollHeight,130)+"px";});
+    input.addEventListener("input",()=>{input.style.height="42px";input.style.height=Math.min(input.scrollHeight,130)+"px";queueNorthworkChatTyping(user.id,input);});
+    input.addEventListener("blur",()=>{northworkChatTypingActive=false;if(northworkChatTypingTimer)clearTimeout(northworkChatTypingTimer);setNorthworkChatTyping(user.id,false);});
     input.addEventListener("keydown",e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();composer?.requestSubmit();}});
     input.focus();
   }
