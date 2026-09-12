@@ -24,6 +24,13 @@ html{
   scrollbar-width:none;
 }
 
+/* Accessible UI scale: use browser zoom so fixed-size UI elements
+   (buttons, labels, cards, etc.) all scale together without requiring
+   every individual component to be rewritten. */
+body{
+  zoom:var(--nw-ui-scale);
+}
+
 html::-webkit-scrollbar{
   width:0;
   height:0;
@@ -2353,9 +2360,15 @@ function initNorthworkSettings(){
     scale.__nwBound=true;
     scale.addEventListener("input",()=>{
       const n=Math.min(135,Math.max(90,Number(scale.value)||100));
-      if(scaleValue)scaleValue.textContent=String(n)+"%";
+      if(scaleValue){
+        scaleValue.value=String(n)+"%";
+        scaleValue.textContent=String(n)+"%";
+      }
+      document.documentElement.style.setProperty("--nw-ui-scale",String(n/100));
     });
-    scale.addEventListener("change",()=>applyScale(scale.value));
+    scale.addEventListener("change",()=>{
+      applyScale(scale.value);
+    });
   }
 }
 
