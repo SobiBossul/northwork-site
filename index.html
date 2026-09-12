@@ -30,7 +30,6 @@ html::-webkit-scrollbar{
 }
 
 body{
-  zoom:var(--nw-ui-scale,1);
   margin:0;
   background:radial-gradient(circle at 50% -20%,rgba(255,255,255,.07),transparent 34%),linear-gradient(180deg,var(--bg),var(--bg2));
   color:var(--text);
@@ -1962,7 +1961,8 @@ function renderProfileActivity(activity){
     title.textContent="Listening on Spotify";
 
     const parts=[];
-    if(activity.track)parts.push(activity.track);
+    const track=activity.song||activity.track||"";
+    if(track)parts.push(track);
     if(activity.artist)parts.push(`by ${activity.artist}`);
 
     const now=Date.now();
@@ -1976,7 +1976,7 @@ function renderProfileActivity(activity){
     meta.textContent=parts.join(" • ");
   }else{
     icon.textContent="◉";
-    title.textContent=`Playing ${activity.name||"a game"}`;
+    title.textContent=`Playing ${activity.game||activity.name||"a game"}`;
 
     const start=Number(activity.startedAt||0);
     meta.textContent=start
@@ -2003,7 +2003,7 @@ function startProfileActivity(userId){
   stopProfileActivity();
   northworkActivityUserId=String(userId);
   refreshProfileActivity(userId);
-  northworkActivityTimer=setInterval(()=>refreshProfileActivity(userId),3000);
+  northworkActivityTimer=setInterval(()=>refreshProfileActivity(userId),1000);
 }
 
 function stopProfileActivity(){
@@ -2351,7 +2351,11 @@ function initNorthworkSettings(){
 
   if(scale&&!scale.__nwBound){
     scale.__nwBound=true;
-    scale.addEventListener("input",()=>applyScale(scale.value));
+    scale.addEventListener("input",()=>{
+      const n=Math.min(135,Math.max(90,Number(scale.value)||100));
+      if(scaleValue)scaleValue.textContent=String(n)+"%";
+    });
+    scale.addEventListener("change",()=>applyScale(scale.value));
   }
 }
 
