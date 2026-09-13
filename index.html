@@ -455,6 +455,69 @@ footer{border-top:1px solid var(--line);padding:30px 0 42px;color:#666e78;font-s
 
 /* ================= NORTHWORK ACCOUNT / PROFILE ================= */
 .account-area{position:relative;flex:none}.account-login{display:inline-flex;align-items:center;gap:8px;padding:9px 13px;border:1px solid var(--line);background:var(--panel);border-radius:9px;color:var(--text);cursor:pointer;font-size:13px}.account-login:hover{border-color:#3a424d;background:#14181d}.account-user{display:flex;align-items:center;gap:9px;border:1px solid var(--line);background:#101317;color:var(--text);border-radius:10px;padding:4px 9px 4px 4px;cursor:pointer}.account-user:hover{border-color:#383f48}.account-user-avatar{width:30px;height:30px;border-radius:50%;object-fit:cover;background:#181c22}.account-user-name{max-width:130px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:13px;font-weight:650}.account-chevron{color:#737b86;font-size:12px}.account-dropdown{position:absolute;right:0;top:48px;width:205px;padding:6px;background:#0f1216;border:1px solid #2a3038;border-radius:12px;box-shadow:0 24px 70px rgba(0,0,0,.55);display:none;z-index:80}.account-dropdown.open{display:block;animation:accountDrop .16s ease both}.account-dropdown .account-menu-user{padding:10px 10px 12px;border-bottom:1px solid #22272f;margin-bottom:4px}.account-menu-user strong{display:block;font-size:13px}.account-menu-user span{display:block;color:#6f7782;font-size:11px;margin-top:2px}.account-dropdown button{width:100%;display:block;text-align:left;padding:10px;border:0;background:transparent;color:#cbd0d7;border-radius:8px;cursor:pointer}.account-dropdown button:hover{background:#171b20}.account-dropdown .account-logout{color:#ef626c}.account-dropdown .account-logout:hover{background:rgba(239,98,108,.08)}@keyframes accountDrop{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
+/* ================= NORTHWORK CONNECTED ACCOUNTS ================= */
+.account-manager-backdrop{
+  position:fixed;
+  inset:0;
+  z-index:500;
+  display:none;
+  place-items:center;
+  padding:20px;
+  background:rgba(0,0,0,.68);
+  backdrop-filter:blur(12px);
+}
+.account-manager-backdrop.open{display:grid}
+.account-manager{
+  width:min(460px,100%);
+  max-height:min(680px,88vh);
+  overflow:hidden;
+  border:1px solid #2c333c;
+  border-radius:18px;
+  background:rgba(12,15,19,.97);
+  box-shadow:0 35px 120px rgba(0,0,0,.7);
+  animation:accountManagerIn .18s ease both;
+}
+@keyframes accountManagerIn{from{opacity:0;transform:translateY(8px) scale(.985)}to{opacity:1;transform:none}}
+.account-manager-head{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:14px;
+  padding:18px 18px 15px;
+  border-bottom:1px solid rgba(255,255,255,.06);
+}
+.account-manager-head h2{margin:0;font-size:19px;letter-spacing:-.03em}
+.account-manager-head p{margin:4px 0 0;color:#727a85;font-size:11px}
+.account-manager-close{width:32px;height:32px;border:1px solid #2a3038;border-radius:9px;background:#11151a;color:#8f96a1;cursor:pointer}
+.account-manager-close:hover{background:#171c22;color:#fff}
+.account-manager-list{padding:12px;display:grid;gap:8px;max-height:470px;overflow:auto}
+.account-manager-row{
+  width:100%;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:11px 12px;
+  border:1px solid #222932;
+  border-radius:12px;
+  background:#0f1317;
+  color:var(--text);
+  text-align:left;
+  cursor:pointer;
+  transition:.16s;
+}
+.account-manager-row:hover{background:#151a20;border-color:#3a424c;transform:translateY(-1px)}
+.account-manager-row.current{background:#171c22;border-color:#4a5562}
+.account-manager-avatar{width:42px;height:42px;border-radius:50%;object-fit:cover;flex:none;background:#171b21;border:1px solid #2b323b}
+.account-manager-main{min-width:0;flex:1}
+.account-manager-name{font-size:13px;font-weight:750;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.account-manager-user{margin-top:3px;color:#737c87;font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.account-manager-tag{flex:none;color:#7f8994;font-size:10px;border:1px solid #2a3038;border-radius:999px;padding:5px 7px}
+.account-manager-row.current .account-manager-tag{color:#dfe4e9;border-color:#46515d}
+.account-manager-foot{padding:12px;border-top:1px solid rgba(255,255,255,.06);display:grid;gap:8px}
+.account-manager-add{width:100%}
+.account-manager-note{color:#68717c;font-size:10px;line-height:1.55;text-align:center}
+.account-manager-empty{padding:20px 12px;color:#727a85;text-align:center;font-size:12px}
+
 .profile-shell{padding:58px 0 90px}.profile-cover{position:relative;height:310px;border:1px solid var(--line);border-radius:20px;overflow:hidden;background:linear-gradient(115deg,#171b21,#090b0e)}.profile-cover-image{position:absolute;inset:0;background-position:center;background-size:cover;transition:.25s} .profile-banner-media{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;}.profile-cover-image:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.04),rgba(0,0,0,.58))}.profile-edit{position:absolute;z-index:3;right:18px;top:18px;width:40px;height:40px;border-radius:10px;border:1px solid #3a4048;background:rgba(8,10,13,.72);color:#fff;cursor:pointer;backdrop-filter:blur(12px)}.profile-edit:hover{background:#15191f}.profile-info{position:relative;margin-top:-67px;padding:0 28px 28px;display:flex;align-items:end;gap:18px;z-index:4}.profile-avatar-wrap{width:132px;height:132px;border-radius:50%;padding:5px;background:#0b0d10;border:1px solid #262c33;flex:none}.profile-avatar{width:100%;height:100%;border-radius:50%;object-fit:cover;border:1px solid #3a4048;background:#161a20}.profile-name h1{font-size:32px;margin:0 0 3px;letter-spacing:-.045em;display:flex;align-items:center;gap:7px;flex-wrap:wrap}.site-profile-badges{display:inline-flex;align-items:center;gap:0px;vertical-align:middle;margin-left:0px;flex:none}.site-profile-badge{width:31px;height:31px;object-fit:contain;display:inline-block;flex:none;vertical-align:middle;cursor:help;position:relative;top:0px}.profile-name p{margin:0;color:#7f8791;font-size:13px}.profile-activity{display:inline-flex;align-items:center;gap:7px;max-width:100%;margin:0 0 7px;padding:5px 8px;border:1px solid #2c333c;background:rgba(12,15,19,.82);border-radius:8px;backdrop-filter:blur(10px);box-shadow:0 8px 26px rgba(0,0,0,.18);font-size:11px;line-height:1.15}.profile-activity[hidden]{display:none}.profile-activity-icon{width:14px;height:14px;display:inline-flex;align-items:center;justify-content:center;color:#8ff0ad;font-size:11px;flex:none}.profile-activity-copy{display:flex;align-items:baseline;gap:6px;min-width:0;flex-wrap:wrap}.profile-activity-copy strong{color:#e7eaee;font-size:11px;font-weight:700}.profile-activity-copy span{color:#7f8994;font-size:10px}.profile-activity.spotify .profile-activity-icon{color:#8ff0ad}.profile-activity.game .profile-activity-icon{color:#8fb7ff}.profile-share{margin-left:auto;white-space:nowrap}.profile-content{border:1px solid var(--line);border-top:1px solid var(--line);border-radius:20px;background:#0b0d10;padding:14px 28px 30px;margin-top:14px}\n.profile-content,.profile-cover{isolation:isolate}.profile-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.profile-panel{border:1px solid var(--line);background:linear-gradient(180deg,#101419,#0d1013);border-radius:14px;padding:20px}.profile-panel.wide{grid-column:1/-1}.profile-panel-title{text-transform:uppercase;letter-spacing:.12em;font-size:10px;color:#707883;font-weight:800;margin-bottom:12px}.profile-joined{font-size:15px;color:#e2e5e9}.profile-roles{display:flex;gap:7px;flex-wrap:wrap} .profile-role{position:relative;font-size:12px;padding:7px 10px 9px;border:1px solid #303640;background:#12161b;border-radius:7px;color:#cbd0d7;overflow:hidden;--role-color:#5865f2}
 .profile-role:after{content:"";position:absolute;left:7px;right:7px;bottom:4px;height:2px;border-radius:999px;background:var(--role-color);opacity:.95}
 .profile-role.role-neutral:after{background:#4b535d;opacity:.7}.profile-ticket{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid #1e2329;font-size:13px}.profile-ticket:last-child{border-bottom:0}.ticket-status{font-size:11px;color:var(--green)}.profile-empty{color:#727a85;font-size:13px}.profile-warning{border:1px solid #65232d;background:linear-gradient(180deg,#180d10,#120b0d);padding:14px;border-radius:10px;margin-bottom:8px;box-shadow:0 0 22px rgba(239,98,108,.08)}.profile-warning strong{color:#ff6c76;font-size:13px}.profile-warning p{color:#c5a7ab;margin:5px 0 0;font-size:12px}.profile-warning small{display:block;color:#777f89;margin-top:7px}.profile-warnings.has-warning{border-color:#6c252f;box-shadow:0 0 30px rgba(239,98,108,.08)}
@@ -1262,6 +1325,7 @@ body.nw-profile-gradient .topbar{
     <div class="page-title"><h1>Settings</h1><p>Manage your Northwork account preferences.</p></div>
     <div class="profile-settings-list">
       <div class="profile-setting-row"><div><strong>Discord account</strong><br><span id="settingsAccount">Connected account</span></div><span>Connected</span></div>
+      <div class="profile-setting-row"><div><strong>Connected accounts</strong><br><span>Link another Discord account and switch between your connected accounts.</span></div><button class="btn" type="button" id="settingsSwitchAccount">Switch Account</button></div>
       <div class="profile-setting-row"><div><strong>Profile background</strong><br><span>Use a custom banner and/or a full-page gradient. They can be enabled together.</span></div><button class="btn" type="button" id="settingsEditProfile">Edit profile</button></div>
       <div class="profile-setting-row"><div><strong>Hide followers</strong><br><span>People can still see your follower count, but they cannot open your follower list.</span></div><label class="profile-toggle-label"><input class="profile-toggle" id="settingsHideFollowers" type="checkbox" aria-label="Hide followers"><span id="settingsHideFollowersText">Off</span></label></div>
       <div class="profile-setting-row"><div><strong>Hide following</strong><br><span>People can still see your following count, but they cannot open the people you follow.</span></div><label class="profile-toggle-label"><input class="profile-toggle" id="settingsHideFollowing" type="checkbox" aria-label="Hide following"><span id="settingsHideFollowingText">Off</span></label></div>
@@ -1270,6 +1334,23 @@ body.nw-profile-gradient .topbar{
     </div>
   </div>
 </section>
+<div class="account-manager-backdrop" id="accountManagerBackdrop" aria-hidden="true">
+  <div class="account-manager" role="dialog" aria-modal="true" aria-labelledby="accountManagerTitle">
+    <div class="account-manager-head">
+      <div>
+        <h2 id="accountManagerTitle">Connected accounts</h2>
+        <p id="accountManagerSubtitle">Manage the Discord accounts connected to Northwork.</p>
+      </div>
+      <button class="account-manager-close" id="accountManagerClose" type="button" aria-label="Close">×</button>
+    </div>
+    <div class="account-manager-list" id="accountManagerList"></div>
+    <div class="account-manager-foot">
+      <button class="btn primary account-manager-add" id="accountManagerAdd" type="button">Add second account</button>
+      <div class="account-manager-note">Each connected account keeps its own Northwork profile, settings, chats and activity.</div>
+    </div>
+  </div>
+</div>
+
 <div class="profile-editor-backdrop" id="profileEditorBackdrop">
   <div class="profile-editor">
     <div class="profile-editor-head"><div><div class="eyebrow">PROFILE</div><h2>Edit profile</h2></div><button class="profile-close" id="profileEditorClose">×</button></div>
@@ -2317,7 +2398,7 @@ async function loadAuth(){
     }
     const u=data.user;
     const avatar=u.avatar_url || "https://cdn.discordapp.com/embed/avatars/0.png";
-    box.innerHTML=`<div style="position:relative"><button id="accountBtn" class="btn" style="padding:5px 9px 5px 5px;gap:8px"><img src="${escapeHtml(avatar)}" style="width:30px;height:30px;border-radius:50%;object-fit:cover" loading="lazy" decoding="async"><span>${escapeHtml(u.global_name||u.username)}</span><span style="color:#777">⌄</span></button><div id="accountMenu" style="display:none;position:absolute;right:0;top:48px;width:190px;padding:6px;background:#0f1216;border:1px solid #22272f;border-radius:12px;box-shadow:0 20px 60px #000b;z-index:100"><a href="#/profile" class="account-link">Go to Profile</a><a href="#/settings" class="account-link">Settings</a><button id="logoutBtn" class="account-link account-logout">Log out</button></div></div>`;
+    box.innerHTML=`<div style="position:relative"><button id="accountBtn" class="btn" style="padding:5px 9px 5px 5px;gap:8px"><img src="${escapeHtml(avatar)}" style="width:30px;height:30px;border-radius:50%;object-fit:cover" loading="lazy" decoding="async"><span>${escapeHtml(u.global_name||u.username)}</span><span style="color:#777">⌄</span></button><div id="accountMenu" style="display:none;position:absolute;right:0;top:48px;width:190px;padding:6px;background:#0f1216;border:1px solid #22272f;border-radius:12px;box-shadow:0 20px 60px #000b;z-index:100"><a href="#/profile" class="account-link">Go to Profile</a><a href="#/settings" class="account-link">Settings</a><button id="legacySwitchAccountBtn" class="account-link" type="button">Switch Account</button><button id="logoutBtn" class="account-link account-logout">Log out</button><button id="legacyAddAccountBtn" class="account-link" type="button">Add Account</button></div></div>`;
     const menu=document.getElementById("accountMenu");
     document.getElementById("accountBtn").onclick=()=>menu.style.display=menu.style.display==="block"?"none":"block";
     document.getElementById("logoutBtn").onclick=async()=>{await fetch(nwApi("/auth/logout"),{method:"POST",credentials:"include"});location.reload()};
@@ -2427,6 +2508,118 @@ async function getNorthworkUser(){
   return window.__northworkUserRequest;
 }
 
+let northworkAccountManagerMode = "switch";
+let northworkAccountsCache = null;
+
+function clearNorthworkAccountUserCache(){
+  northworkCurrentUser=null;
+  window.__northworkUserCacheTime=0;
+  try{localStorage.removeItem("northwork.cachedUser");localStorage.removeItem("northwork.cachedUserTime");}catch{}
+}
+
+async function loadNorthworkConnectedAccounts(force=false){
+  if(northworkAccountsCache&&!force)return northworkAccountsCache;
+  const r=await fetch(nwApi("/api/accounts"),{credentials:"include",cache:"no-store"});
+  const data=await r.json().catch(()=>({}));
+  if(!r.ok)throw new Error(data.error||"Could not load connected accounts.");
+  northworkAccountsCache=data;
+  return data;
+}
+
+function closeNorthworkAccountManager(){
+  const backdrop=document.getElementById("accountManagerBackdrop");
+  if(backdrop){backdrop.classList.remove("open");backdrop.setAttribute("aria-hidden","true");}
+}
+
+function renderNorthworkAccountManager(data){
+  const list=document.getElementById("accountManagerList");
+  const add=document.getElementById("accountManagerAdd");
+  const title=document.getElementById("accountManagerTitle");
+  const subtitle=document.getElementById("accountManagerSubtitle");
+  if(!list||!add||!title||!subtitle)return;
+
+  const accounts=Array.isArray(data?.accounts)?data.accounts:[];
+  title.textContent=northworkAccountManagerMode==="add"?"Add an account":"Switch Account";
+  subtitle.textContent=northworkAccountManagerMode==="add"
+    ?"Your current Discord account is connected. Add another account without logging out."
+    :"Choose which connected Discord account you want to use on Northwork.";
+
+  if(!accounts.length){
+    list.innerHTML='<div class="account-manager-empty">No connected accounts found.</div>';
+  }else{
+    list.innerHTML=accounts.map(account=>{
+      const name=escapeHtml(account.global_name||account.username||"Northwork User");
+      const username=account.username?"@"+escapeHtml(account.username):"";
+      const label=account.isCurrent?"Current":(account.isPrimary?"Main account":"Connected");
+      return `<button class="account-manager-row ${account.isCurrent?"current":""}" type="button" data-switch-account="${escapeHtml(account.id)}">`+
+        `<img class="account-manager-avatar" src="${escapeHtml(account.avatar_url||accountAvatar(account))}" alt="" loading="lazy" decoding="async">`+
+        `<span class="account-manager-main"><span class="account-manager-name">${name}</span><span class="account-manager-user">${username}</span></span>`+
+        `<span class="account-manager-tag">${label}</span>`+
+        `</button>`;
+    }).join("");
+  }
+
+  add.textContent=accounts.length?"Add second account":"Add account";
+  add.onclick=()=>{ window.location.href=nwApi("/auth/discord/add-account"); };
+
+  list.querySelectorAll("[data-switch-account]").forEach(btn=>btn.addEventListener("click",async()=>{
+    const userId=btn.getAttribute("data-switch-account");
+    if(!userId||btn.classList.contains("current"))return;
+    btn.disabled=true;
+    try{
+      const r=await fetch(nwApi("/api/accounts/switch"),{
+        method:"POST",
+        credentials:"include",
+        headers:{"Content-Type":"application/json"},
+        body:JSON.stringify({userId})
+      });
+      const data=await r.json().catch(()=>({}));
+      if(!r.ok)throw new Error(data.error||"Could not switch account.");
+      northworkAccountsCache=null;
+      clearNorthworkAccountUserCache();
+      closeNorthworkAccountManager();
+      await renderAccountArea();
+      await renderRoute();
+      window.scrollTo({top:0,behavior:"smooth"});
+      showNorthworkToast("Switched account.");
+    }catch(error){
+      btn.disabled=false;
+      showNorthworkToast(error.message||"Could not switch account.");
+    }
+  }));
+}
+
+async function openNorthworkAccountManager(mode="switch"){
+  if(!northworkCurrentUser){
+    showNorthworkToast("Log in with Discord to manage connected accounts.");
+    return;
+  }
+  northworkAccountManagerMode=mode;
+  const backdrop=document.getElementById("accountManagerBackdrop");
+  if(!backdrop)return;
+  backdrop.classList.add("open");
+  backdrop.setAttribute("aria-hidden","false");
+  const list=document.getElementById("accountManagerList");
+  if(list)list.innerHTML='<div class="account-manager-empty">Loading connected accounts…</div>';
+  try{
+    const data=await loadNorthworkConnectedAccounts(mode!=="switch");
+    renderNorthworkAccountManager(data);
+  }catch(error){
+    if(list)list.innerHTML=`<div class="account-manager-empty">${escapeHtml(error.message||"Could not load connected accounts.")}</div>`;
+  }
+}
+
+function initNorthworkAccountManager(){
+  const backdrop=document.getElementById("accountManagerBackdrop");
+  const close=document.getElementById("accountManagerClose");
+  if(!backdrop)return;
+  if(close&&!close.__bound){close.__bound=true;close.addEventListener("click",closeNorthworkAccountManager);}
+  if(!backdrop.__bound){
+    backdrop.__bound=true;
+    backdrop.addEventListener("click",e=>{if(e.target===backdrop)closeNorthworkAccountManager();});
+  }
+}
+
 async function renderAccountArea(){
   const area=document.getElementById("accountArea");
   if(!area)return;
@@ -2454,7 +2647,9 @@ async function renderAccountArea(){
       </div>
       <button data-account-route="/profile">Go to Profile</button>
       <button data-account-route="/settings">Settings</button>
+      <button id="accountSwitch" type="button">Switch Account</button>
       <button class="account-logout" id="accountLogout" type="button">Log out</button>
+      <button id="accountAdd" type="button">Add Account</button>
     </div>`;
 
   document.getElementById("accountUserButton")?.addEventListener("click",e=>{
@@ -2469,6 +2664,11 @@ async function renderAccountArea(){
     });
   });
 
+  document.getElementById("accountSwitch")?.addEventListener("click",async()=>{
+    document.getElementById("accountDropdown")?.classList.remove("open");
+    await openNorthworkAccountManager("switch");
+  });
+
   document.getElementById("accountLogout")?.addEventListener("click",async()=>{
     await fetch(nwApi("/auth/logout"),{method:"POST",credentials:"include"}).catch(()=>{});
     northworkCurrentUser=null;
@@ -2477,6 +2677,11 @@ async function renderAccountArea(){
     document.getElementById("chatModal")?.classList.remove("open");
     await renderAccountArea();
     go("/");
+  });
+
+  document.getElementById("accountAdd")?.addEventListener("click",async()=>{
+    document.getElementById("accountDropdown")?.classList.remove("open");
+    await openNorthworkAccountManager("add");
   });
 }
 
@@ -3234,6 +3439,12 @@ function initProfileEditor(){
     });
   }
 
+  const settingsSwitch=document.getElementById("settingsSwitchAccount");
+  if(settingsSwitch&&!settingsSwitch.__bound){
+    settingsSwitch.__bound=true;
+    settingsSwitch.addEventListener("click",()=>openNorthworkAccountManager("switch"));
+  }
+
   const logout=document.getElementById("settingsLogout");
   if(logout && !logout.__northworkBound){
     logout.__northworkBound=true;
@@ -3406,7 +3617,19 @@ loadCommunity();
 initProfileChangeNotice();
 initProfileEditor();
 initNorthworkSettings();
+initNorthworkAccountManager();
 renderAccountArea();
+
+(async()=>{
+  const params=new URLSearchParams(location.search);
+  const result=params.get("accounts");
+  if(result){
+    history.replaceState({},"",location.pathname+location.hash);
+    if(result==="added")showNorthworkToast("Account connected successfully.");
+    else if(result==="already_connected")showNorthworkToast("That account is already connected.");
+    else if(result==="already_linked")showNorthworkToast("That Discord account is already connected to another Northwork account group.");
+  }
+})();
 initNorthworkChat();
 renderRoute();
 </script>
