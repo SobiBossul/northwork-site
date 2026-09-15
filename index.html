@@ -1407,6 +1407,7 @@ const NORTHWORK_CHAT_LIST_CACHE_MS=30000;
 
 const CHAT_SAFETY_TEXT="Chats are normally not moderated, but if you ever feel unsafe, your safety matters to us! Contact us via ticket!";
 let northworkChatMessagesData=[];
+let northworkChatSending=false;
 let northworkChatSendSequence=0;
 
 function chatEsc(v){return escapeHtml(String(v??""));}
@@ -1687,6 +1688,7 @@ function setChatModalUser(user){
 
 async function loadNorthworkChatMessages(userId,mode="modal"){
   if(!northworkCurrentUser||!userId)return;
+  if(northworkChatSending)return;
   const requestUserId=String(userId);
   try{
     const r=await fetch(nwApi(`/api/chats/${encodeURIComponent(requestUserId)}/messages`),{
@@ -1706,7 +1708,6 @@ async function loadNorthworkChatMessages(userId,mode="modal"){
 
     const box=document.getElementById(mode==="page"?"chatPageMessages":"chatModalMessages");
     if(box){
-      box.__nwMessageSignature="";
       renderChatMessages(box,northworkChatMessagesData);
     }
 
@@ -1738,6 +1739,9 @@ async function sendNorthworkChatMessage(userId,body,mode="modal"){
 
   const text=String(body||"").trim();
   if(!text||!northworkCurrentUser||!userId)return false;
+
+  northworkChatSending=true;
+  stopChatMessagePolling();
 
   try{
     const r=await fetch(nwApi(`/api/chats/${encodeURIComponent(userId)}/messages`),{
@@ -1782,6 +1786,11 @@ async function sendNorthworkChatMessage(userId,body,mode="modal"){
   }catch(error){
     showNorthworkToast(error.message||"Could not send message.");
     return false;
+  }finally{
+    northworkChatSending=false;
+    if(northworkChatSelected){
+      startChatMessagePolling(mode);
+    }
   }
 }
 function openNorthworkChat(user){
