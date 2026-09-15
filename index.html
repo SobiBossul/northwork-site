@@ -455,69 +455,6 @@ footer{border-top:1px solid var(--line);padding:30px 0 42px;color:#666e78;font-s
 
 /* ================= NORTHWORK ACCOUNT / PROFILE ================= */
 .account-area{position:relative;flex:none}.account-login{display:inline-flex;align-items:center;gap:8px;padding:9px 13px;border:1px solid var(--line);background:var(--panel);border-radius:9px;color:var(--text);cursor:pointer;font-size:13px}.account-login:hover{border-color:#3a424d;background:#14181d}.account-user{display:flex;align-items:center;gap:9px;border:1px solid var(--line);background:#101317;color:var(--text);border-radius:10px;padding:4px 9px 4px 4px;cursor:pointer}.account-user:hover{border-color:#383f48}.account-user-avatar{width:30px;height:30px;border-radius:50%;object-fit:cover;background:#181c22}.account-user-name{max-width:130px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:13px;font-weight:650}.account-chevron{color:#737b86;font-size:12px}.account-dropdown{position:absolute;right:0;top:48px;width:205px;padding:6px;background:#0f1216;border:1px solid #2a3038;border-radius:12px;box-shadow:0 24px 70px rgba(0,0,0,.55);display:none;z-index:80}.account-dropdown.open{display:block;animation:accountDrop .16s ease both}.account-dropdown .account-menu-user{padding:10px 10px 12px;border-bottom:1px solid #22272f;margin-bottom:4px}.account-menu-user strong{display:block;font-size:13px}.account-menu-user span{display:block;color:#6f7782;font-size:11px;margin-top:2px}.account-dropdown button{width:100%;display:block;text-align:left;padding:10px;border:0;background:transparent;color:#cbd0d7;border-radius:8px;cursor:pointer}.account-dropdown button:hover{background:#171b20}.account-dropdown .account-logout{color:#ef626c}.account-dropdown .account-logout:hover{background:rgba(239,98,108,.08)}@keyframes accountDrop{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
-/* ================= NORTHWORK CONNECTED ACCOUNTS ================= */
-.account-manager-backdrop{
-  position:fixed;
-  inset:0;
-  z-index:500;
-  display:none;
-  place-items:center;
-  padding:20px;
-  background:rgba(0,0,0,.68);
-  backdrop-filter:blur(12px);
-}
-.account-manager-backdrop.open{display:grid}
-.account-manager{
-  width:min(460px,100%);
-  max-height:min(680px,88vh);
-  overflow:hidden;
-  border:1px solid #2c333c;
-  border-radius:18px;
-  background:rgba(12,15,19,.97);
-  box-shadow:0 35px 120px rgba(0,0,0,.7);
-  animation:accountManagerIn .18s ease both;
-}
-@keyframes accountManagerIn{from{opacity:0;transform:translateY(8px) scale(.985)}to{opacity:1;transform:none}}
-.account-manager-head{
-  display:flex;
-  align-items:flex-start;
-  justify-content:space-between;
-  gap:14px;
-  padding:18px 18px 15px;
-  border-bottom:1px solid rgba(255,255,255,.06);
-}
-.account-manager-head h2{margin:0;font-size:19px;letter-spacing:-.03em}
-.account-manager-head p{margin:4px 0 0;color:#727a85;font-size:11px}
-.account-manager-close{width:32px;height:32px;border:1px solid #2a3038;border-radius:9px;background:#11151a;color:#8f96a1;cursor:pointer}
-.account-manager-close:hover{background:#171c22;color:#fff}
-.account-manager-list{padding:12px;display:grid;gap:8px;max-height:470px;overflow:auto}
-.account-manager-row{
-  width:100%;
-  display:flex;
-  align-items:center;
-  gap:12px;
-  padding:11px 12px;
-  border:1px solid #222932;
-  border-radius:12px;
-  background:#0f1317;
-  color:var(--text);
-  text-align:left;
-  cursor:pointer;
-  transition:.16s;
-}
-.account-manager-row:hover{background:#151a20;border-color:#3a424c;transform:translateY(-1px)}
-.account-manager-row.current{background:#171c22;border-color:#4a5562}
-.account-manager-avatar{width:42px;height:42px;border-radius:50%;object-fit:cover;flex:none;background:#171b21;border:1px solid #2b323b}
-.account-manager-main{min-width:0;flex:1}
-.account-manager-name{font-size:13px;font-weight:750;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.account-manager-user{margin-top:3px;color:#737c87;font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.account-manager-tag{flex:none;color:#7f8994;font-size:10px;border:1px solid #2a3038;border-radius:999px;padding:5px 7px}
-.account-manager-row.current .account-manager-tag{color:#dfe4e9;border-color:#46515d}
-.account-manager-foot{padding:12px;border-top:1px solid rgba(255,255,255,.06);display:grid;gap:8px}
-.account-manager-add{width:100%}
-.account-manager-note{color:#68717c;font-size:10px;line-height:1.55;text-align:center}
-.account-manager-empty{padding:20px 12px;color:#727a85;text-align:center;font-size:12px}
-
 .profile-shell{padding:58px 0 90px}.profile-cover{position:relative;height:310px;border:1px solid var(--line);border-radius:20px;overflow:hidden;background:linear-gradient(115deg,#171b21,#090b0e)}.profile-cover-image{position:absolute;inset:0;background-position:center;background-size:cover;transition:.25s} .profile-banner-media{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;}.profile-cover-image:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.04),rgba(0,0,0,.58))}.profile-edit{position:absolute;z-index:3;right:18px;top:18px;width:40px;height:40px;border-radius:10px;border:1px solid #3a4048;background:rgba(8,10,13,.72);color:#fff;cursor:pointer;backdrop-filter:blur(12px)}.profile-edit:hover{background:#15191f}.profile-info{position:relative;margin-top:-67px;padding:0 28px 28px;display:flex;align-items:end;gap:18px;z-index:4}.profile-avatar-wrap{width:132px;height:132px;border-radius:50%;padding:5px;background:#0b0d10;border:1px solid #262c33;flex:none}.profile-avatar{width:100%;height:100%;border-radius:50%;object-fit:cover;border:1px solid #3a4048;background:#161a20}.profile-name h1{font-size:32px;margin:0 0 3px;letter-spacing:-.045em;display:flex;align-items:center;gap:7px;flex-wrap:wrap}.site-profile-badges{display:inline-flex;align-items:center;gap:0px;vertical-align:middle;margin-left:0px;flex:none}.site-profile-badge{width:31px;height:31px;object-fit:contain;display:inline-block;flex:none;vertical-align:middle;cursor:help;position:relative;top:0px}.profile-name p{margin:0;color:#7f8791;font-size:13px}.profile-activity{display:inline-flex;align-items:center;gap:7px;max-width:100%;margin:0 0 7px;padding:5px 8px;border:1px solid #2c333c;background:rgba(12,15,19,.82);border-radius:8px;backdrop-filter:blur(10px);box-shadow:0 8px 26px rgba(0,0,0,.18);font-size:11px;line-height:1.15}.profile-activity[hidden]{display:none}.profile-activity-icon{width:14px;height:14px;display:inline-flex;align-items:center;justify-content:center;color:#8ff0ad;font-size:11px;flex:none}.profile-activity-copy{display:flex;align-items:baseline;gap:6px;min-width:0;flex-wrap:wrap}.profile-activity-copy strong{color:#e7eaee;font-size:11px;font-weight:700}.profile-activity-copy span{color:#7f8994;font-size:10px}.profile-activity.spotify .profile-activity-icon{color:#8ff0ad}.profile-activity.game .profile-activity-icon{color:#8fb7ff}.profile-share{margin-left:auto;white-space:nowrap}.profile-content{border:1px solid var(--line);border-top:1px solid var(--line);border-radius:20px;background:#0b0d10;padding:14px 28px 30px;margin-top:14px}\n.profile-content,.profile-cover{isolation:isolate}.profile-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.profile-panel{border:1px solid var(--line);background:linear-gradient(180deg,#101419,#0d1013);border-radius:14px;padding:20px}.profile-panel.wide{grid-column:1/-1}.profile-panel-title{text-transform:uppercase;letter-spacing:.12em;font-size:10px;color:#707883;font-weight:800;margin-bottom:12px}.profile-joined{font-size:15px;color:#e2e5e9}.profile-roles{display:flex;gap:7px;flex-wrap:wrap} .profile-role{position:relative;font-size:12px;padding:7px 10px 9px;border:1px solid #303640;background:#12161b;border-radius:7px;color:#cbd0d7;overflow:hidden;--role-color:#5865f2}
 .profile-role:after{content:"";position:absolute;left:7px;right:7px;bottom:4px;height:2px;border-radius:999px;background:var(--role-color);opacity:.95}
 .profile-role.role-neutral:after{background:#4b535d;opacity:.7}.profile-ticket{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid #1e2329;font-size:13px}.profile-ticket:last-child{border-bottom:0}.ticket-status{font-size:11px;color:var(--green)}.profile-empty{color:#727a85;font-size:13px}.profile-warning{border:1px solid #65232d;background:linear-gradient(180deg,#180d10,#120b0d);padding:14px;border-radius:10px;margin-bottom:8px;box-shadow:0 0 22px rgba(239,98,108,.08)}.profile-warning strong{color:#ff6c76;font-size:13px}.profile-warning p{color:#c5a7ab;margin:5px 0 0;font-size:12px}.profile-warning small{display:block;color:#777f89;margin-top:7px}.profile-warnings.has-warning{border-color:#6c252f;box-shadow:0 0 30px rgba(239,98,108,.08)}
@@ -846,7 +783,7 @@ body.nw-profile-gradient .topbar{
 .chat-popover-foot .btn{flex:1}
 .chat-modal{position:fixed;inset:0;z-index:420;background:rgba(0,0,0,.38);backdrop-filter:blur(13px);display:none;align-items:flex-end;justify-content:flex-end;padding:24px}
 .chat-modal.open{display:flex}
-.chat-window{width:min(455px,100%);height:min(690px,calc(100vh - 48px));border:1px solid #303740;border-radius:18px;background:rgba(11,14,18,.94);box-shadow:0 35px 120px rgba(0,0,0,.6);backdrop-filter:blur(24px);overflow:hidden;display:flex;flex-direction:column;animation:chatPopIn .18s ease both}
+.chat-window{width:min(455px,100%);height:min(690px,calc(100vh - 48px));min-height:0;min-width:0;border:1px solid #303740;border-radius:18px;background:rgba(11,14,18,.94);box-shadow:0 35px 120px rgba(0,0,0,.6);backdrop-filter:blur(24px);overflow:hidden;display:flex;flex-direction:column;animation:chatPopIn .18s ease both}
 .chat-window-head{padding:13px 15px;border-bottom:1px solid rgba(255,255,255,.06);display:flex;align-items:flex-start;gap:11px}
 .chat-window-head img{width:36px;height:36px;border-radius:50%;object-fit:cover;border:1px solid #2c333c;background:#171b21}
 .chat-window-head-main{min-width:0;flex:1}
@@ -856,7 +793,13 @@ body.nw-profile-gradient .topbar{
 .chat-window-close:hover{background:#171c22;color:#fff}
 .chat-safety{margin:0 13px 10px;padding:10px 11px;border:1px solid rgba(230,190,91,.26);border-radius:10px;background:linear-gradient(180deg,rgba(40,31,10,.45),rgba(20,17,10,.42));color:#9b927e;font-size:10px;line-height:1.55}
 .chat-safety strong{color:#f0cd73}
-.chat-messages{flex:1;min-height:0;overflow-y:auto;overflow-x:hidden;padding:14px;display:flex;flex-direction:column;gap:8px;background:linear-gradient(180deg,rgba(255,255,255,.008),transparent 28%)}
+.chat-messages{flex:1 1 0;height:0;min-height:0;max-height:100%;overflow-y:scroll;overflow-x:hidden;padding:14px;display:flex;flex-direction:column;gap:8px;background:linear-gradient(180deg,rgba(255,255,255,.008),transparent 28%);overscroll-behavior:contain;scrollbar-gutter:stable;scrollbar-width:thin;scrollbar-color:#343c47 transparent;-webkit-overflow-scrolling:touch;touch-action:pan-y;pointer-events:auto}
+.chat-messages::-webkit-scrollbar,.chat-page-list::-webkit-scrollbar,.chat-popover-list::-webkit-scrollbar{width:8px;height:8px}
+.chat-messages::-webkit-scrollbar-track,.chat-page-list::-webkit-scrollbar-track,.chat-popover-list::-webkit-scrollbar-track{background:transparent}
+.chat-messages::-webkit-scrollbar-thumb,.chat-page-list::-webkit-scrollbar-thumb,.chat-popover-list::-webkit-scrollbar-thumb{background:#303844;border-radius:999px;border:2px solid transparent;background-clip:padding-box}
+.chat-messages::-webkit-scrollbar-thumb:hover,.chat-page-list::-webkit-scrollbar-thumb:hover,.chat-popover-list::-webkit-scrollbar-thumb:hover{background:#4a5562;border-radius:999px;border:2px solid transparent;background-clip:padding-box}
+.chat-page-list{scrollbar-width:thin;scrollbar-color:#343c47 transparent}
+.chat-popover-list{scrollbar-width:thin;scrollbar-color:#343c47 transparent}
 .chat-message{display:flex;max-width:82%;gap:7px;align-items:flex-end;animation:chatMessageIn .18s ease both}
 .chat-message.mine{flex-direction:row-reverse;margin-left:auto;justify-content:flex-end}
 .chat-message.theirs{flex-direction:row;margin-right:auto;justify-content:flex-start}
@@ -893,8 +836,8 @@ body.nw-profile-gradient .topbar{
 .chat-page-sidebar-head{padding:18px;border-bottom:1px solid rgba(255,255,255,.06)}
 .chat-page-sidebar-head h2{margin:0;font-size:20px;letter-spacing:-.03em}
 .chat-page-sidebar-head p{margin:4px 0 0;color:#727a85;font-size:11px}
-.chat-page-list{padding:9px;overflow-y:auto;overflow-x:hidden;flex:1;scrollbar-width:thin;scrollbar-color:#3a424c transparent} .chat-page-list::-webkit-scrollbar,.chat-popover-list::-webkit-scrollbar,.chat-messages::-webkit-scrollbar,.account-manager-list::-webkit-scrollbar{width:7px} .chat-page-list::-webkit-scrollbar-track,.chat-popover-list::-webkit-scrollbar-track,.chat-messages::-webkit-scrollbar-track,.account-manager-list::-webkit-scrollbar-track{background:transparent} .chat-page-list::-webkit-scrollbar-thumb,.chat-popover-list::-webkit-scrollbar-thumb,.chat-messages::-webkit-scrollbar-thumb,.account-manager-list::-webkit-scrollbar-thumb{background:#343c46;border-radius:99px;border:2px solid transparent;background-clip:padding-box}
-.chat-page-main{min-width:0;display:flex;flex-direction:column;background:linear-gradient(180deg,#0f1318,#0b0e12)}
+.chat-page-list{padding:9px;overflow:auto;flex:1}
+.chat-page-main{min-width:0;min-height:0;height:100%;overflow:hidden;display:flex;flex-direction:column;background:linear-gradient(180deg,#0f1318,#0b0e12)}
 .chat-page-empty{height:100%;display:grid;place-items:center;padding:30px;color:#68717c;text-align:center;font-size:12px}
 .chat-page-empty strong{display:block;color:#dfe3e8;font-size:16px;margin-bottom:6px}
 .chat-page-header{padding:15px 17px;border-bottom:1px solid rgba(255,255,255,.06);display:flex;align-items:flex-start;gap:11px}
@@ -1325,7 +1268,6 @@ body.nw-profile-gradient .topbar{
     <div class="page-title"><h1>Settings</h1><p>Manage your Northwork account preferences.</p></div>
     <div class="profile-settings-list">
       <div class="profile-setting-row"><div><strong>Discord account</strong><br><span id="settingsAccount">Connected account</span></div><span>Connected</span></div>
-      <div class="profile-setting-row"><div><strong>Connected accounts</strong><br><span>Link another Discord account and switch between your connected accounts.</span></div><button class="btn" type="button" id="settingsSwitchAccount">Switch Account</button></div>
       <div class="profile-setting-row"><div><strong>Profile background</strong><br><span>Use a custom banner and/or a full-page gradient. They can be enabled together.</span></div><button class="btn" type="button" id="settingsEditProfile">Edit profile</button></div>
       <div class="profile-setting-row"><div><strong>Hide followers</strong><br><span>People can still see your follower count, but they cannot open your follower list.</span></div><label class="profile-toggle-label"><input class="profile-toggle" id="settingsHideFollowers" type="checkbox" aria-label="Hide followers"><span id="settingsHideFollowersText">Off</span></label></div>
       <div class="profile-setting-row"><div><strong>Hide following</strong><br><span>People can still see your following count, but they cannot open the people you follow.</span></div><label class="profile-toggle-label"><input class="profile-toggle" id="settingsHideFollowing" type="checkbox" aria-label="Hide following"><span id="settingsHideFollowingText">Off</span></label></div>
@@ -1334,23 +1276,6 @@ body.nw-profile-gradient .topbar{
     </div>
   </div>
 </section>
-<div class="account-manager-backdrop" id="accountManagerBackdrop" aria-hidden="true">
-  <div class="account-manager" role="dialog" aria-modal="true" aria-labelledby="accountManagerTitle">
-    <div class="account-manager-head">
-      <div>
-        <h2 id="accountManagerTitle">Connected accounts</h2>
-        <p id="accountManagerSubtitle">Manage the Discord accounts connected to Northwork.</p>
-      </div>
-      <button class="account-manager-close" id="accountManagerClose" type="button" aria-label="Close">×</button>
-    </div>
-    <div class="account-manager-list" id="accountManagerList"></div>
-    <div class="account-manager-foot">
-      <button class="btn primary account-manager-add" id="accountManagerAdd" type="button">Add second account</button>
-      <div class="account-manager-note">Each connected account keeps its own Northwork profile, settings, chats and activity.</div>
-    </div>
-  </div>
-</div>
-
 <div class="profile-editor-backdrop" id="profileEditorBackdrop">
   <div class="profile-editor">
     <div class="profile-editor-head"><div><div class="eyebrow">PROFILE</div><h2>Edit profile</h2></div><button class="profile-close" id="profileEditorClose">×</button></div>
@@ -1417,7 +1342,7 @@ const CONFIG = {
 // can remain a single file. Northwork Assistant updates this object through the
 // GitHub Contents API when staff register games, programs, bots, site events, or staff.
 /* NORTHWORK_SITE_DATA_START */
-window.NORTHWORK_SITE_DATA = {"games":[{"slug":"vibration-tester","placeId":"96605909078674","universeId":"10080820428","url":"https://www.roblox.com/games/96605909078674/Vibration-Tester","name":"Vibration Tester","description":"Vibration Tester is a game where u can test your device's vibration!\n\nYou have plenty of stuff where u can test your device's vibration!\n    Different parts with different vibration systems!\n\n[FOR MORE COOL VIBRATION SYSTEMS, CONSIDER UNLOCKING VIP!]","thumbnail":"https://tr.rbxcdn.com/180DAY-b6a70701148167c5e71bb0bb360ba0e4/512/512/Image/Png/noFilter","visits":4577,"likes":30,"dislikes":5,"favorites":15,"playing":0,"creator":"Northwork Experiments","creatorType":"Group"},{"slug":"title-unavailable","placeId":"76588596175038","universeId":"8006387443","url":"https://www.roblox.com/games/76588596175038/Spring-Dummies","name":"[TITLE UNAVAILABLE]","description":"[DESCRIPTION UNAVAILABLE]","thumbnail":"https://tr.rbxcdn.com/180DAY-b401cfb39ce70d50c50045625644c1c3/512/512/Image/Png/noFilter","visits":0,"likes":11,"dislikes":0,"favorites":6,"playing":0,"creator":"[UNKNOWN]","creatorType":"Group"},{"slug":"title-unavailable","placeId":"98066790398013","universeId":"10765556958","url":"https://www.roblox.com/games/98066790398013/Classic-Sword-Duel","name":"[TITLE UNAVAILABLE]","description":"[DESCRIPTION UNAVAILABLE]","thumbnail":"https://tr.rbxcdn.com/180DAY-5b410db20b251d348be1216279ba14e6/512/512/Image/Png/noFilter","visits":0,"likes":0,"dislikes":0,"favorites":0,"playing":0,"creator":"[UNKNOWN]","creatorType":"Group"}],"bots":[{"id":"northwork-assistant","discordId":"1454980640238735441","name":"Northwork Assistant","description":"Northwork Assistant — a Northwork bot.","status":"operational","avatar":"https://cdn.discordapp.com/avatars/1454980640238735441/685f578da5a0791d6d4597f615a4f706.png?size=256","activities":[],"incidents":[]},{"id":"northwork-security","discordId":"1495884555624911118","name":"Northwork Security","description":"Northwork Security — a Northwork bot.","status":"operational","avatar":"https://cdn.discordapp.com/avatars/1495884555624911118/9aa984ec8b8f5dcbaf0ae02009cf1afb.png?size=256","activities":[],"incidents":[]},{"id":"northlink","discordId":"1544354790329417738","name":"Northlink","description":"Northlink — a Northwork bot.","status":"operational","avatar":"https://cdn.discordapp.com/avatars/1544354790329417738/c6c008cc9bac090de07ffc53e6f0ccfb.png?size=256","activities":[],"incidents":[]}],"programs":[{"id":"vantacore","name":"VantaCore","description":"VantaCore is a Windows hardware monitoring tool for GPU, CPU, and HDD/SSD diagnostics.  Features: - GPU monitoring - CPU monitoring - HDD/SSD drive details - CHKDSK scan/repair tools ","repo":"https://github.com/NorthworkDev/VantaCore","download":"https://github.com/NorthworkDev/VantaCore/archive/refs/heads/main.zip","version":"main"}],"staff":[{"userId":"438702447683174402","name":"RyTexh","username":"rytexh","role":"Northwork Administrator","roleId":"1454991773393748071","avatar":"https://cdn.discordapp.com/avatars/438702447683174402/504990f67f4b66ecdaade9783ef6c977.png?size=256"},{"userId":"808324602350403595","name":"Claudivania ❤🖤","username":"claudivania_lasukal","role":"Northwork Manager","roleId":"1467663817403007200","avatar":"https://cdn.discordapp.com/avatars/808324602350403595/45b0ffe4b44d862744807717fdfba197.png?size=256"},{"userId":"1149747147600834570","name":"desired","username":"desiredfornobody","role":"Northwork Moderators","roleId":"1454992580109668382","avatar":"https://cdn.discordapp.com/avatars/1149747147600834570/7757b1607e7f8dd157bb290b502d6831.png?size=256"},{"userId":"1206331959266246728","name":"John Northwork","username":"gurtingsgurtieisnotyogurt","role":"Northwork Moderators","roleId":"1454992580109668382","avatar":"https://cdn.discordapp.com/avatars/1206331959266246728/a2af452f9a1f4153cbbdb76487df5ac1.png?size=256"},{"userId":"1104551220951134218","name":"Meh3D","username":"mm_3d","role":"Northwork Moderators","roleId":"1454992580109668382","avatar":"https://cdn.discordapp.com/avatars/1104551220951134218/67617f9cc313c431b03cc9b0c53e2b46.png?size=256"},{"userId":"557596135175356418","name":"ᴱᵒⁿAimee","username":"aimee2569","role":"Northwork Moderators","roleId":"1454992580109668382","avatar":"https://cdn.discordapp.com/avatars/557596135175356418/165eabde0682dd879f5c852a804cba75.png?size=256"},{"userId":"1102261479517978745","name":"Heisenburg","username":"figure2266","role":"Northwork Moderators","roleId":"1454992580109668382","avatar":"https://cdn.discordapp.com/avatars/1102261479517978745/c3700e07f68989588c597ef0af06290b.png?size=256"},{"userId":"1089267764289605663","name":"Kuro","username":"123calebb","role":"Northwork Moderators","roleId":"1454992580109668382","avatar":"https://cdn.discordapp.com/avatars/1089267764289605663/5f37ea64ecb94ff89dfd14a7dc0e2b8e.png?size=256"},{"userId":"1003178163259576371","name":"𝐕𝐄𝐑𝐀","username":"vegupatra","role":"BALENCIAGA GURL 💅","roleId":"1475639115906158642","avatar":"https://cdn.discordapp.com/avatars/1003178163259576371/6b17869a708603fd14a49067eaa727d9.png?size=256"},{"userId":"1398692198404591750","name":"MrChorap","username":"mrchorapings","role":"Northwork Site Ideas Lead","roleId":"1548404280841736313","avatar":"https://cdn.discordapp.com/avatars/1398692198404591750/66a381c600765992bbc9690dd015f7ae.png?size=256"}],"initialized":false,"siteVersion":"1789258446947-d9b6c94b"};
+window.NORTHWORK_SITE_DATA = {"games":[{"slug":"vibration-tester","placeId":"96605909078674","universeId":"10080820428","url":"https://www.roblox.com/games/96605909078674/Vibration-Tester","name":"Vibration Tester","description":"Vibration Tester is a game where u can test your device's vibration!\n\nYou have plenty of stuff where u can test your device's vibration!\n    Different parts with different vibration systems!\n\n[FOR MORE COOL VIBRATION SYSTEMS, CONSIDER UNLOCKING VIP!]","thumbnail":"https://tr.rbxcdn.com/180DAY-b6a70701148167c5e71bb0bb360ba0e4/512/512/Image/Png/noFilter","visits":4577,"likes":30,"dislikes":5,"favorites":15,"playing":0,"creator":"Northwork Experiments","creatorType":"Group"},{"slug":"title-unavailable","placeId":"76588596175038","universeId":"8006387443","url":"https://www.roblox.com/games/76588596175038/Spring-Dummies","name":"[TITLE UNAVAILABLE]","description":"[DESCRIPTION UNAVAILABLE]","thumbnail":"https://tr.rbxcdn.com/180DAY-b401cfb39ce70d50c50045625644c1c3/512/512/Image/Png/noFilter","visits":0,"likes":11,"dislikes":0,"favorites":6,"playing":0,"creator":"[UNKNOWN]","creatorType":"Group"},{"slug":"title-unavailable","placeId":"98066790398013","universeId":"10765556958","url":"https://www.roblox.com/games/98066790398013/Classic-Sword-Duel","name":"[TITLE UNAVAILABLE]","description":"[DESCRIPTION UNAVAILABLE]","thumbnail":"https://tr.rbxcdn.com/180DAY-5b410db20b251d348be1216279ba14e6/512/512/Image/Png/noFilter","visits":0,"likes":0,"dislikes":0,"favorites":0,"playing":0,"creator":"[UNKNOWN]","creatorType":"Group"}],"bots":[{"id":"northwork-assistant","discordId":"1454980640238735441","name":"Northwork Assistant","description":"Northwork Assistant — a Northwork bot.","status":"down","avatar":"https://cdn.discordapp.com/avatars/1454980640238735441/685f578da5a0791d6d4597f615a4f706.png?size=256","activities":[{"title":"Bot needs some parts deleted","description":"Due to some parts not matching what we want, we gotta delete some important parts of the Bot's script, and rewrite them! We will try to bring the service back up soon!","date":"2026-09-09T11:06:00.000Z"},{"title":"Issue has been identified","description":"We are working on a fix, we'll be back shortly!","date":"2026-09-09T09:41:00.000Z"},{"title":"Unidentified Site Issues","description":"We are currently trying to investigate the issue...","date":"2026-09-09T09:36:00.000Z"}],"incidents":[{"type":"down","date":"2026-09-09T11:06:00.000Z","description":"Due to some parts not matching what we want, we gotta delete some important parts of the Bot's script, and rewrite them! We will try to bring the service back up soon!"},{"type":"issue","date":"2026-09-09T09:41:00.000Z","description":"We are working on a fix, we'll be back shortly!"},{"type":"issue","date":"2026-09-09T09:36:00.000Z","description":"We are currently trying to investigate the issue..."}]},{"id":"northwork-security","discordId":"1495884555624911118","name":"Northwork Security","description":"Northwork Security — a Northwork bot.","status":"operational","avatar":"https://cdn.discordapp.com/avatars/1495884555624911118/9aa984ec8b8f5dcbaf0ae02009cf1afb.png?size=256","activities":[],"incidents":[]},{"id":"northlink","discordId":"1544354790329417738","name":"Northlink","description":"Northlink — a Northwork bot.","status":"operational","avatar":"https://cdn.discordapp.com/avatars/1544354790329417738/c6c008cc9bac090de07ffc53e6f0ccfb.png?size=256","activities":[],"incidents":[]}],"programs":[{"id":"vantacore","name":"VantaCore","description":"VantaCore is a Windows hardware monitoring tool for GPU, CPU, and HDD/SSD diagnostics.  Features: - GPU monitoring - CPU monitoring - HDD/SSD drive details - CHKDSK scan/repair tools ","repo":"https://github.com/NorthworkDev/VantaCore","download":"https://github.com/NorthworkDev/VantaCore/archive/refs/heads/main.zip","version":"main"}],"staff":[{"userId":"438702447683174402","name":"RyTexh","username":"rytexh","role":"Northwork Administrator","roleId":"1454991773393748071","avatar":"https://cdn.discordapp.com/avatars/438702447683174402/504990f67f4b66ecdaade9783ef6c977.png?size=256"},{"userId":"808324602350403595","name":"Claudivania ❤🖤","username":"claudivania_lasukal","role":"Northwork Manager","roleId":"1467663817403007200","avatar":"https://cdn.discordapp.com/avatars/808324602350403595/45b0ffe4b44d862744807717fdfba197.png?size=256"},{"userId":"1149747147600834570","name":"desired","username":"desiredfornobody","role":"Northwork Moderators","roleId":"1454992580109668382","avatar":"https://cdn.discordapp.com/avatars/1149747147600834570/7757b1607e7f8dd157bb290b502d6831.png?size=256"},{"userId":"1206331959266246728","name":"John Northwork","username":"gurtingsgurtieisnotyogurt","role":"Northwork Moderators","roleId":"1454992580109668382","avatar":"https://cdn.discordapp.com/avatars/1206331959266246728/a2af452f9a1f4153cbbdb76487df5ac1.png?size=256"},{"userId":"1104551220951134218","name":"Meh3D","username":"mm_3d","role":"Northwork Moderators","roleId":"1454992580109668382","avatar":"https://cdn.discordapp.com/avatars/1104551220951134218/67617f9cc313c431b03cc9b0c53e2b46.png?size=256"},{"userId":"557596135175356418","name":"ᴱᵒⁿAimee","username":"aimee2569","role":"Northwork Moderators","roleId":"1454992580109668382","avatar":"https://cdn.discordapp.com/avatars/557596135175356418/165eabde0682dd879f5c852a804cba75.png?size=256"},{"userId":"1102261479517978745","name":"Heisenburg","username":"figure2266","role":"Northwork Moderators","roleId":"1454992580109668382","avatar":"https://cdn.discordapp.com/avatars/1102261479517978745/c3700e07f68989588c597ef0af06290b.png?size=256"},{"userId":"1089267764289605663","name":"Kuro","username":"123calebb","role":"Northwork Moderators","roleId":"1454992580109668382","avatar":"https://cdn.discordapp.com/avatars/1089267764289605663/5f37ea64ecb94ff89dfd14a7dc0e2b8e.png?size=256"},{"userId":"1003178163259576371","name":"𝐕𝐄𝐑𝐀","username":"vegupatra","role":"BALENCIAGA GURL 💅","roleId":"1475639115906158642","avatar":"https://cdn.discordapp.com/avatars/1003178163259576371/6b17869a708603fd14a49067eaa727d9.png?size=256"}],"initialized":false,"siteVersion":"1788990679954-de59230b"};
 /* NORTHWORK_SITE_DATA_END */
 
 const GAMES = window.NORTHWORK_SITE_DATA.games || [];
@@ -1474,80 +1399,16 @@ async function getGameInfo(game){
 let northworkChatFollowing=[];
 let northworkChatSelected=null;
 let northworkChatMessagesTimer=null;
-let northworkChatMessagesRequest=null;
 let northworkChatListTimer=null;
 let northworkChatLoaded=false;
 let northworkChatListFetchedAt=0;
 let northworkChatListLoading=null;
-const NORTHWORK_CHAT_LIST_CACHE_MS=10000;
+const NORTHWORK_CHAT_LIST_CACHE_MS=30000;
 
 const CHAT_SAFETY_TEXT="Chats are normally not moderated, but if you ever feel unsafe, your safety matters to us! Contact us via ticket!";
-
-let northworkChatTypingActive=false;
-let northworkChatTypingTimer=null;
-let northworkChatTypingRequest=null;
-
-async function setNorthworkChatTyping(userId,typing){
-  if(!northworkCurrentUser||!userId)return;
-
-  const targetId=String(userId);
-
-  try{
-    if(northworkChatTypingRequest){
-      try{northworkChatTypingRequest.abort();}catch{}
-    }
-
-    northworkChatTypingRequest=new AbortController();
-
-    await fetch(
-      nwApi(`/api/chats/${encodeURIComponent(targetId)}/typing`),
-      {
-        method:"POST",
-        credentials:"include",
-        headers:{"Content-Type":"application/json"},
-        body:JSON.stringify({typing:!!typing}),
-        signal:northworkChatTypingRequest.signal
-      }
-    );
-  }catch(error){
-    if(error?.name!=="AbortError"){
-      console.debug("Northwork typing update failed:",error);
-    }
-  }finally{
-    northworkChatTypingRequest=null;
-  }
-}
-
-function queueNorthworkChatTyping(userId,input){
-  if(!northworkCurrentUser||!userId||!input)return;
-
-  if(northworkChatTypingTimer){
-    clearTimeout(northworkChatTypingTimer);
-    northworkChatTypingTimer=null;
-  }
-
-  const hasText=String(input.value||"").trim().length>0;
-
-  if(!hasText){
-    if(northworkChatTypingActive){
-      northworkChatTypingActive=false;
-      setNorthworkChatTyping(userId,false);
-    }
-    return;
-  }
-
-  if(!northworkChatTypingActive){
-    northworkChatTypingActive=true;
-    setNorthworkChatTyping(userId,true);
-  }
-
-  // Stop showing the indicator shortly after the user stops typing.
-  northworkChatTypingTimer=setTimeout(()=>{
-    northworkChatTypingTimer=null;
-    northworkChatTypingActive=false;
-    setNorthworkChatTyping(userId,false);
-  },1800);
-}
+let northworkChatMessagesData=[];
+let northworkChatSending=false;
+let northworkChatSendSequence=0;
 
 function chatEsc(v){return escapeHtml(String(v??""));}
 
@@ -1666,91 +1527,121 @@ async function loadNorthworkChatFollowing(force=false){
 
 function renderChatMessages(box,messages){
   if(!box)return;
+
   const list=Array.isArray(messages)?messages:[];
-
-  // Avoid rebuilding the whole message DOM every poll. Replacing innerHTML
-  // every 1.2s caused the conversation to visibly "refresh" and jump.
-  const signature=list.map(msg=>[
-    msg.id||"",
-    msg.senderId||"",
-    msg.createdAt||"",
-    msg.seenAt||"",
-    msg.body||""
-  ].join("\u0001")).join("\u0002");
-
-  if(box.__nwMessageSignature===signature){
-    return;
-  }
-
-  box.__nwMessageSignature=signature;
-
-  const wasNearBottom=(box.scrollHeight-box.scrollTop-box.clientHeight)<80;
-
-  if(!list.length){
-    box.innerHTML=`<div class="chat-person-empty">No messages yet. Start the conversation.</div>`;
-    box.scrollTop=box.scrollHeight;
-    return;
-  }
-
   const me=String(northworkCurrentUser?.id||"");
   const myAvatar=chatAvatar(northworkCurrentUser);
   const otherAvatar=chatAvatar(northworkChatSelected);
 
-  const grouped=list.map((msg,index)=>{
-    const mine=String(msg.senderId)===me;
-    const previous=list[index-1];
-    const next=list[index+1];
-    const time=chatFormatTime(msg.createdAt);
-    const previousSame=!!previous &&
-      String(previous.senderId)===String(msg.senderId) &&
-      chatFormatTime(previous.createdAt)===time;
-    const nextSame=!!next &&
-      String(next.senderId)===String(msg.senderId) &&
-      chatFormatTime(next.createdAt)===time;
-
-    let groupClass="only-in-group";
-    if(previousSame && nextSame)groupClass="middle-in-group";
-    else if(previousSame)groupClass="last-in-group";
-    else if(nextSame)groupClass="first-in-group";
-
-    return {msg,mine,time,previousSame,nextSame,groupClass};
-  });
-
-  box.innerHTML=grouped.map(item=>{
-    const {msg,mine,time,previousSame,nextSame,groupClass}=item;
-    const lastInGroup=!nextSame;
-    const avatar=mine?myAvatar:otherAvatar;
-    const showAvatar=lastInGroup&&!!avatar;
-    const image=showAvatar
-      ? '<img class="chat-message-avatar" src="'+chatEsc(avatar)+'" alt="" loading="lazy" decoding="async">'
-      : '<div class="chat-message-avatar-spacer" aria-hidden="true"></div>';
-
-    const timeHtml=lastInGroup
-      ? '<div class="chat-time">'+chatEsc(time)+'</div>'
-      : '';
-
-    const status=mine&&lastInGroup
-      ? '<div class="chat-status '+(msg.seenAt?'seen':'')+'">'+(msg.seenAt?'Seen':'Sent')+'</div>'
-      : '';
-
-    const groupedClass=previousSame?' grouped':'';
-
-    return '<div class="chat-message '+(mine?'mine':'theirs')+groupedClass+' '+groupClass+'">'+
-      image+
-      '<div class="chat-message-main">'+
-        '<div class="chat-bubble">'+chatEsc(msg.body)+'</div>'+
-        timeHtml+
-        status+
-      '</div>'+
-    '</div>';
-  }).join("");
-
-  if(wasNearBottom||box.__nwFirstRender){
+  if(!list.length){
+    if(box.__nwMessageCount!==0){
+      box.innerHTML=`<div class="chat-person-empty">No messages yet. Start the conversation.</div>`;
+      box.__nwMessageCount=0;
+      box.__nwStructuralSignature="";
+    }
+    box.__nwFirstRender=true;
     box.scrollTop=box.scrollHeight;
+    return;
   }
-  box.__nwFirstRender=true;
-}
 
+  const structuralSignature=list.map(msg=>[
+    msg.id||"",
+    msg.senderId||"",
+    msg.createdAt||"",
+    msg.body||""
+  ].join("\u0001")).join("\u0002");
+
+  const nearBottom=(box.scrollHeight-box.scrollTop-box.clientHeight)<120;
+
+  /*
+   * Do not rebuild the entire conversation when only Seen/Sent changes.
+   * That was causing the annoying visual refresh every poll.
+   */
+  if(box.__nwStructuralSignature!==structuralSignature){
+
+    const grouped=list.map((msg,index)=>{
+      const mine=String(msg.senderId)===me;
+      const previous=list[index-1];
+      const next=list[index+1];
+      const time=chatFormatTime(msg.createdAt);
+
+      const previousSame=!!previous &&
+        String(previous.senderId)===String(msg.senderId) &&
+        chatFormatTime(previous.createdAt)===time;
+
+      const nextSame=!!next &&
+        String(next.senderId)===String(msg.senderId) &&
+        chatFormatTime(next.createdAt)===time;
+
+      let groupClass="only-in-group";
+      if(previousSame&&nextSame)groupClass="middle-in-group";
+      else if(previousSame)groupClass="last-in-group";
+      else if(nextSame)groupClass="first-in-group";
+
+      return {msg,mine,time,previousSame,nextSame,groupClass};
+    });
+
+    box.innerHTML=grouped.map(item=>{
+      const {msg,mine,time,nextSame,groupClass}=item;
+      const lastInGroup=!nextSame;
+      const avatar=mine?myAvatar:otherAvatar;
+      const showAvatar=lastInGroup&&!!avatar;
+
+      const image=showAvatar
+        ? '<img class="chat-message-avatar" src="'+chatEsc(avatar)+'" alt="" loading="lazy" decoding="async">'
+        : '<div class="chat-message-avatar-spacer" aria-hidden="true"></div>';
+
+      const timeHtml=lastInGroup
+        ? '<div class="chat-time">'+chatEsc(time)+'</div>'
+        : '';
+
+      const status=mine&&lastInGroup
+        ? '<div class="chat-status '+(msg.seenAt?'seen':'')+'">'+(msg.seenAt?'Seen':'Sent')+'</div>'
+        : '';
+
+      const groupedClass=item.previousSame?' grouped':'';
+
+      return '<div class="chat-message '+(mine?'mine':'theirs')+groupedClass+' '+groupClass+'" data-chat-message-id="'+chatEsc(msg.id||"")+'">'+
+        image+
+        '<div class="chat-message-main">'+
+          '<div class="chat-bubble">'+chatEsc(msg.body)+'</div>'+
+          timeHtml+
+          status+
+        '</div>'+
+      '</div>';
+    }).join("");
+
+    box.__nwStructuralSignature=structuralSignature;
+    box.__nwMessageCount=list.length;
+
+    if(box.__nwFirstRender||nearBottom){
+      box.scrollTop=box.scrollHeight;
+    }
+
+    box.__nwFirstRender=true;
+    return;
+  }
+
+  /*
+   * Same messages: update only read state.
+   * Nothing is removed, reinserted, or re-animated.
+   */
+  for(const msg of list){
+    const id=String(msg.id||"");
+    const node=Array.from(box.querySelectorAll("[data-chat-message-id]"))
+      .find(el=>el.getAttribute("data-chat-message-id")===id);
+
+    if(!node)continue;
+
+    const status=node.querySelector(".chat-status");
+    if(status && String(msg.senderId)===me){
+      const seen=!!msg.seenAt;
+      const text=seen?"Seen":"Sent";
+      if(status.textContent!==text)status.textContent=text;
+      status.classList.toggle("seen",seen);
+    }
+  }
+}
 function renderChatTyping(mode,user){
   const box=document.getElementById(mode==="page"?"chatPageTyping":"chatModalTyping");
   if(!box)return;
@@ -1797,20 +1688,33 @@ function setChatModalUser(user){
 
 async function loadNorthworkChatMessages(userId,mode="modal"){
   if(!northworkCurrentUser||!userId)return;
-  if(northworkChatMessagesRequest)return northworkChatMessagesRequest;
-  const selectedId=String(userId);
-  northworkChatMessagesRequest=(async()=>{
+  if(northworkChatSending)return;
+  const requestUserId=String(userId);
   try{
-    const r=await fetch(nwApi(`/api/chats/${encodeURIComponent(selectedId)}/messages`),{credentials:"include",cache:"no-store",headers:{"Accept":"application/json"}});
+    const r=await fetch(nwApi(`/api/chats/${encodeURIComponent(requestUserId)}/messages`),{
+      credentials:"include",
+      cache:"no-store",
+      headers:{"Accept":"application/json"}
+    });
     if(!r.ok)throw new Error("messages unavailable");
     const data=await r.json();
+
+    // Ignore a late response from a chat the user already left.
+    if(!northworkChatSelected || String(northworkChatSelected.id)!==requestUserId){
+      return;
+    }
+
+    northworkChatMessagesData=Array.isArray(data.messages)?data.messages:[];
+
     const box=document.getElementById(mode==="page"?"chatPageMessages":"chatModalMessages");
-    renderChatMessages(box,data.messages||[]);
+    if(box){
+      renderChatMessages(box,northworkChatMessagesData);
+    }
+
     renderChatTyping(mode,data.typing?northworkChatSelected:null);
-  }catch(error){console.warn("Northwork chat messages error:",error);}
-  finally{northworkChatMessagesRequest=null;}
-  })();
-  return northworkChatMessagesRequest;
+  }catch(error){
+    console.warn("Northwork chat messages error:",error);
+  }
 }
 
 function stopChatMessagePolling(){
@@ -1827,35 +1731,68 @@ function startChatMessagePolling(mode="modal"){
 }
 
 async function sendNorthworkChatMessage(userId,body,mode="modal"){
-  if(userId){northworkChatTypingActive=false;if(northworkChatTypingTimer)clearTimeout(northworkChatTypingTimer);setNorthworkChatTyping(userId,false);}
+  if(userId){
+    northworkChatTypingActive=false;
+    if(northworkChatTypingTimer)clearTimeout(northworkChatTypingTimer);
+    setNorthworkChatTyping(userId,false);
+  }
+
   const text=String(body||"").trim();
   if(!text||!northworkCurrentUser||!userId)return false;
+
+  northworkChatSending=true;
+  stopChatMessagePolling();
+
   try{
     const r=await fetch(nwApi(`/api/chats/${encodeURIComponent(userId)}/messages`),{
       method:"POST",
       credentials:"include",
-      cache:"no-store",
-      headers:{"Content-Type":"application/json","Accept":"application/json"},
+      headers:{
+        "Content-Type":"application/json",
+        "Accept":"application/json"
+      },
       body:JSON.stringify({message:text})
     });
+
     const data=await r.json().catch(()=>({}));
-    if(!r.ok){
-      const status=r.status===401?"Your Northwork login session expired. Please log in again.":
-        r.status===403?"You can only chat with someone you follow or who follows you.":
-        (data.error||`Could not send message (${r.status}).`);
-      throw new Error(status);
+    if(!r.ok)throw new Error(data.error||"Could not send message");
+
+    if(northworkChatSelected && String(northworkChatSelected.id)===String(userId)){
+      northworkChatMessagesData=Array.isArray(data.messages)?data.messages:northworkChatMessagesData;
+
+      const box=document.getElementById(
+        mode==="page" ? "chatPageMessages" : "chatModalMessages"
+      );
+
+      if(box){
+        box.__nwStructuralSignature="";
+        box.__nwFirstRender=true;
+        renderChatMessages(box,northworkChatMessagesData);
+        box.scrollTop=box.scrollHeight;
+      }
     }
-    const box=document.getElementById(mode==="page"?"chatPageMessages":"chatModalMessages");
-    renderChatMessages(box,data.messages||[]);
-    const input=document.getElementById(mode==="page"?"chatPageInput":"chatModalInput");
-    if(input){input.value="";input.style.height="42px";input.focus();}
+
+    const input=document.getElementById(
+      mode==="page" ? "chatPageInput" : "chatModalInput"
+    );
+
+    if(input){
+      input.value="";
+      input.style.height="42px";
+      input.focus();
+    }
+
     return true;
   }catch(error){
     showNorthworkToast(error.message||"Could not send message.");
     return false;
+  }finally{
+    northworkChatSending=false;
+    if(northworkChatSelected){
+      startChatMessagePolling(mode);
+    }
   }
 }
-
 function openNorthworkChat(user){
   if(!northworkCurrentUser){
     showNorthworkToast("Log in with Discord to use Northwork chats.");
@@ -1870,6 +1807,8 @@ function openNorthworkChat(user){
   if(launcher)launcher.classList.add("chat-modal-open");
 
   northworkChatSelected=user;
+  northworkChatMessagesData=[];
+  const chatBox=document.getElementById("chatModalMessages"); if(chatBox){chatBox.__nwStructuralSignature="";chatBox.__nwFirstRender=false;}
   renderChatListInto(document.getElementById("chatPopoverList"),"modal");
   setChatModalUser(user);
 
@@ -1961,10 +1900,7 @@ async function initNorthworkChat(){
 
   loadNorthworkChatFollowing(true);
   if(!northworkChatListTimer){
-    northworkChatListTimer=setInterval(()=>{
-      if(!document.querySelector(".chat-modal.open") && !document.getElementById("chatPageApp")?.offsetParent)return;
-      loadNorthworkChatFollowing(false);
-    },15000);
+    northworkChatListTimer=setInterval(()=>loadNorthworkChatFollowing(true),10000);
   }
 }
 
@@ -1983,30 +1919,11 @@ async function initNorthworkChatPage(){
   renderChatListInto(list,"page");
 }
 
-document.addEventListener("click",e=>{
-  const send=e.target.closest("#chatModalSend,#chatPageSend");
-  if(!send)return;
-  e.preventDefault();
-  const mode=send.id==="chatPageSend"?"page":"modal";
-  const input=document.getElementById(mode==="page"?"chatPageInput":"chatModalInput");
-  const userId=northworkChatSelected?.id;
-  const value=input?.value||"";
-  if(!userId||!String(value).trim()||send.disabled)return;
-  send.disabled=true;
-  sendNorthworkChatMessage(userId,value,mode).finally(()=>{send.disabled=false;});
-});
-
-document.addEventListener("keydown",e=>{
-  const input=e.target.closest("#chatModalInput,#chatPageInput");
-  if(!input||e.key!=="Enter"||e.shiftKey)return;
-  e.preventDefault();
-  const mode=input.id==="chatPageInput"?"page":"modal";
-  document.getElementById(mode==="page"?"chatPageSend":"chatModalSend")?.click();
-});
-
 function openNorthworkChatPage(user){
   closeNorthworkChat();
   northworkChatSelected=user;
+  northworkChatMessagesData=[];
+  const chatBox=document.getElementById("chatPageMessages"); if(chatBox){chatBox.__nwStructuralSignature="";chatBox.__nwFirstRender=false;}
   renderChatListInto(document.getElementById("chatPageList"),"page");
   const main=document.getElementById("chatPageMain");
   if(!main)return;
@@ -2426,19 +2343,17 @@ async function loadAuth(){
   const box=document.getElementById("authBox");
   if(!box)return;
   try{
-    const r=await fetch(nwApi("/api/me"),{credentials:"include",cache:"no-store"});
-    if(!r.ok)throw new Error("auth api unavailable");
-    const data=await r.json();
-    if(!data.loggedIn){
+    const data=await getNorthworkUser();
+    if(!data){
       box.innerHTML=`<a class="btn" href="${nwApi("/auth/discord")}" style="white-space:nowrap">Login with Discord</a>`;
       return;
     }
-    const u=data.user;
+    const u=data;
     const avatar=u.avatar_url || "https://cdn.discordapp.com/embed/avatars/0.png";
-    box.innerHTML=`<div style="position:relative"><button id="accountBtn" class="btn" style="padding:5px 9px 5px 5px;gap:8px"><img src="${escapeHtml(avatar)}" style="width:30px;height:30px;border-radius:50%;object-fit:cover" loading="lazy" decoding="async"><span>${escapeHtml(u.global_name||u.username)}</span><span style="color:#777">⌄</span></button><div id="accountMenu" style="display:none;position:absolute;right:0;top:48px;width:190px;padding:6px;background:#0f1216;border:1px solid #22272f;border-radius:12px;box-shadow:0 20px 60px #000b;z-index:100"><a href="#/profile" class="account-link">Go to Profile</a><a href="#/settings" class="account-link">Settings</a><button id="legacySwitchAccountBtn" class="account-link" type="button">Switch Account</button><button id="logoutBtn" class="account-link account-logout">Log out</button><button id="legacyAddAccountBtn" class="account-link" type="button">Add Account</button></div></div>`;
+    box.innerHTML=`<div style="position:relative"><button id="accountBtn" class="btn" style="padding:5px 9px 5px 5px;gap:8px"><img src="${escapeHtml(avatar)}" style="width:30px;height:30px;border-radius:50%;object-fit:cover" loading="lazy" decoding="async"><span>${escapeHtml(u.global_name||u.username)}</span><span style="color:#777">⌄</span></button><div id="accountMenu" style="display:none;position:absolute;right:0;top:48px;width:190px;padding:6px;background:#0f1216;border:1px solid #22272f;border-radius:12px;box-shadow:0 20px 60px #000b;z-index:100"><a href="#/profile" class="account-link">Go to Profile</a><a href="#/settings" class="account-link">Settings</a><button id="logoutBtn" class="account-link account-logout">Log out</button></div></div>`;
     const menu=document.getElementById("accountMenu");
     document.getElementById("accountBtn").onclick=()=>menu.style.display=menu.style.display==="block"?"none":"block";
-    document.getElementById("logoutBtn").onclick=async()=>{await fetch(nwApi("/auth/logout"),{method:"POST",credentials:"include"});location.reload()};
+    document.getElementById("logoutBtn").onclick=async()=>{await fetch(nwApi("/auth/logout"),{method:"POST",credentials:"include"}).catch(()=>{});northworkCurrentUser=null;localStorage.removeItem("northwork.cachedUser");localStorage.removeItem("northwork.cachedUserTime");location.reload()};
   }catch(e){
     box.innerHTML=`<a class="btn" href="${nwApi("/auth/discord")}" style="white-space:nowrap">Login with Discord</a>`;
   }
@@ -2447,7 +2362,7 @@ async function loadAuth(){
 document.getElementById("menuBtn").addEventListener("click",()=>document.getElementById("nav").classList.toggle("open"));
 /* ================= NORTHWORK DISCORD ACCOUNT ================= */
 const NORTHWORK_AUTH = {
-  // Northwork website can be hosted on Cloudflare Pages/custom domains; API/auth is on Render.
+  // Northwork website is hosted on GitHub Pages; API/auth is on Render.
   apiBase: "https://northwork-web-backend.onrender.com"
 };
 
@@ -2545,118 +2460,6 @@ async function getNorthworkUser(){
   return window.__northworkUserRequest;
 }
 
-let northworkAccountManagerMode = "switch";
-let northworkAccountsCache = null;
-
-function clearNorthworkAccountUserCache(){
-  northworkCurrentUser=null;
-  window.__northworkUserCacheTime=0;
-  try{localStorage.removeItem("northwork.cachedUser");localStorage.removeItem("northwork.cachedUserTime");}catch{}
-}
-
-async function loadNorthworkConnectedAccounts(force=false){
-  if(northworkAccountsCache&&!force)return northworkAccountsCache;
-  const r=await fetch(nwApi("/api/accounts"),{credentials:"include",cache:"no-store"});
-  const data=await r.json().catch(()=>({}));
-  if(!r.ok)throw new Error(data.error||"Could not load connected accounts.");
-  northworkAccountsCache=data;
-  return data;
-}
-
-function closeNorthworkAccountManager(){
-  const backdrop=document.getElementById("accountManagerBackdrop");
-  if(backdrop){backdrop.classList.remove("open");backdrop.setAttribute("aria-hidden","true");}
-}
-
-function renderNorthworkAccountManager(data){
-  const list=document.getElementById("accountManagerList");
-  const add=document.getElementById("accountManagerAdd");
-  const title=document.getElementById("accountManagerTitle");
-  const subtitle=document.getElementById("accountManagerSubtitle");
-  if(!list||!add||!title||!subtitle)return;
-
-  const accounts=Array.isArray(data?.accounts)?data.accounts:[];
-  title.textContent=northworkAccountManagerMode==="add"?"Add an account":"Switch Account";
-  subtitle.textContent=northworkAccountManagerMode==="add"
-    ?"Your current Discord account is connected. Add another account without logging out."
-    :"Choose which connected Discord account you want to use on Northwork.";
-
-  if(!accounts.length){
-    list.innerHTML='<div class="account-manager-empty">No connected accounts found.</div>';
-  }else{
-    list.innerHTML=accounts.map(account=>{
-      const name=escapeHtml(account.global_name||account.username||"Northwork User");
-      const username=account.username?"@"+escapeHtml(account.username):"";
-      const label=account.isCurrent?"Current":(account.isPrimary?"Main account":"Connected");
-      return `<button class="account-manager-row ${account.isCurrent?"current":""}" type="button" data-switch-account="${escapeHtml(account.id)}">`+
-        `<img class="account-manager-avatar" src="${escapeHtml(account.avatar_url||accountAvatar(account))}" alt="" loading="lazy" decoding="async">`+
-        `<span class="account-manager-main"><span class="account-manager-name">${name}</span><span class="account-manager-user">${username}</span></span>`+
-        `<span class="account-manager-tag">${label}</span>`+
-        `</button>`;
-    }).join("");
-  }
-
-  add.textContent=accounts.length?"Add second account":"Add account";
-  add.onclick=()=>{ window.location.href=nwApi("/auth/discord/add-account"); };
-
-  list.querySelectorAll("[data-switch-account]").forEach(btn=>btn.addEventListener("click",async()=>{
-    const userId=btn.getAttribute("data-switch-account");
-    if(!userId||btn.classList.contains("current"))return;
-    btn.disabled=true;
-    try{
-      const r=await fetch(nwApi("/api/accounts/switch"),{
-        method:"POST",
-        credentials:"include",
-        headers:{"Content-Type":"application/json"},
-        body:JSON.stringify({userId})
-      });
-      const data=await r.json().catch(()=>({}));
-      if(!r.ok)throw new Error(data.error||"Could not switch account.");
-      northworkAccountsCache=null;
-      clearNorthworkAccountUserCache();
-      closeNorthworkAccountManager();
-      await renderAccountArea();
-      await renderRoute();
-      window.scrollTo({top:0,behavior:"smooth"});
-      showNorthworkToast("Switched account.");
-    }catch(error){
-      btn.disabled=false;
-      showNorthworkToast(error.message||"Could not switch account.");
-    }
-  }));
-}
-
-async function openNorthworkAccountManager(mode="switch"){
-  if(!northworkCurrentUser){
-    showNorthworkToast("Log in with Discord to manage connected accounts.");
-    return;
-  }
-  northworkAccountManagerMode=mode;
-  const backdrop=document.getElementById("accountManagerBackdrop");
-  if(!backdrop)return;
-  backdrop.classList.add("open");
-  backdrop.setAttribute("aria-hidden","false");
-  const list=document.getElementById("accountManagerList");
-  if(list)list.innerHTML='<div class="account-manager-empty">Loading connected accounts…</div>';
-  try{
-    const data=await loadNorthworkConnectedAccounts(mode!=="switch");
-    renderNorthworkAccountManager(data);
-  }catch(error){
-    if(list)list.innerHTML=`<div class="account-manager-empty">${escapeHtml(error.message||"Could not load connected accounts.")}</div>`;
-  }
-}
-
-function initNorthworkAccountManager(){
-  const backdrop=document.getElementById("accountManagerBackdrop");
-  const close=document.getElementById("accountManagerClose");
-  if(!backdrop)return;
-  if(close&&!close.__bound){close.__bound=true;close.addEventListener("click",closeNorthworkAccountManager);}
-  if(!backdrop.__bound){
-    backdrop.__bound=true;
-    backdrop.addEventListener("click",e=>{if(e.target===backdrop)closeNorthworkAccountManager();});
-  }
-}
-
 async function renderAccountArea(){
   const area=document.getElementById("accountArea");
   if(!area)return;
@@ -2684,9 +2487,7 @@ async function renderAccountArea(){
       </div>
       <button data-account-route="/profile">Go to Profile</button>
       <button data-account-route="/settings">Settings</button>
-      <button id="accountSwitch" type="button">Switch Account</button>
       <button class="account-logout" id="accountLogout" type="button">Log out</button>
-      <button id="accountAdd" type="button">Add Account</button>
     </div>`;
 
   document.getElementById("accountUserButton")?.addEventListener("click",e=>{
@@ -2701,11 +2502,6 @@ async function renderAccountArea(){
     });
   });
 
-  document.getElementById("accountSwitch")?.addEventListener("click",async()=>{
-    document.getElementById("accountDropdown")?.classList.remove("open");
-    await openNorthworkAccountManager("switch");
-  });
-
   document.getElementById("accountLogout")?.addEventListener("click",async()=>{
     await fetch(nwApi("/auth/logout"),{method:"POST",credentials:"include"}).catch(()=>{});
     northworkCurrentUser=null;
@@ -2714,11 +2510,6 @@ async function renderAccountArea(){
     document.getElementById("chatModal")?.classList.remove("open");
     await renderAccountArea();
     go("/");
-  });
-
-  document.getElementById("accountAdd")?.addEventListener("click",async()=>{
-    document.getElementById("accountDropdown")?.classList.remove("open");
-    await openNorthworkAccountManager("add");
   });
 }
 
@@ -3476,12 +3267,6 @@ function initProfileEditor(){
     });
   }
 
-  const settingsSwitch=document.getElementById("settingsSwitchAccount");
-  if(settingsSwitch&&!settingsSwitch.__bound){
-    settingsSwitch.__bound=true;
-    settingsSwitch.addEventListener("click",()=>openNorthworkAccountManager("switch"));
-  }
-
   const logout=document.getElementById("settingsLogout");
   if(logout && !logout.__northworkBound){
     logout.__northworkBound=true;
@@ -3654,19 +3439,7 @@ loadCommunity();
 initProfileChangeNotice();
 initProfileEditor();
 initNorthworkSettings();
-initNorthworkAccountManager();
 renderAccountArea();
-
-(async()=>{
-  const params=new URLSearchParams(location.search);
-  const result=params.get("accounts");
-  if(result){
-    history.replaceState({},"",location.pathname+location.hash);
-    if(result==="added")showNorthworkToast("Account connected successfully.");
-    else if(result==="already_connected")showNorthworkToast("That account is already connected.");
-    else if(result==="already_linked")showNorthworkToast("That Discord account is already connected to another Northwork account group.");
-  }
-})();
 initNorthworkChat();
 renderRoute();
 </script>
