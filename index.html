@@ -1404,6 +1404,47 @@ let northworkChatListFetchedAt=0;
 let northworkChatListLoading=null;
 const NORTHWORK_CHAT_LIST_CACHE_MS=30000;
 
+// Chat typing helpers. These were missing from the uploaded build, which meant
+// clicking Send/pressing Enter could throw before the message POST happened.
+let northworkChatTypingActive=false;
+let northworkChatTypingTimer=null;
+let northworkChatTypingAbort=null;
+
+function setNorthworkChatTyping(userId,active){
+  // Typing state is best-effort. Never allow it to block message sending.
+  const targetId=String(userId||"").trim();
+  if(!targetId||!northworkCurrentUser)return;
+  const endpoint=nwApi(`/api/chats/${encodeURIComponent(targetId)}/typing`);
+  try{
+    if(northworkChatTypingAbort)northworkChatTypingAbort.abort();
+    const controller=new AbortController();
+    northworkChatTypingAbort=controller;
+    fetch(endpoint,{
+      method:"POST",
+      credentials:"include",
+      cache:"no-store",
+      headers:{"Content-Type":"application/json","Accept":"application/json"},
+      body:JSON.stringify({typing:!!active}),
+      signal:controller.signal
+    }).catch(()=>{});
+  }catch(_){
+    // Intentionally ignored: typing indicators must never break chat sending.
+  }
+}
+
+function queueNorthworkChatTyping(userId,input){
+  const targetId=String(userId||"").trim();
+  if(!targetId||!input||!northworkCurrentUser)return;
+  const value=String(input.value||"").trim();
+  if(northworkChatTypingTimer)clearTimeout(northworkChatTypingTimer);
+  northworkChatTypingActive=!!value;
+  setNorthworkChatTyping(targetId,northworkChatTypingActive);
+  northworkChatTypingTimer=setTimeout(()=>{
+    northworkChatTypingActive=false;
+    setNorthworkChatTyping(targetId,false);
+  },2200);
+}
+
 const CHAT_SAFETY_TEXT="Chats are normally not moderated, but if you ever feel unsafe, your safety matters to us! Contact us via ticket!";
 let northworkChatMessagesData=[];
 let northworkChatSending=false;
@@ -1736,9 +1777,11 @@ async function sendNorthworkChatMessage(userId,body,mode="modal"){
   if(northworkChatSending)return false;
 
   northworkChatSending=true;
-  northworkChatTypingActive=false;
-  if(northworkChatTypingTimer)clearTimeout(northworkChatTypingTimer);
-  setNorthworkChatTyping(targetId,false);
+  try{
+    northworkChatTypingActive=false;
+    if(northworkChatTypingTimer)clearTimeout(northworkChatTypingTimer);
+    setNorthworkChatTyping(targetId,false);
+  }catch(_){ }
 
   const input=document.getElementById(mode==="page"?"chatPageInput":"chatModalInput");
   const box=document.getElementById(mode==="page"?"chatPageMessages":"chatModalMessages");
@@ -1884,7 +1927,17 @@ async function initNorthworkChat(){
 
   if(composer){
     composer.__bound=true;
-    composer.onsubmit=e=>{e.preventDefault();return false;};
+    composer.onsubmit=async e=>{
+      e.preventDefault();
+      const currentInput=document.getElementById("chatModalInput");
+      const currentSend=document.getElementById("chatModalSend");
+      if(!northworkChatSelected||northworkChatSending)return;
+      const value=currentInput?.value||"";
+      if(!String(value).trim())return;
+      if(currentSend)currentSend.disabled=true;
+      try{await sendNorthworkChatMessage(northworkChatSelected.id,value,"modal");}
+      finally{if(currentSend)currentSend.disabled=false;}
+    };
   }
 
   const input=document.getElementById("chatModalInput");
@@ -1972,7 +2025,17 @@ function openNorthworkChatPage(user){
   const input=document.getElementById("chatPageInput");
   const send=document.getElementById("chatPageSend");
   if(composer){
-    composer.onsubmit=e=>{e.preventDefault();return false;};
+    composer.onsubmit=async e=>{
+      e.preventDefault();
+      if(!northworkChatSelected||northworkChatSending)return;
+      const currentInput=document.getElementById("chatPageInput");
+      const currentSend=document.getElementById("chatPageSend");
+      const value=currentInput?.value||"";
+      if(!String(value).trim())return;
+      if(currentSend)currentSend.disabled=true;
+      try{await sendNorthworkChatMessage(northworkChatSelected.id,value,"page");}
+      finally{if(currentSend)currentSend.disabled=false;}
+    };
   }
   if(input){
     input.oninput=()=>{input.style.height="42px";input.style.height=Math.min(input.scrollHeight,130)+"px";queueNorthworkChatTyping(user.id,input);};
@@ -3473,6 +3536,43 @@ initNorthworkSettings();
 renderAccountArea();
 initNorthworkChat();
 renderRoute();
+
+/* ================= CHAT SEND SAFETY NET ================= */
+(function(){
+  if(window.__northworkChatSendSafetyInstalled)return;
+  window.__northworkChatSendSafetyInstalled=true;
+
+  document.addEventListener("click",function(e){
+    const btn=e.target?.closest?.("#chatModalSend,#chatPageSend");
+    if(!btn)return;
+    e.preventDefault();
+    e.stopPropagation();
+    if(typeof sendNorthworkChatMessage!=="function"||!northworkChatSelected||northworkChatSending)return;
+    const page=btn.id==="chatPageSend";
+    const input=document.getElementById(page?"chatPageInput":"chatModalInput");
+    const value=input?.value||"";
+    if(!String(value).trim())return;
+    btn.disabled=true;
+    Promise.resolve(sendNorthworkChatMessage(northworkChatSelected.id,value,page?"page":"modal"))
+      .finally(()=>{btn.disabled=false;});
+  },true);
+
+  document.addEventListener("keydown",function(e){
+    if(e.key!=="Enter"||e.shiftKey)return;
+    const input=e.target?.closest?.("#chatModalInput,#chatPageInput");
+    if(!input)return;
+    e.preventDefault();
+    e.stopPropagation();
+    if(typeof sendNorthworkChatMessage!=="function"||!northworkChatSelected||northworkChatSending)return;
+    const page=input.id==="chatPageInput";
+    const btn=document.getElementById(page?"chatPageSend":"chatModalSend");
+    const value=input.value||"";
+    if(!String(value).trim())return;
+    if(btn)btn.disabled=true;
+    Promise.resolve(sendNorthworkChatMessage(northworkChatSelected.id,value,page?"page":"modal"))
+      .finally(()=>{if(btn)btn.disabled=false;});
+  },true);
+})();
 </script>
 </body>
 </html>
