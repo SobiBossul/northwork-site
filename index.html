@@ -1739,41 +1739,8 @@ async function sendNorthworkChatMessage(userId,body,mode="modal"){
   const text=String(body||"").trim();
   if(!text||!northworkCurrentUser||!userId)return false;
 
-  const targetId=String(userId);
-  const now=new Date().toISOString();
-  const optimisticId=`optimistic-${Date.now()}-${++northworkChatSendSequence}`;
-
-  // Show the message immediately instead of making the UI wait for R2.
-  const optimisticMessage={
-    id:optimisticId,
-    senderId:String(northworkCurrentUser.id),
-    body:text,
-    createdAt:now,
-    seenAt:null
-  };
-
-  const box=document.getElementById(mode==="page"?"chatPageMessages":"chatModalMessages");
-  const wasNearBottom=!box || (box.scrollHeight-box.scrollTop-box.clientHeight)<140;
-
-  northworkChatMessagesData=[
-    ...(Array.isArray(northworkChatMessagesData)?northworkChatMessagesData:[]),
-    optimisticMessage
-  ];
-
-  if(box){
-    box.__nwMessageSignature="";
-    renderChatMessages(box,northworkChatMessagesData);
-    if(wasNearBottom)box.scrollTop=box.scrollHeight;
-  }
-
-  const input=document.getElementById(mode==="page"?"chatPageInput":"chatModalInput");
-  if(input){
-    input.value="";
-    input.style.height="42px";
-  }
-
   try{
-    const r=await fetch(nwApi(`/api/chats/${encodeURIComponent(targetId)}/messages`),{
+    const r=await fetch(nwApi(`/api/chats/${encodeURIComponent(userId)}/messages`),{
       method:"POST",
       credentials:"include",
       headers:{
@@ -1786,31 +1753,37 @@ async function sendNorthworkChatMessage(userId,body,mode="modal"){
     const data=await r.json().catch(()=>({}));
     if(!r.ok)throw new Error(data.error||"Could not send message");
 
-    // Only reconcile when this conversation is still open.
-    if(northworkChatSelected && String(northworkChatSelected.id)===targetId){
-      northworkChatMessagesData=Array.isArray(data.messages)?data.messages:northworkChatMessagesData.filter(m=>m.id!==optimisticId);
+    if(northworkChatSelected && String(northworkChatSelected.id)===String(userId)){
+      northworkChatMessagesData=Array.isArray(data.messages)?data.messages:northworkChatMessagesData;
+
+      const box=document.getElementById(
+        mode==="page" ? "chatPageMessages" : "chatModalMessages"
+      );
+
       if(box){
-        box.__nwMessageSignature="";
+        box.__nwStructuralSignature="";
+        box.__nwFirstRender=true;
         renderChatMessages(box,northworkChatMessagesData);
         box.scrollTop=box.scrollHeight;
       }
     }
 
-    if(input)input.focus();
+    const input=document.getElementById(
+      mode==="page" ? "chatPageInput" : "chatModalInput"
+    );
+
+    if(input){
+      input.value="";
+      input.style.height="42px";
+      input.focus();
+    }
+
     return true;
   }catch(error){
-    // Remove the optimistic message when the server rejects it.
-    northworkChatMessagesData=northworkChatMessagesData.filter(m=>String(m.id)!==optimisticId);
-    if(box){
-      box.__nwMessageSignature="";
-      renderChatMessages(box,northworkChatMessagesData);
-    }
     showNorthworkToast(error.message||"Could not send message.");
-    if(input)input.focus();
     return false;
   }
 }
-
 function openNorthworkChat(user){
   if(!northworkCurrentUser){
     showNorthworkToast("Log in with Discord to use Northwork chats.");
@@ -1826,7 +1799,7 @@ function openNorthworkChat(user){
 
   northworkChatSelected=user;
   northworkChatMessagesData=[];
-  const chatBox=document.getElementById("chatPageMessages"); if(chatBox){chatBox.__nwStructuralSignature="";chatBox.__nwFirstRender=false;}
+  const chatBox=document.getElementById("chatModalMessages"); if(chatBox){chatBox.__nwStructuralSignature="";chatBox.__nwFirstRender=false;}
   renderChatListInto(document.getElementById("chatPopoverList"),"modal");
   setChatModalUser(user);
 
@@ -1941,6 +1914,7 @@ function openNorthworkChatPage(user){
   closeNorthworkChat();
   northworkChatSelected=user;
   northworkChatMessagesData=[];
+  const chatBox=document.getElementById("chatPageMessages"); if(chatBox){chatBox.__nwStructuralSignature="";chatBox.__nwFirstRender=false;}
   renderChatListInto(document.getElementById("chatPageList"),"page");
   const main=document.getElementById("chatPageMain");
   if(!main)return;
