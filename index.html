@@ -783,7 +783,7 @@ body.nw-profile-gradient .topbar{
 .chat-popover-foot .btn{flex:1}
 .chat-modal{position:fixed;inset:0;z-index:420;background:rgba(0,0,0,.38);backdrop-filter:blur(13px);display:none;align-items:flex-end;justify-content:flex-end;padding:24px}
 .chat-modal.open{display:flex}
-.chat-window{width:min(455px,100%);height:min(690px,calc(100vh - 48px));min-height:0;border:1px solid #303740;border-radius:18px;background:rgba(11,14,18,.94);box-shadow:0 35px 120px rgba(0,0,0,.6);backdrop-filter:blur(24px);overflow:hidden;display:flex;flex-direction:column;animation:chatPopIn .18s ease both}
+.chat-window{position:relative;width:min(455px,100%);height:min(690px,calc(100vh - 48px));min-height:0;border:1px solid #303740;border-radius:18px;background:rgba(11,14,18,.94);box-shadow:0 35px 120px rgba(0,0,0,.6);backdrop-filter:blur(24px);overflow:hidden;display:flex;flex-direction:column;animation:chatPopIn .18s ease both}
 .chat-window-head{padding:13px 15px;border-bottom:1px solid rgba(255,255,255,.06);display:flex;align-items:flex-start;gap:11px}
 .chat-window-head img{width:36px;height:36px;border-radius:50%;object-fit:cover;border:1px solid #2c333c;background:#171b21}
 .chat-window-head-main{min-width:0;flex:1}
@@ -793,13 +793,12 @@ body.nw-profile-gradient .topbar{
 .chat-window-close:hover{background:#171c22;color:#fff}
 .chat-safety{margin:0 13px 10px;padding:10px 11px;border:1px solid rgba(230,190,91,.26);border-radius:10px;background:linear-gradient(180deg,rgba(40,31,10,.45),rgba(20,17,10,.42));color:#9b927e;font-size:10px;line-height:1.55}
 .chat-safety strong{color:#f0cd73}
-.chat-messages{flex:1;min-height:0;overflow-y:auto;overflow-x:hidden;padding:14px;display:flex;flex-direction:column;gap:8px;background:linear-gradient(180deg,rgba(255,255,255,.008),transparent 28%);overscroll-behavior:contain;scrollbar-gutter:stable;scrollbar-width:thin;scrollbar-color:#343c47 transparent}
+.chat-messages{flex:1;min-height:0;min-width:0;overflow-y:auto;overflow-x:hidden;padding:14px;display:flex;flex-direction:column;gap:8px;background:linear-gradient(180deg,rgba(255,255,255,.008),transparent 28%);overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:#343c47 transparent}
 .chat-messages::-webkit-scrollbar,.chat-page-list::-webkit-scrollbar,.chat-popover-list::-webkit-scrollbar{width:8px;height:8px}
 .chat-messages::-webkit-scrollbar-track,.chat-page-list::-webkit-scrollbar-track,.chat-popover-list::-webkit-scrollbar-track{background:transparent}
-.chat-messages::-webkit-scrollbar-thumb,.chat-page-list::-webkit-scrollbar-thumb,.chat-popover-list::-webkit-scrollbar-thumb{background:#303844;border-radius:999px;border:2px solid transparent;background-clip:padding-box}
-.chat-messages::-webkit-scrollbar-thumb:hover,.chat-page-list::-webkit-scrollbar-thumb:hover,.chat-popover-list::-webkit-scrollbar-thumb:hover{background:#4a5562;border-radius:999px;border:2px solid transparent;background-clip:padding-box}
-.chat-page-list{scrollbar-width:thin;scrollbar-color:#343c47 transparent}
-.chat-popover-list{scrollbar-width:thin;scrollbar-color:#343c47 transparent}
+.chat-messages::-webkit-scrollbar-thumb,.chat-page-list::-webkit-scrollbar-thumb,.chat-popover-list::-webkit-scrollbar-thumb{background:#303844;border-radius:999px}
+.chat-messages::-webkit-scrollbar-thumb:hover,.chat-page-list::-webkit-scrollbar-thumb:hover,.chat-popover-list::-webkit-scrollbar-thumb:hover{background:#4a5562}
+.chat-page-list,.chat-popover-list{scrollbar-width:thin;scrollbar-color:#343c47 transparent}
 .chat-message{display:flex;max-width:82%;gap:7px;align-items:flex-end;animation:chatMessageIn .18s ease both}
 .chat-message.mine{flex-direction:row-reverse;margin-left:auto;justify-content:flex-end}
 .chat-message.theirs{flex-direction:row;margin-right:auto;justify-content:flex-start}
@@ -824,10 +823,10 @@ body.nw-profile-gradient .topbar{
 .chat-time{font-size:9px;color:#606975;padding:0 3px}
 .chat-status{font-size:9px;color:#68717c;padding:0 4px;min-height:12px}.chat-status.seen{color:#8f9baa}
 .chat-typing{display:flex;align-items:flex-end;gap:7px;padding:2px 0 4px;opacity:0;transform:translateY(4px);height:0;overflow:hidden;transition:opacity .2s ease,transform .2s ease,height .2s ease}.chat-typing.open{opacity:1;transform:none;height:34px}.chat-typing-avatar{width:28px;height:28px;border-radius:50%;object-fit:cover;border:1px solid #2b323b;background:#171b21;transform:translateX(-8px);transition:transform .24s cubic-bezier(.22,1,.36,1)}.chat-typing.open .chat-typing-avatar{transform:translateX(0)}.chat-typing-bubble{display:flex;align-items:center;gap:4px;min-width:42px;height:28px;padding:0 10px;border-radius:14px;border:1px solid #2c333c;background:#12171d;transform:translateX(-8px);transition:transform .24s cubic-bezier(.22,1,.36,1)}.chat-typing.open .chat-typing-bubble{transform:translateX(0)}.chat-typing-dot{width:5px;height:5px;border-radius:50%;background:#929aa5;animation:chatTypingDot 1.05s ease-in-out infinite}.chat-typing-dot:nth-child(2){animation-delay:.14s}.chat-typing-dot:nth-child(3){animation-delay:.28s}@keyframes chatTypingDot{0%,60%,100%{transform:translateY(0);opacity:.45}30%{transform:translateY(-4px);opacity:1}}
-.chat-composer{padding:11px;border-top:1px solid rgba(255,255,255,.06);display:flex;align-items:flex-end;gap:8px;background:rgba(10,13,16,.78)}
-.chat-composer textarea{flex:1;min-height:42px;max-height:130px;resize:none;border:1px solid #2c333c;border-radius:11px;background:#101419;color:var(--text);padding:10px 11px;font:inherit;font-size:12px;outline:none}
+.chat-composer{position:relative;z-index:5;flex:none;pointer-events:auto;padding:11px;border-top:1px solid rgba(255,255,255,.06);display:flex;align-items:flex-end;gap:8px;background:rgba(10,13,16,.96)}
+.chat-composer textarea{position:relative;z-index:6;pointer-events:auto;flex:1;min-width:0;min-height:42px;max-height:130px;resize:none;border:1px solid #2c333c;border-radius:11px;background:#101419;color:var(--text);padding:10px 11px;font:inherit;font-size:12px;outline:none}
 .chat-composer textarea:focus{border-color:#495461}
-.chat-composer button{height:42px;padding:0 13px;border-radius:11px;border:1px solid #eef1f4;background:#eef1f4;color:#090b0e;font-size:12px;font-weight:750;cursor:pointer}
+.chat-composer button{position:relative;z-index:7;pointer-events:auto;height:42px;padding:0 13px;border-radius:11px;border:1px solid #eef1f4;background:#eef1f4;color:#090b0e;font-size:12px;font-weight:750;cursor:pointer}
 .chat-composer button:hover{background:#fff}
 .chat-composer button:disabled{opacity:.45;cursor:not-allowed}
 .chat-page-shell{padding:58px 0 80px}
@@ -1003,7 +1002,7 @@ body.nw-profile-gradient .topbar{
     <div class="chat-typing" id="chatModalTyping"></div>
     <form class="chat-composer" id="chatModalComposer">
       <textarea id="chatModalInput" maxlength="2000" placeholder="Write a message..." rows="1"></textarea>
-      <button id="chatModalSend" type="submit">Send</button>
+      <button id="chatModalSend" type="button">Send</button>
     </form>
   </div>
 </div>
@@ -1731,39 +1730,64 @@ function startChatMessagePolling(mode="modal"){
 }
 
 async function sendNorthworkChatMessage(userId,body,mode="modal"){
-  if(userId){
-    northworkChatTypingActive=false;
-    if(northworkChatTypingTimer)clearTimeout(northworkChatTypingTimer);
-    setNorthworkChatTyping(userId,false);
-  }
-
   const text=String(body||"").trim();
-  if(!text||!northworkCurrentUser||!userId)return false;
+  const targetId=String(userId||"").trim();
+  if(!text||!northworkCurrentUser||!targetId)return false;
+  if(northworkChatSending)return false;
 
   northworkChatSending=true;
-  stopChatMessagePolling();
+  northworkChatTypingActive=false;
+  if(northworkChatTypingTimer)clearTimeout(northworkChatTypingTimer);
+  setNorthworkChatTyping(targetId,false);
+
+  const input=document.getElementById(mode==="page"?"chatPageInput":"chatModalInput");
+  const box=document.getElementById(mode==="page"?"chatPageMessages":"chatModalMessages");
+  const wasNearBottom=!box || (box.scrollHeight-box.scrollTop-box.clientHeight)<160;
+  const optimisticId=`optimistic-${Date.now()}-${++northworkChatSendSequence}`;
+  const optimisticMessage={
+    id:optimisticId,
+    senderId:String(northworkCurrentUser.id),
+    body:text,
+    createdAt:new Date().toISOString(),
+    seenAt:null
+  };
+
+  northworkChatMessagesData=[...(Array.isArray(northworkChatMessagesData)?northworkChatMessagesData:[]),optimisticMessage];
+  if(box){
+    box.__nwStructuralSignature="";
+    box.__nwFirstRender=true;
+    renderChatMessages(box,northworkChatMessagesData);
+    if(wasNearBottom)box.scrollTop=box.scrollHeight;
+  }
+  if(input){
+    input.value="";
+    input.style.height="42px";
+    input.focus();
+  }
 
   try{
-    const r=await fetch(nwApi(`/api/chats/${encodeURIComponent(userId)}/messages`),{
-      method:"POST",
-      credentials:"include",
-      headers:{
-        "Content-Type":"application/json",
-        "Accept":"application/json"
-      },
-      body:JSON.stringify({message:text})
-    });
+    const controller=new AbortController();
+    const timeout=setTimeout(()=>controller.abort(),15000);
+    let r;
+    try{
+      r=await fetch(nwApi(`/api/chats/${encodeURIComponent(targetId)}/messages`),{
+        method:"POST",
+        credentials:"include",
+        cache:"no-store",
+        headers:{"Content-Type":"application/json","Accept":"application/json"},
+        body:JSON.stringify({message:text}),
+        signal:controller.signal
+      });
+    }finally{
+      clearTimeout(timeout);
+    }
 
     const data=await r.json().catch(()=>({}));
     if(!r.ok)throw new Error(data.error||"Could not send message");
 
-    if(northworkChatSelected && String(northworkChatSelected.id)===String(userId)){
-      northworkChatMessagesData=Array.isArray(data.messages)?data.messages:northworkChatMessagesData;
-
-      const box=document.getElementById(
-        mode==="page" ? "chatPageMessages" : "chatModalMessages"
-      );
-
+    if(northworkChatSelected && String(northworkChatSelected.id)===targetId){
+      const serverMessages=Array.isArray(data.messages)?data.messages:[];
+      northworkChatMessagesData=serverMessages.length?serverMessages:northworkChatMessagesData.filter(m=>String(m.id)!==optimisticId);
       if(box){
         box.__nwStructuralSignature="";
         box.__nwFirstRender=true;
@@ -1771,26 +1795,20 @@ async function sendNorthworkChatMessage(userId,body,mode="modal"){
         box.scrollTop=box.scrollHeight;
       }
     }
-
-    const input=document.getElementById(
-      mode==="page" ? "chatPageInput" : "chatModalInput"
-    );
-
-    if(input){
-      input.value="";
-      input.style.height="42px";
-      input.focus();
-    }
-
     return true;
   }catch(error){
-    showNorthworkToast(error.message||"Could not send message.");
+    northworkChatMessagesData=northworkChatMessagesData.filter(m=>String(m.id)!==optimisticId);
+    if(box){
+      box.__nwStructuralSignature="";
+      box.__nwFirstRender=true;
+      renderChatMessages(box,northworkChatMessagesData);
+    }
+    const message=error?.name==="AbortError"?"Message request timed out. Please try again.":(error?.message||"Could not send message.");
+    showNorthworkToast(message);
+    if(input)input.focus();
     return false;
   }finally{
     northworkChatSending=false;
-    if(northworkChatSelected){
-      startChatMessagePolling(mode);
-    }
   }
 }
 function openNorthworkChat(user){
@@ -1864,33 +1882,38 @@ async function initNorthworkChat(){
     openPage.addEventListener("click",()=>go("/chat"));
   }
 
-  if(!composer.__bound){
+  if(composer){
     composer.__bound=true;
-    const sendMessage=async()=>{
-      if(!northworkChatSelected)return;
-      const input=document.getElementById("chatModalInput");
-      const send=document.getElementById("chatModalSend");
-      if(!input||!send||send.disabled)return;
-      const value=input.value;
-      if(!String(value||"").trim())return;
-      send.disabled=true;
-      try{
-        await sendNorthworkChatMessage(northworkChatSelected.id,value,"modal");
-      }finally{
-        send.disabled=false;
-      }
-    };
-    const send=document.getElementById("chatModalSend");
-    if(send)send.addEventListener("click",sendMessage);
-    composer.addEventListener("submit",e=>{e.preventDefault();sendMessage();});
+    composer.onsubmit=e=>{e.preventDefault();return false;};
   }
 
   const input=document.getElementById("chatModalInput");
-  if(input&&!input.__bound){
-    input.__bound=true;
-    input.addEventListener("input",()=>{input.style.height="42px";input.style.height=Math.min(input.scrollHeight,130)+"px";queueNorthworkChatTyping(northworkChatSelected?.id,input);});
-    input.addEventListener("blur",()=>{if(northworkChatSelected){northworkChatTypingActive=false;if(northworkChatTypingTimer)clearTimeout(northworkChatTypingTimer);setNorthworkChatTyping(northworkChatSelected.id,false);}});
-    input.addEventListener("keydown",e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();document.getElementById("chatModalSend")?.click();}});
+  const send=document.getElementById("chatModalSend");
+  if(input){
+    input.oninput=()=>{input.style.height="42px";input.style.height=Math.min(input.scrollHeight,130)+"px";queueNorthworkChatTyping(northworkChatSelected?.id,input);};
+    input.onblur=()=>{if(northworkChatSelected){northworkChatTypingActive=false;if(northworkChatTypingTimer)clearTimeout(northworkChatTypingTimer);setNorthworkChatTyping(northworkChatSelected.id,false);}};
+    input.onkeydown=async e=>{
+      if(e.key==="Enter"&&!e.shiftKey){
+        e.preventDefault();
+        e.stopPropagation();
+        if(send&&!send.disabled&&northworkChatSelected){
+          const value=input.value;
+          if(String(value).trim())await sendNorthworkChatMessage(northworkChatSelected.id,value,"modal");
+        }
+      }
+    };
+  }
+  if(send){
+    send.onclick=async e=>{
+      e.preventDefault();
+      e.stopPropagation();
+      if(send.disabled||!northworkChatSelected||northworkChatSending)return;
+      const value=input?.value||"";
+      if(!String(value).trim())return;
+      send.disabled=true;
+      try{await sendNorthworkChatMessage(northworkChatSelected.id,value,"modal");}
+      finally{send.disabled=false;}
+    };
   }
 
   if(modal&&!modal.__bound){
@@ -1942,33 +1965,41 @@ function openNorthworkChatPage(user){
     '<div class="chat-typing" id="chatPageTyping"></div>'+
     '<form class="chat-composer chat-page-composer" id="chatPageComposer">'+
       '<textarea id="chatPageInput" maxlength="2000" placeholder="Write a message..." rows="1"></textarea>'+
-      '<button type="submit" id="chatPageSend">Send</button>'+
+      '<button type="button" id="chatPageSend">Send</button>'+
     '</form>';
 
   const composer=document.getElementById("chatPageComposer");
   const input=document.getElementById("chatPageInput");
+  const send=document.getElementById("chatPageSend");
   if(composer){
-    const sendMessage=async()=>{
-      const send=document.getElementById("chatPageSend");
-      if(!send||send.disabled)return;
+    composer.onsubmit=e=>{e.preventDefault();return false;};
+  }
+  if(input){
+    input.oninput=()=>{input.style.height="42px";input.style.height=Math.min(input.scrollHeight,130)+"px";queueNorthworkChatTyping(user.id,input);};
+    input.onblur=()=>{northworkChatTypingActive=false;if(northworkChatTypingTimer)clearTimeout(northworkChatTypingTimer);setNorthworkChatTyping(user.id,false);};
+    input.onkeydown=async e=>{
+      if(e.key==="Enter"&&!e.shiftKey){
+        e.preventDefault();
+        e.stopPropagation();
+        if(send&&!send.disabled&&!northworkChatSending){
+          const value=input.value;
+          if(String(value).trim())await sendNorthworkChatMessage(user.id,value,"page");
+        }
+      }
+    };
+    input.focus();
+  }
+  if(send){
+    send.onclick=async e=>{
+      e.preventDefault();
+      e.stopPropagation();
+      if(send.disabled||northworkChatSending)return;
       const value=input?.value||"";
       if(!String(value).trim())return;
       send.disabled=true;
-      try{
-        await sendNorthworkChatMessage(user.id,value,"page");
-      }finally{
-        send.disabled=false;
-      }
+      try{await sendNorthworkChatMessage(user.id,value,"page");}
+      finally{send.disabled=false;}
     };
-    const send=document.getElementById("chatPageSend");
-    if(send)send.addEventListener("click",sendMessage);
-    composer.addEventListener("submit",e=>{e.preventDefault();sendMessage();});
-  }
-  if(input){
-    input.addEventListener("input",()=>{input.style.height="42px";input.style.height=Math.min(input.scrollHeight,130)+"px";queueNorthworkChatTyping(user.id,input);});
-    input.addEventListener("blur",()=>{northworkChatTypingActive=false;if(northworkChatTypingTimer)clearTimeout(northworkChatTypingTimer);setNorthworkChatTyping(user.id,false);});
-    input.addEventListener("keydown",e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();document.getElementById("chatPageSend")?.click();}});
-    input.focus();
   }
   startChatMessagePolling("page");
 }
@@ -3429,81 +3460,6 @@ function showProfileChangeNotice(){
 /* Site update notice disabled. Version checking remains available on the backend, but the toast is intentionally hidden. */
 // Boot only after every Northwork function exists. This prevents direct
 // profile refreshes from running the router before profile functions are loaded.
-
-/* ================= ROBUST CHAT SEND DELEGATION =================
-   The chat composer is partly static and partly created dynamically by the router.
-   Use delegated listeners so sending does not depend on a particular render cycle.
-*/
-(function initRobustChatSending(){
-  if(window.__northworkRobustChatSending)return;
-  window.__northworkRobustChatSending=true;
-
-  document.addEventListener("submit",async (event)=>{
-    const form=event.target?.closest?.("#chatModalComposer,#chatPageComposer");
-    if(!form)return;
-    event.preventDefault();
-    event.stopPropagation();
-
-    if(window.northworkChatSending)return;
-    if(!window.northworkCurrentUser)return;
-
-    const isPage=form.id==="chatPageComposer";
-    const input=form.querySelector(isPage?"#chatPageInput":"#chatModalInput");
-    const send=form.querySelector(isPage?"#chatPageSend":"#chatModalSend");
-    const selected=window.northworkChatSelected;
-    const text=String(input?.value||"").trim();
-
-    if(!selected||!text||!input)return;
-    if(send?.disabled)return;
-
-    if(send)send.disabled=true;
-    try{
-      await window.sendNorthworkChatMessage(selected.id,text,isPage?"page":"modal");
-    }catch(error){
-      console.error("Northwork delegated chat send error:",error);
-    }finally{
-      if(send)send.disabled=false;
-    }
-  },true);
-
-  document.addEventListener("click",async (event)=>{
-    const button=event.target?.closest?.("#chatModalSend,#chatPageSend");
-    if(!button)return;
-    if(button.type==="submit")return; // handled by the form submit event
-    if(window.northworkChatSending)return;
-    if(!window.northworkCurrentUser||!window.northworkChatSelected)return;
-
-    const isPage=button.id==="chatPageSend";
-    const input=document.getElementById(isPage?"chatPageInput":"chatModalInput");
-    const text=String(input?.value||"").trim();
-    if(!input||!text||button.disabled)return;
-
-    event.preventDefault();
-    event.stopPropagation();
-    button.disabled=true;
-    try{
-      await window.sendNorthworkChatMessage(window.northworkChatSelected.id,text,isPage?"page":"modal");
-    }catch(error){
-      console.error("Northwork delegated chat click error:",error);
-    }finally{
-      button.disabled=false;
-    }
-  },true);
-
-  document.addEventListener("keydown",(event)=>{
-    if(event.key!=="Enter"||event.shiftKey||event.isComposing)return;
-    const input=event.target?.closest?.("#chatModalInput,#chatPageInput");
-    if(!input)return;
-    const form=input.closest("form");
-    if(!form)return;
-    event.preventDefault();
-    event.stopPropagation();
-
-    const send=form.querySelector("button[type=submit],button[id$='Send']");
-    if(send&&!send.disabled)send.click();
-  },true);
-})();
-
 window.addEventListener("popstate",()=>renderRoute());
 window.addEventListener("hashchange",()=>renderRoute());
 
