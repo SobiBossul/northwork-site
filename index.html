@@ -1974,6 +1974,84 @@ button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-
   @media (prefers-reduced-motion: reduce) { .northwork-auth-action-primary { transition: none; } }
 </style>
 
+
+<style id="northwork-career-form-styles">
+  .careers-contact {
+    width: min(100%, 900px);
+    margin: clamp(64px, 8vw, 104px) auto 0;
+    padding: clamp(23px, 4.2vw, 48px);
+    border: 1px solid var(--nw-accent-border, rgba(160,110,255,.25));
+    background: #100d15;
+    box-shadow: 0 18px 52px rgba(0,0,0,.22);
+  }
+  .careers-contact-heading { max-width: 690px; margin: 0 auto 32px; text-align: center; }
+  .careers-contact-eyebrow {
+    display: block; margin: 0 0 13px; color: var(--nw-purple);
+    font: 800 10px/1.2 Arial,sans-serif; letter-spacing: .24em;
+  }
+  .careers-contact-title {
+    margin: 0; color: #f3eff8; font: 800 clamp(30px,5vw,52px)/1.08 Arial,sans-serif;
+    letter-spacing: -.055em;
+  }
+  .careers-contact-title span { color: var(--nw-purple); }
+  .careers-contact-heading p {
+    max-width: 590px; margin: 14px auto 0; color: #aaa2b3;
+    font: 400 14px/1.75 Arial,sans-serif;
+  }
+  .career-application-form { width: 100%; }
+  .career-form-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 19px 17px; }
+  .career-form-field { display: grid; min-width: 0; gap: 8px; color: #d5ccdf; font: 700 10px/1.3 Arial,sans-serif; letter-spacing: .045em; text-transform: uppercase; }
+  .career-form-field small { color: #847a91; font: 400 10px Arial,sans-serif; letter-spacing: 0; text-transform: none; }
+  .career-form-field input,
+  .career-form-field select,
+  .career-form-field textarea {
+    width: 100%; min-width: 0; border: 1px solid #342b3e; border-radius: 0;
+    outline: none; padding: 0 14px; background: #0a080e; color: #f0ebf6;
+    font: 400 13px/1.5 Arial,sans-serif; letter-spacing: 0; text-transform: none;
+    transition: border-color .18s ease, box-shadow .18s ease, background .18s ease;
+    user-select: text;
+  }
+  .career-form-field input, .career-form-field select { height: 46px; }
+  .career-form-field select { color-scheme: dark; cursor: pointer; }
+  .career-form-field textarea { min-height: 142px; padding: 13px 14px; resize: vertical; }
+  .career-form-field input::placeholder,
+  .career-form-field textarea::placeholder { color: #777080; opacity: 1; }
+  .career-form-field input:focus,
+  .career-form-field select:focus,
+  .career-form-field textarea:focus {
+    border-color: var(--nw-purple); background: #0e0a14;
+    box-shadow: 0 0 0 2px color-mix(in srgb,var(--nw-purple) 15%,transparent);
+  }
+  .career-form-message { margin-top: 20px; }
+  .career-form-trap { position: absolute !important; left: -10000px !important; width: 1px !important; height: 1px !important; overflow: hidden !important; }
+  .career-form-submit-row { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 15px 20px; margin-top: 23px; }
+  .career-form-submit {
+    min-width: 160px; min-height: 46px; display: inline-flex; align-items: center; justify-content: center; gap: 12px;
+    padding: 0 20px; border: 1px solid var(--nw-purple); border-radius: 0;
+    background: var(--nw-purple); color: #09070d; cursor: pointer;
+    font: 800 12px Arial,sans-serif; transition: opacity .18s ease, transform .18s ease;
+  }
+  .career-form-submit:hover { opacity: .88; transform: translateY(-1px); }
+  .career-form-submit:disabled { opacity: .55; cursor: wait; transform: none; }
+  .career-form-privacy { max-width: 310px; margin: 0; color: #81798b; font: 400 11px/1.6 Arial,sans-serif; }
+  .career-form-feedback { display: none; margin: 17px 0 0; color: #b8afc4; text-align: center; font: 500 12px/1.6 Arial,sans-serif; overflow-wrap: anywhere; }
+  .career-form-feedback.is-visible { display: block; }
+  .career-form-feedback[data-state="success"] { color: #9bd2ad; }
+  .career-form-feedback[data-state="error"] { color: #ef9a9a; }
+  @media (max-width: 620px) {
+    .careers-contact { margin-top: 64px; padding: 23px 17px; }
+    .careers-contact-heading { margin-bottom: 26px; }
+    .career-form-grid { grid-template-columns: 1fr; gap: 16px; }
+    .career-form-message { margin-top: 16px; }
+    .career-form-submit-row { align-items: stretch; flex-direction: column; }
+    .career-form-submit { width: 100%; }
+    .career-form-privacy { max-width: none; text-align: center; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .career-form-field input, .career-form-field select, .career-form-field textarea, .career-form-submit { transition: none; }
+  }
+</style>
+
 </head>
 <body>
   <header class="topbar">
@@ -2337,8 +2415,8 @@ button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-
       <span class="careers-eyebrow">Your next chapter starts here</span>
       <h2 class="careers-title">Become a member in <span>Northwork</span></h2>
       <div class="careers-actions">
-        <button class="hero-action hero-action-primary" type="button">Apply Now</button>
-        <button class="hero-action hero-action-secondary" type="button">Check Roles</button>
+        <button class="hero-action hero-action-primary" id="careers-apply-now" type="button">Apply Now</button>
+        <button class="hero-action hero-action-secondary" id="careers-check-roles" type="button">Check Roles</button>
       </div>
       <div class="careers-roles" aria-label="Available roles">
         <article class="career-role-card">
@@ -2352,7 +2430,113 @@ button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-
             <strong>0 available</strong>
           </div>
         </article>
+        <article class="career-role-card">
+          <div class="career-role-top">
+            <h3 class="career-role-name">Game Developer</h3>
+            <span class="career-role-tag">Technical</span>
+          </div>
+          <p class="career-role-description">Build gameplay systems, develop new features, fix bugs, and help turn Northwork ideas into polished experiences.</p>
+          <div class="career-role-spots">
+            <span>Available spots</span>
+            <strong>0 available</strong>
+          </div>
+        </article>
+        <article class="career-role-card">
+          <div class="career-role-top">
+            <h3 class="career-role-name">Artist &amp; Thumbnail Designer</h3>
+            <span class="career-role-tag">Creative</span>
+          </div>
+          <p class="career-role-description">Create eye-catching game thumbnails, icons, promotional artwork, and visual assets that give each project its identity.</p>
+          <div class="career-role-spots">
+            <span>Available spots</span>
+            <strong>0 available</strong>
+          </div>
+        </article>
+        <article class="career-role-card">
+          <div class="career-role-top">
+            <h3 class="career-role-name">Data &amp; Analytics</h3>
+            <span class="career-role-tag">Insights</span>
+          </div>
+          <p class="career-role-description">Study player behavior, track experience performance, and turn feedback and data into useful ideas for the team.</p>
+          <div class="career-role-spots">
+            <span>Available spots</span>
+            <strong>0 available</strong>
+          </div>
+        </article>
+        <article class="career-role-card">
+          <div class="career-role-top">
+            <h3 class="career-role-name">UI/UX Designer</h3>
+            <span class="career-role-tag">Design</span>
+          </div>
+          <p class="career-role-description">Design clear, intuitive interfaces and player flows, from in-game menus to the details that make an experience feel complete.</p>
+          <div class="career-role-spots">
+            <span>Available spots</span>
+            <strong>0 available</strong>
+          </div>
+        </article>
+        <article class="career-role-card">
+          <div class="career-role-top">
+            <h3 class="career-role-name">Community Manager</h3>
+            <span class="career-role-tag">Community</span>
+          </div>
+          <p class="career-role-description">Help keep the Northwork community connected, gather suggestions, share updates, and make sure player feedback is heard.</p>
+          <div class="career-role-spots">
+            <span>Available spots</span>
+            <strong>0 available</strong>
+          </div>
+        </article>
       </div>
+
+      <section class="careers-contact" id="careers-contact" aria-labelledby="careers-contact-title">
+        <div class="careers-contact-heading">
+          <span class="careers-contact-eyebrow">GET IN TOUCH</span>
+          <h3 class="careers-contact-title" id="careers-contact-title">Work with <span>NWRK Team</span></h3>
+          <p>Have something to bring to Northwork? Tell us a little about yourself, what you do, and how you'd like to contribute.</p>
+        </div>
+
+        <form class="career-application-form" id="career-application-form">
+          <div class="career-form-grid">
+            <label class="career-form-field">
+              <span>Your name</span>
+              <input type="text" name="full_name" placeholder="How should we call you?" autocomplete="name" minlength="2" maxlength="80" required>
+            </label>
+            <label class="career-form-field">
+              <span>Email</span>
+              <input type="email" name="email" placeholder="you@example.com" autocomplete="email" maxlength="254" required>
+            </label>
+            <label class="career-form-field">
+              <span>What is this about?</span>
+              <select name="role" required>
+                <option value="" selected disabled>Choose a role or topic</option>
+                <option>Game Tester</option>
+                <option>Game Developer</option>
+                <option>Artist &amp; Thumbnail Designer</option>
+                <option>Data &amp; Analytics</option>
+                <option>UI/UX Designer</option>
+                <option>Community Manager</option>
+                <option>General collaboration</option>
+                <option>Other</option>
+              </select>
+            </label>
+            <label class="career-form-field">
+              <span>Discord username <small>(optional)</small></span>
+              <input type="text" name="discord_username" placeholder="yourusername" autocomplete="off" maxlength="80">
+            </label>
+          </div>
+          <label class="career-form-field career-form-message">
+            <span>Message</span>
+            <textarea name="message" rows="6" minlength="10" maxlength="3000" placeholder="Tell us about yourself, your experience, or what you'd like to work on..." required></textarea>
+          </label>
+          <div class="career-form-trap" aria-hidden="true">
+            <label>Leave this field empty<input type="text" name="website" tabindex="-1" autocomplete="off"></label>
+          </div>
+          <div class="career-form-submit-row">
+            <button class="career-form-submit" id="career-form-submit" type="submit">Send application <span aria-hidden="true">↗</span></button>
+            <p class="career-form-privacy">Your details are shared with the Northwork team for application review.</p>
+          </div>
+          <p class="career-form-feedback" id="career-form-feedback" role="status" aria-live="polite"></p>
+        </form>
+      </section>
     </div>
   </section>
 
@@ -2556,6 +2740,69 @@ button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-
           auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true }
         })
       : null;
+
+    // Northwork career enquiries are stored in a write-only Supabase table.
+    const careerApplicationForm = document.getElementById("career-application-form");
+    const careerApplicationFeedback = document.getElementById("career-form-feedback");
+    const careerApplicationSubmit = document.getElementById("career-form-submit");
+    const careersApplyNow = document.getElementById("careers-apply-now");
+    const careersCheckRoles = document.getElementById("careers-check-roles");
+
+    careersApplyNow?.addEventListener("click", () => {
+      document.getElementById("careers-contact")?.scrollIntoView({ behavior: "smooth", block: "start" });
+      window.setTimeout(() => careerApplicationForm?.querySelector('[name="full_name"]')?.focus({ preventScroll: true }), 450);
+    });
+    careersCheckRoles?.addEventListener("click", () => {
+      document.querySelector(".careers-roles")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+
+    function showCareerApplicationFeedback(message, state = "info") {
+      if (!careerApplicationFeedback) return;
+      careerApplicationFeedback.textContent = message;
+      careerApplicationFeedback.dataset.state = state;
+      careerApplicationFeedback.classList.add("is-visible");
+    }
+
+    careerApplicationForm?.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      if (!careerApplicationForm.reportValidity()) return;
+
+      const values = new FormData(careerApplicationForm);
+      // Quietly discard bot submissions that fill the hidden honeypot field.
+      if (String(values.get("website") || "").trim()) {
+        careerApplicationForm.reset();
+        showCareerApplicationFeedback("Thanks for reaching out to Northwork!", "success");
+        return;
+      }
+      if (!supabaseClient) {
+        showCareerApplicationFeedback("The application service isn't connected right now. Please try again later.", "error");
+        return;
+      }
+
+      const application = {
+        full_name: String(values.get("full_name") || "").trim(),
+        email: String(values.get("email") || "").trim(),
+        role: String(values.get("role") || "").trim(),
+        discord_username: String(values.get("discord_username") || "").trim() || null,
+        message: String(values.get("message") || "").trim()
+      };
+
+      careerApplicationSubmit.disabled = true;
+      careerApplicationSubmit.textContent = "Sending…";
+      careerApplicationFeedback.classList.remove("is-visible");
+      try {
+        const { error } = await supabaseClient.from("career_applications").insert(application);
+        if (error) throw error;
+        careerApplicationForm.reset();
+        showCareerApplicationFeedback("Your application has been sent. Thanks for wanting to work with Northwork!", "success");
+      } catch (error) {
+        console.error("Northwork career application submission failed:", error);
+        showCareerApplicationFeedback("We couldn't send your application. Please check that the Northwork career applications database setup has been completed, then try again.", "error");
+      } finally {
+        careerApplicationSubmit.disabled = false;
+        careerApplicationSubmit.innerHTML = 'Send application <span aria-hidden="true">↗</span>';
+      }
+    });
 
     const accountSubmit = document.getElementById("account-submit");
     const accountDisclaimer = document.getElementById("account-disclaimer");
