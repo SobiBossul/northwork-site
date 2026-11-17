@@ -1957,6 +1957,11 @@ button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-
     padding: clamp(22px, 5vw, 38px); box-shadow: 0 24px 90px rgba(0,0,0,.38);
   }
   .northwork-auth-action-kicker { margin: 0 0 13px; color: var(--nw-purple); font: 700 10px/1.2 Arial,sans-serif; letter-spacing: .16em; }
+  .northwork-auth-brand { display:flex; align-items:center; gap:11px; margin:0 0 28px; }
+  .northwork-auth-brand-mark { display:grid; place-items:center; width:36px; height:36px; border:1px solid var(--nw-purple); background:color-mix(in srgb,var(--nw-purple) 12%,#101319); color:#f5f2ff; font:800 18px/1 Arial,sans-serif; letter-spacing:-.08em; }
+  .northwork-auth-brand-name { color:#f2f3f6; font:800 12px/1 Arial,sans-serif; letter-spacing:.18em; }
+  .northwork-auth-secondary { display:block; width:100%; margin:13px 0 0; border:0; padding:8px 0; background:transparent; color:#a7a0b8; font:600 11px Arial,sans-serif; text-align:center; cursor:pointer; }
+  .northwork-auth-secondary:hover { color:#fff; }
   .northwork-auth-action-card h1 { margin: 0 0 10px; color: #f5f6f8; font: 700 clamp(26px,5vw,34px)/1.08 Arial,sans-serif; letter-spacing: -.04em; }
   .northwork-auth-action-description { margin: 0 0 24px; color: #969daa; font: 400 13px/1.65 Arial,sans-serif; }
   .northwork-auth-action-field { display: grid; gap: 8px; margin: 0 0 15px; color: #d5d9e1; font: 600 11px/1.3 Arial,sans-serif; }
@@ -2236,6 +2241,21 @@ button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-
 
 
   <section class="northwork-auth-action-page" id="northwork-auth-action-page" aria-hidden="true">
+    <div class="northwork-auth-action-card" id="northwork-password-request-panel" hidden>
+      <button class="northwork-auth-action-back" type="button" data-auth-action-back>← Back to Northwork</button>
+      <div class="northwork-auth-brand"><span class="northwork-auth-brand-mark">N</span><span class="northwork-auth-brand-name">NORTHWORK</span></div>
+      <p class="northwork-auth-action-kicker">ACCOUNT RECOVERY</p>
+      <h1>Forgot your password?</h1>
+      <p class="northwork-auth-action-description">No problem. Enter the email address connected to your Northwork account and we'll send you a secure reset link.</p>
+      <form id="northwork-password-request-form">
+        <label class="northwork-auth-action-field">Email address
+          <input id="northwork-reset-email" type="email" autocomplete="email" placeholder="you@example.com" required>
+        </label>
+        <button class="northwork-auth-action-primary" id="northwork-send-reset-link" type="submit">Send reset link</button>
+        <p class="northwork-auth-action-feedback" id="northwork-password-request-feedback" role="status" aria-live="polite">Enter your account email to get started.</p>
+      </form>
+      <p class="northwork-auth-action-note">For your security, the password can only be changed after opening the one-time link sent to your email.</p>
+    </div>
     <div class="northwork-auth-action-card" id="northwork-password-reset-panel" hidden>
       <button class="northwork-auth-action-back" type="button" data-auth-action-back>← Back to Northwork</button>
       <p class="northwork-auth-action-kicker">NORTHWORK / ACCOUNT SECURITY</p>
@@ -2895,28 +2915,9 @@ button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-
       }
     });
 
-    forgotPassword.addEventListener("click", async () => {
-      if (!supabaseClient) {
-        showAccountFeedback("Connect your Supabase project first to enable password recovery.", "error");
-        return;
-      }
+    forgotPassword.addEventListener("click", () => {
       const email = emailInput.value.trim();
-      if (!email) {
-        showAccountFeedback("Enter your email address first, then choose Forgot password?", "error");
-        emailInput.focus();
-        return;
-      }
-      forgotPassword.disabled = true;
-      try {
-        const redirectUrl = requireNorthworkAuthRedirect("password-reset");
-        const { error } = await supabaseClient.auth.resetPasswordForEmail(email, { redirectTo: redirectUrl });
-        if (error) throw error;
-        showAccountFeedback("If an account exists for that email, a password-reset link is on its way.", "success");
-      } catch (error) {
-        showAccountFeedback(error.message || "We couldn't send the reset email. Please try again.", "error");
-      } finally {
-        forgotPassword.disabled = false;
-      }
+      openNorthworkPasswordRequestPage(email);
     });
 
     // Public Northwork profiles (profile data is stored in Supabase).
@@ -3442,8 +3443,13 @@ button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-
     // Dedicated Northwork email-action pages. Supabase returns here using the
     // northwork-auth query route; Supabase JS consumes the confirmation token
     // from the URL and establishes the session before the user can continue.
-    const northworkAuthRoute = new URLSearchParams(window.location.search).get("northwork-auth");
+    let northworkAuthRoute = new URLSearchParams(window.location.search).get("northwork-auth");
     const northworkAuthActionPage = document.getElementById("northwork-auth-action-page");
+    const northworkPasswordRequestPanel = document.getElementById("northwork-password-request-panel");
+    const northworkPasswordRequestForm = document.getElementById("northwork-password-request-form");
+    const northworkPasswordRequestFeedback = document.getElementById("northwork-password-request-feedback");
+    const northworkResetEmailInput = document.getElementById("northwork-reset-email");
+    const northworkSendResetLinkButton = document.getElementById("northwork-send-reset-link");
     const northworkPasswordPanel = document.getElementById("northwork-password-reset-panel");
     const northworkEmailPanel = document.getElementById("northwork-email-confirm-panel");
     const northworkPasswordForm = document.getElementById("northwork-password-reset-form");
@@ -3461,29 +3467,76 @@ button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-
       northworkAuthActionPage.classList.add("open");
       northworkAuthActionPage.setAttribute("aria-hidden", "false");
       document.body.style.overflow = "hidden";
+      if (northworkPasswordRequestPanel) northworkPasswordRequestPanel.hidden = route !== "password-request";
       if (northworkPasswordPanel) northworkPasswordPanel.hidden = route !== "password-reset";
       if (northworkEmailPanel) northworkEmailPanel.hidden = route !== "email-confirmation";
+    }
+
+    function openNorthworkPasswordRequestPage(email = "") {
+      northworkAuthRoute = "password-request";
+      const nextUrl = new URL(window.location.href);
+      nextUrl.searchParams.set("northwork-auth", "password-request");
+      window.history.pushState({ northworkAuth: "password-request" }, "", nextUrl.toString());
+      openNorthworkAuthActionPage("password-request");
+      if (northworkResetEmailInput) {
+        northworkResetEmailInput.value = email;
+        if (!email) northworkResetEmailInput.focus();
+      }
+      if (northworkPasswordRequestFeedback) {
+        setNorthworkAuthFeedback(northworkPasswordRequestFeedback, supabaseClient
+          ? "Enter your account email to get started."
+          : "Northwork password recovery is unavailable right now. Please try again later.", supabaseClient ? "info" : "error");
+      }
     }
 
     function closeNorthworkAuthActionPage() {
       northworkAuthActionPage?.classList.remove("open");
       northworkAuthActionPage?.setAttribute("aria-hidden", "true");
       document.body.style.overflow = "";
+      northworkAuthRoute = null;
       const cleanUrl = new URL(window.location.href);
       cleanUrl.searchParams.delete("northwork-auth");
-      cleanUrl.hash = "";
+      cleanUrl.hash = document.body.classList.contains("signup-open") ? "#login" : "";
       window.history.replaceState({}, "", cleanUrl.toString());
     }
 
     document.querySelectorAll("[data-auth-action-back]").forEach(button => button.addEventListener("click", closeNorthworkAuthActionPage));
 
-    if (northworkAuthRoute === "password-reset" || northworkAuthRoute === "email-confirmation") {
+    if (northworkAuthRoute === "password-request" || northworkAuthRoute === "password-reset" || northworkAuthRoute === "email-confirmation") {
       openNorthworkAuthActionPage(northworkAuthRoute);
       if (!supabaseClient) {
-        setNorthworkAuthFeedback(northworkPasswordFeedback, "Northwork authentication is unavailable. Please reload the site.", "error");
-        setNorthworkAuthFeedback(document.getElementById("northwork-email-confirm-feedback"), "Northwork authentication is unavailable. Please reload the site.", "error");
+        const unavailableMessage = "Northwork authentication is unavailable. Please reload the site.";
+        setNorthworkAuthFeedback(northworkPasswordRequestFeedback, unavailableMessage, "error");
+        setNorthworkAuthFeedback(northworkPasswordFeedback, unavailableMessage, "error");
+        setNorthworkAuthFeedback(document.getElementById("northwork-email-confirm-feedback"), unavailableMessage, "error");
+      } else if (northworkAuthRoute === "password-request") {
+        setNorthworkAuthFeedback(northworkPasswordRequestFeedback, "Enter the email linked to your Northwork account.", "info");
       }
     }
+
+    northworkPasswordRequestForm?.addEventListener("submit", async event => {
+      event.preventDefault();
+      if (!supabaseClient || !northworkResetEmailInput || !northworkSendResetLinkButton) return;
+      const email = northworkResetEmailInput.value.trim();
+      if (!email) {
+        setNorthworkAuthFeedback(northworkPasswordRequestFeedback, "Enter your account email address.", "error");
+        northworkResetEmailInput.focus();
+        return;
+      }
+      northworkSendResetLinkButton.disabled = true;
+      northworkSendResetLinkButton.textContent = "Sending…";
+      try {
+        const redirectTo = requireNorthworkAuthRedirect("password-reset");
+        const { error } = await supabaseClient.auth.resetPasswordForEmail(email, { redirectTo });
+        if (error) throw error;
+        setNorthworkAuthFeedback(northworkPasswordRequestFeedback, "If an account exists for that email, a secure password-reset link is on its way.", "success");
+      } catch (error) {
+        setNorthworkAuthFeedback(northworkPasswordRequestFeedback, error.message || "We couldn't send the reset email. Please try again.", "error");
+      } finally {
+        northworkSendResetLinkButton.disabled = false;
+        northworkSendResetLinkButton.textContent = "Send reset link";
+      }
+    });
 
     northworkPasswordForm?.addEventListener("submit", async event => {
       event.preventDefault();
@@ -3562,6 +3615,16 @@ button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-
       }
     }
     window.addEventListener("popstate", () => {
+      const requestedAuthRoute = new URLSearchParams(location.search).get("northwork-auth");
+      if (["password-request", "password-reset", "email-confirmation"].includes(requestedAuthRoute)) {
+        northworkAuthRoute = requestedAuthRoute;
+        openNorthworkAuthActionPage(requestedAuthRoute);
+      } else if (northworkAuthActionPage?.classList.contains("open")) {
+        northworkAuthActionPage.classList.remove("open");
+        northworkAuthActionPage.setAttribute("aria-hidden", "true");
+        document.body.style.overflow = "";
+        northworkAuthRoute = null;
+      }
       const requestedProfile = new URL(location.href).searchParams.get("profile");
       if (requestedProfile) openPublicProfileById(requestedProfile, false);
       else if (accountPage?.classList.contains("open")) closeNorthworkAccount(false);
