@@ -2161,6 +2161,37 @@ button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-
   .nw-chat-message-row.mine .nw-chat-message-bubble { border-color:color-mix(in srgb,var(--nw-purple) 45%,#34313d); background:color-mix(in srgb,var(--nw-purple) 13%,#171622); }
   .nw-chat-message-body { margin:0; color:#e9ebf1; font:400 12px/1.65 Arial,sans-serif; white-space:pre-wrap; overflow-wrap:anywhere; }
   .nw-chat-message-time { display:block; margin-top:6px; color:#7e8795; text-align:right; font:400 8px Arial,sans-serif; }
+  .nw-chat-gif-media { display:block; max-width:min(100%,360px); overflow:hidden; }
+  .nw-chat-gif-media a { display:block; color:inherit; text-decoration:none; }
+  .nw-chat-gif-media img { display:block; width:auto; max-width:100%; max-height:260px; object-fit:contain; background:#090c11; }
+  .nw-chat-gif-credit { display:flex; align-items:center; gap:5px; margin-top:7px; color:#828b99; font:600 8px Arial,sans-serif; }
+  .nw-chat-gif-credit a { color:#9dbfff; text-decoration:none; }
+  .nw-chat-gif-credit a:hover { text-decoration:underline; }
+  .nw-chat-gif-button { min-height:34px; min-width:42px; padding:0 11px !important; border:1px solid #394354 !important; background:#151b26 !important; color:#c8d8f5 !important; font:800 9px Arial,sans-serif !important; letter-spacing:.08em; }
+  .nw-chat-gif-button:hover { border-color:var(--nw-purple) !important; background:#1c2330 !important; color:#fff !important; }
+  .nw-chat-composer-tools { display:flex; align-items:center; gap:11px; min-width:0; }
+  .nw-gif-picker { position:fixed; z-index:100000; inset:0; display:grid; place-items:center; padding:20px; background:rgba(0,0,0,.72); backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px); }
+  .nw-gif-picker[hidden] { display:none; }
+  .nw-gif-picker-panel { width:min(620px,100%); max-height:min(680px,calc(100dvh - 40px)); display:flex; flex-direction:column; border:1px solid #343b49; background:#10141c; color:#eef1f7; box-shadow:0 24px 80px rgba(0,0,0,.58); }
+  .nw-gif-picker-head { display:flex; align-items:center; justify-content:space-between; gap:14px; padding:17px 18px; border-bottom:1px solid #272e39; }
+  .nw-gif-picker-head strong { display:block; color:#f1f3f8; font:750 15px Arial,sans-serif; }
+  .nw-gif-picker-head small { display:block; margin-top:5px; color:#808b9c; font:400 9px Arial,sans-serif; }
+  .nw-gif-picker-close { width:34px; height:34px; flex:none; border:1px solid #394251; background:#171d27; color:#e8edf7; font:600 18px Arial,sans-serif; cursor:pointer; }
+  .nw-gif-picker-search { display:flex; gap:8px; padding:13px 16px; border-bottom:1px solid #272e39; }
+  .nw-gif-picker-search input { flex:1; min-width:0; height:39px; border:1px solid #384252; outline:0; padding:0 12px; background:#090d13; color:#f3f5fa; font:400 11px Arial,sans-serif; }
+  .nw-gif-picker-search input:focus { border-color:var(--nw-purple); }
+  .nw-gif-picker-search button { min-width:72px; border:1px solid var(--nw-purple); background:var(--nw-purple); color:#0b0910; font:800 9px Arial,sans-serif; cursor:pointer; }
+  .nw-gif-picker-results { min-height:180px; overflow:auto; padding:12px; display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); align-content:start; gap:9px; }
+  .nw-gif-result { position:relative; min-width:0; min-height:90px; padding:0; overflow:hidden; border:1px solid #2b3442; background:#090c12; cursor:pointer; }
+  .nw-gif-result:hover,.nw-gif-result:focus-visible { outline:2px solid var(--nw-purple); outline-offset:1px; }
+  .nw-gif-result img { display:block; width:100%; height:112px; object-fit:cover; }
+  .nw-gif-result span { position:absolute; left:0; right:0; bottom:0; padding:5px 6px; overflow:hidden; background:linear-gradient(transparent,rgba(0,0,0,.82)); color:#fff; font:600 8px Arial,sans-serif; text-align:left; text-overflow:ellipsis; white-space:nowrap; }
+  .nw-gif-picker-status { grid-column:1/-1; display:grid; place-items:center; min-height:150px; padding:22px; color:#909bad; font:400 11px/1.6 Arial,sans-serif; text-align:center; }
+  .nw-gif-picker-status a { color:#a8c8ff; }
+  .nw-gif-picker-foot { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:10px 15px; border-top:1px solid #272e39; color:#778294; font:600 8px Arial,sans-serif; }
+  .nw-gif-powered { display:inline-flex; align-items:center; gap:6px; color:#aab3c1; text-decoration:none; }
+  .nw-gif-powered img { width:17px; height:17px; display:block; object-fit:contain; }
+  .nw-gif-powered strong { color:#f2f4f8; font:900 9px Arial,sans-serif; letter-spacing:.08em; }
   .nw-chat-message-loading,.nw-chat-no-messages { margin:auto; padding:20px; color:#7e8897; text-align:center; font:400 11px/1.6 Arial,sans-serif; }
   .nw-chat-composer { flex:none; padding:13px 18px 15px; border-top:1px solid #252a34; background:#0e1117; }
   .nw-chat-composer textarea { display:block; box-sizing:border-box; width:100%; min-height:47px; max-height:130px; resize:vertical; border:1px solid #343a46; border-radius:0; outline:0; padding:13px 13px; background:#090c11; color:#f0f2f6; font:400 12px/1.5 Arial,sans-serif; }
@@ -2201,6 +2232,12 @@ button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-
     .nw-chat-composer { padding:10px; }
     .nw-chat-composer-actions>span { font-size:7px; }
     .nw-chat-composer-actions button { min-height:36px; padding:0 10px; }
+    .nw-gif-picker { padding:10px; }
+    .nw-gif-picker-panel { max-height:calc(100dvh - 20px); }
+    .nw-gif-picker-results { grid-template-columns:repeat(2,minmax(0,1fr)); gap:7px; padding:9px; }
+    .nw-gif-result img { height:108px; }
+    .nw-chat-composer-tools { gap:7px; }
+    .nw-chat-gif-button { min-height:36px; padding:0 9px !important; }
   }
   @media (prefers-reduced-motion:reduce) { .northwork-chat-page { transition:none; } }
 
@@ -2456,7 +2493,10 @@ window.NORTHWORK_SITE_DATA = {"staff":[{"userId":"438702447683174402","name":"Ry
             <form class="nw-chat-composer" id="northwork-chat-message-form">
               <textarea id="northwork-chat-message-input" rows="1" maxlength="3000" placeholder="Write a message…" aria-label="Write a message"></textarea>
               <div class="nw-chat-composer-actions">
-                <span>ENTER TO SEND <i>·</i> SHIFT + ENTER FOR A NEW LINE</span>
+                <div class="nw-chat-composer-tools">
+                  <button type="button" class="nw-chat-gif-button" id="northwork-chat-gif-button" aria-haspopup="dialog" aria-expanded="false">GIF</button>
+                  <span>ENTER TO SEND <i>·</i> SHIFT + ENTER FOR A NEW LINE</span>
+                </div>
                 <button type="submit" id="northwork-chat-send-button">Send message <span>↗</span></button>
               </div>
             </form>
@@ -2464,6 +2504,27 @@ window.NORTHWORK_SITE_DATA = {"staff":[{"userId":"438702447683174402","name":"Ry
         </main>
       </div>
       <div class="nw-chat-toast" id="northwork-chat-toast" role="status" aria-live="polite" hidden></div>
+    </div>
+    <div class="nw-gif-picker" id="northwork-gif-picker" role="dialog" aria-modal="true" aria-labelledby="northwork-gif-picker-title" hidden>
+      <div class="nw-gif-picker-panel">
+        <div class="nw-gif-picker-head">
+          <div><strong id="northwork-gif-picker-title">Choose a GIF</strong><small>Search a reaction and send it into your chat</small></div>
+          <button class="nw-gif-picker-close" id="northwork-gif-picker-close" type="button" aria-label="Close GIF picker">×</button>
+        </div>
+        <form class="nw-gif-picker-search" id="northwork-gif-picker-search-form">
+          <input id="northwork-gif-picker-search" type="search" maxlength="50" placeholder="Search GIFs…" autocomplete="off" aria-label="Search GIFs">
+          <button type="submit">Search</button>
+        </form>
+        <div class="nw-gif-picker-results" id="northwork-gif-picker-results" aria-live="polite">
+          <div class="nw-gif-picker-status">Trending GIFs will appear here.</div>
+        </div>
+        <div class="nw-gif-picker-foot">
+          <span>Tap a GIF to send it · General audience results</span>
+          <a class="nw-gif-powered" href="https://giphy.com" target="_blank" rel="noopener noreferrer" aria-label="Powered by GIPHY">
+            <span>Powered by</span><img src="https://cdn.simpleicons.org/giphy/FFFFFF" alt="GIPHY logo"><strong>GIPHY</strong>
+          </a>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -2982,11 +3043,16 @@ window.NORTHWORK_SITE_DATA = {"staff":[{"userId":"438702447683174402","name":"Ry
       !SUPABASE_URL.includes("YOUR_") &&
       SUPABASE_PUBLISHABLE_KEY.length > 20 &&
       !SUPABASE_PUBLISHABLE_KEY.includes("YOUR_");
-    const supabaseClient = supabaseConfigured
+    // The CDN script can occasionally fail to load. Keep the rest of the page
+    // alive in that case, and expose the client for the independent site-data
+    // renderer below.
+    const supabaseClient = supabaseConfigured && window.supabase &&
+      typeof window.supabase.createClient === "function"
       ? window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY, {
           auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true }
         })
       : null;
+    window.northworkSupabaseClient = supabaseClient;
 
     // Northwork career enquiries are stored in a write-only Supabase table.
     const careerApplicationForm = document.getElementById("career-application-form");
@@ -3165,7 +3231,6 @@ window.NORTHWORK_SITE_DATA = {"staff":[{"userId":"438702447683174402","name":"Ry
     let northworkChatRealtimeChannel = null;
     let northworkChatToastTimeout = null;
     let northworkChatLastRead = new Map();
-    let northworkChatMessageProfiles = new Map();
     let activeProfileUser = null;
     let ownProfileData = null;
     let viewingProfile = null;
@@ -3384,6 +3449,18 @@ window.NORTHWORK_SITE_DATA = {"staff":[{"userId":"438702447683174402","name":"Ry
     const northworkChatMessageForm = document.getElementById("northwork-chat-message-form");
     const northworkChatMessageInput = document.getElementById("northwork-chat-message-input");
     const northworkChatSendButton = document.getElementById("northwork-chat-send-button");
+    const northworkChatGifButton = document.getElementById("northwork-chat-gif-button");
+    const northworkGifPicker = document.getElementById("northwork-gif-picker");
+    const northworkGifPickerClose = document.getElementById("northwork-gif-picker-close");
+    const northworkGifPickerSearchForm = document.getElementById("northwork-gif-picker-search-form");
+    const northworkGifPickerSearchInput = document.getElementById("northwork-gif-picker-search");
+    const northworkGifPickerResults = document.getElementById("northwork-gif-picker-results");
+    // GIPHY's browser API key is an application key, not a Supabase/server secret.
+    // Create a Web API key at https://developers.giphy.com/dashboard/ and paste it here.
+    const NORTHWORK_GIPHY_API_KEY = "RllU5QYJT2KtgAhserHIW2BQOeJdQ008";
+    const NORTHWORK_GIPHY_MESSAGE_PREFIX = "NWGIF1:";
+    let northworkGifSearchTimer = null;
+    let northworkGifSearchSequence = 0;
     const northworkChatThread = document.getElementById("northwork-chat-thread");
     const northworkChatEmptyState = document.getElementById("northwork-chat-empty-state");
     const northworkChatUnreadBadge = document.getElementById("profile-chat-unread-count");
@@ -3433,6 +3510,198 @@ window.NORTHWORK_SITE_DATA = {"staff":[{"userId":"438702447683174402","name":"Ry
       northworkChatUnreadBadge.textContent = total > 99 ? "99+" : String(total);
     }
 
+    function parseNorthworkGifMessage(bodyText) {
+      const raw = String(bodyText || "");
+      if (!raw.startsWith(NORTHWORK_GIPHY_MESSAGE_PREFIX)) return null;
+      try {
+        const payload = JSON.parse(raw.slice(NORTHWORK_GIPHY_MESSAGE_PREFIX.length));
+        const url = new URL(payload.url);
+        if (url.protocol !== "https:" || !/^media\d*\.giphy\.com$/i.test(url.hostname) || !/\/media\//i.test(url.pathname) || !/\.(gif|webp)$/i.test(url.pathname)) return null;
+        return payload;
+      } catch (_) {
+        return null;
+      }
+    }
+
+    function northworkGiphyCustomerId() {
+      const key = "northwork-giphy-customer-id";
+      try {
+        let value = localStorage.getItem(key);
+        if (!value) {
+          value = (window.crypto && crypto.randomUUID)
+            ? crypto.randomUUID()
+            : "nw-" + Date.now().toString(36) + Math.random().toString(36).slice(2, 12);
+          localStorage.setItem(key, value);
+        }
+        return value;
+      } catch (_) {
+        return "nw-anon";
+      }
+    }
+
+    function northworkGiphyTrack(trackingUrl) {
+      if (!trackingUrl) return;
+      try {
+        const url = new URL(trackingUrl);
+        if (url.protocol !== "https:" || url.hostname !== "giphy-analytics.giphy.com") return;
+        url.searchParams.set("ts", String(Date.now()));
+        url.searchParams.set("customer_id", northworkGiphyCustomerId());
+        fetch(url.toString(), { method: "GET", mode: "no-cors", keepalive: true }).catch(() => {});
+      } catch (_) {}
+    }
+
+    function closeNorthworkGifPicker() {
+      if (!northworkGifPicker) return;
+      northworkGifPicker.hidden = true;
+      northworkChatGifButton?.setAttribute("aria-expanded", "false");
+      if (northworkGifPickerSearchInput) northworkGifPickerSearchInput.value = "";
+      northworkChatMessageInput?.focus({ preventScroll: true });
+    }
+
+    function showNorthworkGifPickerMessage(message, linkToDashboard = false) {
+      if (!northworkGifPickerResults) return;
+      northworkGifPickerResults.replaceChildren();
+      const status = document.createElement("div");
+      status.className = "nw-gif-picker-status";
+      if (linkToDashboard) {
+        status.append(document.createTextNode(message + " "));
+        const link = document.createElement("a");
+        link.href = "https://developers.giphy.com/dashboard/";
+        link.target = "_blank";
+        link.rel = "noopener noreferrer";
+        link.textContent = "Create a GIPHY API key";
+        status.appendChild(link);
+      } else {
+        status.textContent = message;
+      }
+      northworkGifPickerResults.appendChild(status);
+    }
+
+    async function loadNorthworkGifs(query = "") {
+      if (!northworkGifPickerResults) return;
+      if (!NORTHWORK_GIPHY_API_KEY || NORTHWORK_GIPHY_API_KEY.includes("PASTE_")) {
+        showNorthworkGifPickerMessage("Connect GIPHY to enable GIF search. Add your Web API key to the Northwork HTML configuration.", true);
+        return;
+      }
+      const searchId = ++northworkGifSearchSequence;
+      showNorthworkGifPickerMessage(query ? "Searching GIFs…" : "Loading trending GIFs…");
+      const endpoint = query
+        ? "https://api.giphy.com/v1/gifs/search"
+        : "https://api.giphy.com/v1/gifs/trending";
+      const url = new URL(endpoint);
+      url.searchParams.set("api_key", NORTHWORK_GIPHY_API_KEY);
+      url.searchParams.set("limit", "24");
+      url.searchParams.set("rating", "g");
+      url.searchParams.set("bundle", "messaging_non_clips");
+      if (query) {
+        url.searchParams.set("q", query.slice(0, 50));
+        url.searchParams.set("lang", "en");
+      }
+      try {
+        const response = await fetch(url.toString(), { headers: { Accept: "application/json" } });
+        if (!response.ok) throw new Error(response.status === 403 ? "GIPHY rejected this API key. Check that it is active." : "GIPHY request failed (" + response.status + ").");
+        const result = await response.json();
+        if (searchId !== northworkGifSearchSequence || northworkGifPicker.hidden) return;
+        const gifs = Array.isArray(result.data) ? result.data : [];
+        if (!gifs.length) {
+          showNorthworkGifPickerMessage("No GIFs found. Try another search.");
+          return;
+        }
+        northworkGifPickerResults.replaceChildren();
+        for (const gif of gifs) {
+          const previewUrl = gif.images?.fixed_width_small?.url || gif.images?.fixed_width?.url || gif.images?.preview_gif?.url;
+          const originalUrl = gif.images?.original?.url;
+          if (!previewUrl || !originalUrl) continue;
+          const preview = new URL(previewUrl);
+          const original = new URL(originalUrl);
+          const validGiphyMedia = mediaUrl => mediaUrl.protocol === "https:" && /^media\d*\.giphy\.com$/i.test(mediaUrl.hostname) && /\/media\//i.test(mediaUrl.pathname) && /\.(gif|webp)$/i.test(mediaUrl.pathname);
+          if (!validGiphyMedia(preview) || !validGiphyMedia(original)) continue;
+
+          const button = document.createElement("button");
+          button.type = "button";
+          button.className = "nw-gif-result";
+          button.setAttribute("aria-label", "Send GIF " + (gif.title || "GIF"));
+          const image = document.createElement("img");
+          image.src = preview.toString();
+          image.alt = gif.title || "GIF preview";
+          image.loading = "lazy";
+          const title = document.createElement("span");
+          title.textContent = gif.title || "Send GIF";
+          button.append(image, title);
+          button.addEventListener("click", () => sendNorthworkGif(gif));
+          northworkGifPickerResults.appendChild(button);
+          if (gif.analytics?.onload?.url) image.addEventListener("load", () => northworkGiphyTrack(gif.analytics.onload.url), { once: true });
+          if (gif.analytics?.onclick?.url) image.addEventListener("click", () => northworkGiphyTrack(gif.analytics.onclick.url));
+        }
+        if (!northworkGifPickerResults.children.length) showNorthworkGifPickerMessage("GIPHY did not return any compatible GIF previews. Try another search.");
+      } catch (error) {
+        console.error("Northwork GIPHY search failed:", error);
+        showNorthworkGifPickerMessage(error.message || "Couldn't load GIFs. Please try again.");
+      }
+    }
+
+    function openNorthworkGifPicker() {
+      if (!northworkGifPicker || !northworkChatActiveConversationId || !activeProfileUser) return;
+      northworkGifPicker.hidden = false;
+      northworkChatGifButton?.setAttribute("aria-expanded", "true");
+      if (!NORTHWORK_GIPHY_API_KEY || NORTHWORK_GIPHY_API_KEY.includes("PASTE_")) {
+        showNorthworkGifPickerMessage("Connect GIPHY to enable GIF search. Add your Web API key to the Northwork HTML configuration.", true);
+      } else {
+        loadNorthworkGifs("");
+      }
+      northworkGifPickerSearchInput?.focus({ preventScroll: true });
+    }
+
+    async function sendNorthworkGif(gif) {
+      const conversationId = northworkChatActiveConversationId;
+      if (!conversationId || !supabaseClient || !activeProfileUser || !gif?.images?.original?.url) return;
+      let mediaUrl;
+      try { mediaUrl = new URL(gif.images.original.url); } catch (_) { return; }
+      if (mediaUrl.protocol !== "https:" || !/^media\d*\.giphy\.com$/i.test(mediaUrl.hostname) || !/\/media\//i.test(mediaUrl.pathname) || !/\.(gif|webp)$/i.test(mediaUrl.pathname)) {
+        showNorthworkChatToast("That GIF link isn't supported.");
+        return;
+      }
+      const payload = {
+        url: mediaUrl.toString(),
+        title: String(gif.title || "GIF").slice(0, 120),
+        id: String(gif.id || "").slice(0, 80),
+        page: /^https:\/\/giphy\.com\//i.test(gif.url || "") ? gif.url : "https://giphy.com",
+        creator: String(gif.user?.username || "").slice(0, 80),
+        onload: gif.analytics?.onload?.url || "",
+        onclick: gif.analytics?.onclick?.url || "",
+        onsent: gif.analytics?.onsent?.url || ""
+      };
+      let body = NORTHWORK_GIPHY_MESSAGE_PREFIX + JSON.stringify(payload);
+      if (body.length > 3000) {
+        delete payload.onload;
+        delete payload.onclick;
+        delete payload.onsent;
+        body = NORTHWORK_GIPHY_MESSAGE_PREFIX + JSON.stringify(payload);
+      }
+      northworkChatSendButton.disabled = true;
+      northworkChatGifButton.disabled = true;
+      northworkChatSendButton.textContent = "Sending…";
+      try {
+        const { data: sentMessage, error } = await supabaseClient.from("northwork_messages")
+          .insert({ conversation_id: conversationId, sender_id: activeProfileUser.id, body })
+          .select("id,conversation_id,sender_id,body,created_at")
+          .single();
+        if (error) throw error;
+        closeNorthworkGifPicker();
+        appendNorthworkChatMessage(sentMessage);
+        northworkGiphyTrack(payload.onsent);
+        await loadNorthworkChatInbox();
+        await markNorthworkChatRead(conversationId);
+      } catch (error) {
+        console.error("Northwork GIF send failed:", error);
+        showNorthworkChatToast(error.message || "Couldn't send this GIF. Try again.");
+      } finally {
+        northworkChatSendButton.disabled = false;
+        northworkChatSendButton.innerHTML = 'Send message <span>↗</span>';
+        northworkChatGifButton.disabled = false;
+      }
+    }
+
     function renderNorthworkChatInbox() {
       if (!northworkChatList) return;
       northworkChatList.replaceChildren();
@@ -3458,7 +3727,9 @@ window.NORTHWORK_SITE_DATA = {"staff":[{"userId":"438702447683174402","name":"Ry
         const preview = document.createElement("span");
         preview.className = "nw-chat-conversation-preview";
         if (item.lastMessage) {
-          preview.textContent = (item.lastMessage.sender_id === activeProfileUser?.id ? "You: " : "") + item.lastMessage.body;
+          const lastBody = String(item.lastMessage.body || "");
+          const previewText = parseNorthworkGifMessage(lastBody) ? "GIF" : lastBody;
+          preview.textContent = (item.lastMessage.sender_id === activeProfileUser?.id ? "You: " : "") + previewText;
         } else {
           preview.textContent = "Start the conversation";
         }
@@ -3574,9 +3845,40 @@ window.NORTHWORK_SITE_DATA = {"staff":[{"userId":"438702447683174402","name":"Ry
       row.dataset.messageId = message.id;
       const bubble = document.createElement("div");
       bubble.className = "nw-chat-message-bubble";
-      const body = document.createElement("p");
-      body.className = "nw-chat-message-body";
-      body.textContent = message.body || "";
+      const gifPayload = parseNorthworkGifMessage(message.body);
+      if (gifPayload) {
+        const media = document.createElement("div");
+        media.className = "nw-chat-gif-media";
+        const mediaLink = document.createElement("a");
+        mediaLink.href = /^https:\/\/giphy\.com\//i.test(gifPayload.page || "") ? gifPayload.page : "https://giphy.com";
+        mediaLink.target = "_blank";
+        mediaLink.rel = "noopener noreferrer";
+        mediaLink.setAttribute("aria-label", "Open GIF on GIPHY");
+        const image = document.createElement("img");
+        image.src = gifPayload.url;
+        image.alt = gifPayload.title || "Animated GIF";
+        image.loading = "lazy";
+        image.addEventListener("load", () => northworkGiphyTrack(gifPayload.onload), { once: true });
+        image.addEventListener("click", () => northworkGiphyTrack(gifPayload.onclick));
+        mediaLink.appendChild(image);
+        media.appendChild(mediaLink);
+        const credit = document.createElement("div");
+        credit.className = "nw-chat-gif-credit";
+        credit.textContent = gifPayload.creator ? "GIF by @" + gifPayload.creator + " · " : "GIF · ";
+        const source = document.createElement("a");
+        source.href = "https://giphy.com";
+        source.target = "_blank";
+        source.rel = "noopener noreferrer";
+        source.textContent = "GIPHY";
+        credit.appendChild(source);
+        media.appendChild(credit);
+        bubble.appendChild(media);
+      } else {
+        const body = document.createElement("p");
+        body.className = "nw-chat-message-body";
+        body.textContent = message.body || "";
+        bubble.appendChild(body);
+      }
       const time = document.createElement("time");
       time.className = "nw-chat-message-time";
       time.dateTime = message.created_at || "";
@@ -3908,6 +4210,28 @@ window.NORTHWORK_SITE_DATA = {"staff":[{"userId":"438702447683174402","name":"Ry
         northworkChatSendButton.innerHTML = 'Send message <span>↗</span>';
         northworkChatMessageInput.focus();
       }
+    });
+
+    northworkChatGifButton?.addEventListener("click", openNorthworkGifPicker);
+    northworkGifPickerClose?.addEventListener("click", closeNorthworkGifPicker);
+    northworkGifPicker?.addEventListener("click", event => {
+      if (event.target === northworkGifPicker) closeNorthworkGifPicker();
+    });
+    northworkGifPickerSearchForm?.addEventListener("submit", event => {
+      event.preventDefault();
+      const query = northworkGifPickerSearchInput?.value.trim() || "";
+      if (query) loadNorthworkGifs(query); else loadNorthworkGifs("");
+    });
+    northworkGifPickerSearchInput?.addEventListener("input", () => {
+      clearTimeout(northworkGifSearchTimer);
+      const query = northworkGifPickerSearchInput.value.trim();
+      northworkGifSearchTimer = setTimeout(() => {
+        if (!query) loadNorthworkGifs("");
+        else if (query.length >= 2) loadNorthworkGifs(query);
+      }, 450);
+    });
+    document.addEventListener("keydown", event => {
+      if (event.key === "Escape" && northworkGifPicker && !northworkGifPicker.hidden) closeNorthworkGifPicker();
     });
 
     northworkChatMessageInput?.addEventListener("keydown", event => {
@@ -4465,5 +4789,220 @@ window.NORTHWORK_SITE_DATA = {"staff":[{"userId":"438702447683174402","name":"Ry
     window.addEventListener("resize", updateActiveNavigation);
     updateActiveNavigation();
   </script>
+
+  <script>
+  // Northwork bot-managed content renderer.
+  // Runs independently of the account/chat code so a Supabase auth issue cannot
+  // prevent game cards, careers, or "Northwork at a glance" from updating.
+  (() => {
+    "use strict";
+
+    const siteData = window.NORTHWORK_SITE_DATA && typeof window.NORTHWORK_SITE_DATA === "object"
+      ? window.NORTHWORK_SITE_DATA
+      : {};
+
+    const roleKeys = ["tester", "developer", "artist", "analytics", "uiux", "manager"];
+
+    function safeCount(value) {
+      const number = Number(value);
+      return Number.isFinite(number) && number >= 0 ? Math.floor(number) : 0;
+    }
+
+    function formatCount(value) {
+      return safeCount(value).toLocaleString();
+    }
+
+    function safeRobloxGameUrl(value) {
+      try {
+        const url = new URL(String(value || ""));
+        if (url.protocol !== "https:" ||
+            !/^(www\.)?roblox\.com$/i.test(url.hostname) ||
+            !/^\/games\/\d+(\/|$)/.test(url.pathname)) return null;
+        return url.href;
+      } catch (_) {
+        return null;
+      }
+    }
+
+    function safeThumbnailUrl(value) {
+      try {
+        const url = new URL(String(value || ""));
+        const host = url.hostname.toLowerCase();
+        const trustedHost = host === "roblox.com" ||
+          host.endsWith(".roblox.com") ||
+          host === "rbxcdn.com" ||
+          host.endsWith(".rbxcdn.com");
+        if (url.protocol !== "https:" || !trustedHost) return null;
+        return url.href;
+      } catch (_) {
+        return null;
+      }
+    }
+
+    function setCardLink(card, url, name) {
+      if (!card || !url) return;
+      card.style.cursor = "pointer";
+      card.setAttribute("role", "link");
+      card.setAttribute("tabindex", "0");
+      card.setAttribute("aria-label", "Open " + name + " on Roblox");
+      if (card.dataset.northworkLinkBound === "true") return;
+      card.dataset.northworkLinkBound = "true";
+
+      const open = () => window.open(url, "_blank", "noopener,noreferrer");
+      card.addEventListener("click", event => {
+        if (event.target.closest("a, button, input, select, textarea")) return;
+        open();
+      });
+      card.addEventListener("keydown", event => {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          open();
+        }
+      });
+    }
+
+    function applyGameCard(card, game, index, compact, rankNumber = index + 1) {
+      if (!card || !game || typeof game !== "object") return;
+      const url = safeRobloxGameUrl(game.url);
+      if (!url) return;
+
+      const name = String(game.name || game.displayName || "Northwork game").slice(0, 80);
+      const thumbnail = safeThumbnailUrl(game.thumbnail);
+
+      setCardLink(card, url, name);
+
+      const artwork = card.querySelector(compact ? ".hero-game-art" : ".game-card-cover");
+      if (artwork && thumbnail) {
+        artwork.style.backgroundImage = compact
+          ? 'linear-gradient(0deg,rgba(7,7,10,.55),rgba(7,7,10,.08)),url("' + thumbnail + '")'
+          : 'linear-gradient(0deg,rgba(7,7,10,.76),rgba(7,7,10,.08)),url("' + thumbnail + '")';
+        artwork.style.backgroundSize = "cover";
+        artwork.style.backgroundPosition = "center";
+        artwork.style.backgroundRepeat = "no-repeat";
+        artwork.classList.add("has-game-thumbnail");
+        const mark = compact
+          ? artwork.querySelector("span")
+          : artwork.querySelector(".game-card-mark");
+        if (mark) mark.hidden = true;
+      }
+
+      const rank = card.querySelector(compact ? ".hero-game-rank" : ".game-rank");
+      if (rank) rank.textContent = "#" + rankNumber;
+
+      const title = card.querySelector(compact ? ".hero-game-name" : ".game-card-name");
+      if (title) title.textContent = name;
+
+      if (compact) {
+        const meta = card.querySelectorAll(".hero-game-meta span");
+        if (meta[0]) meta[0].textContent = "◉ " + formatCount(game.playing);
+        if (meta[1]) meta[1].textContent = "♥ " + formatCount(game.visits);
+      } else {
+        const status = card.querySelector(".game-status");
+        if (status) status.textContent = "NORTHWORK";
+        const note = card.querySelector(".game-card-note");
+        if (note) note.textContent = String(game.description || "Open this Northwork experience on Roblox").slice(0, 500);
+        const stats = card.querySelectorAll(".game-card-stats span");
+        if (stats[0]) stats[0].textContent = "◉ " + formatCount(game.playing) + " playing";
+        if (stats[1]) stats[1].textContent = "♥ " + formatCount(game.visits) + " visits";
+      }
+    }
+
+    function renderManagedGames() {
+      const homeGames = Array.isArray(siteData.homeGames) ? siteData.homeGames : [];
+      const topGames = Array.isArray(siteData.topGames) ? siteData.topGames : [];
+
+      // Homepage cards are visually arranged by rank, not by array order:
+      // #4, #2, #1 (featured center), #3, #5. Keep /homegames1 mapped
+      // to the featured center card, /homegames2 to the #2 card, etc.
+      const homeSlotByVisualCard = [3, 1, 0, 2, 4];
+      const homeRankByVisualCard = [4, 2, 1, 3, 5];
+      document.querySelectorAll(".hero-game-row .hero-game-card").forEach((card, visualIndex) => {
+        const slotIndex = homeSlotByVisualCard[visualIndex];
+        const rankNumber = homeRankByVisualCard[visualIndex];
+        applyGameCard(card, homeGames[slotIndex], slotIndex, true, rankNumber);
+      });
+
+      document.querySelectorAll(".games-grid .game-card").forEach((card, index) => {
+        applyGameCard(card, topGames[index], index, false);
+      });
+    }
+
+    function renderRoleSpots() {
+      const spots = siteData.roleSpots && typeof siteData.roleSpots === "object"
+        ? siteData.roleSpots
+        : {};
+      document.querySelectorAll(".career-role-card").forEach((card, index) => {
+        const key = roleKeys[index];
+        const value = key ? safeCount(spots[key]) : 0;
+        const output = card.querySelector(".career-role-spots strong");
+        if (output && key) output.textContent = value.toLocaleString() + " available";
+      });
+    }
+
+    function renderAboutStats(stats) {
+      const about = siteData.aboutStats && typeof siteData.aboutStats === "object"
+        ? siteData.aboutStats
+        : {};
+      const items = document.querySelectorAll(".about-overview-grid .about-overview-item strong");
+
+      if (items[0] && about.developersText != null) {
+        items[0].textContent = String(about.developersText).slice(0, 80);
+      }
+      if (items[1] && about.publishedTitles != null) {
+        items[1].textContent = String(about.publishedTitles).slice(0, 80);
+      }
+      if (items[2] && about.timeOfExperience != null) {
+        items[2].textContent = String(about.timeOfExperience).slice(0, 80);
+      }
+      if (stats && items[3]) items[3].textContent = formatCount(stats.total_visits);
+    }
+
+    function renderHeroStats(stats) {
+      if (!stats) return;
+      const values = document.querySelectorAll(".hero-stats .hero-stat-value");
+      if (values[0]) values[0].textContent = formatCount(stats.live_players);
+      if (values[1]) values[1].textContent = formatCount(stats.total_visits);
+    }
+
+    function renderAll() {
+      renderManagedGames();
+      renderRoleSpots();
+      renderAboutStats(null);
+      // Expose a lightweight status for diagnostics without putting secrets in
+      // the page or making the site renderer depend on the bot runtime.
+      document.documentElement.dataset.northworkSiteData = siteData.siteVersion
+        ? "loaded"
+        : "default";
+    }
+
+    async function refreshPublicStats() {
+      const client = window.northworkSupabaseClient;
+      if (!client || typeof client.from !== "function") return;
+
+      try {
+        const result = await client
+          .from("northwork_site_stats")
+          .select("live_players,total_visits,updated_at")
+          .eq("id", "current")
+          .maybeSingle();
+
+        if (result.error) throw result.error;
+        if (!result.data) return;
+
+        renderHeroStats(result.data);
+        renderAboutStats(result.data);
+        document.documentElement.dataset.northworkStats = "loaded";
+      } catch (error) {
+        document.documentElement.dataset.northworkStats = "unavailable";
+        console.warn("[Northwork] Could not load public Roblox statistics:", error.message || error);
+      }
+    }
+
+    renderAll();
+    refreshPublicStats();
+    window.setInterval(refreshPublicStats, 5 * 60 * 1000);
+  })();
+  </script>
+
 </body>
 </html>
