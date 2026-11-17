@@ -2153,8 +2153,10 @@ button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-
   .nw-chat-thread-label { display:flex; align-items:center; gap:8px; margin-left:auto; color:#798392; font:800 8px Arial,sans-serif; letter-spacing:.12em; }
   .nw-chat-thread-label span { background:var(--nw-purple); box-shadow:0 0 0 3px color-mix(in srgb,var(--nw-purple) 14%,transparent); }
   .nw-chat-messages { flex:1; min-height:0; display:flex; flex-direction:column; gap:10px; overflow:auto; padding:22px clamp(16px,3vw,34px); scrollbar-width:thin; scrollbar-color:var(--nw-purple) #0a0d12; }
-  .nw-chat-message-row { display:flex; width:100%; }
+  .nw-chat-message-row { display:flex; align-items:flex-end; gap:9px; width:100%; }
   .nw-chat-message-row.mine { justify-content:flex-end; }
+  .nw-chat-message-avatar { width:30px; height:30px; flex:none; display:grid; place-items:center; overflow:hidden; border:1px solid #3b344c; background:#1b1726; color:#d7c9ff; font:800 11px Arial,sans-serif; }
+  .nw-chat-message-avatar img { width:100%; height:100%; display:block; object-fit:cover; }
   .nw-chat-message-bubble { max-width:min(72%,560px); padding:11px 13px 9px; border:1px solid #2b313d; background:#141922; color:#e7eaf0; }
   .nw-chat-message-row.mine .nw-chat-message-bubble { border-color:color-mix(in srgb,var(--nw-purple) 45%,#34313d); background:color-mix(in srgb,var(--nw-purple) 13%,#171622); }
   .nw-chat-message-body { margin:0; color:#e9ebf1; font:400 12px/1.65 Arial,sans-serif; white-space:pre-wrap; overflow-wrap:anywhere; }
@@ -2206,7 +2208,7 @@ button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-
 
 <script>
 /* NORTHWORK_SITE_DATA_START */
-window.NORTHWORK_SITE_DATA = {"staff":[{"userId":"438702447683174402","name":"RyTexh","username":"rytexh","role":"Northwork Administrator","roleId":"1454991773393748071","avatar":"https://cdn.discordapp.com/avatars/438702447683174402/504990f67f4b66ecdaade9783ef6c977.png?size=256"},{"userId":"808324602350403595","name":"Claudivania ❤🖤","username":"claudivania_lasukal","role":"Northwork Manager","roleId":"1467663817403007200","avatar":"https://cdn.discordapp.com/avatars/808324602350403595/45b0ffe4b44d862744807717fdfba197.png?size=256"},{"userId":"1149747147600834570","name":"desired","username":"desiredfornobody","role":"Northwork Moderators","roleId":"1454992580109668382","avatar":"https://cdn.discordapp.com/avatars/1149747147600834570/7757b1607e7f8dd157bb290b502d6831.png?size=256"},{"userId":"1206331959266246728","name":"John Northwork","username":"gurtingsgurtieisnotyogurt","role":"Northwork Moderators","roleId":"1454992580109668382","avatar":"https://cdn.discordapp.com/avatars/1206331959266246728/a2af452f9a1f4153cbbdb76487df5ac1.png?size=256"},{"userId":"1104551220951134218","name":"Meh3D","username":"mm_3d","role":"Northwork Moderators","roleId":"1454992580109668382","avatar":"https://cdn.discordapp.com/avatars/1104551220951134218/67617f9cc313c431b03cc9b0c53e2b46.png?size=256"},{"userId":"557596135175356418","name":"ᴱᵒⁿAimee","username":"aimee2569","role":"Northwork Moderators","roleId":"1454992580109668382","avatar":"https://cdn.discordapp.com/avatars/557596135175356418/165eabde0682dd879f5c852a804cba75.png?size=256"},{"userId":"1102261479517978745","name":"Heisenburg","username":"figure2266","role":"Northwork Moderators","roleId":"1454992580109668382","avatar":"https://cdn.discordapp.com/avatars/1102261479517978745/c3700e07f68989588c597ef0af06290b.png?size=256"},{"userId":"1089267764289605663","name":"Kuro","username":"123calebb","role":"Northwork Moderators","roleId":"1454992580109668382","avatar":"https://cdn.discordapp.com/avatars/1089267764289605663/5f37ea64ecb94ff89dfd14a7dc0e2b8e.png?size=256"},{"userId":"1003178163259576371","name":"𝐕𝐄𝐑𝐀","username":"vegupatra","role":"BALENCIAGA GURL 💅","roleId":"1475639115906158642","avatar":"https://cdn.discordapp.com/avatars/1003178163259576371/6b17869a708603fd14a49067eaa727d9.png?size=256"},{"userId":"1398692198404591750","name":"MrChorap","username":"mrchorapings","role":"Northwork Site Ideas Lead","roleId":"1548404280841736313","avatar":"https://cdn.discordapp.com/avatars/1398692198404591750/66a381c600765992bbc9690dd015f7ae.png?size=256"}],"initialized":false,"topGames":[{"slug":"vibration-tester","placeId":"96605909078674","universeId":"10080820428","url":"https://www.roblox.com/games/96605909078674/","name":"Vibration Tester","description":"Vibration Tester is a game where u can test your device's vibration!\n\nYou have plenty of stuff where u can test your device's vibration!\n    Different parts with different vibration systems!\n\n[FOR MORE COOL VIBRATION SYSTEMS, CONSIDER UNLOCKING VIP!]","thumbnail":"https://tr.rbxcdn.com/180DAY-b6a70701148167c5e71bb0bb360ba0e4/512/512/Image/Png/noFilter","visits":5149,"likes":16,"dislikes":6,"favorites":17,"playing":0,"creator":"Northwork Experiments","creatorType":"Group","robloxName":"Vibration Tester","displayName":"Vibration Tester"},null,null,null,null,null],"homeGames":[{"slug":"vibration-tester","placeId":"96605909078674","universeId":"10080820428","url":"https://www.roblox.com/games/96605909078674/","name":"Vibration Tester","description":"Vibration Tester is a game where u can test your device's vibration!\n\nYou have plenty of stuff where u can test your device's vibration!\n    Different parts with different vibration systems!\n\n[FOR MORE COOL VIBRATION SYSTEMS, CONSIDER UNLOCKING VIP!]","thumbnail":"https://tr.rbxcdn.com/180DAY-b6a70701148167c5e71bb0bb360ba0e4/512/512/Image/Png/noFilter","visits":5149,"likes":16,"dislikes":6,"favorites":17,"playing":0,"creator":"Northwork Experiments","creatorType":"Group","robloxName":"Vibration Tester","displayName":"Vibration Tester"},null,null,null,null],"roleSpots":{"tester":3,"developer":0,"artist":0,"analytics":0,"uiux":0,"manager":0},"aboutStats":{"developersText":"1","publishedTitles":"1","timeOfExperience":"+4"},"siteVersion":"1794936132385-1c68bcb0"};
+window.NORTHWORK_SITE_DATA = {"staff":[{"userId":"438702447683174402","name":"RyTexh","username":"rytexh","role":"Northwork Administrator","roleId":"1454991773393748071","avatar":"https://cdn.discordapp.com/avatars/438702447683174402/504990f67f4b66ecdaade9783ef6c977.png?size=256"},{"userId":"808324602350403595","name":"Claudivania ❤🖤","username":"claudivania_lasukal","role":"Northwork Manager","roleId":"1467663817403007200","avatar":"https://cdn.discordapp.com/avatars/808324602350403595/45b0ffe4b44d862744807717fdfba197.png?size=256"},{"userId":"1149747147600834570","name":"desired","username":"desiredfornobody","role":"Northwork Moderators","roleId":"1454992580109668382","avatar":"https://cdn.discordapp.com/avatars/1149747147600834570/7757b1607e7f8dd157bb290b502d6831.png?size=256"},{"userId":"1206331959266246728","name":"John Northwork","username":"gurtingsgurtieisnotyogurt","role":"Northwork Moderators","roleId":"1454992580109668382","avatar":"https://cdn.discordapp.com/avatars/1206331959266246728/a2af452f9a1f4153cbbdb76487df5ac1.png?size=256"},{"userId":"1104551220951134218","name":"Meh3D","username":"mm_3d","role":"Northwork Moderators","roleId":"1454992580109668382","avatar":"https://cdn.discordapp.com/avatars/1104551220951134218/67617f9cc313c431b03cc9b0c53e2b46.png?size=256"},{"userId":"557596135175356418","name":"ᴱᵒⁿAimee","username":"aimee2569","role":"Northwork Moderators","roleId":"1454992580109668382","avatar":"https://cdn.discordapp.com/avatars/557596135175356418/165eabde0682dd879f5c852a804cba75.png?size=256"},{"userId":"1102261479517978745","name":"Heisenburg","username":"figure2266","role":"Northwork Moderators","roleId":"1454992580109668382","avatar":"https://cdn.discordapp.com/avatars/1102261479517978745/c3700e07f68989588c597ef0af06290b.png?size=256"},{"userId":"1089267764289605663","name":"Kuro","username":"123calebb","role":"Northwork Moderators","roleId":"1454992580109668382","avatar":"https://cdn.discordapp.com/avatars/1089267764289605663/5f37ea64ecb94ff89dfd14a7dc0e2b8e.png?size=256"},{"userId":"1003178163259576371","name":"𝐕𝐄𝐑𝐀","username":"vegupatra","role":"BALENCIAGA GURL 💅","roleId":"1475639115906158642","avatar":"https://cdn.discordapp.com/avatars/1003178163259576371/6b17869a708603fd14a49067eaa727d9.png?size=256"},{"userId":"1398692198404591750","name":"MrChorap","username":"mrchorapings","role":"Northwork Site Ideas Lead","roleId":"1548404280841736313","avatar":"https://cdn.discordapp.com/avatars/1398692198404591750/66a381c600765992bbc9690dd015f7ae.png?size=256"}],"initialized":false,"topGames":[{"slug":"vibration-tester","placeId":"96605909078674","universeId":"10080820428","url":"https://www.roblox.com/games/96605909078674/","name":"Vibration Tester","description":"Vibration Tester is a game where u can test your device's vibration!\n\nYou have plenty of stuff where u can test your device's vibration!\n    Different parts with different vibration systems!\n\n[FOR MORE COOL VIBRATION SYSTEMS, CONSIDER UNLOCKING VIP!]","thumbnail":"https://tr.rbxcdn.com/180DAY-b6a70701148167c5e71bb0bb360ba0e4/512/512/Image/Png/noFilter","visits":5149,"likes":16,"dislikes":6,"favorites":17,"playing":0,"creator":"Northwork Experiments","creatorType":"Group","robloxName":"Vibration Tester","displayName":"Vibration Tester"},null,null,null,null,null],"homeGames":[null,null,null,null,null],"roleSpots":{"tester":0,"developer":0,"artist":0,"analytics":0,"uiux":0,"manager":0},"aboutStats":{"developersText":"1","publishedTitles":"0","timeOfExperience":"0"},"siteVersion":"1794933311472-9eb482db"};
 /* NORTHWORK_SITE_DATA_END */
 </script>
 </head>
@@ -2424,22 +2426,14 @@ window.NORTHWORK_SITE_DATA = {"staff":[{"userId":"438702447683174402","name":"Ry
           </div>
           <div class="nw-chat-conversation-list" id="northwork-chat-conversation-list">
             <div class="nw-chat-list-empty">
-              <span class="nw-chat-empty-symbol">N</span>
               <p>Your conversations will show up here.</p>
             </div>
           </div>
-          <div class="nw-chat-sidebar-foot">
-            <span class="nw-chat-sidebar-mark">N</span>
-            <span>Northwork messages</span>
-            <span class="nw-chat-private-mark">PRIVATE</span>
-          </div>
-        </aside>
+         </aside>
 
         <main class="nw-chat-main" id="northwork-chat-main">
           <div class="nw-chat-empty-state" id="northwork-chat-empty-state">
-            <div class="nw-chat-empty-logo">N</div>
-            <span class="nw-chat-eyebrow">NORTHWORK COMMUNITY</span>
-            <h2>Your space to connect.</h2>
+             <h2>Your space to connect.</h2>
             <p>Search for a Northwork member to start a conversation, or pick one from your inbox.</p>
             <button type="button" id="northwork-chat-empty-search">Find a member <span>↗</span></button>
           </div>
@@ -2988,16 +2982,11 @@ window.NORTHWORK_SITE_DATA = {"staff":[{"userId":"438702447683174402","name":"Ry
       !SUPABASE_URL.includes("YOUR_") &&
       SUPABASE_PUBLISHABLE_KEY.length > 20 &&
       !SUPABASE_PUBLISHABLE_KEY.includes("YOUR_");
-    // The CDN script can occasionally fail to load. Keep the rest of the page
-    // alive in that case, and expose the client for the independent site-data
-    // renderer below.
-    const supabaseClient = supabaseConfigured && window.supabase &&
-      typeof window.supabase.createClient === "function"
+    const supabaseClient = supabaseConfigured
       ? window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY, {
           auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true }
         })
       : null;
-    window.northworkSupabaseClient = supabaseClient;
 
     // Northwork career enquiries are stored in a write-only Supabase table.
     const careerApplicationForm = document.getElementById("career-application-form");
@@ -3176,6 +3165,7 @@ window.NORTHWORK_SITE_DATA = {"staff":[{"userId":"438702447683174402","name":"Ry
     let northworkChatRealtimeChannel = null;
     let northworkChatToastTimeout = null;
     let northworkChatLastRead = new Map();
+    let northworkChatMessageProfiles = new Map();
     let activeProfileUser = null;
     let ownProfileData = null;
     let viewingProfile = null;
@@ -3487,12 +3477,9 @@ window.NORTHWORK_SITE_DATA = {"staff":[{"userId":"438702447683174402","name":"Ry
       if (!northworkChatItems.length) {
         const empty = document.createElement("div");
         empty.className = "nw-chat-list-empty";
-        const mark = document.createElement("span");
-        mark.className = "nw-chat-empty-symbol";
-        mark.textContent = "N";
         const text = document.createElement("p");
         text.textContent = "No conversations yet. Search for a member above to say hello.";
-        empty.append(mark, text);
+        empty.appendChild(text);
         northworkChatList.appendChild(empty);
       }
       document.getElementById("northwork-chat-count").textContent = String(northworkChatItems.length);
@@ -3595,7 +3582,16 @@ window.NORTHWORK_SITE_DATA = {"staff":[{"userId":"438702447683174402","name":"Ry
       time.dateTime = message.created_at || "";
       time.textContent = northworkChatTime(message.created_at);
       bubble.append(body, time);
-      row.appendChild(bubble);
+
+      const senderProfile = northworkChatMessageProfiles.get(message.sender_id) || (
+        message.sender_id === activeProfileUser?.id
+          ? (ownProfileData || { display_name: "You", avatar_url: null })
+          : northworkChatPeerFor(northworkChatItems.find(item => item.id === message.conversation_id))
+      );
+      const senderAvatar = northworkChatAvatarElement(senderProfile, "nw-chat-message-avatar");
+      senderAvatar.setAttribute("aria-label", (senderProfile?.display_name || senderProfile?.username || "Member") + " profile picture");
+      if (message.sender_id === activeProfileUser?.id) row.append(bubble, senderAvatar);
+      else row.append(senderAvatar, bubble);
       northworkChatMessages.appendChild(row);
       northworkChatMessages.scrollTop = northworkChatMessages.scrollHeight;
     }
@@ -3627,6 +3623,28 @@ window.NORTHWORK_SITE_DATA = {"staff":[{"userId":"438702447683174402","name":"Ry
       northworkChatThread.hidden = false;
 
       const peer = northworkChatPeerFor(item);
+      northworkChatMessageProfiles = new Map();
+      const ownMessageProfile = ownProfileData || {
+        id: activeProfileUser.id,
+        display_name: activeProfileUser.user_metadata?.display_name || activeProfileUser.user_metadata?.full_name || activeProfileUser.email?.split("@")[0] || "You",
+        username: activeProfileUser.user_metadata?.username || "",
+        avatar_url: activeProfileUser.user_metadata?.avatar_url || null
+      };
+      northworkChatMessageProfiles.set(activeProfileUser.id, ownMessageProfile);
+      if (peer?.id) northworkChatMessageProfiles.set(peer.id, peer);
+      // Refresh the signed-in member's avatar from their private profile row if
+      // it was not available in the already-loaded account state.
+      if (!ownMessageProfile.avatar_url) {
+        try {
+          const refreshedOwnProfile = await fetchProfileById(activeProfileUser.id);
+          if (refreshedOwnProfile) {
+            ownProfileData = refreshedOwnProfile;
+            northworkChatMessageProfiles.set(activeProfileUser.id, refreshedOwnProfile);
+          }
+        } catch (profileError) {
+          console.warn("Northwork chat could not load your profile picture:", profileError.message);
+        }
+      }
       const avatar = document.getElementById("northwork-chat-peer-avatar");
       avatar.replaceChildren();
       if (peer.avatar_url) {
@@ -4447,220 +4465,5 @@ window.NORTHWORK_SITE_DATA = {"staff":[{"userId":"438702447683174402","name":"Ry
     window.addEventListener("resize", updateActiveNavigation);
     updateActiveNavigation();
   </script>
-
-  <script>
-  // Northwork bot-managed content renderer.
-  // Runs independently of the account/chat code so a Supabase auth issue cannot
-  // prevent game cards, careers, or "Northwork at a glance" from updating.
-  (() => {
-    "use strict";
-
-    const siteData = window.NORTHWORK_SITE_DATA && typeof window.NORTHWORK_SITE_DATA === "object"
-      ? window.NORTHWORK_SITE_DATA
-      : {};
-
-    const roleKeys = ["tester", "developer", "artist", "analytics", "uiux", "manager"];
-
-    function safeCount(value) {
-      const number = Number(value);
-      return Number.isFinite(number) && number >= 0 ? Math.floor(number) : 0;
-    }
-
-    function formatCount(value) {
-      return safeCount(value).toLocaleString();
-    }
-
-    function safeRobloxGameUrl(value) {
-      try {
-        const url = new URL(String(value || ""));
-        if (url.protocol !== "https:" ||
-            !/^(www\.)?roblox\.com$/i.test(url.hostname) ||
-            !/^\/games\/\d+(\/|$)/.test(url.pathname)) return null;
-        return url.href;
-      } catch (_) {
-        return null;
-      }
-    }
-
-    function safeThumbnailUrl(value) {
-      try {
-        const url = new URL(String(value || ""));
-        const host = url.hostname.toLowerCase();
-        const trustedHost = host === "roblox.com" ||
-          host.endsWith(".roblox.com") ||
-          host === "rbxcdn.com" ||
-          host.endsWith(".rbxcdn.com");
-        if (url.protocol !== "https:" || !trustedHost) return null;
-        return url.href;
-      } catch (_) {
-        return null;
-      }
-    }
-
-    function setCardLink(card, url, name) {
-      if (!card || !url) return;
-      card.style.cursor = "pointer";
-      card.setAttribute("role", "link");
-      card.setAttribute("tabindex", "0");
-      card.setAttribute("aria-label", "Open " + name + " on Roblox");
-      if (card.dataset.northworkLinkBound === "true") return;
-      card.dataset.northworkLinkBound = "true";
-
-      const open = () => window.open(url, "_blank", "noopener,noreferrer");
-      card.addEventListener("click", event => {
-        if (event.target.closest("a, button, input, select, textarea")) return;
-        open();
-      });
-      card.addEventListener("keydown", event => {
-        if (event.key === "Enter" || event.key === " ") {
-          event.preventDefault();
-          open();
-        }
-      });
-    }
-
-    function applyGameCard(card, game, index, compact, rankNumber = index + 1) {
-      if (!card || !game || typeof game !== "object") return;
-      const url = safeRobloxGameUrl(game.url);
-      if (!url) return;
-
-      const name = String(game.name || game.displayName || "Northwork game").slice(0, 80);
-      const thumbnail = safeThumbnailUrl(game.thumbnail);
-
-      setCardLink(card, url, name);
-
-      const artwork = card.querySelector(compact ? ".hero-game-art" : ".game-card-cover");
-      if (artwork && thumbnail) {
-        artwork.style.backgroundImage = compact
-          ? 'linear-gradient(0deg,rgba(7,7,10,.55),rgba(7,7,10,.08)),url("' + thumbnail + '")'
-          : 'linear-gradient(0deg,rgba(7,7,10,.76),rgba(7,7,10,.08)),url("' + thumbnail + '")';
-        artwork.style.backgroundSize = "cover";
-        artwork.style.backgroundPosition = "center";
-        artwork.style.backgroundRepeat = "no-repeat";
-        artwork.classList.add("has-game-thumbnail");
-        const mark = compact
-          ? artwork.querySelector("span")
-          : artwork.querySelector(".game-card-mark");
-        if (mark) mark.hidden = true;
-      }
-
-      const rank = card.querySelector(compact ? ".hero-game-rank" : ".game-rank");
-      if (rank) rank.textContent = "#" + rankNumber;
-
-      const title = card.querySelector(compact ? ".hero-game-name" : ".game-card-name");
-      if (title) title.textContent = name;
-
-      if (compact) {
-        const meta = card.querySelectorAll(".hero-game-meta span");
-        if (meta[0]) meta[0].textContent = "◉ " + formatCount(game.playing);
-        if (meta[1]) meta[1].textContent = "♥ " + formatCount(game.visits);
-      } else {
-        const status = card.querySelector(".game-status");
-        if (status) status.textContent = "NORTHWORK";
-        const note = card.querySelector(".game-card-note");
-        if (note) note.textContent = String(game.description || "Open this Northwork experience on Roblox").slice(0, 500);
-        const stats = card.querySelectorAll(".game-card-stats span");
-        if (stats[0]) stats[0].textContent = "◉ " + formatCount(game.playing) + " playing";
-        if (stats[1]) stats[1].textContent = "♥ " + formatCount(game.visits) + " visits";
-      }
-    }
-
-    function renderManagedGames() {
-      const homeGames = Array.isArray(siteData.homeGames) ? siteData.homeGames : [];
-      const topGames = Array.isArray(siteData.topGames) ? siteData.topGames : [];
-
-      // Homepage cards are visually arranged by rank, not by array order:
-      // #4, #2, #1 (featured center), #3, #5. Keep /homegames1 mapped
-      // to the featured center card, /homegames2 to the #2 card, etc.
-      const homeSlotByVisualCard = [3, 1, 0, 2, 4];
-      const homeRankByVisualCard = [4, 2, 1, 3, 5];
-      document.querySelectorAll(".hero-game-row .hero-game-card").forEach((card, visualIndex) => {
-        const slotIndex = homeSlotByVisualCard[visualIndex];
-        const rankNumber = homeRankByVisualCard[visualIndex];
-        applyGameCard(card, homeGames[slotIndex], slotIndex, true, rankNumber);
-      });
-
-      document.querySelectorAll(".games-grid .game-card").forEach((card, index) => {
-        applyGameCard(card, topGames[index], index, false);
-      });
-    }
-
-    function renderRoleSpots() {
-      const spots = siteData.roleSpots && typeof siteData.roleSpots === "object"
-        ? siteData.roleSpots
-        : {};
-      document.querySelectorAll(".career-role-card").forEach((card, index) => {
-        const key = roleKeys[index];
-        const value = key ? safeCount(spots[key]) : 0;
-        const output = card.querySelector(".career-role-spots strong");
-        if (output && key) output.textContent = value.toLocaleString() + " available";
-      });
-    }
-
-    function renderAboutStats(stats) {
-      const about = siteData.aboutStats && typeof siteData.aboutStats === "object"
-        ? siteData.aboutStats
-        : {};
-      const items = document.querySelectorAll(".about-overview-grid .about-overview-item strong");
-
-      if (items[0] && about.developersText != null) {
-        items[0].textContent = String(about.developersText).slice(0, 80);
-      }
-      if (items[1] && about.publishedTitles != null) {
-        items[1].textContent = String(about.publishedTitles).slice(0, 80);
-      }
-      if (items[2] && about.timeOfExperience != null) {
-        items[2].textContent = String(about.timeOfExperience).slice(0, 80);
-      }
-      if (stats && items[3]) items[3].textContent = formatCount(stats.total_visits);
-    }
-
-    function renderHeroStats(stats) {
-      if (!stats) return;
-      const values = document.querySelectorAll(".hero-stats .hero-stat-value");
-      if (values[0]) values[0].textContent = formatCount(stats.live_players);
-      if (values[1]) values[1].textContent = formatCount(stats.total_visits);
-    }
-
-    function renderAll() {
-      renderManagedGames();
-      renderRoleSpots();
-      renderAboutStats(null);
-      // Expose a lightweight status for diagnostics without putting secrets in
-      // the page or making the site renderer depend on the bot runtime.
-      document.documentElement.dataset.northworkSiteData = siteData.siteVersion
-        ? "loaded"
-        : "default";
-    }
-
-    async function refreshPublicStats() {
-      const client = window.northworkSupabaseClient;
-      if (!client || typeof client.from !== "function") return;
-
-      try {
-        const result = await client
-          .from("northwork_site_stats")
-          .select("live_players,total_visits,updated_at")
-          .eq("id", "current")
-          .maybeSingle();
-
-        if (result.error) throw result.error;
-        if (!result.data) return;
-
-        renderHeroStats(result.data);
-        renderAboutStats(result.data);
-        document.documentElement.dataset.northworkStats = "loaded";
-      } catch (error) {
-        document.documentElement.dataset.northworkStats = "unavailable";
-        console.warn("[Northwork] Could not load public Roblox statistics:", error.message || error);
-      }
-    }
-
-    renderAll();
-    refreshPublicStats();
-    window.setInterval(refreshPublicStats, 5 * 60 * 1000);
-  })();
-  </script>
-
 </body>
 </html>
