@@ -2198,8 +2198,7 @@ button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-
   .nw-chat-composer textarea:focus { border-color:var(--nw-purple); }
   .nw-chat-composer textarea::placeholder { color:#707988; }
   .nw-chat-composer-actions { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-top:10px; }
-  .nw-chat-composer-actions>span { color:#687383; font:700 8px Arial,sans-serif; letter-spacing:.08em; }
-  .nw-chat-composer-actions>span i { padding:0 4px; color:#454d59; font-style:normal; }
+  .nw-chat-composer-tools>span { color:#687383; font:500 7px/1.35 Arial,sans-serif; letter-spacing:.035em; text-transform:none; white-space:normal; }
   .nw-chat-composer-actions button { min-height:34px; padding:0 13px; border:1px solid var(--nw-purple); background:var(--nw-purple); color:#0b0910; font:800 10px Arial,sans-serif; cursor:pointer; }
   .nw-chat-composer-actions button:disabled { opacity:.5; cursor:wait; }
   .nw-chat-composer-actions button span { padding-left:7px; }
@@ -2495,7 +2494,7 @@ window.NORTHWORK_SITE_DATA = {"staff":[{"userId":"438702447683174402","name":"Ry
               <div class="nw-chat-composer-actions">
                 <div class="nw-chat-composer-tools">
                   <button type="button" class="nw-chat-gif-button" id="northwork-chat-gif-button" aria-haspopup="dialog" aria-expanded="false">GIF</button>
-                  <span>ENTER TO SEND <i>·</i> SHIFT + ENTER FOR A NEW LINE</span>
+                  <span>Enter to send · Shift + Enter for a new line</span>
                 </div>
                 <button type="submit" id="northwork-chat-send-button">Send message <span>↗</span></button>
               </div>
@@ -3457,7 +3456,7 @@ window.NORTHWORK_SITE_DATA = {"staff":[{"userId":"438702447683174402","name":"Ry
     const northworkGifPickerResults = document.getElementById("northwork-gif-picker-results");
     // GIPHY's browser API key is an application key, not a Supabase/server secret.
     // Create a Web API key at https://developers.giphy.com/dashboard/ and paste it here.
-    const NORTHWORK_GIPHY_API_KEY = "RllU5QYJT2KtgAhserHIW2BQOeJdQ008";
+    const NORTHWORK_GIPHY_API_KEY = "PASTE_GIPHY_API_KEY_HERE";
     const NORTHWORK_GIPHY_MESSAGE_PREFIX = "NWGIF1:";
     let northworkGifSearchTimer = null;
     let northworkGifSearchSequence = 0;
@@ -3883,7 +3882,9 @@ window.NORTHWORK_SITE_DATA = {"staff":[{"userId":"438702447683174402","name":"Ry
       time.className = "nw-chat-message-time";
       time.dateTime = message.created_at || "";
       time.textContent = northworkChatTime(message.created_at);
-      bubble.append(body, time);
+      // The message body (or GIF media) is already appended above.
+      // Append only the timestamp here; `body` is block-scoped in the text branch.
+      bubble.appendChild(time);
 
       const senderProfile = northworkChatMessageProfiles.get(message.sender_id) || (
         message.sender_id === activeProfileUser?.id
