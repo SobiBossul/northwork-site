@@ -1761,8 +1761,9 @@
     .settings-feedback { min-height:0; margin:8px 0 0; color:#9acfae; font-size:11px; line-height:1.5; }
     .settings-email-current { margin:0 0 16px; padding:12px 13px; border:1px solid #292d36; background:#0c0e12; }
     .settings-email-current strong { display:block; color:#e8e7ed; font-size:13px; overflow-wrap:anywhere; }
-    .settings-email-grid { align-items:end; }
-    .settings-button-field { justify-content:flex-end; }
+    .settings-email-grid { align-items:start; }
+    .settings-button-field { justify-content:flex-start; }
+    .settings-button-field .settings-secondary-button { min-height:42px; }
     .settings-security-row,.settings-toggle-row { display:flex; align-items:center; justify-content:space-between; gap:18px; padding-top:15px; margin-top:15px; border-top:1px solid #282c34; }
     .settings-security-row strong,.settings-toggle-row strong,.settings-setting-copy strong { display:block; margin-bottom:4px; color:#e9e8ed; font-size:12px; }
     .settings-setting-block { display:flex; align-items:center; justify-content:space-between; gap:22px; }
@@ -2055,6 +2056,152 @@ button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-
   @media (prefers-reduced-motion: reduce) {
     .career-form-field input, .career-form-field select, .career-form-field textarea, .career-form-submit { transition: none; }
   }
+
+  /* Northwork direct messages — square, dark and member-focused. */
+  .profile-menu-chat { justify-content:space-between; }
+  .profile-chat-unread {
+    display:inline-flex; min-width:20px; height:20px; box-sizing:border-box;
+    align-items:center; justify-content:center; margin-left:auto; padding:0 6px;
+    background:var(--nw-purple); color:#09080d; font:800 10px/1 Arial,sans-serif;
+  }
+  .northwork-chat-page {
+    position:fixed; inset:0; z-index:1506; overflow:hidden;
+    background:#080a0e; color:#edf0f5;
+    opacity:0; visibility:hidden; pointer-events:none;
+    transition:opacity .2s ease,visibility .2s ease;
+  }
+  .northwork-chat-page.open { opacity:1; visibility:visible; pointer-events:auto; }
+  .northwork-chat-shell {
+    width:min(1320px,calc(100% - 56px)); height:calc(100dvh - 56px);
+    min-height:480px; margin:28px auto; display:flex; flex-direction:column;
+    border:1px solid #262b35; background:#0b0e13; box-shadow:0 24px 80px rgba(0,0,0,.42);
+  }
+  .northwork-chat-topbar {
+    min-height:58px; box-sizing:border-box; display:flex; align-items:center; gap:20px;
+    padding:0 20px; border-bottom:1px solid #252a34; background:#0e1117;
+  }
+  .nw-chat-back {
+    min-height:34px; padding:0 11px; border:1px solid #343a46; border-radius:0;
+    background:#141820; color:#e8ebf1; font:600 11px Arial,sans-serif; cursor:pointer;
+  }
+  .nw-chat-back:hover { border-color:var(--nw-purple); color:#fff; }
+  .nw-chat-breadcrumb { display:flex; align-items:center; gap:10px; margin-left:auto; color:#77808e; font:700 9px Arial,sans-serif; letter-spacing:.15em; }
+  .nw-chat-breadcrumb i { color:#454c58; font-style:normal; }
+  .nw-chat-breadcrumb strong { color:#eef0f4; }
+  .nw-chat-live-indicator { display:flex; align-items:center; gap:7px; color:#8d96a5; font:700 9px Arial,sans-serif; letter-spacing:.1em; }
+  .nw-chat-live-indicator span,.nw-chat-thread-label span { width:6px; height:6px; background:#73c69a; display:block; box-shadow:0 0 0 3px rgba(115,198,154,.12); }
+  .nw-chat-layout { display:grid; grid-template-columns:330px minmax(0,1fr); flex:1; min-height:0; }
+  .nw-chat-sidebar { min-width:0; display:flex; flex-direction:column; border-right:1px solid #252a34; background:#0d1016; }
+  .nw-chat-sidebar-heading { display:flex; align-items:center; justify-content:space-between; padding:24px 20px 17px; }
+  .nw-chat-eyebrow { display:block; color:var(--nw-purple); font:800 9px/1.2 Arial,sans-serif; letter-spacing:.17em; }
+  .nw-chat-sidebar-heading h1 { margin:8px 0 0; color:#f3f4f7; font:750 25px/1 Arial,sans-serif; letter-spacing:-.04em; }
+  .nw-chat-count { min-width:25px; height:25px; display:grid; place-items:center; border:1px solid #303642; color:#b7beca; font:700 10px Arial,sans-serif; }
+  .nw-chat-search { display:flex; gap:0; margin:0 16px 14px; border:1px solid #303641; background:#090c11; }
+  .nw-chat-search:focus-within { border-color:var(--nw-purple); }
+  .nw-chat-search input { width:100%; min-width:0; height:40px; border:0; outline:0; padding:0 11px; background:transparent; color:#f0f2f6; font:400 11px Arial,sans-serif; }
+  .nw-chat-search input::placeholder { color:#707988; }
+  .nw-chat-search button { width:40px; flex:none; border:0; border-left:1px solid #303641; background:#151922; color:var(--nw-purple); font:700 15px Arial,sans-serif; cursor:pointer; }
+  .nw-chat-search-results { max-height:210px; overflow:auto; margin:0 16px 14px; border:1px solid #303641; background:#10141b; }
+  .nw-chat-search-results[hidden] { display:none; }
+  .nw-chat-search-result { width:100%; display:flex; align-items:center; gap:10px; padding:10px; border:0; border-bottom:1px solid #252b35; background:transparent; color:#e9edf4; text-align:left; cursor:pointer; }
+  .nw-chat-search-result:last-child { border-bottom:0; }
+  .nw-chat-search-result:hover { background:#1a202b; }
+  .nw-chat-search-result .nw-chat-avatar { width:34px; height:34px; }
+  .nw-chat-search-result-copy { min-width:0; flex:1; }
+  .nw-chat-search-result-copy strong,.nw-chat-search-result-copy small { display:block; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .nw-chat-search-result-copy strong { color:#eff1f5; font:700 11px Arial,sans-serif; }
+  .nw-chat-search-result-copy small { margin-top:4px; color:#858e9d; font:400 10px Arial,sans-serif; }
+  .nw-chat-search-result-action { color:var(--nw-purple); font:800 9px Arial,sans-serif; letter-spacing:.08em; }
+  .nw-chat-search-message { padding:12px; color:#8e97a6; font:400 11px/1.5 Arial,sans-serif; }
+  .nw-chat-list-heading { display:flex; justify-content:space-between; gap:8px; padding:11px 19px; border-top:1px solid #222833; border-bottom:1px solid #222833; color:#858e9c; font:800 8px Arial,sans-serif; letter-spacing:.13em; }
+  .nw-chat-list-heading span:last-child { color:#596271; }
+  .nw-chat-conversation-list { flex:1; min-height:0; overflow:auto; scrollbar-width:thin; scrollbar-color:var(--nw-purple) #0d1016; }
+  .nw-chat-conversation-list::-webkit-scrollbar,.nw-chat-messages::-webkit-scrollbar,.nw-chat-search-results::-webkit-scrollbar { width:7px; }
+  .nw-chat-conversation-list::-webkit-scrollbar-thumb,.nw-chat-messages::-webkit-scrollbar-thumb,.nw-chat-search-results::-webkit-scrollbar-thumb { background:var(--nw-purple); }
+  .nw-chat-conversation-item { position:relative; width:100%; display:flex; align-items:center; gap:11px; box-sizing:border-box; padding:13px 16px; border:0; border-bottom:1px solid #1e242d; background:transparent; color:#e8ebf1; text-align:left; cursor:pointer; }
+  .nw-chat-conversation-item:hover { background:#151a22; }
+  .nw-chat-conversation-item.active { background:#191e28; box-shadow:inset 2px 0 var(--nw-purple); }
+  .nw-chat-avatar { width:42px; height:42px; flex:none; display:grid; place-items:center; overflow:hidden; border:1px solid #3b344c; background:#1b1726; color:#d7c9ff; font:800 14px Arial,sans-serif; }
+  .nw-chat-avatar img { width:100%; height:100%; display:block; object-fit:cover; }
+  .nw-chat-conversation-copy { min-width:0; flex:1; }
+  .nw-chat-conversation-top { display:flex; align-items:center; justify-content:space-between; gap:8px; }
+  .nw-chat-conversation-top strong { min-width:0; overflow:hidden; color:#eef0f5; font:700 11px Arial,sans-serif; text-overflow:ellipsis; white-space:nowrap; }
+  .nw-chat-conversation-top time { flex:none; color:#727c8b; font:400 9px Arial,sans-serif; }
+  .nw-chat-conversation-preview { display:block; overflow:hidden; margin-top:6px; color:#87909e; font:400 10px/1.4 Arial,sans-serif; text-overflow:ellipsis; white-space:nowrap; }
+  .nw-chat-conversation-unread { width:7px; height:7px; flex:none; margin-left:5px; background:var(--nw-purple); }
+  .nw-chat-list-empty { display:flex; flex-direction:column; align-items:center; justify-content:center; padding:40px 25px; text-align:center; }
+  .nw-chat-empty-symbol { width:34px; height:34px; display:grid; place-items:center; border:1px solid #343b47; color:#9b83df; font:800 15px Arial,sans-serif; }
+  .nw-chat-list-empty p { max-width:200px; margin:12px 0 0; color:#798392; font:400 11px/1.6 Arial,sans-serif; }
+  .nw-chat-sidebar-foot { display:flex; align-items:center; gap:9px; padding:13px 17px; border-top:1px solid #252a34; color:#737d8c; font:600 9px Arial,sans-serif; }
+  .nw-chat-sidebar-mark { width:19px; height:19px; display:grid; place-items:center; border:1px solid #51416d; color:#c2afff; font:800 9px Arial,sans-serif; }
+  .nw-chat-private-mark { margin-left:auto; color:#687282; font:800 8px Arial,sans-serif; letter-spacing:.1em; }
+  .nw-chat-main { min-width:0; min-height:0; display:flex; background:#0a0d12; }
+  .nw-chat-empty-state { width:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:32px; text-align:center; }
+  .nw-chat-empty-logo { width:62px; height:62px; display:grid; place-items:center; margin-bottom:22px; border:1px solid color-mix(in srgb,var(--nw-purple) 60%,#2a2e39); background:color-mix(in srgb,var(--nw-purple) 10%,#10131a); color:#d6caff; font:900 27px Arial,sans-serif; }
+  .nw-chat-empty-state h2 { margin:12px 0 9px; color:#f2f4f8; font:750 clamp(23px,3vw,34px)/1.1 Arial,sans-serif; letter-spacing:-.045em; }
+  .nw-chat-empty-state p { max-width:360px; margin:0; color:#8a94a3; font:400 12px/1.75 Arial,sans-serif; }
+  .nw-chat-empty-state button { margin-top:23px; padding:12px 15px; border:1px solid var(--nw-purple); background:var(--nw-purple); color:#0a0910; font:800 10px Arial,sans-serif; cursor:pointer; }
+  .nw-chat-empty-state button span { padding-left:12px; }
+  .nw-chat-thread { min-width:0; width:100%; display:flex; flex-direction:column; }
+  .nw-chat-thread[hidden],.nw-chat-empty-state[hidden] { display:none; }
+  .nw-chat-thread-header { min-height:70px; box-sizing:border-box; display:flex; align-items:center; gap:12px; padding:12px 21px; border-bottom:1px solid #252a34; background:#0e1117; }
+  .nw-chat-peer-avatar { width:39px; height:39px; display:grid; place-items:center; overflow:hidden; flex:none; border:1px solid #4a3e62; background:#1d1828; color:#d8caff; font:800 13px Arial,sans-serif; }
+  .nw-chat-peer-avatar img { width:100%; height:100%; object-fit:cover; }
+  .nw-chat-peer-copy { min-width:0; display:flex; flex-direction:column; gap:5px; }
+  .nw-chat-peer-copy strong { overflow:hidden; color:#f2f3f6; font:700 12px Arial,sans-serif; text-overflow:ellipsis; white-space:nowrap; }
+  .nw-chat-peer-copy span { color:#818b99; font:400 10px Arial,sans-serif; }
+  .nw-chat-thread-label { display:flex; align-items:center; gap:8px; margin-left:auto; color:#798392; font:800 8px Arial,sans-serif; letter-spacing:.12em; }
+  .nw-chat-thread-label span { background:var(--nw-purple); box-shadow:0 0 0 3px color-mix(in srgb,var(--nw-purple) 14%,transparent); }
+  .nw-chat-messages { flex:1; min-height:0; display:flex; flex-direction:column; gap:10px; overflow:auto; padding:22px clamp(16px,3vw,34px); scrollbar-width:thin; scrollbar-color:var(--nw-purple) #0a0d12; }
+  .nw-chat-message-row { display:flex; width:100%; }
+  .nw-chat-message-row.mine { justify-content:flex-end; }
+  .nw-chat-message-bubble { max-width:min(72%,560px); padding:11px 13px 9px; border:1px solid #2b313d; background:#141922; color:#e7eaf0; }
+  .nw-chat-message-row.mine .nw-chat-message-bubble { border-color:color-mix(in srgb,var(--nw-purple) 45%,#34313d); background:color-mix(in srgb,var(--nw-purple) 13%,#171622); }
+  .nw-chat-message-body { margin:0; color:#e9ebf1; font:400 12px/1.65 Arial,sans-serif; white-space:pre-wrap; overflow-wrap:anywhere; }
+  .nw-chat-message-time { display:block; margin-top:6px; color:#7e8795; text-align:right; font:400 8px Arial,sans-serif; }
+  .nw-chat-message-loading,.nw-chat-no-messages { margin:auto; padding:20px; color:#7e8897; text-align:center; font:400 11px/1.6 Arial,sans-serif; }
+  .nw-chat-composer { flex:none; padding:13px 18px 15px; border-top:1px solid #252a34; background:#0e1117; }
+  .nw-chat-composer textarea { display:block; box-sizing:border-box; width:100%; min-height:47px; max-height:130px; resize:vertical; border:1px solid #343a46; border-radius:0; outline:0; padding:13px 13px; background:#090c11; color:#f0f2f6; font:400 12px/1.5 Arial,sans-serif; }
+  .nw-chat-composer textarea:focus { border-color:var(--nw-purple); }
+  .nw-chat-composer textarea::placeholder { color:#707988; }
+  .nw-chat-composer-actions { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-top:10px; }
+  .nw-chat-composer-actions>span { color:#687383; font:700 8px Arial,sans-serif; letter-spacing:.08em; }
+  .nw-chat-composer-actions>span i { padding:0 4px; color:#454d59; font-style:normal; }
+  .nw-chat-composer-actions button { min-height:34px; padding:0 13px; border:1px solid var(--nw-purple); background:var(--nw-purple); color:#0b0910; font:800 10px Arial,sans-serif; cursor:pointer; }
+  .nw-chat-composer-actions button:disabled { opacity:.5; cursor:wait; }
+  .nw-chat-composer-actions button span { padding-left:7px; }
+  .nw-chat-mobile-back { display:none; padding:8px 9px; border:1px solid #333a46; background:#131821; color:#cdd3de; font:700 9px Arial,sans-serif; cursor:pointer; }
+  .nw-chat-toast { position:fixed; z-index:10; right:22px; bottom:22px; max-width:min(350px,calc(100% - 44px)); padding:13px 16px; border:1px solid #4b4064; background:#15131d; color:#f0ecfa; box-shadow:0 12px 40px rgba(0,0,0,.4); font:600 11px/1.5 Arial,sans-serif; }
+  .nw-chat-toast[hidden] { display:none; }
+  @media (max-width:850px) {
+    .northwork-chat-shell { width:calc(100% - 28px); height:calc(100dvh - 28px); margin:14px auto; }
+    .nw-chat-layout { grid-template-columns:290px minmax(0,1fr); }
+    .nw-chat-composer-actions>span { max-width:50%; line-height:1.5; }
+  }
+  @media (max-width:620px) {
+    .northwork-chat-shell { width:100%; height:100dvh; min-height:0; margin:0; border:0; }
+    .northwork-chat-topbar { min-height:54px; gap:10px; padding:0 12px; }
+    .nw-chat-back { min-height:32px; padding:0 8px; font-size:9px; }
+    .nw-chat-breadcrumb { gap:6px; font-size:8px; }
+    .nw-chat-live-indicator { font-size:0; }
+    .nw-chat-live-indicator span { width:7px; height:7px; }
+    .nw-chat-layout { display:block; position:relative; }
+    .nw-chat-sidebar { width:100%; height:100%; border-right:0; }
+    .nw-chat-main { display:none; position:absolute; inset:0; height:100%; }
+    .northwork-chat-page.thread-active .nw-chat-sidebar { display:none; }
+    .northwork-chat-page.thread-active .nw-chat-main { display:flex; }
+    .nw-chat-sidebar-heading { padding:20px 17px 15px; }
+    .nw-chat-thread-header { min-height:62px; gap:8px; padding:9px 10px; }
+    .nw-chat-mobile-back { display:block; }
+    .nw-chat-thread-label { font-size:7px; }
+    .nw-chat-messages { padding:16px 12px; }
+    .nw-chat-message-bubble { max-width:84%; }
+    .nw-chat-composer { padding:10px; }
+    .nw-chat-composer-actions>span { font-size:7px; }
+    .nw-chat-composer-actions button { min-height:36px; padding:0 10px; }
+  }
+  @media (prefers-reduced-motion:reduce) { .northwork-chat-page { transition:none; } }
+
 </style>
 
 </head>
@@ -2079,7 +2226,8 @@ button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-
           <div id="profile-menu-main">
             <div class="profile-dropdown-head"><strong id="profile-menu-name">Your account</strong><span id="profile-menu-email"></span></div>
             <button class="profile-menu-item" id="profile-account-open" type="button" role="menuitem">Account</button>
-            <button class="profile-menu-item" id="profile-wallet-open" type="button" role="menuitem">NWRKWallet</button>
+            <button class="profile-menu-item" id="profile-wallet-open" type="button" role="menuitem">Wallet</button>
+            <button class="profile-menu-item profile-menu-chat" id="profile-chat-open" type="button" role="menuitem">Chat <span class="profile-chat-unread" id="profile-chat-unread-count" hidden>0</span></button>
             <button class="profile-menu-item" id="profile-settings-open" type="button" role="menuitem">Settings</button>
             <div class="profile-menu-divider"></div>
             <button class="profile-menu-item logout" id="profile-logout" type="button" role="menuitem">Log out</button>
@@ -2196,11 +2344,11 @@ button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-
     </div>
   </section>
 
-  <section class="northwork-wallet-page" id="northwork-wallet-page" aria-label="NWRKWallet" aria-hidden="true">
+  <section class="northwork-wallet-page" id="northwork-wallet-page" aria-label="Wallet" aria-hidden="true">
     <div class="nwrk-wallet-shell">
       <header class="nwrk-wallet-top">
         <button class="nwrk-wallet-back" id="wallet-page-back" type="button">← Back to Northwork</button>
-        <div class="nwrk-wallet-breadcrumb"><span>NORTHWORK</span><i>/</i><strong>NWRKWALLET</strong></div>
+        <div class="nwrk-wallet-breadcrumb"><span>NORTHWORK</span><i>/</i><strong>WALLET</strong></div>
       </header>
 
       <main class="nwrk-wallet-grid">
@@ -2239,6 +2387,86 @@ button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-
     </div>
   </section>
 
+
+
+  <section class="northwork-chat-page" id="northwork-chat-page" aria-label="Northwork Chat" aria-hidden="true">
+    <div class="northwork-chat-shell">
+      <header class="northwork-chat-topbar">
+        <button class="nw-chat-back" id="northwork-chat-close" type="button">← Back to Northwork</button>
+        <div class="nw-chat-breadcrumb"><span>NORTHWORK</span><i>/</i><strong>CHAT</strong></div>
+        <div class="nw-chat-live-indicator" id="northwork-chat-live-indicator"><span></span> LIVE MESSAGES</div>
+      </header>
+
+      <div class="nw-chat-layout">
+        <aside class="nw-chat-sidebar" aria-label="Messages and members">
+          <div class="nw-chat-sidebar-heading">
+            <div>
+              <span class="nw-chat-eyebrow">YOUR INBOX</span>
+              <h1>Messages</h1>
+            </div>
+            <span class="nw-chat-count" id="northwork-chat-count">0</span>
+          </div>
+
+          <form class="nw-chat-search" id="northwork-chat-search-form">
+            <input id="northwork-chat-search-input" type="search" autocomplete="off" placeholder="Find a member by name or @username" aria-label="Find a Northwork member">
+            <button type="submit" aria-label="Search members">↗</button>
+          </form>
+          <div class="nw-chat-search-results" id="northwork-chat-search-results" hidden></div>
+
+          <div class="nw-chat-list-heading">
+            <span>DIRECT MESSAGES</span>
+            <span id="northwork-chat-list-status">YOUR CHATS</span>
+          </div>
+          <div class="nw-chat-conversation-list" id="northwork-chat-conversation-list">
+            <div class="nw-chat-list-empty">
+              <span class="nw-chat-empty-symbol">N</span>
+              <p>Your conversations will show up here.</p>
+            </div>
+          </div>
+          <div class="nw-chat-sidebar-foot">
+            <span class="nw-chat-sidebar-mark">N</span>
+            <span>Northwork messages</span>
+            <span class="nw-chat-private-mark">PRIVATE</span>
+          </div>
+        </aside>
+
+        <main class="nw-chat-main" id="northwork-chat-main">
+          <div class="nw-chat-empty-state" id="northwork-chat-empty-state">
+            <div class="nw-chat-empty-logo">N</div>
+            <span class="nw-chat-eyebrow">NORTHWORK COMMUNITY</span>
+            <h2>Your space to connect.</h2>
+            <p>Search for a Northwork member to start a conversation, or pick one from your inbox.</p>
+            <button type="button" id="northwork-chat-empty-search">Find a member <span>↗</span></button>
+          </div>
+
+          <section class="nw-chat-thread" id="northwork-chat-thread" hidden aria-label="Direct message">
+            <header class="nw-chat-thread-header">
+              <button class="nw-chat-mobile-back" id="northwork-chat-mobile-back" type="button">← Chats</button>
+              <div class="nw-chat-peer-avatar" id="northwork-chat-peer-avatar">N</div>
+              <div class="nw-chat-peer-copy">
+                <strong id="northwork-chat-peer-name">Northwork member</strong>
+                <span id="northwork-chat-peer-username">Direct message</span>
+              </div>
+              <div class="nw-chat-thread-label"><span></span> DIRECT MESSAGE</div>
+            </header>
+
+            <div class="nw-chat-messages" id="northwork-chat-messages" aria-live="polite">
+              <div class="nw-chat-message-loading">Loading conversation…</div>
+            </div>
+
+            <form class="nw-chat-composer" id="northwork-chat-message-form">
+              <textarea id="northwork-chat-message-input" rows="1" maxlength="3000" placeholder="Write a message…" aria-label="Write a message"></textarea>
+              <div class="nw-chat-composer-actions">
+                <span>ENTER TO SEND <i>·</i> SHIFT + ENTER FOR A NEW LINE</span>
+                <button type="submit" id="northwork-chat-send-button">Send message <span>↗</span></button>
+              </div>
+            </form>
+          </section>
+        </main>
+      </div>
+      <div class="nw-chat-toast" id="northwork-chat-toast" role="status" aria-live="polite" hidden></div>
+    </div>
+  </section>
 
   <section class="northwork-auth-action-page" id="northwork-auth-action-page" aria-hidden="true">
     <div class="northwork-auth-action-card" id="northwork-password-request-panel" hidden>
@@ -2931,7 +3159,13 @@ button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-
     const accountPageBack = document.getElementById("account-page-back");
     const walletPage = document.getElementById("northwork-wallet-page");
     const walletPageBack = document.getElementById("wallet-page-back");
+    const chatPage = document.getElementById("northwork-chat-page");
     const editorBackdrop = document.getElementById("profile-editor-backdrop");
+    let northworkChatItems = [];
+    let northworkChatActiveConversationId = null;
+    let northworkChatRealtimeChannel = null;
+    let northworkChatToastTimeout = null;
+    let northworkChatLastRead = new Map();
     let activeProfileUser = null;
     let ownProfileData = null;
     let viewingProfile = null;
@@ -3037,7 +3271,7 @@ button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-
       document.getElementById("public-profile-feedback").textContent = "";
     }
     function updateNorthworkOverlayScrollLock() {
-      const overlayOpen = [settingsPage, accountPage, walletPage].some(page => page?.classList.contains("open"));
+      const overlayOpen = [settingsPage, accountPage, walletPage, chatPage].some(page => page?.classList.contains("open"));
       document.documentElement.classList.toggle("northwork-overlay-open", overlayOpen);
       document.body.classList.toggle("northwork-overlay-open", overlayOpen);
     }
@@ -3107,7 +3341,7 @@ button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-
       walletPage.classList.add("open");
       walletPage.setAttribute("aria-hidden", "false");
       updateNorthworkOverlayScrollLock();
-      document.title = "NWRKWallet | Northwork";
+      document.title = "Wallet | Northwork";
     }
     function closeNorthworkWallet() {
       walletPage?.classList.remove("open");
@@ -3139,6 +3373,522 @@ button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-
       settingsPage?.classList.remove("open"); settingsPage?.setAttribute("aria-hidden", "true");
       updateNorthworkOverlayScrollLock();
     }
+
+
+    // Northwork direct messaging: one-to-one conversations are stored in Supabase.
+    const northworkChatList = document.getElementById("northwork-chat-conversation-list");
+    const northworkChatSearchForm = document.getElementById("northwork-chat-search-form");
+    const northworkChatSearchInput = document.getElementById("northwork-chat-search-input");
+    const northworkChatSearchResults = document.getElementById("northwork-chat-search-results");
+    const northworkChatMessages = document.getElementById("northwork-chat-messages");
+    const northworkChatMessageForm = document.getElementById("northwork-chat-message-form");
+    const northworkChatMessageInput = document.getElementById("northwork-chat-message-input");
+    const northworkChatSendButton = document.getElementById("northwork-chat-send-button");
+    const northworkChatThread = document.getElementById("northwork-chat-thread");
+    const northworkChatEmptyState = document.getElementById("northwork-chat-empty-state");
+    const northworkChatUnreadBadge = document.getElementById("profile-chat-unread-count");
+
+    function northworkChatTime(value, dateOnly = false) {
+      if (!value) return "";
+      const date = new Date(value);
+      if (Number.isNaN(date.getTime())) return "";
+      return new Intl.DateTimeFormat(undefined, dateOnly
+        ? { month: "short", day: "numeric" }
+        : { hour: "2-digit", minute: "2-digit" }).format(date);
+    }
+
+    function northworkChatPeerFor(item) {
+      return item?.peer || { id: "", display_name: "Northwork member", username: "", avatar_url: null };
+    }
+
+    function northworkChatSetStatus(message, state = "info") {
+      const el = document.getElementById("northwork-chat-list-status");
+      if (el) {
+        el.textContent = message;
+        el.dataset.state = state;
+      }
+    }
+
+    function northworkChatAvatarElement(profile, className = "nw-chat-avatar") {
+      const avatar = document.createElement("span");
+      avatar.className = className;
+      const name = profile?.display_name || profile?.username || "N";
+      if (profile?.avatar_url) {
+        const image = document.createElement("img");
+        image.src = profile.avatar_url;
+        image.alt = "";
+        image.loading = "lazy";
+        image.onerror = () => { image.remove(); avatar.textContent = profileInitial(name); };
+        avatar.appendChild(image);
+      } else {
+        avatar.textContent = profileInitial(name);
+      }
+      return avatar;
+    }
+
+    function updateNorthworkChatUnreadBadge(count) {
+      const total = Math.max(0, Number(count) || 0);
+      if (!northworkChatUnreadBadge) return;
+      northworkChatUnreadBadge.hidden = total === 0;
+      northworkChatUnreadBadge.textContent = total > 99 ? "99+" : String(total);
+    }
+
+    function renderNorthworkChatInbox() {
+      if (!northworkChatList) return;
+      northworkChatList.replaceChildren();
+      let unreadTotal = 0;
+      for (const item of northworkChatItems) {
+        if (item.unread) unreadTotal += 1;
+        const peer = northworkChatPeerFor(item);
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "nw-chat-conversation-item" + (item.id === northworkChatActiveConversationId ? " active" : "");
+        button.setAttribute("aria-label", "Open conversation with " + (peer.display_name || "Northwork member"));
+
+        button.appendChild(northworkChatAvatarElement(peer));
+        const copy = document.createElement("span");
+        copy.className = "nw-chat-conversation-copy";
+        const top = document.createElement("span");
+        top.className = "nw-chat-conversation-top";
+        const name = document.createElement("strong");
+        name.textContent = peer.display_name || "Northwork member";
+        const time = document.createElement("time");
+        time.textContent = northworkChatTime(item.lastMessage?.created_at || item.last_message_at);
+        top.append(name, time);
+        const preview = document.createElement("span");
+        preview.className = "nw-chat-conversation-preview";
+        if (item.lastMessage) {
+          preview.textContent = (item.lastMessage.sender_id === activeProfileUser?.id ? "You: " : "") + item.lastMessage.body;
+        } else {
+          preview.textContent = "Start the conversation";
+        }
+        copy.append(top, preview);
+        button.appendChild(copy);
+        if (item.unread) {
+          const dot = document.createElement("span");
+          dot.className = "nw-chat-conversation-unread";
+          dot.setAttribute("aria-label", "Unread messages");
+          button.appendChild(dot);
+        }
+        button.addEventListener("click", () => openNorthworkChatThread(item.id));
+        northworkChatList.appendChild(button);
+      }
+
+      if (!northworkChatItems.length) {
+        const empty = document.createElement("div");
+        empty.className = "nw-chat-list-empty";
+        const mark = document.createElement("span");
+        mark.className = "nw-chat-empty-symbol";
+        mark.textContent = "N";
+        const text = document.createElement("p");
+        text.textContent = "No conversations yet. Search for a member above to say hello.";
+        empty.append(mark, text);
+        northworkChatList.appendChild(empty);
+      }
+      document.getElementById("northwork-chat-count").textContent = String(northworkChatItems.length);
+      updateNorthworkChatUnreadBadge(unreadTotal);
+    }
+
+    async function loadNorthworkChatInbox() {
+      if (!supabaseClient || !activeProfileUser) return;
+      northworkChatSetStatus("LOADING…");
+      try {
+        const { data: conversations, error } = await supabaseClient
+          .from("northwork_conversations")
+          .select("id,member_one,member_two,last_message_at,created_at")
+          .order("last_message_at", { ascending: false, nullsFirst: false });
+        if (error) throw error;
+
+        const rows = conversations || [];
+        if (!rows.length) {
+          northworkChatItems = [];
+          northworkChatLastRead = new Map();
+          renderNorthworkChatInbox();
+          northworkChatSetStatus("YOUR CHATS");
+          return;
+        }
+
+        const partnerIds = [...new Set(rows.map(row => row.member_one === activeProfileUser.id ? row.member_two : row.member_one))];
+        const ids = rows.map(row => row.id);
+        const [profilesResult, readsResult, messagesResult] = await Promise.all([
+          supabaseClient.from("northwork_public_profiles")
+            .select("id,display_name,username,avatar_url")
+            .in("id", partnerIds),
+          supabaseClient.from("northwork_chat_reads")
+            .select("conversation_id,last_read_at")
+            .eq("user_id", activeProfileUser.id)
+            .in("conversation_id", ids),
+          supabaseClient.from("northwork_messages")
+            .select("id,conversation_id,sender_id,body,created_at")
+            .in("conversation_id", ids)
+            .order("created_at", { ascending: false })
+            .limit(1000)
+        ]);
+        if (profilesResult.error) throw profilesResult.error;
+        if (readsResult.error) throw readsResult.error;
+        if (messagesResult.error) throw messagesResult.error;
+
+        const profiles = new Map((profilesResult.data || []).map(profile => [profile.id, profile]));
+        northworkChatLastRead = new Map((readsResult.data || []).map(read => [read.conversation_id, read.last_read_at]));
+        const lastMessages = new Map();
+        for (const message of (messagesResult.data || [])) {
+          if (!lastMessages.has(message.conversation_id)) lastMessages.set(message.conversation_id, message);
+        }
+
+        northworkChatItems = rows.map(row => {
+          const peerId = row.member_one === activeProfileUser.id ? row.member_two : row.member_one;
+          const lastMessage = lastMessages.get(row.id) || null;
+          const readAt = northworkChatLastRead.get(row.id);
+          const unread = Boolean(lastMessage && lastMessage.sender_id !== activeProfileUser.id &&
+            (!readAt || new Date(lastMessage.created_at).getTime() > new Date(readAt).getTime()));
+          return {
+            ...row,
+            peer: profiles.get(peerId) || { id: peerId, display_name: "Northwork member", username: "", avatar_url: null },
+            lastMessage,
+            unread
+          };
+        }).sort((a, b) => new Date(b.last_message_at || b.created_at) - new Date(a.last_message_at || a.created_at));
+
+        renderNorthworkChatInbox();
+        northworkChatSetStatus("YOUR CHATS");
+      } catch (error) {
+        console.error("Northwork chat inbox could not load:", error);
+        northworkChatSetStatus("SETUP NEEDED", "error");
+        northworkChatList.replaceChildren();
+        const message = document.createElement("div");
+        message.className = "nw-chat-list-empty";
+        const title = document.createElement("strong");
+        title.textContent = "Chat needs its database setup";
+        title.style.cssText = "color:#e5e8ef;font:700 11px Arial,sans-serif";
+        const detail = document.createElement("p");
+        detail.textContent = /northwork_public_profiles|username|column .* does not exist|schema cache/i.test(error.message || "")
+          ? "Your profile migration may be missing. Run the Northwork chat setup SQL and make sure the username migration has been applied."
+          : "Run Northwork-Chat-Database-Setup.sql in Supabase → SQL Editor, then refresh Northwork.";
+        message.append(title, detail);
+        northworkChatList.appendChild(message);
+      }
+    }
+
+    function appendNorthworkChatMessage(message) {
+      if (!northworkChatMessages || !message?.id) return;
+      if (northworkChatMessages.querySelector('[data-message-id="' + message.id + '"]')) return;
+      const row = document.createElement("div");
+      row.className = "nw-chat-message-row" + (message.sender_id === activeProfileUser?.id ? " mine" : "");
+      row.dataset.messageId = message.id;
+      const bubble = document.createElement("div");
+      bubble.className = "nw-chat-message-bubble";
+      const body = document.createElement("p");
+      body.className = "nw-chat-message-body";
+      body.textContent = message.body || "";
+      const time = document.createElement("time");
+      time.className = "nw-chat-message-time";
+      time.dateTime = message.created_at || "";
+      time.textContent = northworkChatTime(message.created_at);
+      bubble.append(body, time);
+      row.appendChild(bubble);
+      northworkChatMessages.appendChild(row);
+      northworkChatMessages.scrollTop = northworkChatMessages.scrollHeight;
+    }
+
+    async function markNorthworkChatRead(conversationId) {
+      if (!supabaseClient || !activeProfileUser || !conversationId) return;
+      const now = new Date().toISOString();
+      const { error } = await supabaseClient.from("northwork_chat_reads").upsert({
+        conversation_id: conversationId,
+        user_id: activeProfileUser.id,
+        last_read_at: now
+      }, { onConflict: "conversation_id,user_id" });
+      if (error) {
+        console.warn("Northwork chat read status could not be updated:", error.message);
+        return;
+      }
+      northworkChatLastRead.set(conversationId, now);
+      const item = northworkChatItems.find(entry => entry.id === conversationId);
+      if (item) item.unread = false;
+      renderNorthworkChatInbox();
+    }
+
+    async function openNorthworkChatThread(conversationId) {
+      const item = northworkChatItems.find(entry => entry.id === conversationId);
+      if (!item || !supabaseClient || !activeProfileUser) return;
+      northworkChatActiveConversationId = conversationId;
+      chatPage.classList.add("thread-active");
+      northworkChatEmptyState.hidden = true;
+      northworkChatThread.hidden = false;
+
+      const peer = northworkChatPeerFor(item);
+      const avatar = document.getElementById("northwork-chat-peer-avatar");
+      avatar.replaceChildren();
+      if (peer.avatar_url) {
+        const peerImage = document.createElement("img");
+        peerImage.src = peer.avatar_url;
+        peerImage.alt = "";
+        peerImage.onerror = () => { peerImage.remove(); avatar.textContent = profileInitial(peer.display_name || peer.username || "N"); };
+        avatar.appendChild(peerImage);
+      } else {
+        avatar.textContent = profileInitial(peer.display_name || peer.username || "N");
+      }
+      const peerName = document.getElementById("northwork-chat-peer-name");
+      const peerUsername = document.getElementById("northwork-chat-peer-username");
+      peerName.textContent = peer.display_name || "Northwork member";
+      peerUsername.textContent = peer.username ? "@" + peer.username : "Northwork member";
+      northworkChatMessages.replaceChildren();
+      const loading = document.createElement("div");
+      loading.className = "nw-chat-message-loading";
+      loading.textContent = "Loading conversation…";
+      northworkChatMessages.appendChild(loading);
+      renderNorthworkChatInbox();
+
+      const { data: messages, error } = await supabaseClient.from("northwork_messages")
+        .select("id,conversation_id,sender_id,body,created_at")
+        .eq("conversation_id", conversationId)
+        .order("created_at", { ascending: true })
+        .limit(250);
+      if (error) {
+        northworkChatMessages.replaceChildren();
+        const feedback = document.createElement("div");
+        feedback.className = "nw-chat-message-loading";
+        feedback.textContent = error.message || "Couldn't load this conversation.";
+        northworkChatMessages.appendChild(feedback);
+        return;
+      }
+      if (northworkChatActiveConversationId !== conversationId) return;
+      northworkChatMessages.replaceChildren();
+      if (!(messages || []).length) {
+        const empty = document.createElement("div");
+        empty.className = "nw-chat-no-messages";
+        empty.textContent = "This is the beginning of your conversation. Say hello.";
+        northworkChatMessages.appendChild(empty);
+      } else {
+        for (const message of messages) appendNorthworkChatMessage(message);
+      }
+      await markNorthworkChatRead(conversationId);
+      northworkChatMessageInput.focus({ preventScroll: true });
+    }
+
+    function showNorthworkChatToast(text) {
+      const toast = document.getElementById("northwork-chat-toast");
+      if (!toast) return;
+      toast.textContent = text;
+      toast.hidden = false;
+      clearTimeout(northworkChatToastTimeout);
+      northworkChatToastTimeout = setTimeout(() => { toast.hidden = true; }, 4200);
+    }
+
+    function subscribeNorthworkChatRealtime() {
+      if (!supabaseClient || !activeProfileUser) return;
+      if (northworkChatRealtimeChannel) supabaseClient.removeChannel(northworkChatRealtimeChannel);
+      northworkChatRealtimeChannel = supabaseClient
+        .channel("northwork-chat-live-" + activeProfileUser.id)
+        .on("postgres_changes", {
+          event: "INSERT",
+          schema: "public",
+          table: "northwork_messages"
+        }, async payload => {
+          const message = payload.new;
+          if (!message?.conversation_id || !message?.id) return;
+          const item = northworkChatItems.find(entry => entry.id === message.conversation_id);
+          if (!item) await loadNorthworkChatInbox();
+          const currentItem = northworkChatItems.find(entry => entry.id === message.conversation_id);
+          if (northworkChatActiveConversationId === message.conversation_id && chatPage.classList.contains("open")) {
+            appendNorthworkChatMessage(message);
+            await markNorthworkChatRead(message.conversation_id);
+          } else if (message.sender_id !== activeProfileUser.id) {
+            const name = currentItem?.peer?.display_name || "A Northwork member";
+            showNorthworkChatToast("New message from " + name);
+            await loadNorthworkChatInbox();
+          } else {
+            appendNorthworkChatMessage(message);
+            await loadNorthworkChatInbox();
+          }
+        })
+        .subscribe(status => {
+          const indicator = document.getElementById("northwork-chat-live-indicator");
+          if (!indicator) return;
+          if (status === "SUBSCRIBED") {
+            indicator.innerHTML = "<span></span> LIVE MESSAGES";
+            indicator.dataset.state = "live";
+          } else if (status === "CHANNEL_ERROR" || status === "TIMED_OUT") {
+            indicator.textContent = "RECONNECTING";
+            indicator.dataset.state = "error";
+          }
+        });
+    }
+
+    async function openNorthworkChat() {
+      if (!activeProfileUser || !chatPage) return;
+      closeProfileMenu();
+      [settingsPage, accountPage, walletPage].forEach(page => {
+        page?.classList.remove("open");
+        page?.setAttribute("aria-hidden", "true");
+      });
+      chatPage.classList.add("open");
+      chatPage.setAttribute("aria-hidden", "false");
+      updateNorthworkOverlayScrollLock();
+      document.title = "Chat | Northwork";
+      if (!supabaseClient) {
+        northworkChatSetStatus("UNAVAILABLE", "error");
+        showNorthworkChatToast("Northwork chat needs an active Supabase connection.");
+        return;
+      }
+      await loadNorthworkChatInbox();
+      subscribeNorthworkChatRealtime();
+      if (northworkChatActiveConversationId && northworkChatItems.some(item => item.id === northworkChatActiveConversationId)) {
+        await openNorthworkChatThread(northworkChatActiveConversationId);
+      }
+    }
+
+    function closeNorthworkChat() {
+      chatPage?.classList.remove("open", "thread-active");
+      chatPage?.setAttribute("aria-hidden", "true");
+      if (northworkChatRealtimeChannel && supabaseClient) {
+        supabaseClient.removeChannel(northworkChatRealtimeChannel);
+        northworkChatRealtimeChannel = null;
+      }
+      updateNorthworkOverlayScrollLock();
+      if (![accountPage, settingsPage, walletPage].some(page => page?.classList.contains("open"))) document.title = "Northwork";
+    }
+
+    async function searchNorthworkMembers(term) {
+      if (!supabaseClient || !activeProfileUser) return;
+      const query = term.trim().replace(/[%_(),]/g, " ").replace(/\s+/g, " ").trim();
+      if (query.length < 2) {
+        northworkChatSearchResults.hidden = false;
+        northworkChatSearchResults.replaceChildren();
+        const help = document.createElement("div");
+        help.className = "nw-chat-search-message";
+        help.textContent = "Type at least 2 characters to find Northwork members.";
+        northworkChatSearchResults.appendChild(help);
+        return;
+      }
+      northworkChatSearchResults.hidden = false;
+      northworkChatSearchResults.replaceChildren();
+      const loading = document.createElement("div");
+      loading.className = "nw-chat-search-message";
+      loading.textContent = "Searching members…";
+      northworkChatSearchResults.appendChild(loading);
+      try {
+        const [usernameResult, nameResult] = await Promise.all([
+          supabaseClient.from("northwork_public_profiles").select("id,display_name,username,avatar_url").ilike("username", "%" + query + "%").neq("id", activeProfileUser.id).limit(8),
+          supabaseClient.from("northwork_public_profiles").select("id,display_name,username,avatar_url").ilike("display_name", "%" + query + "%").neq("id", activeProfileUser.id).limit(8)
+        ]);
+        if (usernameResult.error) throw usernameResult.error;
+        if (nameResult.error) throw nameResult.error;
+        const profiles = [...new Map([...(usernameResult.data || []), ...(nameResult.data || [])].map(profile => [profile.id, profile])).values()].slice(0, 10);
+        northworkChatSearchResults.replaceChildren();
+        if (!profiles.length) {
+          const empty = document.createElement("div");
+          empty.className = "nw-chat-search-message";
+          empty.textContent = "No public Northwork members matched that search.";
+          northworkChatSearchResults.appendChild(empty);
+          return;
+        }
+        for (const profile of profiles) {
+          const button = document.createElement("button");
+          button.type = "button";
+          button.className = "nw-chat-search-result";
+          button.appendChild(northworkChatAvatarElement(profile));
+          const copy = document.createElement("span");
+          copy.className = "nw-chat-search-result-copy";
+          const name = document.createElement("strong");
+          name.textContent = profile.display_name || "Northwork member";
+          const username = document.createElement("small");
+          username.textContent = profile.username ? "@" + profile.username : "Northwork member";
+          copy.append(name, username);
+          const action = document.createElement("span");
+          action.className = "nw-chat-search-result-action";
+          action.textContent = "MESSAGE";
+          button.append(copy, action);
+          button.addEventListener("click", () => startNorthworkDirectConversation(profile));
+          northworkChatSearchResults.appendChild(button);
+        }
+      } catch (error) {
+        console.error("Northwork member search failed:", error);
+        northworkChatSearchResults.replaceChildren();
+        const feedback = document.createElement("div");
+        feedback.className = "nw-chat-search-message";
+        feedback.textContent = /northwork_public_profiles|username|column .* does not exist|schema cache/i.test(error.message || "")
+          ? "Profile search needs the Northwork username migration. Run the Settings database migration, then refresh."
+          : (error.message || "Couldn't search members.");
+        northworkChatSearchResults.appendChild(feedback);
+      }
+    }
+
+    async function startNorthworkDirectConversation(profile) {
+      if (!supabaseClient || !activeProfileUser || !profile?.id) return;
+      northworkChatSearchResults.hidden = true;
+      try {
+        const { data: conversationId, error } = await supabaseClient.rpc("northwork_start_direct_conversation", {
+          p_other_user_id: profile.id
+        });
+        if (error) throw error;
+        await loadNorthworkChatInbox();
+        await openNorthworkChatThread(conversationId);
+      } catch (error) {
+        console.error("Northwork direct message could not start:", error);
+        showNorthworkChatToast(/function .*northwork_start_direct_conversation|schema cache/i.test(error.message || "")
+          ? "Run Northwork-Chat-Database-Setup.sql in Supabase first."
+          : (error.message || "Couldn't start this conversation."));
+      }
+    }
+
+    northworkChatSearchForm?.addEventListener("submit", event => {
+      event.preventDefault();
+      searchNorthworkMembers(northworkChatSearchInput.value);
+    });
+    northworkChatSearchInput?.addEventListener("input", () => {
+      if (!northworkChatSearchInput.value.trim()) northworkChatSearchResults.hidden = true;
+    });
+    document.getElementById("northwork-chat-empty-search")?.addEventListener("click", () => northworkChatSearchInput?.focus());
+    document.getElementById("northwork-chat-close")?.addEventListener("click", closeNorthworkChat);
+    document.getElementById("northwork-chat-mobile-back")?.addEventListener("click", () => {
+      chatPage.classList.remove("thread-active");
+      northworkChatActiveConversationId = null;
+      northworkChatThread.hidden = true;
+      northworkChatEmptyState.hidden = false;
+      renderNorthworkChatInbox();
+    });
+
+    northworkChatMessageForm?.addEventListener("submit", async event => {
+      event.preventDefault();
+      const body = northworkChatMessageInput.value.trim();
+      const conversationId = northworkChatActiveConversationId;
+      if (!body || !conversationId || !supabaseClient || !activeProfileUser) return;
+      if (body.length > 3000) {
+        showNorthworkChatToast("Messages can contain up to 3,000 characters.");
+        return;
+      }
+      northworkChatSendButton.disabled = true;
+      northworkChatSendButton.textContent = "Sending…";
+      try {
+        const { data: sentMessage, error } = await supabaseClient.from("northwork_messages")
+          .insert({ conversation_id: conversationId, sender_id: activeProfileUser.id, body })
+          .select("id,conversation_id,sender_id,body,created_at")
+          .single();
+        if (error) throw error;
+        northworkChatMessageInput.value = "";
+        appendNorthworkChatMessage(sentMessage);
+        await loadNorthworkChatInbox();
+        await markNorthworkChatRead(conversationId);
+      } catch (error) {
+        console.error("Northwork message send failed:", error);
+        showNorthworkChatToast(/row-level security|permission denied|not authorized/i.test(error.message || "")
+          ? "Supabase blocked this message. Check the Northwork Chat database policies."
+          : (error.message || "Couldn't send your message. Try again."));
+      } finally {
+        northworkChatSendButton.disabled = false;
+        northworkChatSendButton.innerHTML = 'Send message <span>↗</span>';
+        northworkChatMessageInput.focus();
+      }
+    });
+
+    northworkChatMessageInput?.addEventListener("keydown", event => {
+      if (event.key === "Enter" && !event.shiftKey) {
+        event.preventDefault();
+        northworkChatMessageForm.requestSubmit();
+      }
+    });
+
 
     const NORTHWORK_ACCENTS = {
       violet: { main: "#a889ff", deep: "#7650d5" },
@@ -3200,7 +3950,7 @@ button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-
       activeProfileUser = user || null;
       document.body.dataset.northworkSignedIn = user ? "true" : "false";
       if (!user) {
-        ownProfileData = null; setHeaderProfile(null, null); closeProfileMenu(); closeNorthworkAccount(false); closeNorthworkSettings(); closeNorthworkWallet(); return;
+        ownProfileData = null; setHeaderProfile(null, null); closeProfileMenu(); closeNorthworkAccount(false); closeNorthworkSettings(); closeNorthworkWallet(); closeNorthworkChat(); updateNorthworkChatUnreadBadge(0); return;
       }
       setHeaderProfile(user, null);
       try {
@@ -3339,6 +4089,7 @@ button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-
     });
     document.getElementById("profile-account-open")?.addEventListener("click", openNorthworkAccount);
     document.getElementById("profile-wallet-open")?.addEventListener("click", openNorthworkWallet);
+    document.getElementById("profile-chat-open")?.addEventListener("click", openNorthworkChat);
     document.getElementById("profile-settings-open")?.addEventListener("click", openNorthworkSettings);
     document.getElementById("profile-edit-open")?.addEventListener("click", openProfileEditor);
     document.getElementById("profile-edit-close")?.addEventListener("click", closeProfileEditor);
@@ -3429,7 +4180,7 @@ button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-
     });
     document.addEventListener("click", (event) => { if (!event.target.closest("#profile-menu-wrap")) closeProfileMenu(); });
     document.addEventListener("keydown", (event) => {
-      if (event.key === "Escape") { closeProfileMenu(); closeNorthworkSettings(); closeNorthworkWallet(); if (editorBackdrop?.classList.contains("open")) closeProfileEditor(); else if (accountPage?.classList.contains("open")) closeNorthworkAccount(true); }
+      if (event.key === "Escape") { closeProfileMenu(); closeNorthworkSettings(); closeNorthworkWallet(); closeNorthworkChat(); if (editorBackdrop?.classList.contains("open")) closeProfileEditor(); else if (accountPage?.classList.contains("open")) closeNorthworkAccount(true); }
     });
     applyNorthworkPreferences();
     document.getElementById("profile-logout")?.addEventListener("click", async () => {
