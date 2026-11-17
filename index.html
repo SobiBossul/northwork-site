@@ -2988,11 +2988,16 @@ window.NORTHWORK_SITE_DATA = {"staff":[{"userId":"438702447683174402","name":"Ry
       !SUPABASE_URL.includes("YOUR_") &&
       SUPABASE_PUBLISHABLE_KEY.length > 20 &&
       !SUPABASE_PUBLISHABLE_KEY.includes("YOUR_");
-    const supabaseClient = supabaseConfigured
+    // The CDN script can occasionally fail to load. Keep the rest of the page
+    // alive in that case, and expose the client for the independent site-data
+    // renderer below.
+    const supabaseClient = supabaseConfigured && window.supabase &&
+      typeof window.supabase.createClient === "function"
       ? window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY, {
           auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true }
         })
       : null;
+    window.northworkSupabaseClient = supabaseClient;
 
     // Northwork career enquiries are stored in a write-only Supabase table.
     const careerApplicationForm = document.getElementById("career-application-form");
@@ -4442,5 +4447,213 @@ window.NORTHWORK_SITE_DATA = {"staff":[{"userId":"438702447683174402","name":"Ry
     window.addEventListener("resize", updateActiveNavigation);
     updateActiveNavigation();
   </script>
+
+  <script>
+  // Northwork bot-managed content renderer.
+  // Runs independently of the account/chat code so a Supabase auth issue cannot
+  // prevent game cards, careers, or "Northwork at a glance" from updating.
+  (() => {
+    "use strict";
+
+    const siteData = window.NORTHWORK_SITE_DATA && typeof window.NORTHWORK_SITE_DATA === "object"
+      ? window.NORTHWORK_SITE_DATA
+      : {};
+
+    const roleKeys = ["tester", "developer", "artist", "analytics", "uiux", "manager"];
+
+    function safeCount(value) {
+      const number = Number(value);
+      return Number.isFinite(number) && number >= 0 ? Math.floor(number) : 0;
+    }
+
+    function formatCount(value) {
+      return safeCount(value).toLocaleString();
+    }
+
+    function safeRobloxGameUrl(value) {
+      try {
+        const url = new URL(String(value || ""));
+        if (url.protocol !== "https:" ||
+            !/^(www\.)?roblox\.com$/i.test(url.hostname) ||
+            !/^\/games\/\d+(\/|$)/.test(url.pathname)) return null;
+        return url.href;
+      } catch (_) {
+        return null;
+      }
+    }
+
+    function safeThumbnailUrl(value) {
+      try {
+        const url = new URL(String(value || ""));
+        const host = url.hostname.toLowerCase();
+        const trustedHost = host === "roblox.com" ||
+          host.endsWith(".roblox.com") ||
+          host === "rbxcdn.com" ||
+          host.endsWith(".rbxcdn.com");
+        if (url.protocol !== "https:" || !trustedHost) return null;
+        return url.href;
+      } catch (_) {
+        return null;
+      }
+    }
+
+    function setCardLink(card, url, name) {
+      if (!card || !url) return;
+      card.style.cursor = "pointer";
+      card.setAttribute("role", "link");
+      card.setAttribute("tabindex", "0");
+      card.setAttribute("aria-label", "Open " + name + " on Roblox");
+      if (card.dataset.northworkLinkBound === "true") return;
+      card.dataset.northworkLinkBound = "true";
+
+      const open = () => window.open(url, "_blank", "noopener,noreferrer");
+      card.addEventListener("click", event => {
+        if (event.target.closest("a, button, input, select, textarea")) return;
+        open();
+      });
+      card.addEventListener("keydown", event => {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          open();
+        }
+      });
+    }
+
+    function applyGameCard(card, game, index, compact) {
+      if (!card || !game || typeof game !== "object") return;
+      const url = safeRobloxGameUrl(game.url);
+      if (!url) return;
+
+      const name = String(game.name || game.displayName || "Northwork game").slice(0, 80);
+      const thumbnail = safeThumbnailUrl(game.thumbnail);
+
+      setCardLink(card, url, name);
+
+      const artwork = card.querySelector(compact ? ".hero-game-art" : ".game-card-cover");
+      if (artwork && thumbnail) {
+        artwork.style.backgroundImage = compact
+          ? 'linear-gradient(0deg,rgba(7,7,10,.55),rgba(7,7,10,.08)),url("' + thumbnail + '")'
+          : 'linear-gradient(0deg,rgba(7,7,10,.76),rgba(7,7,10,.08)),url("' + thumbnail + '")';
+        artwork.style.backgroundSize = "cover";
+        artwork.style.backgroundPosition = "center";
+        artwork.style.backgroundRepeat = "no-repeat";
+        artwork.classList.add("has-game-thumbnail");
+        const mark = compact
+          ? artwork.querySelector("span")
+          : artwork.querySelector(".game-card-mark");
+        if (mark) mark.hidden = true;
+      }
+
+      const rank = card.querySelector(compact ? ".hero-game-rank" : ".game-rank");
+      if (rank) rank.textContent = "#" + (index + 1);
+
+      const title = card.querySelector(compact ? ".hero-game-name" : ".game-card-name");
+      if (title) title.textContent = name;
+
+      if (compact) {
+        const meta = card.querySelectorAll(".hero-game-meta span");
+        if (meta[0]) meta[0].textContent = "◉ " + formatCount(game.playing);
+        if (meta[1]) meta[1].textContent = "♥ " + formatCount(game.visits);
+      } else {
+        const status = card.querySelector(".game-status");
+        if (status) status.textContent = "NORTHWORK";
+        const note = card.querySelector(".game-card-note");
+        if (note) note.textContent = String(game.description || "Open this Northwork experience on Roblox").slice(0, 500);
+        const stats = card.querySelectorAll(".game-card-stats span");
+        if (stats[0]) stats[0].textContent = "◉ " + formatCount(game.playing) + " playing";
+        if (stats[1]) stats[1].textContent = "♥ " + formatCount(game.visits) + " visits";
+      }
+    }
+
+    function renderManagedGames() {
+      const homeGames = Array.isArray(siteData.homeGames) ? siteData.homeGames : [];
+      const topGames = Array.isArray(siteData.topGames) ? siteData.topGames : [];
+
+      document.querySelectorAll(".hero-game-row .hero-game-card").forEach((card, index) => {
+        applyGameCard(card, homeGames[index], index, true);
+      });
+
+      document.querySelectorAll(".games-grid .game-card").forEach((card, index) => {
+        applyGameCard(card, topGames[index], index, false);
+      });
+    }
+
+    function renderRoleSpots() {
+      const spots = siteData.roleSpots && typeof siteData.roleSpots === "object"
+        ? siteData.roleSpots
+        : {};
+      document.querySelectorAll(".career-role-card").forEach((card, index) => {
+        const key = roleKeys[index];
+        const value = key ? safeCount(spots[key]) : 0;
+        const output = card.querySelector(".career-role-spots strong");
+        if (output && key) output.textContent = value.toLocaleString() + " available";
+      });
+    }
+
+    function renderAboutStats(stats) {
+      const about = siteData.aboutStats && typeof siteData.aboutStats === "object"
+        ? siteData.aboutStats
+        : {};
+      const items = document.querySelectorAll(".about-overview-grid .about-overview-item strong");
+
+      if (items[0] && about.developersText != null) {
+        items[0].textContent = String(about.developersText).slice(0, 80);
+      }
+      if (items[1] && about.publishedTitles != null) {
+        items[1].textContent = String(about.publishedTitles).slice(0, 80);
+      }
+      if (items[2] && about.timeOfExperience != null) {
+        items[2].textContent = String(about.timeOfExperience).slice(0, 80);
+      }
+      if (stats && items[3]) items[3].textContent = formatCount(stats.total_visits);
+    }
+
+    function renderHeroStats(stats) {
+      if (!stats) return;
+      const values = document.querySelectorAll(".hero-stats .hero-stat-value");
+      if (values[0]) values[0].textContent = formatCount(stats.live_players);
+      if (values[1]) values[1].textContent = formatCount(stats.total_visits);
+    }
+
+    function renderAll() {
+      renderManagedGames();
+      renderRoleSpots();
+      renderAboutStats(null);
+      // Expose a lightweight status for diagnostics without putting secrets in
+      // the page or making the site renderer depend on the bot runtime.
+      document.documentElement.dataset.northworkSiteData = siteData.siteVersion
+        ? "loaded"
+        : "default";
+    }
+
+    async function refreshPublicStats() {
+      const client = window.northworkSupabaseClient;
+      if (!client || typeof client.from !== "function") return;
+
+      try {
+        const result = await client
+          .from("northwork_site_stats")
+          .select("live_players,total_visits,updated_at")
+          .eq("id", "current")
+          .maybeSingle();
+
+        if (result.error) throw result.error;
+        if (!result.data) return;
+
+        renderHeroStats(result.data);
+        renderAboutStats(result.data);
+        document.documentElement.dataset.northworkStats = "loaded";
+      } catch (error) {
+        document.documentElement.dataset.northworkStats = "unavailable";
+        console.warn("[Northwork] Could not load public Roblox statistics:", error.message || error);
+      }
+    }
+
+    renderAll();
+    refreshPublicStats();
+    window.setInterval(refreshPublicStats, 5 * 60 * 1000);
+  })();
+  </script>
+
 </body>
 </html>
