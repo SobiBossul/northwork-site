@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Northwork</title>
   <style>
     * {
@@ -2247,6 +2247,449 @@ button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-
 window.NORTHWORK_SITE_DATA = {"staff":[{"userId":"438702447683174402","name":"RyTexh","username":"rytexh","role":"Northwork Administrator","roleId":"1454991773393748071","avatar":"https://cdn.discordapp.com/avatars/438702447683174402/504990f67f4b66ecdaade9783ef6c977.png?size=256"},{"userId":"808324602350403595","name":"Claudivania ❤🖤","username":"claudivania_lasukal","role":"Northwork Manager","roleId":"1467663817403007200","avatar":"https://cdn.discordapp.com/avatars/808324602350403595/45b0ffe4b44d862744807717fdfba197.png?size=256"},{"userId":"1149747147600834570","name":"desired","username":"desiredfornobody","role":"Northwork Moderators","roleId":"1454992580109668382","avatar":"https://cdn.discordapp.com/avatars/1149747147600834570/7757b1607e7f8dd157bb290b502d6831.png?size=256"},{"userId":"1206331959266246728","name":"John Northwork","username":"gurtingsgurtieisnotyogurt","role":"Northwork Moderators","roleId":"1454992580109668382","avatar":"https://cdn.discordapp.com/avatars/1206331959266246728/a2af452f9a1f4153cbbdb76487df5ac1.png?size=256"},{"userId":"1104551220951134218","name":"Meh3D","username":"mm_3d","role":"Northwork Moderators","roleId":"1454992580109668382","avatar":"https://cdn.discordapp.com/avatars/1104551220951134218/67617f9cc313c431b03cc9b0c53e2b46.png?size=256"},{"userId":"557596135175356418","name":"ᴱᵒⁿAimee","username":"aimee2569","role":"Northwork Moderators","roleId":"1454992580109668382","avatar":"https://cdn.discordapp.com/avatars/557596135175356418/165eabde0682dd879f5c852a804cba75.png?size=256"},{"userId":"1102261479517978745","name":"Heisenburg","username":"figure2266","role":"Northwork Moderators","roleId":"1454992580109668382","avatar":"https://cdn.discordapp.com/avatars/1102261479517978745/c3700e07f68989588c597ef0af06290b.png?size=256"},{"userId":"1089267764289605663","name":"Kuro","username":"123calebb","role":"Northwork Moderators","roleId":"1454992580109668382","avatar":"https://cdn.discordapp.com/avatars/1089267764289605663/5f37ea64ecb94ff89dfd14a7dc0e2b8e.png?size=256"},{"userId":"1003178163259576371","name":"𝐕𝐄𝐑𝐀","username":"vegupatra","role":"BALENCIAGA GURL 💅","roleId":"1475639115906158642","avatar":"https://cdn.discordapp.com/avatars/1003178163259576371/6b17869a708603fd14a49067eaa727d9.png?size=256"},{"userId":"1398692198404591750","name":"MrChorap","username":"mrchorapings","role":"Northwork Site Ideas Lead","roleId":"1548404280841736313","avatar":"https://cdn.discordapp.com/avatars/1398692198404591750/66a381c600765992bbc9690dd015f7ae.png?size=256"}],"initialized":false,"topGames":[{"slug":"vibration-tester","placeId":"96605909078674","universeId":"10080820428","url":"https://www.roblox.com/games/96605909078674/","name":"Vibration Tester","description":"Vibration Tester is a game where u can test your device's vibration!\n\nYou have plenty of stuff where u can test your device's vibration!\n    Different parts with different vibration systems!\n\n[FOR MORE COOL VIBRATION SYSTEMS, CONSIDER UNLOCKING VIP!]","thumbnail":"https://tr.rbxcdn.com/180DAY-b6a70701148167c5e71bb0bb360ba0e4/512/512/Image/Png/noFilter","visits":5149,"likes":16,"dislikes":6,"favorites":17,"playing":0,"creator":"Northwork Experiments","creatorType":"Group","robloxName":"Vibration Tester","displayName":"Vibration Tester"},null,null,null,null,null],"homeGames":[null,null,null,null,null],"roleSpots":{"tester":0,"developer":0,"artist":0,"analytics":0,"uiux":0,"manager":0},"aboutStats":{"developersText":"1","publishedTitles":"0","timeOfExperience":"0"},"siteVersion":"1794933311472-9eb482db"};
 /* NORTHWORK_SITE_DATA_END */
 </script>
+
+<style id="northwork-mobile-polish">
+/* =========================================================
+   Northwork mobile-first refinement
+   Keeps the desktop composition intact while making every
+   site surface fit and feel deliberate on phones and tablets.
+   ========================================================= */
+:root {
+  --nw-mobile-gutter: 18px;
+  --nw-mobile-header: 66px;
+}
+
+html, body {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+img, video, canvas, iframe { max-width: 100%; }
+button, input, select, textarea { max-width: 100%; }
+
+@media (max-width: 760px) {
+  html { scroll-padding-top: var(--nw-mobile-header); }
+  body { padding-top: var(--nw-mobile-header) !important; }
+
+  /* Compact header with a swipeable nav instead of shrinking every label. */
+  .topbar {
+    height: var(--nw-mobile-header) !important;
+    min-height: var(--nw-mobile-header) !important;
+    padding: 0 12px !important;
+    gap: 9px !important;
+    align-items: center !important;
+  }
+  .logo {
+    width: 78px !important;
+    height: 29px !important;
+    flex: 0 0 78px;
+  }
+  .nav-buttons {
+    flex: 1 1 auto !important;
+    width: auto !important;
+    min-width: 0 !important;
+    max-width: none !important;
+    margin-left: auto !important;
+    padding: 0 0 2px !important;
+    gap: 2px !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    overscroll-behavior-x: contain;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none !important;
+    transform: none !important;
+    white-space: nowrap;
+  }
+  .nav-buttons::-webkit-scrollbar { display: none !important; }
+  .nav-button {
+    flex: 0 0 auto;
+    min-height: 38px;
+    padding: 8px 8px !important;
+    font-size: 11px !important;
+    white-space: nowrap;
+  }
+  .nav-button::after { left: 7px !important; right: 7px !important; }
+  .nav-button.contact-button,
+  .nav-button.account-login,
+  .nav-button.account-signup { margin-left: 2px !important; }
+  .profile-menu-wrap { flex: 0 0 auto; margin-left: 2px !important; }
+  body[data-northwork-signed-in="true"] .profile-menu-wrap .profile-trigger,
+  body[data-northwork-signed-in="true"] #profile-trigger {
+    width: 112px !important;
+    min-width: 112px !important;
+    max-width: 112px !important;
+    height: 38px !important;
+    padding: 4px 6px !important;
+    gap: 6px !important;
+  }
+  .profile-trigger-avatar, .profile-trigger-initial {
+    width: 25px !important;
+    height: 25px !important;
+    flex: 0 0 25px !important;
+  }
+  .profile-trigger-name { font-size: 10px !important; }
+  .profile-dropdown {
+    position: fixed !important;
+    top: calc(var(--nw-mobile-header) + 7px) !important;
+    right: 10px !important;
+    left: auto !important;
+    width: min(244px, calc(100vw - 20px)) !important;
+    max-height: calc(100dvh - var(--nw-mobile-header) - 18px);
+    overflow-y: auto;
+    z-index: 2200 !important;
+  }
+
+  /* Homepage: concise headline, full-width stats, swipeable game rail. */
+  .hero {
+    display: flex !important;
+    flex-direction: column;
+    align-items: stretch !important;
+    justify-content: flex-start !important;
+    gap: 21px !important;
+    min-height: calc(100svh - var(--nw-mobile-header)) !important;
+    padding: 70px var(--nw-mobile-gutter) 38px !important;
+    text-align: left !important;
+  }
+  .hero::before { top: 23px !important; left: var(--nw-mobile-gutter) !important; }
+  .hero h1 {
+    width: 100%;
+    max-width: 100% !important;
+    grid-column: auto !important;
+    grid-row: auto !important;
+    align-items: flex-start !important;
+    gap: 4px !important;
+    font-size: clamp(36px, 10.2vw, 54px) !important;
+    line-height: 1.02 !important;
+    letter-spacing: -.058em !important;
+    overflow-wrap: anywhere;
+  }
+  .hero-line { max-width: 100%; text-align: left !important; }
+  .hero-actions {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-column: auto !important;
+    grid-row: auto !important;
+    width: 100%;
+    gap: 9px !important;
+    margin: 0 !important;
+  }
+  .hero-action {
+    width: 100%;
+    min-width: 0;
+    min-height: 44px !important;
+    padding: 0 9px !important;
+    font-size: 11px !important;
+    text-align: center;
+  }
+  .hero-stats {
+    display: grid !important;
+    grid-column: auto !important;
+    grid-row: auto !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    width: 100% !important;
+    max-width: none !important;
+    justify-self: stretch !important;
+    padding: 17px 9px !important;
+    margin: 0 !important;
+  }
+  .hero-stat { min-width: 0; padding: 0 5px; }
+  .hero-stat-label { gap: 5px; font-size: 8px !important; letter-spacing: .09em !important; white-space: nowrap; }
+  .hero-stat-value { font-size: clamp(23px, 6vw, 30px) !important; }
+  .hero-top-games {
+    grid-column: auto !important;
+    grid-row: auto !important;
+    width: 100%;
+    margin: 0 !important;
+    padding-top: 17px !important;
+  }
+  .hero-top-games-label { font-size: 9px !important; margin-bottom: 12px !important; }
+  .hero-game-row {
+    display: grid !important;
+    grid-template-columns: none !important;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(142px, 44%);
+    gap: 9px !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    padding: 0 1px 12px !important;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: 1px;
+    overscroll-behavior-x: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+  .hero-game-card, .hero-game-card:nth-child(n) {
+    min-width: 0 !important;
+    min-height: 112px !important;
+    height: auto !important;
+    opacity: 1 !important;
+    transform: none !important;
+    scroll-snap-align: start;
+  }
+  .hero-game-art, .hero-game-card:nth-child(n) .hero-game-art { height: 59px !important; }
+  .hero-game-name { font-size: 10px !important; }
+  .hero-game-meta { flex-wrap: wrap; font-size: 8px !important; }
+
+  /* Sections use narrower gutters and cards sized for touch screens. */
+  .games-section, .about-section, .careers-section {
+    scroll-margin-top: var(--nw-mobile-header) !important;
+    padding: 58px var(--nw-mobile-gutter) 66px !important;
+  }
+  .games-inner, .about-inner, .careers-inner { width: 100% !important; }
+  .games-heading {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) !important;
+    grid-template-rows: auto !important;
+    gap: 10px !important;
+    margin-bottom: 25px !important;
+    padding-bottom: 20px !important;
+    text-align: left !important;
+  }
+  .games-eyebrow, .games-showcase-title, .games-description { grid-column: 1 !important; }
+  .games-eyebrow { margin-bottom: 3px !important; }
+  .games-showcase-title { font-size: clamp(35px, 9vw, 54px) !important; line-height: 1 !important; }
+  .games-description { max-width: 100% !important; margin: 0 !important; font-size: 13px !important; }
+  .games-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 1px !important;
+  }
+  .game-card-cover, .game-card:nth-child(n) .game-card-cover { height: clamp(92px, 27vw, 132px) !important; }
+  .game-card-info { padding: 13px 11px 12px !important; }
+  .game-card-name { font-size: 12px !important; line-height: 1.35 !important; overflow-wrap: anywhere; }
+  .game-card-note { font-size: 10px !important; line-height: 1.45 !important; }
+  .game-card-stats { flex-wrap: wrap; gap: 7px 10px !important; margin-top: 11px !important; padding-top: 9px !important; font-size: 9px !important; }
+
+  .about-title, .careers-title {
+    font-size: clamp(35px, 9.5vw, 58px) !important;
+    line-height: 1.02 !important;
+    overflow-wrap: anywhere;
+  }
+  .about-title { margin-bottom: 31px !important; }
+  .about-layout { grid-template-columns: minmax(0, 1fr) !important; gap: 25px !important; }
+  .about-story { min-width: 0; }
+  .about-copy { font-size: 14px !important; line-height: 1.8 !important; }
+  .about-history { min-width: 0; padding-left: 23px !important; }
+  .about-overview-card { padding: 16px !important; }
+  .about-overview-grid { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; gap: 8px !important; }
+  .about-overview-item { padding: 12px 10px !important; }
+  .about-overview-item strong { font-size: clamp(19px, 5vw, 24px) !important; }
+  .about-stat-cards { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; gap: 9px !important; }
+  .about-stat-card { min-width: 0; padding: 14px 11px !important; }
+  .about-stat-card strong { font-size: 22px !important; overflow-wrap: anywhere; }
+  .about-stat-card span { font-size: 9px !important; }
+
+  .careers-section { align-items: flex-start !important; }
+  .careers-inner { max-width: 100% !important; }
+  .careers-actions { gap: 9px !important; margin-top: 23px !important; }
+  .careers-actions .hero-action { min-width: 0 !important; flex: 1 1 135px; }
+  .careers-roles { width: 100% !important; margin-top: 33px !important; grid-template-columns: minmax(0, 1fr) !important; gap: 11px !important; }
+  .career-role-card { min-width: 0; padding: 17px !important; }
+  .career-role-name { font-size: 16px !important; }
+  .career-role-description { font-size: 12px !important; }
+  .careers-contact { width: 100% !important; margin-top: 38px !important; padding: 21px 15px !important; }
+  .careers-contact-title { font-size: clamp(28px, 8vw, 42px) !important; }
+  .careers-contact-heading p { font-size: 12px !important; }
+  .career-form-grid { grid-template-columns: minmax(0, 1fr) !important; gap: 14px !important; }
+  .career-form-submit-row { align-items: stretch !important; flex-direction: column !important; gap: 10px !important; }
+  .career-form-submit { width: 100% !important; }
+  .career-form-privacy { max-width: none !important; text-align: center !important; }
+
+  /* Account access, settings, account and wallet surfaces. */
+  .signup-page { padding: 18px 16px 28px !important; }
+  .signup-shell { width: 100% !important; }
+  .signup-top { gap: 12px !important; margin-bottom: 27px !important; }
+  .signup-brand { max-width: 102px; height: auto; }
+  .signup-back { padding: 9px 10px !important; font-size: 11px !important; }
+  .signup-layout { grid-template-columns: minmax(0, 1fr) !important; gap: 22px !important; }
+  .signup-intro { max-width: none !important; }
+  .signup-title { font-size: clamp(36px, 10vw, 52px) !important; line-height: 1.02 !important; }
+  .signup-lead { margin-top: 12px !important; font-size: 13px !important; line-height: 1.65 !important; }
+  .signup-panel { width: 100% !important; max-width: none !important; padding: 18px !important; }
+  .signup-panel h2 { font-size: 19px !important; }
+  .signup-field input, .signup-field select, .signup-field textarea { min-width: 0; }
+  .forgot-link { margin-top: 0 !important; }
+
+  .northwork-settings-page { padding: 20px 14px calc(28px + env(safe-area-inset-bottom)) !important; }
+  .settings-page-inner { width: 100% !important; }
+  .settings-heading-row { align-items: flex-start !important; flex-direction: column; gap: 9px !important; margin: 23px 0 18px !important; }
+  .settings-page-title { font-size: clamp(29px, 8vw, 39px) !important; }
+  .settings-page-description { font-size: 12px !important; line-height: 1.6 !important; }
+  .settings-card { padding: 15px !important; margin-bottom: 10px !important; }
+  .settings-card-heading { gap: 10px !important; }
+  .settings-card-heading h2 { font-size: 15px !important; }
+  .settings-field-grid, .settings-inline-meta { grid-template-columns: minmax(0, 1fr) !important; }
+  .settings-setting-block, .settings-text-block { align-items: flex-start !important; flex-direction: column !important; gap: 13px !important; }
+  .settings-setting-copy { min-width: 0 !important; }
+  .settings-color-options { justify-content: flex-start !important; width: 100%; }
+  .settings-size-options { width: 100% !important; }
+  .settings-size-option { flex: 1 1 0; min-width: 0 !important; }
+  .settings-security-row, .settings-toggle-row { align-items: flex-start !important; gap: 12px !important; }
+  .settings-security-row button { flex: 0 0 auto; }
+
+  .account-page-shell { width: calc(100% - 28px) !important; padding: 18px 0 30px !important; }
+  .account-page-top { gap: 10px !important; }
+  .account-back { max-width: 58%; padding: 9px 10px !important; font-size: 11px !important; }
+  .account-breadcrumb { gap: 5px !important; font-size: 8px !important; }
+  .account-page-heading { flex-direction: column !important; align-items: flex-start !important; gap: 11px !important; margin: 27px 0 18px !important; }
+  .account-page-heading h1 { font-size: clamp(29px, 8vw, 39px) !important; }
+  .account-page-description { font-size: 12px !important; }
+  .account-status-label { white-space: normal !important; }
+  .account-identity-row { gap: 12px !important; padding: 14px !important; }
+  .account-identity-copy h2 { font-size: 18px !important; }
+  .account-identity-copy p { font-size: 11px !important; }
+  .account-overview-grid { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
+  .account-overview-item { padding: 12px !important; }
+  .account-information-grid { grid-template-columns: minmax(0, 1fr) !important; gap: 10px !important; }
+  .account-information-panel { padding: 15px !important; }
+  .account-detail-row { gap: 10px !important; }
+  .account-detail-row > span { flex: 0 0 100px !important; }
+  .account-detail-row > strong { min-width: 0; overflow-wrap: anywhere; }
+
+  .public-profile-shell { width: calc(100% - 24px) !important; padding: 15px 0 22px !important; }
+  .public-profile-top { gap: 8px !important; flex-wrap: wrap; }
+  .public-profile-back, .public-profile-action { min-height: 39px; padding: 9px 10px !important; font-size: 10px !important; }
+  .public-profile-actions { flex-wrap: wrap; gap: 6px !important; }
+  .public-profile-banner { height: clamp(105px, 30vw, 145px) !important; margin-top: 14px !important; }
+  .public-profile-identity { align-items: flex-start !important; gap: 11px !important; padding: 0 4px 14px !important; }
+  .public-profile-avatar { width: 68px !important; height: 68px !important; flex: 0 0 68px !important; margin-top: -20px !important; }
+  .public-profile-heading h1 { font-size: 19px !important; }
+  .public-profile-heading p { font-size: 11px !important; }
+  .public-profile-footer { flex-wrap: wrap; font-size: 10px !important; }
+
+  .profile-editor-backdrop { align-items: flex-end !important; padding: 8px !important; }
+  .profile-editor { width: 100% !important; max-height: calc(100dvh - 16px - env(safe-area-inset-top)) !important; padding: 15px !important; overflow-y: auto !important; }
+  .profile-editor-header h2 { font-size: 19px !important; }
+  .profile-editor-media { grid-template-columns: 1fr !important; gap: 16px !important; padding: 16px 0 !important; }
+  .profile-upload-block { width: 100%; }
+  .banner-upload-block .profile-upload-banner { height: 105px !important; }
+  .profile-editor-fields { grid-template-columns: minmax(0, 1fr) !important; gap: 13px !important; }
+  .profile-editor-field:nth-child(n) { grid-column: 1 !important; }
+  .profile-editor-footer { align-items: stretch !important; flex-direction: column !important; }
+  .profile-editor-footer > div { display: grid !important; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .profile-editor-footer button { min-height: 42px; }
+
+  .northwork-wallet-page { padding-bottom: env(safe-area-inset-bottom); }
+  .nwrk-wallet-shell { width: calc(100% - 28px) !important; padding: 17px 0 calc(25px + env(safe-area-inset-bottom)) !important; }
+  .nwrk-wallet-top { gap: 9px !important; }
+  .nwrk-wallet-back { padding: 9px 10px !important; font-size: 10px !important; }
+  .nwrk-wallet-breadcrumb { gap: 5px !important; font-size: 8px !important; white-space: nowrap; }
+  .nwrk-wallet-grid { grid-template-columns: minmax(0, 1fr) !important; gap: 12px !important; padding-top: 17px !important; }
+  .nwrk-wallet-left-column { grid-template-rows: minmax(190px, auto) auto !important; gap: 11px !important; }
+  .nwrk-balance-card, .nwrk-role-card, .nwrk-reports-card { padding: 17px !important; }
+  .nwrk-balance-content { min-height: 100px !important; gap: 11px !important; }
+  .nwrk-robux-icon { width: 48px !important; height: 54px !important; }
+  .nwrk-balance-number { font-size: clamp(36px, 10vw, 52px) !important; }
+  .nwrk-role-value { margin: 22px 0 15px !important; font-size: 18px !important; overflow-wrap: anywhere; }
+  .nwrk-reports-card { min-height: 270px !important; }
+  .nwrk-reports-empty { min-height: 165px !important; }
+
+  /* Chat: full-height mobile inbox/thread with space for the home indicator. */
+  .northwork-chat-page { padding: 0 !important; }
+  .northwork-chat-shell {
+    width: 100% !important;
+    height: 100dvh !important;
+    min-height: 0 !important;
+    margin: 0 !important;
+    border: 0 !important;
+  }
+  .northwork-chat-topbar {
+    min-height: calc(52px + env(safe-area-inset-top)) !important;
+    padding: env(safe-area-inset-top) 11px 0 !important;
+    gap: 8px !important;
+  }
+  .nw-chat-back { min-height: 34px !important; padding: 0 8px !important; font-size: 9px !important; }
+  .nw-chat-live-indicator { flex: 0 0 auto; }
+  .nw-chat-sidebar-heading { padding: 18px 15px 13px !important; }
+  .nw-chat-sidebar-heading h1 { font-size: 23px !important; }
+  .nw-chat-search { margin: 0 12px 12px !important; }
+  .nw-chat-search input { height: 44px !important; font-size: 13px !important; }
+  .nw-chat-search-results { margin-left: 12px !important; margin-right: 12px !important; }
+  .nw-chat-list-heading { padding-left: 14px !important; padding-right: 14px !important; }
+  .nw-chat-conversation-list { padding-bottom: calc(14px + env(safe-area-inset-bottom)); }
+  .nw-chat-thread-header { min-height: 62px !important; padding: 8px 10px !important; gap: 8px !important; }
+  .nw-chat-peer-avatar { width: 35px !important; height: 35px !important; }
+  .nw-chat-peer-copy strong { font-size: 12px !important; }
+  .nw-chat-thread-label { display: none !important; }
+  .nw-chat-messages { padding: 13px 10px !important; gap: 9px !important; overscroll-behavior: contain; }
+  .nw-chat-message-row { gap: 6px !important; }
+  .nw-chat-message-avatar { width: 27px !important; height: 27px !important; }
+  .nw-chat-message-bubble { max-width: min(84%, 560px) !important; padding: 10px 11px 8px !important; }
+  .nw-chat-message-body { font-size: 13px !important; line-height: 1.55 !important; }
+  .nw-chat-gif-media { max-width: min(70vw, 320px) !important; }
+  .nw-chat-gif-media img { max-height: 220px !important; }
+  .nw-chat-composer { padding: 9px 10px calc(9px + env(safe-area-inset-bottom)) !important; }
+  .nw-chat-composer textarea { min-height: 45px !important; max-height: 112px !important; resize: none !important; padding: 11px !important; font-size: 16px !important; }
+  .nw-chat-composer-actions { gap: 8px !important; }
+  .nw-chat-composer-tools { flex-wrap: wrap; gap: 7px !important; }
+  .nw-chat-composer-tools > span { display: none !important; }
+  .nw-chat-gif-button { min-height: 38px !important; min-width: 45px !important; }
+  .nw-chat-composer-actions button { min-height: 40px !important; padding: 0 12px !important; font-size: 10px !important; }
+  .nw-chat-toast { right: 10px !important; bottom: calc(10px + env(safe-area-inset-bottom)) !important; max-width: calc(100vw - 20px) !important; }
+  .nw-gif-picker { padding: 8px !important; }
+  .nw-gif-picker-panel { width: 100% !important; max-height: calc(100dvh - 16px - env(safe-area-inset-top) - env(safe-area-inset-bottom)) !important; }
+  .nw-gif-picker-head { padding: 13px !important; }
+  .nw-gif-picker-search { padding: 10px !important; }
+  .nw-gif-picker-search input { min-height: 42px; font-size: 16px !important; }
+  .nw-gif-picker-search button { min-width: 65px !important; }
+  .nw-gif-picker-results { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; gap: 7px !important; padding: 8px !important; }
+  .nw-gif-result img { height: clamp(90px, 29vw, 130px) !important; }
+  .nw-gif-picker-foot { flex-wrap: wrap; padding: 9px 11px !important; }
+
+  /* Touch ergonomics, prevent iOS input zoom and accidental horizontal scroll. */
+  input, select, textarea { font-size: 16px !important; }
+  button, a, input[type="checkbox"], input[type="radio"] { touch-action: manipulation; }
+  button, .hero-action, .nav-button, .settings-secondary-button,
+  .settings-primary-button, .career-form-submit { -webkit-tap-highlight-color: transparent; }
+}
+
+@media (max-width: 420px) {
+  :root { --nw-mobile-gutter: 15px; }
+  .topbar { padding-left: 9px !important; padding-right: 9px !important; gap: 7px !important; }
+  .logo { width: 70px !important; flex-basis: 70px !important; }
+  body[data-northwork-signed-in="true"] .profile-menu-wrap .profile-trigger,
+  body[data-northwork-signed-in="true"] #profile-trigger {
+    width: 96px !important; min-width: 96px !important; max-width: 96px !important;
+  }
+  .nav-button { padding-left: 7px !important; padding-right: 7px !important; font-size: 10px !important; }
+  .hero h1 { font-size: clamp(34px, 10vw, 43px) !important; }
+  .hero-stat-label { font-size: 7px !important; letter-spacing: .065em !important; }
+  .games-grid { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
+  .game-card-info { padding: 11px 9px !important; }
+  .game-card-name { font-size: 11px !important; }
+  .game-card-stats { font-size: 8px !important; gap: 6px !important; }
+  .about-overview-grid { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
+  .account-overview-grid { grid-template-columns: minmax(0, 1fr) !important; }
+  .public-profile-top { align-items: stretch !important; }
+  .public-profile-actions { justify-content: flex-end; }
+  .nw-chat-breadcrumb { font-size: 7px !important; }
+  .nw-chat-back { font-size: 8px !important; }
+}
+
+@media (max-width: 350px) {
+  .logo { width: 62px !important; flex-basis: 62px !important; }
+  body[data-northwork-signed-in="true"] .profile-menu-wrap .profile-trigger,
+  body[data-northwork-signed-in="true"] #profile-trigger { width: 86px !important; min-width: 86px !important; max-width: 86px !important; }
+  .profile-trigger-name { font-size: 9px !important; }
+  .hero-actions { grid-template-columns: minmax(0, 1fr) !important; }
+  .nw-chat-back { max-width: 124px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+}
+
+@media (max-height: 520px) and (orientation: landscape) and (max-width: 900px) {
+  .hero { min-height: auto !important; padding-top: 58px !important; }
+  .hero h1 { font-size: clamp(31px, 6vw, 44px) !important; }
+  .northwork-chat-shell { height: 100dvh !important; }
+}
+
+@supports (padding: max(0px)) {
+  @media (max-width: 760px) {
+    .northwork-settings-page { padding-bottom: max(24px, env(safe-area-inset-bottom)) !important; }
+    .signup-page { padding-bottom: max(28px, env(safe-area-inset-bottom)) !important; }
+  }
+}
+
+</style>
 </head>
 <body>
   <header class="topbar">
@@ -3456,7 +3899,7 @@ window.NORTHWORK_SITE_DATA = {"staff":[{"userId":"438702447683174402","name":"Ry
     const northworkGifPickerResults = document.getElementById("northwork-gif-picker-results");
     // GIPHY's browser API key is an application key, not a Supabase/server secret.
     // Create a Web API key at https://developers.giphy.com/dashboard/ and paste it here.
-    const NORTHWORK_GIPHY_API_KEY = "RllU5QYJT2KtgAhserHIW2BQOeJdQ008";
+    const NORTHWORK_GIPHY_API_KEY = "PASTE_GIPHY_API_KEY_HERE";
     const NORTHWORK_GIPHY_MESSAGE_PREFIX = "NWGIF1:";
     let northworkGifSearchTimer = null;
     let northworkGifSearchSequence = 0;
