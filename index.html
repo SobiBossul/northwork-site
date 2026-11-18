@@ -4,6 +4,11 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Northwork</title>
+  <meta name="theme-color" content="#08090d">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="manifest" href="/northwork.webmanifest">
+  <link rel="apple-touch-icon" href="/northwork-push-icon.png">
   <style>
     * {
       box-sizing: border-box;
@@ -2150,6 +2155,17 @@ button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-
   .nw-chat-peer-copy { min-width:0; display:flex; flex-direction:column; gap:5px; }
   .nw-chat-peer-copy strong { overflow:hidden; color:#f2f3f6; font:700 12px Arial,sans-serif; text-overflow:ellipsis; white-space:nowrap; }
   .nw-chat-peer-copy span { color:#818b99; font:400 10px Arial,sans-serif; }
+  .nw-chat-typing-indicator { display:inline-flex; align-items:center; gap:5px; color:#92d8b3 !important; font:600 10px Arial,sans-serif !important; letter-spacing:.01em; }
+  .nw-chat-typing-indicator[hidden] { display:none; }
+  .nw-chat-typing-dots { display:inline-flex; align-items:center; gap:3px; }
+  .nw-chat-typing-dots i { width:3px; height:3px; border-radius:50%; background:#92d8b3; animation:nwTypingPulse 1s infinite ease-in-out; }
+  .nw-chat-typing-dots i:nth-child(2) { animation-delay:.14s; }
+  .nw-chat-typing-dots i:nth-child(3) { animation-delay:.28s; }
+  @keyframes nwTypingPulse { 0%,60%,100% { opacity:.35; transform:translateY(0); } 30% { opacity:1; transform:translateY(-3px); } }
+  .nw-chat-notifications-button { min-height:32px; flex:none; padding:0 10px; border:1px solid #353d4b; background:#151b25; color:#cbd5e5; font:700 9px Arial,sans-serif; letter-spacing:.02em; cursor:pointer; }
+  .nw-chat-notifications-button:hover { border-color:var(--nw-purple); color:#fff; }
+  .nw-chat-notifications-button:disabled { cursor:default; opacity:.65; }
+  .nw-chat-notifications-button[data-state="on"] { border-color:rgba(115,198,154,.45); color:#92d8b3; background:rgba(115,198,154,.08); }
   .nw-chat-thread-label { display:flex; align-items:center; gap:8px; margin-left:auto; color:#798392; font:800 8px Arial,sans-serif; letter-spacing:.12em; }
   .nw-chat-thread-label span { background:var(--nw-purple); box-shadow:0 0 0 3px color-mix(in srgb,var(--nw-purple) 14%,transparent); }
   .nw-chat-messages { flex:1; min-height:0; display:flex; flex-direction:column; gap:10px; overflow:auto; padding:22px clamp(16px,3vw,34px); scrollbar-width:thin; scrollbar-color:var(--nw-purple) #0a0d12; }
@@ -2217,6 +2233,7 @@ button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-
     .nw-chat-breadcrumb { gap:6px; font-size:8px; }
     .nw-chat-live-indicator { font-size:0; }
     .nw-chat-live-indicator span { width:7px; height:7px; }
+    .nw-chat-notifications-button { min-height:30px; padding:0 7px; font-size:8px; }
     .nw-chat-layout { display:block; position:relative; }
     .nw-chat-sidebar { width:100%; height:100%; border-right:0; }
     .nw-chat-main { display:none; position:absolute; inset:0; height:100%; }
@@ -2244,7 +2261,7 @@ button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-
 
 <script>
 /* NORTHWORK_SITE_DATA_START */
-window.NORTHWORK_SITE_DATA = {"staff":[{"userId":"438702447683174402","name":"RyTexh","username":"rytexh","role":"Northwork Administrator","roleId":"1454991773393748071","avatar":"https://cdn.discordapp.com/avatars/438702447683174402/504990f67f4b66ecdaade9783ef6c977.png?size=256"},{"userId":"808324602350403595","name":"Claudivania ❤🖤","username":"claudivania_lasukal","role":"Northwork Manager","roleId":"1467663817403007200","avatar":"https://cdn.discordapp.com/avatars/808324602350403595/45b0ffe4b44d862744807717fdfba197.png?size=256"},{"userId":"1149747147600834570","name":"desired","username":"desiredfornobody","role":"Northwork Moderators","roleId":"1454992580109668382","avatar":"https://cdn.discordapp.com/avatars/1149747147600834570/7757b1607e7f8dd157bb290b502d6831.png?size=256"},{"userId":"1206331959266246728","name":"John Northwork","username":"gurtingsgurtieisnotyogurt","role":"Northwork Moderators","roleId":"1454992580109668382","avatar":"https://cdn.discordapp.com/avatars/1206331959266246728/a2af452f9a1f4153cbbdb76487df5ac1.png?size=256"},{"userId":"1104551220951134218","name":"Meh3D","username":"mm_3d","role":"Northwork Moderators","roleId":"1454992580109668382","avatar":"https://cdn.discordapp.com/avatars/1104551220951134218/67617f9cc313c431b03cc9b0c53e2b46.png?size=256"},{"userId":"557596135175356418","name":"ᴱᵒⁿAimee","username":"aimee2569","role":"Northwork Moderators","roleId":"1454992580109668382","avatar":"https://cdn.discordapp.com/avatars/557596135175356418/165eabde0682dd879f5c852a804cba75.png?size=256"},{"userId":"1102261479517978745","name":"Heisenburg","username":"figure2266","role":"Northwork Moderators","roleId":"1454992580109668382","avatar":"https://cdn.discordapp.com/avatars/1102261479517978745/c3700e07f68989588c597ef0af06290b.png?size=256"},{"userId":"1089267764289605663","name":"Kuro","username":"123calebb","role":"Northwork Moderators","roleId":"1454992580109668382","avatar":"https://cdn.discordapp.com/avatars/1089267764289605663/5f37ea64ecb94ff89dfd14a7dc0e2b8e.png?size=256"},{"userId":"1003178163259576371","name":"𝐕𝐄𝐑𝐀","username":"vegupatra","role":"BALENCIAGA GURL 💅","roleId":"1475639115906158642","avatar":"https://cdn.discordapp.com/avatars/1003178163259576371/6b17869a708603fd14a49067eaa727d9.png?size=256"},{"userId":"1398692198404591750","name":"MrChorap","username":"mrchorapings","role":"Northwork Site Ideas Lead","roleId":"1548404280841736313","avatar":"https://cdn.discordapp.com/avatars/1398692198404591750/66a381c600765992bbc9690dd015f7ae.png?size=256"}],"initialized":false,"topGames":[{"slug":"vibration-tester","placeId":"96605909078674","universeId":"10080820428","url":"https://www.roblox.com/games/96605909078674/","name":"Vibration Tester","description":"Vibration Tester is a game where u can test your device's vibration!\n\nYou have plenty of stuff where u can test your device's vibration!\n    Different parts with different vibration systems!\n\n[FOR MORE COOL VIBRATION SYSTEMS, CONSIDER UNLOCKING VIP!]","thumbnail":"https://tr.rbxcdn.com/180DAY-b6a70701148167c5e71bb0bb360ba0e4/512/512/Image/Png/noFilter","visits":5149,"likes":16,"dislikes":6,"favorites":17,"playing":0,"creator":"Northwork Experiments","creatorType":"Group","robloxName":"Vibration Tester","displayName":"Vibration Tester"},null,null,null,null,null],"homeGames":[{"slug":"vibration-tester","placeId":"96605909078674","universeId":"10080820428","url":"https://www.roblox.com/games/96605909078674/","name":"Vibration Tester","description":"Vibration Tester is a game where u can test your device's vibration!\n\nYou have plenty of stuff where u can test your device's vibration!\n    Different parts with different vibration systems!\n\n[FOR MORE COOL VIBRATION SYSTEMS, CONSIDER UNLOCKING VIP!]","thumbnail":"https://tr.rbxcdn.com/180DAY-b6a70701148167c5e71bb0bb360ba0e4/512/512/Image/Png/noFilter","visits":5149,"likes":16,"dislikes":6,"favorites":17,"playing":0,"creator":"Northwork Experiments","creatorType":"Group","robloxName":"Vibration Tester","displayName":"Vibration Tester"},null,null,null,null],"roleSpots":{"tester":3,"developer":0,"artist":0,"analytics":0,"uiux":0,"manager":0},"aboutStats":{"developersText":"1","publishedTitles":"1","timeOfExperience":"+4"},"siteVersion":"1795019470583-8408ed94"};
+window.NORTHWORK_SITE_DATA = {"staff":[{"userId":"438702447683174402","name":"RyTexh","username":"rytexh","role":"Northwork Administrator","roleId":"1454991773393748071","avatar":"https://cdn.discordapp.com/avatars/438702447683174402/504990f67f4b66ecdaade9783ef6c977.png?size=256"},{"userId":"808324602350403595","name":"Claudivania ❤🖤","username":"claudivania_lasukal","role":"Northwork Manager","roleId":"1467663817403007200","avatar":"https://cdn.discordapp.com/avatars/808324602350403595/45b0ffe4b44d862744807717fdfba197.png?size=256"},{"userId":"1149747147600834570","name":"desired","username":"desiredfornobody","role":"Northwork Moderators","roleId":"1454992580109668382","avatar":"https://cdn.discordapp.com/avatars/1149747147600834570/7757b1607e7f8dd157bb290b502d6831.png?size=256"},{"userId":"1206331959266246728","name":"John Northwork","username":"gurtingsgurtieisnotyogurt","role":"Northwork Moderators","roleId":"1454992580109668382","avatar":"https://cdn.discordapp.com/avatars/1206331959266246728/a2af452f9a1f4153cbbdb76487df5ac1.png?size=256"},{"userId":"1104551220951134218","name":"Meh3D","username":"mm_3d","role":"Northwork Moderators","roleId":"1454992580109668382","avatar":"https://cdn.discordapp.com/avatars/1104551220951134218/67617f9cc313c431b03cc9b0c53e2b46.png?size=256"},{"userId":"557596135175356418","name":"ᴱᵒⁿAimee","username":"aimee2569","role":"Northwork Moderators","roleId":"1454992580109668382","avatar":"https://cdn.discordapp.com/avatars/557596135175356418/165eabde0682dd879f5c852a804cba75.png?size=256"},{"userId":"1102261479517978745","name":"Heisenburg","username":"figure2266","role":"Northwork Moderators","roleId":"1454992580109668382","avatar":"https://cdn.discordapp.com/avatars/1102261479517978745/c3700e07f68989588c597ef0af06290b.png?size=256"},{"userId":"1089267764289605663","name":"Kuro","username":"123calebb","role":"Northwork Moderators","roleId":"1454992580109668382","avatar":"https://cdn.discordapp.com/avatars/1089267764289605663/5f37ea64ecb94ff89dfd14a7dc0e2b8e.png?size=256"},{"userId":"1003178163259576371","name":"𝐕𝐄𝐑𝐀","username":"vegupatra","role":"BALENCIAGA GURL 💅","roleId":"1475639115906158642","avatar":"https://cdn.discordapp.com/avatars/1003178163259576371/6b17869a708603fd14a49067eaa727d9.png?size=256"},{"userId":"1398692198404591750","name":"MrChorap","username":"mrchorapings","role":"Northwork Site Ideas Lead","roleId":"1548404280841736313","avatar":"https://cdn.discordapp.com/avatars/1398692198404591750/66a381c600765992bbc9690dd015f7ae.png?size=256"}],"initialized":false,"topGames":[{"slug":"vibration-tester","placeId":"96605909078674","universeId":"10080820428","url":"https://www.roblox.com/games/96605909078674/","name":"Vibration Tester","description":"Vibration Tester is a game where u can test your device's vibration!\n\nYou have plenty of stuff where u can test your device's vibration!\n    Different parts with different vibration systems!\n\n[FOR MORE COOL VIBRATION SYSTEMS, CONSIDER UNLOCKING VIP!]","thumbnail":"https://tr.rbxcdn.com/180DAY-b6a70701148167c5e71bb0bb360ba0e4/512/512/Image/Png/noFilter","visits":5149,"likes":16,"dislikes":6,"favorites":17,"playing":0,"creator":"Northwork Experiments","creatorType":"Group","robloxName":"Vibration Tester","displayName":"Vibration Tester"},null,null,null,null,null],"homeGames":[null,null,null,null,null],"roleSpots":{"tester":0,"developer":0,"artist":0,"analytics":0,"uiux":0,"manager":0},"aboutStats":{"developersText":"1","publishedTitles":"0","timeOfExperience":"0"},"siteVersion":"1794933311472-9eb482db"};
 /* NORTHWORK_SITE_DATA_END */
 </script>
 
@@ -2881,6 +2898,7 @@ button, input, select, textarea { max-width: 100%; }
         <button class="nw-chat-back" id="northwork-chat-close" type="button">← Back to Northwork</button>
         <div class="nw-chat-breadcrumb"><span>NORTHWORK</span><i>/</i><strong>CHAT</strong></div>
         <div class="nw-chat-live-indicator" id="northwork-chat-live-indicator"><span></span> LIVE MESSAGES</div>
+        <button class="nw-chat-notifications-button" id="northwork-chat-notifications" type="button">Enable alerts</button>
       </header>
 
       <div class="nw-chat-layout">
@@ -2924,6 +2942,7 @@ button, input, select, textarea { max-width: 100%; }
               <div class="nw-chat-peer-copy">
                 <strong id="northwork-chat-peer-name">Northwork member</strong>
                 <span id="northwork-chat-peer-username">Direct message</span>
+                <span id="northwork-chat-typing-indicator" class="nw-chat-typing-indicator" hidden>typing<span class="nw-chat-typing-dots"><i></i><i></i><i></i></span></span>
               </div>
               <div class="nw-chat-thread-label"><span></span> DIRECT MESSAGE</div>
             </header>
@@ -3671,7 +3690,12 @@ button, input, select, textarea { max-width: 100%; }
     let northworkChatItems = [];
     let northworkChatActiveConversationId = null;
     let northworkChatRealtimeChannel = null;
+    let northworkChatTypingChannel = null;
+    let northworkChatTypingStopTimer = null;
+    let northworkChatTypingHideTimer = null;
+    let northworkChatTypingLastSentAt = 0;
     let northworkChatToastTimeout = null;
+    let northworkPushRegistrationPromise = null;
     let northworkChatLastRead = new Map();
     let activeProfileUser = null;
     let ownProfileData = null;
@@ -3901,11 +3925,174 @@ button, input, select, textarea { max-width: 100%; }
     // Create a Web API key at https://developers.giphy.com/dashboard/ and paste it here.
     const NORTHWORK_GIPHY_API_KEY = "PASTE_GIPHY_API_KEY_HERE";
     const NORTHWORK_GIPHY_MESSAGE_PREFIX = "NWGIF1:";
+    // Public VAPID key: generate a key pair using `npx web-push generate-vapid-keys`.
+    // The matching PRIVATE key belongs only in Supabase Edge Function secrets.
+    const NORTHWORK_VAPID_PUBLIC_KEY = "BOybDk3r1gLmy4dgUilDWYhr4G22CQqwCfwJOKvuxUnVR8GYQAYC0GCSNd2uD3soDiHfg1_JHGn-9TdNB4RD7-Y";
+    const northworkChatNotificationsButton = document.getElementById("northwork-chat-notifications");
+    const northworkChatTypingIndicator = document.getElementById("northwork-chat-typing-indicator");
     let northworkGifSearchTimer = null;
     let northworkGifSearchSequence = 0;
     const northworkChatThread = document.getElementById("northwork-chat-thread");
     const northworkChatEmptyState = document.getElementById("northwork-chat-empty-state");
     const northworkChatUnreadBadge = document.getElementById("profile-chat-unread-count");
+
+    function northworkBase64UrlToBytes(value) {
+      const padding = "=".repeat((4 - value.length % 4) % 4);
+      const base64 = (value + padding).replace(/-/g, "+").replace(/_/g, "/");
+      const raw = atob(base64);
+      return Uint8Array.from(raw, char => char.charCodeAt(0));
+    }
+
+    async function getNorthworkPushRegistration() {
+      if (!("serviceWorker" in navigator) || !window.isSecureContext) {
+        throw new Error("Browser notifications need a supported browser on HTTPS.");
+      }
+      if (!northworkPushRegistrationPromise) {
+        northworkPushRegistrationPromise = navigator.serviceWorker
+          .register("/northwork-push-sw.js", { scope: "/" })
+          .then(() => navigator.serviceWorker.ready)
+          .catch(error => { northworkPushRegistrationPromise = null; throw error; });
+      }
+      return northworkPushRegistrationPromise;
+    }
+
+    async function refreshNorthworkNotificationButton() {
+      const button = northworkChatNotificationsButton;
+      if (!button) return;
+      if (!activeProfileUser) { button.disabled = true; button.textContent = "Sign in for alerts"; return; }
+      const supported = "Notification" in window && "PushManager" in window && "serviceWorker" in navigator;
+      if (!supported || !window.isSecureContext) { button.disabled = true; button.textContent = "Alerts unavailable"; return; }
+      if (Notification.permission === "denied") { button.disabled = false; button.dataset.state = "off"; button.textContent = "Allow alerts in browser"; return; }
+      try {
+        const registration = await getNorthworkPushRegistration();
+        const subscription = await registration.pushManager.getSubscription();
+        const enabled = Notification.permission === "granted" && Boolean(subscription);
+        button.dataset.state = enabled ? "on" : "off";
+        button.textContent = enabled ? "Alerts on" : "Enable alerts";
+        button.disabled = false;
+      } catch (_) {
+        button.dataset.state = "off";
+        button.textContent = "Enable alerts";
+        button.disabled = false;
+      }
+    }
+
+    async function enableNorthworkWebPush() {
+      if (!supabaseClient || !activeProfileUser) return;
+      const button = northworkChatNotificationsButton;
+      try {
+        if (!NORTHWORK_VAPID_PUBLIC_KEY || NORTHWORK_VAPID_PUBLIC_KEY.includes("PASTE_")) {
+          throw new Error("Add your VAPID public key to NORTHWORK_VAPID_PUBLIC_KEY in index.html first.");
+        }
+        if (!("Notification" in window) || !("PushManager" in window)) {
+          throw new Error("This browser doesn't support web push notifications.");
+        }
+        if (!window.isSecureContext) throw new Error("Notifications require the secure HTTPS Northwork site.");
+        if (button) { button.disabled = true; button.textContent = "Enabling…"; }
+        let permission = Notification.permission;
+        if (permission !== "granted") permission = await Notification.requestPermission();
+        if (permission !== "granted") throw new Error("Notifications were not allowed. You can enable them in your browser's site settings.");
+        const registration = await getNorthworkPushRegistration();
+        let subscription = await registration.pushManager.getSubscription();
+        if (!subscription) {
+          subscription = await registration.pushManager.subscribe({
+            userVisibleOnly: true,
+            applicationServerKey: northworkBase64UrlToBytes(NORTHWORK_VAPID_PUBLIC_KEY)
+          });
+        }
+        const platform = /iphone|ipad|ipod/i.test(navigator.userAgent) ? "ios-web" : /android/i.test(navigator.userAgent) ? "android-web" : "web";
+        const { error } = await supabaseClient.from("northwork_chat_push_devices").upsert({
+          user_id: activeProfileUser.id,
+          provider: "web",
+          platform,
+          endpoint: subscription.endpoint,
+          web_subscription: subscription.toJSON(),
+          expo_push_token: null,
+          updated_at: new Date().toISOString()
+        }, { onConflict: "endpoint" });
+        if (error) throw error;
+        showNorthworkChatToast("Notifications are enabled on this device.");
+      } catch (error) {
+        console.error("Northwork browser notifications could not be enabled:", error);
+        showNorthworkChatToast(error.message || "Couldn't enable notifications.");
+      } finally {
+        await refreshNorthworkNotificationButton();
+      }
+    }
+
+    async function notifyNorthworkMessagePush(message) {
+      if (!supabaseClient || !message?.id) return;
+      try {
+        const { error } = await supabaseClient.functions.invoke("northwork-chat-push", {
+          body: { message_id: message.id }
+        });
+        if (error) throw error;
+      } catch (error) {
+        // A push delivery problem must never block the actual chat message.
+        console.warn("Northwork push notification could not be sent:", error.message || error);
+      }
+    }
+
+    function broadcastNorthworkTyping(isTyping) {
+      if (!northworkChatTypingChannel || !activeProfileUser) return;
+      northworkChatTypingChannel.send({
+        type: "broadcast",
+        event: "typing",
+        payload: { user_id: activeProfileUser.id, is_typing: Boolean(isTyping) }
+      }).catch(error => console.debug("Northwork typing signal was not sent:", error.message || error));
+    }
+
+    function stopNorthworkTyping() {
+      if (northworkChatTypingStopTimer) clearTimeout(northworkChatTypingStopTimer);
+      northworkChatTypingStopTimer = null;
+      broadcastNorthworkTyping(false);
+    }
+
+    function handleNorthworkTypingInput() {
+      if (!northworkChatMessageInput?.value.trim() || !northworkChatTypingChannel) {
+        stopNorthworkTyping();
+        return;
+      }
+      const now = Date.now();
+      if (now - northworkChatTypingLastSentAt > 1200) {
+        northworkChatTypingLastSentAt = now;
+        broadcastNorthworkTyping(true);
+      }
+      if (northworkChatTypingStopTimer) clearTimeout(northworkChatTypingStopTimer);
+      northworkChatTypingStopTimer = setTimeout(() => broadcastNorthworkTyping(false), 2100);
+    }
+
+    function startNorthworkTypingChannel(conversationId) {
+      stopNorthworkTyping();
+      if (northworkChatTypingChannel && supabaseClient) supabaseClient.removeChannel(northworkChatTypingChannel);
+      northworkChatTypingChannel = null;
+      if (northworkChatTypingHideTimer) clearTimeout(northworkChatTypingHideTimer);
+      if (northworkChatTypingIndicator) northworkChatTypingIndicator.hidden = true;
+      if (!supabaseClient || !activeProfileUser || !conversationId) return;
+      const channel = supabaseClient
+        .channel("northwork-chat-typing:" + conversationId, { config: { private: true } })
+        .on("broadcast", { event: "typing" }, ({ payload }) => {
+          if (!payload || payload.user_id === activeProfileUser?.id || northworkChatActiveConversationId !== conversationId) return;
+          const typing = payload.is_typing === true;
+          if (northworkChatTypingIndicator) northworkChatTypingIndicator.hidden = !typing;
+          if (northworkChatTypingHideTimer) clearTimeout(northworkChatTypingHideTimer);
+          if (typing) northworkChatTypingHideTimer = setTimeout(() => {
+            if (northworkChatTypingIndicator) northworkChatTypingIndicator.hidden = true;
+          }, 2800);
+        })
+        .subscribe(status => {
+          if (status === "CHANNEL_ERROR" || status === "TIMED_OUT") {
+            console.warn("Northwork typing channel could not connect:", status);
+          }
+        });
+      northworkChatTypingChannel = channel;
+    }
+
+    // Register the service worker without prompting for permission. Permission
+    // is requested only after the user taps Enable alerts in the chat header.
+    if ("serviceWorker" in navigator && window.isSecureContext) {
+      getNorthworkPushRegistration().catch(error => console.warn("Northwork service worker registration failed:", error.message || error));
+    }
 
     function northworkChatTime(value, dateOnly = false) {
       if (!value) return "";
@@ -4131,6 +4318,8 @@ button, input, select, textarea { max-width: 100%; }
         if (error) throw error;
         closeNorthworkGifPicker();
         appendNorthworkChatMessage(sentMessage);
+        void notifyNorthworkMessagePush(sentMessage);
+        stopNorthworkTyping();
         northworkGiphyTrack(payload.onsent);
         await loadNorthworkChatInbox();
         await markNorthworkChatRead(conversationId);
@@ -4364,6 +4553,7 @@ button, input, select, textarea { max-width: 100%; }
       const item = northworkChatItems.find(entry => entry.id === conversationId);
       if (!item || !supabaseClient || !activeProfileUser) return;
       northworkChatActiveConversationId = conversationId;
+      startNorthworkTypingChannel(conversationId);
       chatPage.classList.add("thread-active");
       northworkChatEmptyState.hidden = true;
       northworkChatThread.hidden = false;
@@ -4406,6 +4596,7 @@ button, input, select, textarea { max-width: 100%; }
       const peerUsername = document.getElementById("northwork-chat-peer-username");
       peerName.textContent = peer.display_name || "Northwork member";
       peerUsername.textContent = peer.username ? "@" + peer.username : "Northwork member";
+      if (northworkChatTypingIndicator) northworkChatTypingIndicator.hidden = true;
       northworkChatMessages.replaceChildren();
       const loading = document.createElement("div");
       loading.className = "nw-chat-message-loading";
@@ -4506,6 +4697,7 @@ button, input, select, textarea { max-width: 100%; }
         return;
       }
       await loadNorthworkChatInbox();
+      void refreshNorthworkNotificationButton();
       subscribeNorthworkChatRealtime();
       if (northworkChatActiveConversationId && northworkChatItems.some(item => item.id === northworkChatActiveConversationId)) {
         await openNorthworkChatThread(northworkChatActiveConversationId);
@@ -4519,6 +4711,11 @@ button, input, select, textarea { max-width: 100%; }
         supabaseClient.removeChannel(northworkChatRealtimeChannel);
         northworkChatRealtimeChannel = null;
       }
+      stopNorthworkTyping();
+      if (northworkChatTypingChannel && supabaseClient) supabaseClient.removeChannel(northworkChatTypingChannel);
+      northworkChatTypingChannel = null;
+      if (northworkChatTypingHideTimer) clearTimeout(northworkChatTypingHideTimer);
+      if (northworkChatTypingIndicator) northworkChatTypingIndicator.hidden = true;
       updateNorthworkOverlayScrollLock();
       if (![accountPage, settingsPage, walletPage].some(page => page?.classList.contains("open"))) document.title = "Northwork";
     }
@@ -4616,6 +4813,10 @@ button, input, select, textarea { max-width: 100%; }
     document.getElementById("northwork-chat-empty-search")?.addEventListener("click", () => northworkChatSearchInput?.focus());
     document.getElementById("northwork-chat-close")?.addEventListener("click", closeNorthworkChat);
     document.getElementById("northwork-chat-mobile-back")?.addEventListener("click", () => {
+      stopNorthworkTyping();
+      if (northworkChatTypingChannel && supabaseClient) supabaseClient.removeChannel(northworkChatTypingChannel);
+      northworkChatTypingChannel = null;
+      if (northworkChatTypingIndicator) northworkChatTypingIndicator.hidden = true;
       chatPage.classList.remove("thread-active");
       northworkChatActiveConversationId = null;
       northworkChatThread.hidden = true;
@@ -4641,7 +4842,9 @@ button, input, select, textarea { max-width: 100%; }
           .single();
         if (error) throw error;
         northworkChatMessageInput.value = "";
+        stopNorthworkTyping();
         appendNorthworkChatMessage(sentMessage);
+        void notifyNorthworkMessagePush(sentMessage);
         await loadNorthworkChatInbox();
         await markNorthworkChatRead(conversationId);
       } catch (error) {
@@ -4677,6 +4880,10 @@ button, input, select, textarea { max-width: 100%; }
     document.addEventListener("keydown", event => {
       if (event.key === "Escape" && northworkGifPicker && !northworkGifPicker.hidden) closeNorthworkGifPicker();
     });
+
+    northworkChatMessageInput?.addEventListener("input", handleNorthworkTypingInput);
+    northworkChatMessageInput?.addEventListener("blur", stopNorthworkTyping);
+    northworkChatNotificationsButton?.addEventListener("click", enableNorthworkWebPush);
 
     northworkChatMessageInput?.addEventListener("keydown", event => {
       if (event.key === "Enter" && !event.shiftKey) {
@@ -4754,7 +4961,18 @@ button, input, select, textarea { max-width: 100%; }
         if (activeProfileUser?.id !== user.id) return;
         ownProfileData = profile;
         setHeaderProfile(user, profile);
+        void refreshNorthworkNotificationButton();
       } catch (error) { console.warn("Could not load Northwork profile data:", error.message); }
+      const requestedChat = new URL(location.href).searchParams.get("northwork-open-chat");
+      if (requestedChat && activeProfileUser?.id === user.id) {
+        try {
+          await openNorthworkChat();
+          await openNorthworkChatThread(requestedChat);
+          const cleanUrl = new URL(location.href);
+          cleanUrl.searchParams.delete("northwork-open-chat");
+          history.replaceState({}, "", cleanUrl.toString());
+        } catch (openError) { console.warn("Could not open chat from notification:", openError.message || openError); }
+      }
     }
 
     function openProfileEditor() {
@@ -4982,7 +5200,18 @@ button, input, select, textarea { max-width: 100%; }
     document.getElementById("profile-logout")?.addEventListener("click", async () => {
       if (!supabaseClient) return;
       const logoutButton = document.getElementById("profile-logout"); logoutButton.disabled = true;
-      try { const { error } = await supabaseClient.auth.signOut(); if (error) throw error; await renderProfileMenu(null); }
+      try {
+        if (activeProfileUser && "serviceWorker" in navigator) {
+          try {
+            const registration = await navigator.serviceWorker.ready;
+            const subscription = await registration.pushManager.getSubscription();
+            if (subscription) {
+              await supabaseClient.from("northwork_chat_push_devices").delete().eq("user_id", activeProfileUser.id).eq("endpoint", subscription.endpoint);
+              await subscription.unsubscribe();
+            }
+          } catch (pushCleanupError) { console.warn("Northwork notification subscription cleanup failed:", pushCleanupError.message || pushCleanupError); }
+        }
+        const { error } = await supabaseClient.auth.signOut(); if (error) throw error; await renderProfileMenu(null); }
       catch (error) { console.error("Northwork logout failed:", error.message); logoutButton.textContent = "Couldn't log out — try again"; }
       finally { logoutButton.disabled = false; }
     });
