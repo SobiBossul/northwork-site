@@ -1,0 +1,57 @@
+name: Publish Northwork Chat updates
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "northwork-chat-app/**"
+      - ".github/workflows/northwork-chat-ota.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: northwork-chat-ota-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  publish:
+    name: Publish compatible Android and iOS updates
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: northwork-chat-app
+    env:
+      EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+    steps:
+      - name: Check out GitHub repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install app dependencies
+        run: npm install --no-audit --no-fund
+
+      - name: Validate Expo project configuration
+        run: npx expo config --type public
+
+      - name: Publish preview update
+        run: >-
+          npx eas-cli@latest update
+          --channel preview
+          --environment preview
+          --message "GitHub ${{ github.sha }}"
+          --non-interactive
+
+      - name: Publish production update
+        run: >-
+          npx eas-cli@latest update
+          --channel production
+          --environment preview
+          --message "GitHub ${{ github.sha }}"
+          --non-interactive

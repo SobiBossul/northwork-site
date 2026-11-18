@@ -1,0 +1,41 @@
+{
+  "expo": {
+    "name": "Northwork Chat",
+    "slug": "northwork-chat",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "scheme": "northworkchat",
+    "userInterfaceStyle": "dark",
+    "newArchEnabled": true,
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.northwork.chat"
+    },
+    "android": {
+      "package": "com.northwork.chat",
+      "edgeToEdgeEnabled": true,
+      "softwareKeyboardLayoutMode": "resize",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#08090D"
+      }
+    },
+    "plugins": [
+      "expo-image"
+    ],
+    "icon": "./assets/icon.png",
+    "splash": {
+      "image": "./assets/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#08090D"
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "enabled": true,
+      "checkAutomatically": "NEVER",
+      "fallbackToCacheTimeout": 0
+    }
+  }
+}
