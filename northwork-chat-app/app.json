@@ -35,7 +35,13 @@
     "updates": {
       "enabled": true,
       "checkAutomatically": "NEVER",
-      "fallbackToCacheTimeout": 0
+      "fallbackToCacheTimeout": 0,
+      "url": "https://u.expo.dev/ce2ec98c-220d-45e4-8d6b-00bd628d2f78"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "ce2ec98c-220d-45e4-8d6b-00bd628d2f78"
+      }
     }
   }
 }
