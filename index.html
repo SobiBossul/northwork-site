@@ -2177,6 +2177,20 @@ button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-
   .nw-chat-message-row.mine .nw-chat-message-bubble { border-color:color-mix(in srgb,var(--nw-purple) 45%,#34313d); background:color-mix(in srgb,var(--nw-purple) 13%,#171622); }
   .nw-chat-message-body { margin:0; color:#e9ebf1; font:400 12px/1.65 Arial,sans-serif; white-space:pre-wrap; overflow-wrap:anywhere; }
   .nw-chat-message-time { display:block; margin-top:6px; color:#7e8795; text-align:right; font:400 8px Arial,sans-serif; }
+  .nw-chat-reply-quote { display:block; width:100%; margin:0 0 8px; padding:7px 9px; border:0; border-left:2px solid var(--nw-purple); background:rgba(255,255,255,.045); color:#e7eaf0; text-align:left; cursor:pointer; }
+  .nw-chat-reply-quote strong { display:block; margin-bottom:3px; color:#c7b7ff; font:700 9px Arial,sans-serif; }
+  .nw-chat-reply-quote span { display:block; overflow:hidden; color:#a6afbd; font:400 9px/1.4 Arial,sans-serif; text-overflow:ellipsis; white-space:nowrap; }
+  .nw-chat-message-actions { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-top:5px; }
+  .nw-chat-message-actions .nw-chat-message-time { margin-top:0; flex:1; }
+  .nw-chat-reply-action { border:0; padding:2px 0; background:transparent; color:#a99acb; font:700 8px Arial,sans-serif; cursor:pointer; }
+  .nw-chat-reply-action:hover { color:#fff; text-decoration:underline; }
+  .nw-chat-message-row.reply-target-flash .nw-chat-message-bubble { outline:2px solid var(--nw-purple); outline-offset:3px; }
+  .nw-chat-reply-preview { display:flex; align-items:center; justify-content:space-between; gap:12px; margin:0 0 9px; padding:8px 10px; border-left:2px solid var(--nw-purple); background:rgba(255,255,255,.045); }
+  .nw-chat-reply-preview[hidden] { display:none; }
+  .nw-chat-reply-preview-copy { display:grid; min-width:0; gap:3px; }
+  .nw-chat-reply-preview-copy strong { color:#c7b7ff; font:700 9px Arial,sans-serif; }
+  .nw-chat-reply-preview-copy span { overflow:hidden; color:#a6afbd; font:400 9px/1.4 Arial,sans-serif; text-overflow:ellipsis; white-space:nowrap; }
+  .nw-chat-reply-cancel { flex:none; width:26px; height:26px; border:1px solid #3a4050; background:#151b25; color:#cbd2df; font:700 16px Arial,sans-serif; cursor:pointer; }
   .nw-chat-gif-media { display:block; max-width:min(100%,360px); overflow:hidden; }
   .nw-chat-gif-media a { display:block; color:inherit; text-decoration:none; }
   .nw-chat-gif-media img { display:block; width:auto; max-width:100%; max-height:260px; object-fit:contain; background:#090c11; }
@@ -2952,6 +2966,10 @@ button, input, select, textarea { max-width: 100%; }
             </div>
 
             <form class="nw-chat-composer" id="northwork-chat-message-form">
+              <div class="nw-chat-reply-preview" id="northwork-chat-reply-preview" hidden>
+                <div class="nw-chat-reply-preview-copy"><strong id="northwork-chat-reply-sender">Replying to message</strong><span id="northwork-chat-reply-text">Message preview</span></div>
+                <button type="button" class="nw-chat-reply-cancel" id="northwork-chat-reply-cancel" aria-label="Cancel reply">×</button>
+              </div>
               <textarea id="northwork-chat-message-input" rows="1" maxlength="3000" placeholder="Write a message…" aria-label="Write a message"></textarea>
               <div class="nw-chat-composer-actions">
                 <div class="nw-chat-composer-tools">
@@ -3689,6 +3707,8 @@ button, input, select, textarea { max-width: 100%; }
     const editorBackdrop = document.getElementById("profile-editor-backdrop");
     let northworkChatItems = [];
     let northworkChatActiveConversationId = null;
+    let northworkChatReplyTarget = null;
+    let northworkChatMessageCache = new Map();
     let northworkChatRealtimeChannel = null;
     let northworkChatTypingChannel = null;
     let northworkChatTypingStopTimer = null;
@@ -3914,6 +3934,10 @@ button, input, select, textarea { max-width: 100%; }
     const northworkChatMessages = document.getElementById("northwork-chat-messages");
     const northworkChatMessageForm = document.getElementById("northwork-chat-message-form");
     const northworkChatMessageInput = document.getElementById("northwork-chat-message-input");
+    const northworkChatReplyPreview = document.getElementById("northwork-chat-reply-preview");
+    const northworkChatReplySender = document.getElementById("northwork-chat-reply-sender");
+    const northworkChatReplyText = document.getElementById("northwork-chat-reply-text");
+    const northworkChatReplyCancel = document.getElementById("northwork-chat-reply-cancel");
     const northworkChatSendButton = document.getElementById("northwork-chat-send-button");
     const northworkChatGifButton = document.getElementById("northwork-chat-gif-button");
     const northworkGifPicker = document.getElementById("northwork-gif-picker");
@@ -3927,7 +3951,7 @@ button, input, select, textarea { max-width: 100%; }
     const NORTHWORK_GIPHY_MESSAGE_PREFIX = "NWGIF1:";
     // Public VAPID key: generate a key pair using `npx web-push generate-vapid-keys`.
     // The matching PRIVATE key belongs only in Supabase Edge Function secrets.
-    const NORTHWORK_VAPID_PUBLIC_KEY = "BOybDk3r1gLmy4dgUilDWYhr4G22CQqwCfwJOKvuxUnVR8GYQAYC0GCSNd2uD3soDiHfg1_JHGn-9TdNB4RD7-Y";
+    const NORTHWORK_VAPID_PUBLIC_KEY = "PASTE_VAPID_PUBLIC_KEY_HERE";
     const northworkChatNotificationsButton = document.getElementById("northwork-chat-notifications");
     const northworkChatTypingIndicator = document.getElementById("northwork-chat-typing-indicator");
     let northworkGifSearchTimer = null;
@@ -4064,6 +4088,7 @@ button, input, select, textarea { max-width: 100%; }
 
     function startNorthworkTypingChannel(conversationId) {
       stopNorthworkTyping();
+      clearNorthworkChatReplyTarget();
       if (northworkChatTypingChannel && supabaseClient) supabaseClient.removeChannel(northworkChatTypingChannel);
       northworkChatTypingChannel = null;
       if (northworkChatTypingHideTimer) clearTimeout(northworkChatTypingHideTimer);
@@ -4312,11 +4337,12 @@ button, input, select, textarea { max-width: 100%; }
       northworkChatSendButton.textContent = "Sending…";
       try {
         const { data: sentMessage, error } = await supabaseClient.from("northwork_messages")
-          .insert({ conversation_id: conversationId, sender_id: activeProfileUser.id, body })
-          .select("id,conversation_id,sender_id,body,created_at")
+          .insert({ conversation_id: conversationId, sender_id: activeProfileUser.id, body, reply_to_message_id: northworkChatReplyTarget?.id || null })
+          .select("id,conversation_id,sender_id,body,created_at,reply_to_message_id")
           .single();
         if (error) throw error;
         closeNorthworkGifPicker();
+        clearNorthworkChatReplyTarget();
         appendNorthworkChatMessage(sentMessage);
         void notifyNorthworkMessagePush(sentMessage);
         stopNorthworkTyping();
@@ -4468,14 +4494,61 @@ button, input, select, textarea { max-width: 100%; }
       }
     }
 
+    function northworkChatReplySnippet(message) {
+      if (!message) return "Original message";
+      return parseNorthworkGifMessage(message.body) ? "GIF" : String(message.body || "Message").replace(/\s+/g, " ").slice(0, 150);
+    }
+
+    function setNorthworkChatReplyTarget(message) {
+      if (!message?.id || !northworkChatActiveConversationId || message.conversation_id !== northworkChatActiveConversationId) return;
+      northworkChatReplyTarget = message;
+      const sender = northworkChatMessageProfiles.get(message.sender_id) || (message.sender_id === activeProfileUser?.id ? ownProfileData : northworkChatPeerFor(northworkChatItems.find(item => item.id === message.conversation_id)));
+      if (northworkChatReplySender) northworkChatReplySender.textContent = "Replying to " + (sender?.display_name || sender?.username || (message.sender_id === activeProfileUser?.id ? "yourself" : "member"));
+      if (northworkChatReplyText) northworkChatReplyText.textContent = northworkChatReplySnippet(message);
+      if (northworkChatReplyPreview) northworkChatReplyPreview.hidden = false;
+      northworkChatMessageInput?.focus({ preventScroll: true });
+    }
+
+    function clearNorthworkChatReplyTarget() {
+      northworkChatReplyTarget = null;
+      if (northworkChatReplyPreview) northworkChatReplyPreview.hidden = true;
+    }
+
+    async function ensureNorthworkReplyTargetCached(message) {
+      const replyId = message?.reply_to_message_id;
+      if (!replyId || northworkChatMessageCache.has(replyId) || !supabaseClient || !message.conversation_id) return;
+      const { data, error } = await supabaseClient.from("northwork_messages")
+        .select("id,conversation_id,sender_id,body,created_at,reply_to_message_id")
+        .eq("id", replyId).eq("conversation_id", message.conversation_id).maybeSingle();
+      if (!error && data) northworkChatMessageCache.set(data.id, data);
+    }
+
     function appendNorthworkChatMessage(message) {
       if (!northworkChatMessages || !message?.id) return;
+      northworkChatMessageCache.set(message.id, message);
       if (northworkChatMessages.querySelector('[data-message-id="' + message.id + '"]')) return;
       const row = document.createElement("div");
       row.className = "nw-chat-message-row" + (message.sender_id === activeProfileUser?.id ? " mine" : "");
       row.dataset.messageId = message.id;
       const bubble = document.createElement("div");
       bubble.className = "nw-chat-message-bubble";
+      if (message.reply_to_message_id) {
+        const replied = northworkChatMessageCache.get(message.reply_to_message_id);
+        const quote = document.createElement("button");
+        quote.type = "button";
+        quote.className = "nw-chat-reply-quote";
+        const quoteSender = document.createElement("strong");
+        const repliedProfile = replied ? (northworkChatMessageProfiles.get(replied.sender_id) || (replied.sender_id === activeProfileUser?.id ? ownProfileData : northworkChatPeerFor(northworkChatItems.find(item => item.id === message.conversation_id)))) : null;
+        quoteSender.textContent = repliedProfile?.display_name || (replied?.sender_id === activeProfileUser?.id ? "You" : "Reply");
+        const quoteText = document.createElement("span");
+        quoteText.textContent = northworkChatReplySnippet(replied);
+        quote.append(quoteSender, quoteText);
+        if (replied) quote.addEventListener("click", () => {
+          const targetRow = northworkChatMessages.querySelector('[data-message-id="' + replied.id + '"]');
+          if (targetRow) { targetRow.scrollIntoView({ behavior: "smooth", block: "center" }); targetRow.classList.add("reply-target-flash"); setTimeout(() => targetRow.classList.remove("reply-target-flash"), 1100); }
+        });
+        bubble.appendChild(quote);
+      }
       const gifPayload = parseNorthworkGifMessage(message.body);
       if (gifPayload) {
         const media = document.createElement("div");
@@ -4514,9 +4587,16 @@ button, input, select, textarea { max-width: 100%; }
       time.className = "nw-chat-message-time";
       time.dateTime = message.created_at || "";
       time.textContent = northworkChatTime(message.created_at);
-      // The message body (or GIF media) is already appended above.
-      // Append only the timestamp here; `body` is block-scoped in the text branch.
-      bubble.appendChild(time);
+      const actions = document.createElement("div");
+      actions.className = "nw-chat-message-actions";
+      const replyButton = document.createElement("button");
+      replyButton.type = "button";
+      replyButton.className = "nw-chat-reply-action";
+      replyButton.textContent = "Reply";
+      replyButton.setAttribute("aria-label", "Reply to this message");
+      replyButton.addEventListener("click", () => setNorthworkChatReplyTarget(message));
+      actions.append(time, replyButton);
+      bubble.appendChild(actions);
 
       const senderProfile = northworkChatMessageProfiles.get(message.sender_id) || (
         message.sender_id === activeProfileUser?.id
@@ -4553,6 +4633,8 @@ button, input, select, textarea { max-width: 100%; }
       const item = northworkChatItems.find(entry => entry.id === conversationId);
       if (!item || !supabaseClient || !activeProfileUser) return;
       northworkChatActiveConversationId = conversationId;
+      northworkChatMessageCache = new Map();
+      clearNorthworkChatReplyTarget();
       startNorthworkTypingChannel(conversationId);
       chatPage.classList.add("thread-active");
       northworkChatEmptyState.hidden = true;
@@ -4605,7 +4687,7 @@ button, input, select, textarea { max-width: 100%; }
       renderNorthworkChatInbox();
 
       const { data: messages, error } = await supabaseClient.from("northwork_messages")
-        .select("id,conversation_id,sender_id,body,created_at")
+        .select("id,conversation_id,sender_id,body,created_at,reply_to_message_id")
         .eq("conversation_id", conversationId)
         .order("created_at", { ascending: true })
         .limit(250);
@@ -4618,6 +4700,14 @@ button, input, select, textarea { max-width: 100%; }
         return;
       }
       if (northworkChatActiveConversationId !== conversationId) return;
+      northworkChatMessageCache = new Map((messages || []).map(message => [message.id, message]));
+      const replyIds = [...new Set((messages || []).map(message => message.reply_to_message_id).filter(id => id && !northworkChatMessageCache.has(id)))];
+      if (replyIds.length) {
+        const { data: replyTargets, error: replyTargetError } = await supabaseClient.from("northwork_messages")
+          .select("id,conversation_id,sender_id,body,created_at,reply_to_message_id")
+          .eq("conversation_id", conversationId).in("id", replyIds);
+        if (!replyTargetError) for (const target of (replyTargets || [])) northworkChatMessageCache.set(target.id, target);
+      }
       northworkChatMessages.replaceChildren();
       if (!(messages || []).length) {
         const empty = document.createElement("div");
@@ -4656,6 +4746,7 @@ button, input, select, textarea { max-width: 100%; }
           if (!item) await loadNorthworkChatInbox();
           const currentItem = northworkChatItems.find(entry => entry.id === message.conversation_id);
           if (northworkChatActiveConversationId === message.conversation_id && chatPage.classList.contains("open")) {
+            await ensureNorthworkReplyTargetCached(message);
             appendNorthworkChatMessage(message);
             await markNorthworkChatRead(message.conversation_id);
           } else if (message.sender_id !== activeProfileUser.id) {
@@ -4813,6 +4904,7 @@ button, input, select, textarea { max-width: 100%; }
     document.getElementById("northwork-chat-empty-search")?.addEventListener("click", () => northworkChatSearchInput?.focus());
     document.getElementById("northwork-chat-close")?.addEventListener("click", closeNorthworkChat);
     document.getElementById("northwork-chat-mobile-back")?.addEventListener("click", () => {
+      clearNorthworkChatReplyTarget();
       stopNorthworkTyping();
       if (northworkChatTypingChannel && supabaseClient) supabaseClient.removeChannel(northworkChatTypingChannel);
       northworkChatTypingChannel = null;
@@ -4837,11 +4929,12 @@ button, input, select, textarea { max-width: 100%; }
       northworkChatSendButton.textContent = "Sending…";
       try {
         const { data: sentMessage, error } = await supabaseClient.from("northwork_messages")
-          .insert({ conversation_id: conversationId, sender_id: activeProfileUser.id, body })
-          .select("id,conversation_id,sender_id,body,created_at")
+          .insert({ conversation_id: conversationId, sender_id: activeProfileUser.id, body, reply_to_message_id: northworkChatReplyTarget?.id || null })
+          .select("id,conversation_id,sender_id,body,created_at,reply_to_message_id")
           .single();
         if (error) throw error;
         northworkChatMessageInput.value = "";
+        clearNorthworkChatReplyTarget();
         stopNorthworkTyping();
         appendNorthworkChatMessage(sentMessage);
         void notifyNorthworkMessagePush(sentMessage);
@@ -4881,6 +4974,7 @@ button, input, select, textarea { max-width: 100%; }
       if (event.key === "Escape" && northworkGifPicker && !northworkGifPicker.hidden) closeNorthworkGifPicker();
     });
 
+    northworkChatReplyCancel?.addEventListener("click", clearNorthworkChatReplyTarget);
     northworkChatMessageInput?.addEventListener("input", handleNorthworkTypingInput);
     northworkChatMessageInput?.addEventListener("blur", stopNorthworkTyping);
     northworkChatNotificationsButton?.addEventListener("click", enableNorthworkWebPush);
