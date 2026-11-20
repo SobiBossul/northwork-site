@@ -2220,7 +2220,6 @@ button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-
   .nw-gif-picker-status a { color:#a8c8ff; }
   .nw-gif-picker-foot { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:10px 15px; border-top:1px solid #272e39; color:#778294; font:600 8px Arial,sans-serif; }
   .nw-gif-powered { display:inline-flex; align-items:center; gap:6px; color:#aab3c1; text-decoration:none; }
-  .nw-gif-powered img { width:17px; height:17px; display:block; object-fit:contain; }
   .nw-gif-powered strong { color:#f2f4f8; font:900 9px Arial,sans-serif; letter-spacing:.08em; }
   .nw-chat-message-loading,.nw-chat-no-messages { margin:auto; padding:20px; color:#7e8897; text-align:center; font:400 11px/1.6 Arial,sans-serif; }
   .nw-chat-composer { flex:none; padding:13px 18px 15px; border-top:1px solid #252a34; background:#0e1117; }
@@ -3045,7 +3044,7 @@ button, input, select, textarea { max-width: 100%; }
           <button class="nw-gif-picker-close" id="northwork-gif-picker-close" type="button" aria-label="Close GIF picker">×</button>
         </div>
         <form class="nw-gif-picker-search" id="northwork-gif-picker-search-form">
-          <input id="northwork-gif-picker-search" type="search" maxlength="50" placeholder="Search GIFs…" autocomplete="off" aria-label="Search GIFs">
+          <input id="northwork-gif-picker-search" type="search" maxlength="50" placeholder="Search KLIPY" autocomplete="off" aria-label="Search KLIPY GIFs">
           <button type="submit">Search</button>
         </form>
         <div class="nw-gif-picker-results" id="northwork-gif-picker-results" aria-live="polite">
@@ -3053,8 +3052,8 @@ button, input, select, textarea { max-width: 100%; }
         </div>
         <div class="nw-gif-picker-foot">
           <span>Tap a GIF to send it · General audience results</span>
-          <a class="nw-gif-powered" href="https://giphy.com" target="_blank" rel="noopener noreferrer" aria-label="Powered by GIPHY">
-            <span>Powered by</span><img src="https://cdn.simpleicons.org/giphy/FFFFFF" alt="GIPHY logo"><strong>GIPHY</strong>
+          <a class="nw-gif-powered" href="https://klipy.com" target="_blank" rel="noopener noreferrer" aria-label="Powered by KLIPY">
+            <span>Powered by</span><strong>KLIPY</strong>
           </a>
         </div>
       </div>
@@ -4205,10 +4204,11 @@ button, input, select, textarea { max-width: 100%; }
     const northworkGifPickerSearchForm = document.getElementById("northwork-gif-picker-search-form");
     const northworkGifPickerSearchInput = document.getElementById("northwork-gif-picker-search");
     const northworkGifPickerResults = document.getElementById("northwork-gif-picker-results");
-    // GIPHY's browser API key is an application key, not a Supabase/server secret.
-    // Create a Web API key at https://developers.giphy.com/dashboard/ and paste it here.
-    const NORTHWORK_GIPHY_API_KEY = "PASTE_GIPHY_API_KEY_HERE";
-    const NORTHWORK_GIPHY_MESSAGE_PREFIX = "NWGIF1:";
+    // KLIPY app key is used by the public client for GIF search. It is not a Supabase/server secret.
+    // Create a test key at https://partner.klipy.com/ and paste it here.
+    const NORTHWORK_KLIPY_APP_KEY = "hg9TOZZbELFkjEbCKID9Z5BOCORoxYZ8rL2EJL34QOWtSj5CvzmbeKeAP52qyTVF";
+    // Keep NWGIF1 so messages sent before this provider switch continue to load.
+    const NORTHWORK_GIF_MESSAGE_PREFIX = "NWGIF1:";
     // Public VAPID key: generate a key pair using `npx web-push generate-vapid-keys`.
     // The matching PRIVATE key belongs only in Supabase Edge Function secrets.
     const NORTHWORK_VAPID_PUBLIC_KEY = "PASTE_VAPID_PUBLIC_KEY_HERE";
@@ -4424,44 +4424,91 @@ button, input, select, textarea { max-width: 100%; }
       northworkChatUnreadBadge.textContent = total > 99 ? "99+" : String(total);
     }
 
+    function isNorthworkGifMediaUrl(value) {
+      try {
+        const url = new URL(String(value || ""));
+        if (url.protocol !== "https:") return false;
+        const host = url.hostname.toLowerCase();
+        const path = url.pathname.toLowerCase();
+        const isLegacyGiphy = /^media\d*\.giphy\.com$/.test(host) && path.includes("/media/") && /\.(gif|webp)$/.test(path);
+        const isKlipy = ["static.klipy.com", "static1.klipy.com", "static2.klipy.com"].includes(host) && path.includes("/ii/") && /\.(gif|webp)$/.test(path);
+        return isLegacyGiphy || isKlipy;
+      } catch (_) {
+        return false;
+      }
+    }
+
+    function northworkGifProvider(payload) {
+      if (payload?.provider === "klipy") return "KLIPY";
+      try {
+        if (new URL(payload?.url || "").hostname.toLowerCase().endsWith(".klipy.com")) return "KLIPY";
+      } catch (_) {}
+      return "GIPHY";
+    }
+
+    function northworkSafeGifPage(payload) {
+      const provider = northworkGifProvider(payload);
+      const fallback = provider === "KLIPY" ? "https://klipy.com" : "https://giphy.com";
+      try {
+        const page = new URL(String(payload?.page || fallback));
+        const host = page.hostname.toLowerCase();
+        const allowed = page.protocol === "https:" && (host === "klipy.com" || host.endsWith(".klipy.com") || host === "giphy.com" || host.endsWith(".giphy.com"));
+        return allowed ? page.toString() : fallback;
+      } catch (_) {
+        return fallback;
+      }
+    }
+
     function parseNorthworkGifMessage(bodyText) {
       const raw = String(bodyText || "");
-      if (!raw.startsWith(NORTHWORK_GIPHY_MESSAGE_PREFIX)) return null;
+      if (!raw.startsWith(NORTHWORK_GIF_MESSAGE_PREFIX)) return null;
       try {
-        const payload = JSON.parse(raw.slice(NORTHWORK_GIPHY_MESSAGE_PREFIX.length));
-        const url = new URL(payload.url);
-        if (url.protocol !== "https:" || !/^media\d*\.giphy\.com$/i.test(url.hostname) || !/\/media\//i.test(url.pathname) || !/\.(gif|webp)$/i.test(url.pathname)) return null;
+        const payload = JSON.parse(raw.slice(NORTHWORK_GIF_MESSAGE_PREFIX.length));
+        if (!isNorthworkGifMediaUrl(payload.url)) return null;
+        if (payload.previewUrl && !isNorthworkGifMediaUrl(payload.previewUrl)) delete payload.previewUrl;
         return payload;
       } catch (_) {
         return null;
       }
     }
 
-    function northworkGiphyCustomerId() {
-      const key = "northwork-giphy-customer-id";
-      try {
-        let value = localStorage.getItem(key);
-        if (!value) {
-          value = (window.crypto && crypto.randomUUID)
-            ? crypto.randomUUID()
-            : "nw-" + Date.now().toString(36) + Math.random().toString(36).slice(2, 12);
-          localStorage.setItem(key, value);
-        }
-        return value;
-      } catch (_) {
-        return "nw-anon";
-      }
+    function northworkKlipyMediaUrl(value) {
+      if (typeof value === "string") return value;
+      if (value && typeof value.url === "string") return value.url;
+      return "";
     }
 
-    function northworkGiphyTrack(trackingUrl) {
-      if (!trackingUrl) return;
+    function normalizeNorthworkKlipyGif(item) {
+      if (!item || item.type === "ad") return null;
+      const formats = item.media_formats || {};
+      const files = item.file || {};
+      const originalUrl = northworkKlipyMediaUrl(formats.gif) ||
+        northworkKlipyMediaUrl(files.gif) ||
+        northworkKlipyMediaUrl(formats.mediumgif) ||
+        northworkKlipyMediaUrl(formats.webp) ||
+        northworkKlipyMediaUrl(files.webp);
+      const previewUrl = northworkKlipyMediaUrl(formats.tinygif) ||
+        northworkKlipyMediaUrl(formats.preview) ||
+        northworkKlipyMediaUrl(formats.mediumgif) ||
+        northworkKlipyMediaUrl(files.webp) ||
+        northworkKlipyMediaUrl(files.gif) || originalUrl;
+      if (!isNorthworkGifMediaUrl(originalUrl) || !isNorthworkGifMediaUrl(previewUrl)) return null;
+      const itemPage = item.itemurl || item.url || "https://klipy.com";
+      let safePage = "https://klipy.com";
       try {
-        const url = new URL(trackingUrl);
-        if (url.protocol !== "https:" || url.hostname !== "giphy-analytics.giphy.com") return;
-        url.searchParams.set("ts", String(Date.now()));
-        url.searchParams.set("customer_id", northworkGiphyCustomerId());
-        fetch(url.toString(), { method: "GET", mode: "no-cors", keepalive: true }).catch(() => {});
+        const pageUrl = new URL(itemPage);
+        if (pageUrl.protocol === "https:" && (pageUrl.hostname === "klipy.com" || pageUrl.hostname.endsWith(".klipy.com"))) safePage = pageUrl.toString();
       } catch (_) {}
+      return {
+        provider: "klipy",
+        url: originalUrl,
+        previewUrl,
+        title: String(item.title || item.content_description || item.tags?.[0] || "GIF").slice(0, 120),
+        id: String(item.id || item.slug || "").slice(0, 80),
+        slug: String(item.slug || "").slice(0, 120),
+        page: safePage,
+        creator: ""
+      };
     }
 
     function closeNorthworkGifPicker() {
@@ -4472,18 +4519,18 @@ button, input, select, textarea { max-width: 100%; }
       northworkChatMessageInput?.focus({ preventScroll: true });
     }
 
-    function showNorthworkGifPickerMessage(message, linkToDashboard = false) {
+    function showNorthworkGifPickerMessage(message, linkToPartner = false) {
       if (!northworkGifPickerResults) return;
       northworkGifPickerResults.replaceChildren();
       const status = document.createElement("div");
       status.className = "nw-gif-picker-status";
-      if (linkToDashboard) {
+      if (linkToPartner) {
         status.append(document.createTextNode(message + " "));
         const link = document.createElement("a");
-        link.href = "https://developers.giphy.com/dashboard/";
+        link.href = "https://partner.klipy.com/";
         link.target = "_blank";
         link.rel = "noopener noreferrer";
-        link.textContent = "Create a GIPHY API key";
+        link.textContent = "Create a KLIPY API key";
         status.appendChild(link);
       } else {
         status.textContent = message;
@@ -4493,50 +4540,46 @@ button, input, select, textarea { max-width: 100%; }
 
     async function loadNorthworkGifs(query = "") {
       if (!northworkGifPickerResults) return;
-      if (!NORTHWORK_GIPHY_API_KEY || NORTHWORK_GIPHY_API_KEY.includes("PASTE_")) {
-        showNorthworkGifPickerMessage("Connect GIPHY to enable GIF search. Add your Web API key to the Northwork HTML configuration.", true);
+      if (!NORTHWORK_KLIPY_APP_KEY || NORTHWORK_KLIPY_APP_KEY.includes("PASTE_")) {
+        showNorthworkGifPickerMessage("Connect KLIPY to enable GIF search. Add your app key to the Northwork HTML configuration.", true);
         return;
       }
       const searchId = ++northworkGifSearchSequence;
-      showNorthworkGifPickerMessage(query ? "Searching GIFs…" : "Loading trending GIFs…");
-      const endpoint = query
-        ? "https://api.giphy.com/v1/gifs/search"
-        : "https://api.giphy.com/v1/gifs/trending";
-      const url = new URL(endpoint);
-      url.searchParams.set("api_key", NORTHWORK_GIPHY_API_KEY);
-      url.searchParams.set("limit", "24");
-      url.searchParams.set("rating", "g");
-      url.searchParams.set("bundle", "messaging_non_clips");
-      if (query) {
-        url.searchParams.set("q", query.slice(0, 50));
-        url.searchParams.set("lang", "en");
-      }
+      showNorthworkGifPickerMessage(query ? "Searching KLIPY…" : "Loading trending GIFs…");
+      const action = query.trim() ? "search" : "trending";
+      const url = new URL("https://api.klipy.com/api/v1/" + encodeURIComponent(NORTHWORK_KLIPY_APP_KEY) + "/gifs/" + action);
+      url.searchParams.set("page", "1");
+      url.searchParams.set("per_page", "24");
+      url.searchParams.set("locale", "en_US");
+      url.searchParams.set("content_filter", "high");
+      url.searchParams.set("format_filter", "gif,webp");
+      if (query.trim()) url.searchParams.set("q", query.trim().slice(0, 50));
+      if (activeProfileUser?.id) url.searchParams.set("customer_id", activeProfileUser.id);
       try {
         const response = await fetch(url.toString(), { headers: { Accept: "application/json" } });
-        if (!response.ok) throw new Error(response.status === 403 ? "GIPHY rejected this API key. Check that it is active." : "GIPHY request failed (" + response.status + ").");
-        const result = await response.json();
+        const result = await response.json().catch(() => ({}));
+        if (!response.ok || result?.result === false) {
+          const detail = result?.message || result?.error || (response.status === 401 || response.status === 403 ? "KLIPY rejected this app key. Check that it is active." : "KLIPY request failed (" + response.status + ").");
+          throw new Error(detail);
+        }
         if (searchId !== northworkGifSearchSequence || northworkGifPicker.hidden) return;
-        const gifs = Array.isArray(result.data) ? result.data : [];
+        const rows = Array.isArray(result?.data?.data) ? result.data.data :
+          Array.isArray(result?.data?.results) ? result.data.results :
+          Array.isArray(result?.data) ? result.data :
+          Array.isArray(result?.results) ? result.results : [];
+        const gifs = rows.map(normalizeNorthworkKlipyGif).filter(Boolean);
         if (!gifs.length) {
           showNorthworkGifPickerMessage("No GIFs found. Try another search.");
           return;
         }
         northworkGifPickerResults.replaceChildren();
         for (const gif of gifs) {
-          const previewUrl = gif.images?.fixed_width_small?.url || gif.images?.fixed_width?.url || gif.images?.preview_gif?.url;
-          const originalUrl = gif.images?.original?.url;
-          if (!previewUrl || !originalUrl) continue;
-          const preview = new URL(previewUrl);
-          const original = new URL(originalUrl);
-          const validGiphyMedia = mediaUrl => mediaUrl.protocol === "https:" && /^media\d*\.giphy\.com$/i.test(mediaUrl.hostname) && /\/media\//i.test(mediaUrl.pathname) && /\.(gif|webp)$/i.test(mediaUrl.pathname);
-          if (!validGiphyMedia(preview) || !validGiphyMedia(original)) continue;
-
           const button = document.createElement("button");
           button.type = "button";
           button.className = "nw-gif-result";
           button.setAttribute("aria-label", "Send GIF " + (gif.title || "GIF"));
           const image = document.createElement("img");
-          image.src = preview.toString();
+          image.src = gif.previewUrl;
           image.alt = gif.title || "GIF preview";
           image.loading = "lazy";
           const title = document.createElement("span");
@@ -4544,12 +4587,9 @@ button, input, select, textarea { max-width: 100%; }
           button.append(image, title);
           button.addEventListener("click", () => sendNorthworkGif(gif));
           northworkGifPickerResults.appendChild(button);
-          if (gif.analytics?.onload?.url) image.addEventListener("load", () => northworkGiphyTrack(gif.analytics.onload.url), { once: true });
-          if (gif.analytics?.onclick?.url) image.addEventListener("click", () => northworkGiphyTrack(gif.analytics.onclick.url));
         }
-        if (!northworkGifPickerResults.children.length) showNorthworkGifPickerMessage("GIPHY did not return any compatible GIF previews. Try another search.");
       } catch (error) {
-        console.error("Northwork GIPHY search failed:", error);
+        console.error("Northwork KLIPY search failed:", error);
         showNorthworkGifPickerMessage(error.message || "Couldn't load GIFs. Please try again.");
       }
     }
@@ -4558,8 +4598,8 @@ button, input, select, textarea { max-width: 100%; }
       if (!northworkGifPicker || !northworkChatActiveConversationId || !activeProfileUser) return;
       northworkGifPicker.hidden = false;
       northworkChatGifButton?.setAttribute("aria-expanded", "true");
-      if (!NORTHWORK_GIPHY_API_KEY || NORTHWORK_GIPHY_API_KEY.includes("PASTE_")) {
-        showNorthworkGifPickerMessage("Connect GIPHY to enable GIF search. Add your Web API key to the Northwork HTML configuration.", true);
+      if (!NORTHWORK_KLIPY_APP_KEY || NORTHWORK_KLIPY_APP_KEY.includes("PASTE_")) {
+        showNorthworkGifPickerMessage("Connect KLIPY to enable GIF search. Add your app key to the Northwork HTML configuration.", true);
       } else {
         loadNorthworkGifs("");
       }
@@ -4568,30 +4608,21 @@ button, input, select, textarea { max-width: 100%; }
 
     async function sendNorthworkGif(gif) {
       const conversationId = northworkChatActiveConversationId;
-      if (!conversationId || !supabaseClient || !activeProfileUser || !gif?.images?.original?.url) return;
-      let mediaUrl;
-      try { mediaUrl = new URL(gif.images.original.url); } catch (_) { return; }
-      if (mediaUrl.protocol !== "https:" || !/^media\d*\.giphy\.com$/i.test(mediaUrl.hostname) || !/\/media\//i.test(mediaUrl.pathname) || !/\.(gif|webp)$/i.test(mediaUrl.pathname)) {
+      if (!conversationId || !supabaseClient || !activeProfileUser || !gif?.url) return;
+      if (!isNorthworkGifMediaUrl(gif.url)) {
         showNorthworkChatToast("That GIF link isn't supported.");
         return;
       }
       const payload = {
-        url: mediaUrl.toString(),
+        provider: "klipy",
+        url: gif.url,
+        previewUrl: isNorthworkGifMediaUrl(gif.previewUrl) ? gif.previewUrl : undefined,
         title: String(gif.title || "GIF").slice(0, 120),
         id: String(gif.id || "").slice(0, 80),
-        page: /^https:\/\/giphy\.com\//i.test(gif.url || "") ? gif.url : "https://giphy.com",
-        creator: String(gif.user?.username || "").slice(0, 80),
-        onload: gif.analytics?.onload?.url || "",
-        onclick: gif.analytics?.onclick?.url || "",
-        onsent: gif.analytics?.onsent?.url || ""
+        slug: String(gif.slug || "").slice(0, 120),
+        page: gif.page || "https://klipy.com"
       };
-      let body = NORTHWORK_GIPHY_MESSAGE_PREFIX + JSON.stringify(payload);
-      if (body.length > 3000) {
-        delete payload.onload;
-        delete payload.onclick;
-        delete payload.onsent;
-        body = NORTHWORK_GIPHY_MESSAGE_PREFIX + JSON.stringify(payload);
-      }
+      const body = NORTHWORK_GIF_MESSAGE_PREFIX + JSON.stringify(payload);
       northworkChatSendButton.disabled = true;
       northworkChatGifButton.disabled = true;
       northworkChatSendButton.textContent = "Sending…";
@@ -4606,7 +4637,6 @@ button, input, select, textarea { max-width: 100%; }
         appendNorthworkChatMessage(sentMessage);
         void notifyNorthworkMessagePush(sentMessage);
         stopNorthworkTyping();
-        northworkGiphyTrack(payload.onsent);
         await loadNorthworkChatInbox();
         await markNorthworkChatRead(conversationId);
       } catch (error) {
@@ -4821,26 +4851,25 @@ button, input, select, textarea { max-width: 100%; }
         const media = document.createElement("div");
         media.className = "nw-chat-gif-media";
         const mediaLink = document.createElement("a");
-        mediaLink.href = /^https:\/\/giphy\.com\//i.test(gifPayload.page || "") ? gifPayload.page : "https://giphy.com";
+        const provider = northworkGifProvider(gifPayload);
+        mediaLink.href = northworkSafeGifPage(gifPayload);
         mediaLink.target = "_blank";
         mediaLink.rel = "noopener noreferrer";
-        mediaLink.setAttribute("aria-label", "Open GIF on GIPHY");
+        mediaLink.setAttribute("aria-label", "Open GIF on " + provider);
         const image = document.createElement("img");
         image.src = gifPayload.url;
         image.alt = gifPayload.title || "Animated GIF";
         image.loading = "lazy";
-        image.addEventListener("load", () => northworkGiphyTrack(gifPayload.onload), { once: true });
-        image.addEventListener("click", () => northworkGiphyTrack(gifPayload.onclick));
         mediaLink.appendChild(image);
         media.appendChild(mediaLink);
         const credit = document.createElement("div");
         credit.className = "nw-chat-gif-credit";
-        credit.textContent = gifPayload.creator ? "GIF by @" + gifPayload.creator + " · " : "GIF · ";
+        credit.textContent = "GIF · Powered by " + provider;
         const source = document.createElement("a");
-        source.href = "https://giphy.com";
+        source.href = provider === "KLIPY" ? "https://klipy.com" : "https://giphy.com";
         source.target = "_blank";
         source.rel = "noopener noreferrer";
-        source.textContent = "GIPHY";
+        source.textContent = provider;
         credit.appendChild(source);
         media.appendChild(credit);
         bubble.appendChild(media);
@@ -5870,7 +5899,9 @@ button, input, select, textarea { max-width: 100%; }
   (() => {
     "use strict";
 
-    const siteData = window.NORTHWORK_SITE_DATA && typeof window.NORTHWORK_SITE_DATA === "object"
+    // Bot-managed content is fetched from a separate JSON file. This keeps bot data
+    // independent from manual index.html redesigns and feature updates.
+    let siteData = window.NORTHWORK_SITE_DATA && typeof window.NORTHWORK_SITE_DATA === "object"
       ? window.NORTHWORK_SITE_DATA
       : {};
 
@@ -6072,7 +6103,30 @@ button, input, select, textarea { max-width: 100%; }
     }
 
     renderAll();
+
+    async function refreshNorthworkSiteData() {
+      try {
+        const response = await fetch("/northwork-site-data.json?v=" + Date.now(), {
+          cache: "no-store",
+          headers: { "Accept": "application/json" }
+        });
+        if (!response.ok) throw new Error("HTTP " + response.status);
+        const remoteData = await response.json();
+        if (!remoteData || typeof remoteData !== "object" || Array.isArray(remoteData)) {
+          throw new Error("The Northwork data file is not a JSON object.");
+        }
+        siteData = remoteData;
+        renderAll();
+        document.documentElement.dataset.northworkSiteData = "loaded";
+      } catch (error) {
+        // Keep the embedded copy as a fallback during the one-time migration/deployment.
+        console.warn("[Northwork] Separate bot data file is not available yet; using embedded fallback:", error.message || error);
+      }
+    }
+
+    refreshNorthworkSiteData();
     refreshPublicStats();
+    window.setInterval(refreshNorthworkSiteData, 60 * 1000);
     window.setInterval(refreshPublicStats, 5 * 60 * 1000);
   })();
   </script>
