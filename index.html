@@ -2721,6 +2721,42 @@ button, input, select, textarea { max-width: 100%; }
 }
 
 </style>
+<style id="northwork-follow-profile-styles">
+  .public-profile-follow-row { display:flex; align-items:center; justify-content:space-between; gap:18px; padding:17px 20px; border-bottom:1px solid #272c35; }
+  .public-profile-follow-counts { display:flex; align-items:center; gap:25px; }
+  .public-profile-follow-count { appearance:none; display:inline-flex; align-items:baseline; gap:5px; padding:0; border:0; background:transparent; color:#aeb5c0; cursor:pointer; font:500 12px/1.2 Arial,sans-serif; }
+  .public-profile-follow-count strong { color:#f3f4f6; font-size:14px; font-weight:750; font-variant-numeric:tabular-nums; }
+  .public-profile-follow-count:hover span { color:#fff; text-decoration:underline; text-underline-offset:3px; }
+  .public-profile-follow-button { min-width:112px; min-height:38px; }
+  .public-profile-follow-button[data-following="true"] { border-color:#3a414c; background:#151a21; color:#e5e8ed; }
+  .public-profile-follow-button:disabled { opacity:.55; cursor:wait; }
+  .northwork-follow-backdrop { position:fixed; inset:0; z-index:1700; display:flex; align-items:center; justify-content:center; padding:20px; background:rgba(0,0,0,.72); backdrop-filter:blur(8px); }
+  .northwork-follow-backdrop[hidden] { display:none !important; }
+  .northwork-follow-dialog { width:min(440px,100%); max-height:min(680px, 84dvh, 84vh); display:flex; flex-direction:column; overflow:hidden; border:1px solid #343b47; background:#0e1117; box-shadow:0 24px 80px rgba(0,0,0,.55); }
+  .northwork-follow-dialog-header { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:16px 18px; border-bottom:1px solid #292f39; }
+  .northwork-follow-dialog-header h2 { margin:0; color:#f2f3f6; font:700 16px/1.2 Arial,sans-serif; }
+  .northwork-follow-dialog-header button { width:32px; height:32px; border:1px solid #343a45; background:#151a21; color:#e9ebef; font-size:22px; cursor:pointer; }
+  .northwork-follow-list { min-height:100px; overflow:auto; padding:5px 0; }
+  .northwork-follow-empty { padding:22px 18px; margin:0; color:#858e9b; font:400 12px/1.5 Arial,sans-serif; text-align:center; }
+  .northwork-follow-person { width:100%; display:flex; align-items:center; gap:12px; padding:11px 17px; border:0; border-bottom:1px solid rgba(255,255,255,.045); background:transparent; color:#f2f3f6; text-align:left; cursor:pointer; }
+  .northwork-follow-person:hover { background:#171c25; }
+  .northwork-follow-person-avatar { width:40px; height:40px; flex:0 0 40px; display:grid; place-items:center; overflow:hidden; border:1px solid #343b47; background:#202631; color:#e7dcff; font:700 14px Arial,sans-serif; }
+  .northwork-follow-person-avatar img { width:100%; height:100%; object-fit:cover; }
+  .northwork-follow-person-copy { min-width:0; display:flex; flex-direction:column; gap:4px; }
+  .northwork-follow-person-copy strong { overflow:hidden; color:#f2f3f6; font:650 12px Arial,sans-serif; text-overflow:ellipsis; white-space:nowrap; }
+  .northwork-follow-person-copy span { color:#8d96a4; font:400 10px Arial,sans-serif; }
+  .nw-chat-profile-link { cursor:pointer; }
+  .nw-chat-profile-link:focus-visible { outline:2px solid var(--nw-purple); outline-offset:3px; }
+  @media(max-width:650px) {
+    .public-profile-follow-row { padding:14px 5px; gap:10px; }
+    .public-profile-follow-counts { gap:15px; }
+    .public-profile-follow-count { font-size:11px; }
+    .public-profile-follow-count strong { font-size:13px; }
+    .public-profile-follow-button { min-width:92px; min-height:36px; padding:9px 11px !important; }
+    .northwork-follow-backdrop { align-items:flex-end; padding:0; }
+    .northwork-follow-dialog { width:100%; max-height:82dvh; border-left:0; border-right:0; }
+  }
+</style>
 </head>
 <body>
   <header class="topbar">
@@ -2852,6 +2888,14 @@ button, input, select, textarea { max-width: 100%; }
         </div>
       </section>
 
+      <section class="public-profile-follow-row" id="public-profile-follow-row" aria-label="Followers and following">
+        <div class="public-profile-follow-counts">
+          <button class="public-profile-follow-count" id="profile-followers-button" type="button" aria-label="View followers"><strong id="profile-followers-count">0</strong><span>followers</span></button>
+          <button class="public-profile-follow-count" id="profile-following-button" type="button" aria-label="View following"><strong id="profile-following-count">0</strong><span>following</span></button>
+        </div>
+        <button class="public-profile-action primary public-profile-follow-button" id="profile-follow-toggle" type="button" hidden>Follow</button>
+      </section>
+
       <section class="public-profile-social-card" id="public-profile-social-card" aria-label="Connected socials" hidden>
         <header class="public-profile-social-head"><strong>CONNECTED SOCIALS</strong><span id="public-profile-social-count">0 LINKS</span></header>
         <div class="public-profile-links" id="public-profile-links" aria-label="Profile links"></div>
@@ -2860,6 +2904,16 @@ button, input, select, textarea { max-width: 100%; }
       <p class="public-profile-feedback" id="public-profile-feedback" role="status" aria-live="polite"></p>
     </div>
   </section>
+
+  <div class="northwork-follow-backdrop" id="northwork-follow-backdrop" aria-hidden="true" hidden>
+    <section class="northwork-follow-dialog" role="dialog" aria-modal="true" aria-labelledby="northwork-follow-dialog-title">
+      <header class="northwork-follow-dialog-header">
+        <h2 id="northwork-follow-dialog-title">Followers</h2>
+        <button id="northwork-follow-dialog-close" type="button" aria-label="Close">×</button>
+      </header>
+      <div class="northwork-follow-list" id="northwork-follow-list"><p class="northwork-follow-empty">Loading…</p></div>
+    </section>
+  </div>
 
   <section class="northwork-wallet-page" id="northwork-wallet-page" aria-label="Wallet" aria-hidden="true">
     <div class="nwrk-wallet-shell">
@@ -3720,6 +3774,7 @@ button, input, select, textarea { max-width: 100%; }
     let activeProfileUser = null;
     let ownProfileData = null;
     let viewingProfile = null;
+    let northworkFollowRenderToken = 0;
     let selectedAvatarFile = null;
     let selectedBannerFile = null;
 
@@ -3820,7 +3875,219 @@ button, input, select, textarea { max-width: 100%; }
       document.getElementById("public-profile-joined").textContent = "Joined " + formatNorthworkDate(profile.created_at);
       renderPublicLinks(profile);
       document.getElementById("public-profile-feedback").textContent = "";
+      void loadNorthworkFollowSummary(profile, isOwner);
     }
+    async function loadNorthworkFollowSummary(profile, isOwner = false) {
+      const row = document.getElementById("public-profile-follow-row");
+      const followersCount = document.getElementById("profile-followers-count");
+      const followingCount = document.getElementById("profile-following-count");
+      const followButton = document.getElementById("profile-follow-toggle");
+      const token = ++northworkFollowRenderToken;
+      if (!profile?.id || !supabaseClient) {
+        row.hidden = !profile?.id;
+        followButton.hidden = true;
+        return;
+      }
+      row.hidden = false;
+      followButton.hidden = isOwner;
+      followersCount.textContent = "…";
+      followingCount.textContent = "…";
+      try {
+        const [followersResult, followingResult] = await Promise.all([
+          supabaseClient.from("profile_follows").select("follower_id", { count: "exact", head: true }).eq("following_id", profile.id),
+          supabaseClient.from("profile_follows").select("following_id", { count: "exact", head: true }).eq("follower_id", profile.id)
+        ]);
+        if (followersResult.error) throw followersResult.error;
+        if (followingResult.error) throw followingResult.error;
+        let alreadyFollowing = false;
+        if (!isOwner && activeProfileUser?.id) {
+          const { data, error } = await supabaseClient.from("profile_follows").select("follower_id")
+            .eq("follower_id", activeProfileUser.id).eq("following_id", profile.id).maybeSingle();
+          if (error) throw error;
+          alreadyFollowing = Boolean(data);
+        }
+        if (token !== northworkFollowRenderToken || viewingProfile?.id !== profile.id) return;
+        followersCount.textContent = String(followersResult.count ?? 0);
+        followingCount.textContent = String(followingResult.count ?? 0);
+        followButton.dataset.following = String(alreadyFollowing);
+        followButton.textContent = alreadyFollowing ? "Following" : "Follow";
+        followButton.setAttribute("aria-pressed", String(alreadyFollowing));
+        followButton.hidden = isOwner;
+      } catch (error) {
+        if (token !== northworkFollowRenderToken) return;
+        followersCount.textContent = "0";
+        followingCount.textContent = "0";
+        followButton.hidden = isOwner;
+        const feedback = document.getElementById("public-profile-feedback");
+        if (/profile_follows|schema cache|does not exist|relation/i.test(error.message || "")) {
+          feedback.textContent = "Follow features need the Northwork Follow migration. Run the supplied SQL in Supabase, then refresh.";
+        } else {
+          console.warn("Northwork follow counts could not be loaded:", error.message);
+        }
+      }
+    }
+
+    async function toggleNorthworkFollow() {
+      const button = document.getElementById("profile-follow-toggle");
+      if (!viewingProfile?.id || !activeProfileUser || !supabaseClient) {
+        const feedback = document.getElementById("public-profile-feedback");
+        feedback.textContent = "Sign in to follow Northwork members.";
+        return;
+      }
+      if (viewingProfile.id === activeProfileUser.id) return;
+      const isFollowing = button.dataset.following === "true";
+      button.disabled = true;
+      button.textContent = isFollowing ? "Unfollowing…" : "Following…";
+      try {
+        let result;
+        if (isFollowing) {
+          result = await supabaseClient.from("profile_follows").delete()
+            .eq("follower_id", activeProfileUser.id).eq("following_id", viewingProfile.id);
+        } else {
+          result = await supabaseClient.from("profile_follows").insert({ follower_id: activeProfileUser.id, following_id: viewingProfile.id });
+        }
+        if (result.error) throw result.error;
+        await loadNorthworkFollowSummary(viewingProfile, false);
+      } catch (error) {
+        console.error("Northwork follow action failed:", error);
+        document.getElementById("public-profile-feedback").textContent = error.message || "Couldn't update this follow. Please try again.";
+        button.textContent = isFollowing ? "Following" : "Follow";
+      } finally {
+        button.disabled = false;
+      }
+    }
+
+    function closeNorthworkFollowList() {
+      const backdrop = document.getElementById("northwork-follow-backdrop");
+      backdrop.classList.remove("open");
+      backdrop.hidden = true;
+      backdrop.setAttribute("aria-hidden", "true");
+    }
+
+    async function openNorthworkFollowList(kind) {
+      if (!viewingProfile?.id || !supabaseClient) return;
+      const backdrop = document.getElementById("northwork-follow-backdrop");
+      const title = document.getElementById("northwork-follow-dialog-title");
+      const list = document.getElementById("northwork-follow-list");
+      const isFollowers = kind === "followers";
+      title.textContent = isFollowers ? "Followers" : "Following";
+      list.replaceChildren();
+      const loading = document.createElement("p");
+      loading.className = "northwork-follow-empty";
+      loading.textContent = "Loading members…";
+      list.appendChild(loading);
+      backdrop.hidden = false;
+      backdrop.classList.add("open");
+      backdrop.setAttribute("aria-hidden", "false");
+      try {
+        const idColumn = isFollowers ? "follower_id" : "following_id";
+        const filterColumn = isFollowers ? "following_id" : "follower_id";
+        const { data: follows, error } = await supabaseClient.from("profile_follows")
+          .select(idColumn + ",created_at").eq(filterColumn, viewingProfile.id)
+          .order("created_at", { ascending: false }).limit(100);
+        if (error) throw error;
+        const ids = [...new Set((follows || []).map(item => item[idColumn]).filter(Boolean))];
+        if (!ids.length) {
+          list.replaceChildren();
+          const empty = document.createElement("p");
+          empty.className = "northwork-follow-empty";
+          empty.textContent = isFollowers ? "No followers yet." : "Not following anyone yet.";
+          list.appendChild(empty);
+          return;
+        }
+        const { data: profiles, error: profilesError } = await supabaseClient.from("northwork_public_profiles")
+          .select("id,display_name,username,avatar_url").in("id", ids);
+        if (profilesError) throw profilesError;
+        const profileMap = new Map((profiles || []).map(profile => [profile.id, profile]));
+        list.replaceChildren();
+        ids.map(id => profileMap.get(id)).filter(Boolean).forEach(profile => {
+          const item = document.createElement("button");
+          item.type = "button";
+          item.className = "northwork-follow-person";
+          const avatar = document.createElement("span");
+          avatar.className = "northwork-follow-person-avatar";
+          const displayName = profile.display_name || profile.username || "Northwork member";
+          if (profile.avatar_url) {
+            const image = document.createElement("img");
+            image.src = profile.avatar_url;
+            image.alt = "";
+            image.onerror = () => { image.remove(); avatar.textContent = profileInitial(displayName); };
+            avatar.appendChild(image);
+          } else avatar.textContent = profileInitial(displayName);
+          const copy = document.createElement("span");
+          copy.className = "northwork-follow-person-copy";
+          const name = document.createElement("strong");
+          name.textContent = displayName;
+          const username = document.createElement("span");
+          username.textContent = profile.username ? "@" + profile.username : "Northwork member";
+          copy.append(name, username);
+          item.append(avatar, copy);
+          item.addEventListener("click", () => {
+            closeNorthworkFollowList();
+            openPublicProfileById(profile.id, true);
+          });
+          list.appendChild(item);
+        });
+        if (!list.children.length) {
+          const empty = document.createElement("p");
+          empty.className = "northwork-follow-empty";
+          empty.textContent = "These members don't have public profiles.";
+          list.appendChild(empty);
+        }
+      } catch (error) {
+        console.error("Northwork follow list failed:", error);
+        list.replaceChildren();
+        const message = document.createElement("p");
+        message.className = "northwork-follow-empty";
+        message.textContent = error.message || "Couldn't load this list.";
+        list.appendChild(message);
+      }
+    }
+
+    function northworkProfileUsernameFromPath(pathname = location.pathname) {
+      const match = pathname.match(/^\/@([a-z0-9_]{3,20})\/?$/i);
+      return match ? match[1].toLowerCase() : null;
+    }
+
+    function setProfileUrl(profile, push = true) {
+      const url = new URL(window.location.href);
+      if (profile?.username && /^[a-z0-9_]{3,20}$/i.test(profile.username)) {
+        url.pathname = "/@" + profile.username.toLowerCase();
+        url.searchParams.delete("profile");
+      } else if (profile?.id) {
+        url.pathname = "/";
+        url.searchParams.set("profile", profile.id);
+      }
+      url.hash = "";
+      try {
+        if (location.protocol === "file:") return;
+        if (push) history.pushState({ northworkProfile: true }, "", url.toString());
+        else history.replaceState(history.state, "", url.toString());
+      } catch (error) { console.warn("Could not update profile URL:", error.message); }
+    }
+
+    async function openPublicProfileByUsername(username, push = false) {
+      const normalized = String(username || "").replace(/^@/, "").trim().toLowerCase();
+      if (!/^[a-z0-9_]{3,20}$/.test(normalized) || !supabaseClient) return;
+      closeProfileMenu();
+      try {
+        const { data: profile, error } = await supabaseClient.from("northwork_public_profiles")
+          .select("id,display_name,avatar_url,banner_url,bio,instagram_url,youtube_url,website_url,is_public,created_at,username")
+          .eq("username", normalized).maybeSingle();
+        if (error) throw error;
+        if (!profile || profile.is_public === false) throw new Error("This Northwork profile is unavailable.");
+        const isOwner = Boolean(activeProfileUser && activeProfileUser.id === profile.id);
+        if (isOwner) ownProfileData = profile;
+        renderPublicProfile(profile, isOwner);
+        openProfileSurface();
+        if (push) setProfileUrl(profile, true);
+      } catch (error) {
+        renderPublicProfile({ display_name: "Profile unavailable", bio: error.message || "This profile could not be found." }, false);
+        openProfileSurface();
+        document.getElementById("profile-edit-open").hidden = true;
+      }
+    }
+
     function updateNorthworkOverlayScrollLock() {
       const overlayOpen = [settingsPage, accountPage, walletPage, chatPage].some(page => page?.classList.contains("open"));
       document.documentElement.classList.toggle("northwork-overlay-open", overlayOpen);
@@ -3833,15 +4100,6 @@ button, input, select, textarea { max-width: 100%; }
       updateNorthworkOverlayScrollLock();
       document.title = (viewingProfile?.display_name || "Profile") + " | Northwork";
     }
-    function setProfileUrl(id, push = true) {
-      const url = new URL(window.location.href);
-      url.searchParams.set("profile", id);
-      try {
-        if (location.protocol === "file:") return;
-        if (push) history.pushState({ northworkProfile: true }, "", url.toString());
-        else history.replaceState(history.state, "", url.toString());
-      } catch (error) { console.warn("Could not update profile URL:", error.message); }
-    }
     async function openNorthworkAccount() {
       if (!activeProfileUser) return;
       closeProfileMenu();
@@ -3849,7 +4107,7 @@ button, input, select, textarea { max-width: 100%; }
         ownProfileData = await fetchProfileById(activeProfileUser.id);
         if (!ownProfileData) throw new Error("Your profile is not ready yet. Please refresh and try again.");
         renderPublicProfile(ownProfileData, true);
-        setProfileUrl(activeProfileUser.id, true);
+        setProfileUrl(ownProfileData, true);
         openProfileSurface();
       } catch (error) {
         console.error("Northwork profile could not be loaded:", error);
@@ -3867,7 +4125,7 @@ button, input, select, textarea { max-width: 100%; }
         if (isOwner) ownProfileData = profile;
         renderPublicProfile(profile, isOwner);
         openProfileSurface();
-        if (push) setProfileUrl(id, true);
+        if (push) setProfileUrl(profile, true);
       } catch (error) {
         renderPublicProfile({ display_name: "Profile unavailable", bio: error.message || "This profile could not be found." }, false);
         openProfileSurface();
@@ -3881,8 +4139,10 @@ button, input, select, textarea { max-width: 100%; }
       accountPage?.setAttribute("aria-hidden", "true");
       updateNorthworkOverlayScrollLock();
       document.title = "Northwork";
-      if (updateUrl && new URL(location.href).searchParams.has("profile")) {
-        const url = new URL(location.href); url.searchParams.delete("profile");
+      if (updateUrl && (new URL(location.href).searchParams.has("profile") || northworkProfileUsernameFromPath())) {
+        const url = new URL(location.href);
+        url.pathname = "/";
+        url.searchParams.delete("profile");
         history.replaceState(history.state, "", url.toString());
       }
     }
@@ -4371,7 +4631,14 @@ button, input, select, textarea { max-width: 100%; }
         button.className = "nw-chat-conversation-item" + (item.id === northworkChatActiveConversationId ? " active" : "");
         button.setAttribute("aria-label", "Open conversation with " + (peer.display_name || "Northwork member"));
 
-        button.appendChild(northworkChatAvatarElement(peer));
+        const inboxAvatar = northworkChatAvatarElement(peer);
+        inboxAvatar.classList.add("nw-chat-profile-link");
+        inboxAvatar.setAttribute("role", "link");
+        inboxAvatar.setAttribute("tabindex", "0");
+        inboxAvatar.setAttribute("aria-label", "Open " + (peer.display_name || "member") + " profile");
+        inboxAvatar.addEventListener("click", event => { event.stopPropagation(); if (peer?.id) openPublicProfileById(peer.id, true); });
+        inboxAvatar.addEventListener("keydown", event => { if (event.key === "Enter" || event.key === " ") { event.preventDefault(); event.stopPropagation(); if (peer?.id) openPublicProfileById(peer.id, true); } });
+        button.appendChild(inboxAvatar);
         const copy = document.createElement("span");
         copy.className = "nw-chat-conversation-copy";
         const top = document.createElement("span");
@@ -4604,7 +4871,13 @@ button, input, select, textarea { max-width: 100%; }
           : northworkChatPeerFor(northworkChatItems.find(item => item.id === message.conversation_id))
       );
       const senderAvatar = northworkChatAvatarElement(senderProfile, "nw-chat-message-avatar");
-      senderAvatar.setAttribute("aria-label", (senderProfile?.display_name || senderProfile?.username || "Member") + " profile picture");
+      senderAvatar.setAttribute("aria-label", (senderProfile?.display_name || senderProfile?.username || "Member") + " profile picture — open profile");
+      senderAvatar.classList.add("nw-chat-profile-link");
+      senderAvatar.setAttribute("role", "link");
+      senderAvatar.setAttribute("tabindex", "0");
+      const openSenderProfile = () => { if (senderProfile?.id) openPublicProfileById(senderProfile.id, true); };
+      senderAvatar.addEventListener("click", openSenderProfile);
+      senderAvatar.addEventListener("keydown", event => { if (event.key === "Enter" || event.key === " ") { event.preventDefault(); openSenderProfile(); } });
       if (message.sender_id === activeProfileUser?.id) row.append(bubble, senderAvatar);
       else row.append(senderAvatar, bubble);
       northworkChatMessages.appendChild(row);
@@ -4849,7 +5122,14 @@ button, input, select, textarea { max-width: 100%; }
           const button = document.createElement("button");
           button.type = "button";
           button.className = "nw-chat-search-result";
-          button.appendChild(northworkChatAvatarElement(profile));
+          const searchAvatar = northworkChatAvatarElement(profile);
+          searchAvatar.classList.add("nw-chat-profile-link");
+          searchAvatar.setAttribute("role", "link");
+          searchAvatar.setAttribute("tabindex", "0");
+          searchAvatar.setAttribute("aria-label", "Open " + (profile.display_name || "member") + " profile");
+          searchAvatar.addEventListener("click", event => { event.stopPropagation(); openPublicProfileById(profile.id, true); });
+          searchAvatar.addEventListener("keydown", event => { if (event.key === "Enter" || event.key === " ") { event.preventDefault(); event.stopPropagation(); openPublicProfileById(profile.id, true); } });
+          button.appendChild(searchAvatar);
           const copy = document.createElement("span");
           copy.className = "nw-chat-search-result-copy";
           const name = document.createElement("strong");
@@ -5231,7 +5511,7 @@ button, input, select, textarea { max-width: 100%; }
         if (authError) console.warn("Profile metadata sync failed:", authError.message);
         if (authData?.user) activeProfileUser = authData.user;
         setHeaderProfile(activeProfileUser, ownProfileData);
-        if (accountPage?.classList.contains("open")) renderPublicProfile(ownProfileData, true);
+        if (accountPage?.classList.contains("open")) { renderPublicProfile(ownProfileData, true); setProfileUrl(ownProfileData, false); }
         feedback.style.color = "#9acfae"; feedback.textContent = "Account details saved successfully.";
       } catch (error) {
         console.error("Northwork settings save failed:", error);
@@ -5270,6 +5550,25 @@ button, input, select, textarea { max-width: 100%; }
       finally { button.disabled = false; button.textContent = "Send reset link"; }
     });
     accountPageBack?.addEventListener("click", () => closeNorthworkAccount(true));
+    document.getElementById("profile-follow-toggle")?.addEventListener("click", toggleNorthworkFollow);
+    document.getElementById("profile-followers-button")?.addEventListener("click", () => openNorthworkFollowList("followers"));
+    document.getElementById("profile-following-button")?.addEventListener("click", () => openNorthworkFollowList("following"));
+    document.getElementById("northwork-follow-dialog-close")?.addEventListener("click", closeNorthworkFollowList);
+    document.getElementById("northwork-follow-backdrop")?.addEventListener("click", event => { if (event.target.id === "northwork-follow-backdrop") closeNorthworkFollowList(); });
+
+    function openCurrentNorthworkChatPeerProfile() {
+      const item = northworkChatItems.find(entry => entry.id === northworkChatActiveConversationId);
+      const peer = item ? northworkChatPeerFor(item) : null;
+      if (peer?.id) openPublicProfileById(peer.id, true);
+    }
+    [document.getElementById("northwork-chat-peer-avatar"), document.getElementById("northwork-chat-peer-name"), document.getElementById("northwork-chat-peer-username")]
+      .filter(Boolean).forEach(element => {
+        element.classList.add("nw-chat-profile-link");
+        element.setAttribute("role", "link");
+        element.setAttribute("tabindex", "0");
+        element.addEventListener("click", openCurrentNorthworkChatPeerProfile);
+        element.addEventListener("keydown", event => { if (event.key === "Enter" || event.key === " ") { event.preventDefault(); openCurrentNorthworkChatPeerProfile(); } });
+      });
     walletPageBack?.addEventListener("click", closeNorthworkWallet);
     document.getElementById("profile-share")?.addEventListener("click", async () => {
       if (!viewingProfile?.id) return;
@@ -5277,7 +5576,10 @@ button, input, select, textarea { max-width: 100%; }
         document.getElementById("public-profile-feedback").textContent = "Public profile links will work once Northwork is hosted online.";
         return;
       }
-      const url = new URL(window.location.href); url.searchParams.set("profile", viewingProfile.id); url.hash = "";
+      const url = new URL(window.location.href);
+      if (viewingProfile.username) { url.pathname = "/@" + viewingProfile.username.toLowerCase(); url.searchParams.delete("profile"); }
+      else { url.pathname = "/"; url.searchParams.set("profile", viewingProfile.id); }
+      url.hash = "";
       const shareUrl = url.toString();
       try {
         if (navigator.share) await navigator.share({ title: (viewingProfile.display_name || "Northwork profile") + " | Northwork", url: shareUrl });
@@ -5288,7 +5590,7 @@ button, input, select, textarea { max-width: 100%; }
     });
     document.addEventListener("click", (event) => { if (!event.target.closest("#profile-menu-wrap")) closeProfileMenu(); });
     document.addEventListener("keydown", (event) => {
-      if (event.key === "Escape") { closeProfileMenu(); closeNorthworkSettings(); closeNorthworkWallet(); closeNorthworkChat(); if (editorBackdrop?.classList.contains("open")) closeProfileEditor(); else if (accountPage?.classList.contains("open")) closeNorthworkAccount(true); }
+      if (event.key === "Escape") { closeNorthworkFollowList(); closeProfileMenu(); closeNorthworkSettings(); closeNorthworkWallet(); closeNorthworkChat(); if (editorBackdrop?.classList.contains("open")) closeProfileEditor(); else if (accountPage?.classList.contains("open")) closeNorthworkAccount(true); }
     });
     applyNorthworkPreferences();
     document.getElementById("profile-logout")?.addEventListener("click", async () => {
@@ -5452,8 +5754,10 @@ button, input, select, textarea { max-width: 100%; }
       supabaseClient.auth.getSession().then(async ({ data, error }) => {
         if (error) console.warn("Could not restore Northwork session:", error.message);
         await renderProfileMenu(data?.session?.user || null);
+        const requestedUsername = northworkProfileUsernameFromPath();
         const requestedProfile = new URL(location.href).searchParams.get("profile");
-        if (requestedProfile) openPublicProfileById(requestedProfile, false);
+        if (requestedUsername) openPublicProfileByUsername(requestedUsername, false);
+        else if (requestedProfile) openPublicProfileById(requestedProfile, false);
       });
       supabaseClient.auth.onAuthStateChange((event, session) => {
         renderProfileMenu(session?.user || null);
@@ -5495,8 +5799,10 @@ button, input, select, textarea { max-width: 100%; }
         document.body.style.overflow = "";
         northworkAuthRoute = null;
       }
+      const requestedUsername = northworkProfileUsernameFromPath();
       const requestedProfile = new URL(location.href).searchParams.get("profile");
-      if (requestedProfile) openPublicProfileById(requestedProfile, false);
+      if (requestedUsername) openPublicProfileByUsername(requestedUsername, false);
+      else if (requestedProfile) openPublicProfileById(requestedProfile, false);
       else if (accountPage?.classList.contains("open")) closeNorthworkAccount(false);
     });
 
