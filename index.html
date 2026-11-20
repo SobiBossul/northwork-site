@@ -2755,6 +2755,39 @@ button, input, select, textarea { max-width: 100%; }
     .northwork-follow-backdrop { align-items:flex-end; padding:0; }
     .northwork-follow-dialog { width:100%; max-height:82dvh; border-left:0; border-right:0; }
   }
+
+/* NWRK Support — purpose-built, square-edged support desk */
+.northwork-support-page{position:fixed;inset:0;z-index:1508;overflow-y:auto;overflow-x:hidden;background:#090b0f;color:#f2f4f7;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .22s ease,visibility .22s ease;scrollbar-width:thin;scrollbar-color:var(--nw-purple) #11151b}
+.northwork-support-page.open{opacity:1;visibility:visible;pointer-events:auto}
+.northwork-support-page::-webkit-scrollbar{width:10px}.northwork-support-page::-webkit-scrollbar-track{background:#11151b}.northwork-support-page::-webkit-scrollbar-thumb{background:var(--nw-purple);border:2px solid #11151b;border-radius:0}
+.nws-shell{width:min(1220px,calc(100% - 56px));margin:0 auto;padding:25px 0 68px}
+.nws-top{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-bottom:17px;border-bottom:1px solid #252b35}
+.nws-back{border:1px solid #343c48;background:#121720;color:#e8ebf0;padding:10px 13px;border-radius:0;font:700 11px/1 Arial,sans-serif;letter-spacing:.04em;cursor:pointer}
+.nws-back:hover{border-color:var(--nw-purple);background:#191e28}
+.nws-crumb{display:flex;align-items:center;gap:10px;color:#788291;font:700 9px/1 Arial,sans-serif;letter-spacing:.16em}.nws-crumb strong{color:#e9eaf0}.nws-crumb i{font-style:normal;color:#4c5563}
+.nws-hero{position:relative;display:grid;grid-template-columns:minmax(0,1.2fr) minmax(230px,.8fr);gap:28px;align-items:end;margin:48px 0 34px;padding:32px;border:1px solid #303743;background-color:#0e1218;background-image:linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px);background-size:28px 28px;overflow:hidden}
+.nws-hero:after{content:"";position:absolute;right:0;top:0;width:5px;height:100%;background:var(--nw-purple)}
+.nws-eyebrow{display:block;margin:0 0 13px;color:var(--nw-purple);font:800 9px/1 Arial,sans-serif;letter-spacing:.2em}.nws-hero h1{margin:0;color:#f5f6f8;font:800 clamp(38px,6vw,68px)/.98 Arial,sans-serif;letter-spacing:-.065em}.nws-hero h1 span{display:block;color:#aeb5c0;font-size:.42em;letter-spacing:.06em;margin-top:13px}
+.nws-hero-copy{max-width:380px;margin:0 0 3px;color:#9ba4b1;font:400 13px/1.75 Arial,sans-serif}.nws-hero-meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:22px}.nws-meta-chip{border:1px solid #343c48;background:#10151c;padding:7px 9px;color:#aab2bf;font:700 8px/1 Arial,sans-serif;letter-spacing:.1em}
+.nws-section-heading{display:flex;justify-content:space-between;align-items:end;gap:18px;margin:0 0 15px}.nws-section-heading h2{margin:0;color:#eef0f3;font:700 19px/1.2 Arial,sans-serif}.nws-section-heading p{margin:5px 0 0;color:#818b99;font:400 11px/1.5 Arial,sans-serif}.nws-section-heading>span{color:#687384;font:700 9px/1 Arial,sans-serif;letter-spacing:.12em}
+.nws-category-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.nws-category-card{min-width:0;border:1px solid #303743;background:#0f1319;position:relative;transition:border-color .16s ease,transform .16s ease}
+.nws-category-card:hover{border-color:#555f6d;transform:translateY(-2px)}
+.nws-category-top{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;padding:17px 17px 14px;border-bottom:1px solid #272e38}.nws-category-code{color:var(--nw-purple);font:800 9px/1 Arial,sans-serif;letter-spacing:.16em}.nws-category-top h3{margin:8px 0 4px;color:#f0f2f5;font:700 18px/1.1 Arial,sans-serif}.nws-category-top p{margin:0;color:#8993a1;font:400 11px/1.45 Arial,sans-serif}.nws-category-number{color:#333d4a;font:800 28px/1 Arial,sans-serif}
+.nws-issue-list{padding:5px 10px 10px}.nws-issue-tile{width:100%;display:flex;align-items:center;justify-content:space-between;gap:14px;padding:12px 8px;border:0;border-bottom:1px solid #222933;background:transparent;color:#dce1e8;text-align:left;cursor:pointer;font:600 12px/1.35 Arial,sans-serif;transition:background .14s ease,color .14s ease}.nws-issue-tile:last-child{border-bottom:0}.nws-issue-tile:hover{background:#181e27;color:#fff}.nws-issue-tile small{display:block;margin-top:4px;color:#778291;font:400 10px/1.35 Arial,sans-serif}.nws-issue-arrow{color:var(--nw-purple);font:700 18px/1 Arial,sans-serif;flex:0 0 auto}
+.nws-bottom-note{display:flex;align-items:flex-start;gap:12px;margin-top:18px;padding:15px 17px;border:1px solid #29313c;background:#0d1117;color:#8792a0;font:400 11px/1.6 Arial,sans-serif}.nws-bottom-note strong{color:#d9dfe7}
+.nws-form-view,.nws-success-view{max-width:930px;margin:32px auto 0}.nws-form-top{display:flex;justify-content:space-between;align-items:center;gap:15px;margin-bottom:22px}.nws-form-category{display:inline-flex;align-items:center;gap:9px;border:1px solid #303947;background:#111720;padding:8px 10px;color:var(--nw-purple);font:800 9px/1 Arial,sans-serif;letter-spacing:.12em}.nws-form-id{color:#697585;font:700 9px/1 Arial,sans-serif;letter-spacing:.12em}
+.nws-form-layout{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(220px,.6fr);gap:14px;align-items:start}.nws-form-card,.nws-guide-card{border:1px solid #303743;background:#0f1319;padding:22px}.nws-form-card h1{margin:0;color:#f2f4f7;font:800 clamp(26px,4vw,38px)/1.08 Arial,sans-serif;letter-spacing:-.045em}.nws-form-intro{margin:9px 0 22px;color:#939daa;font:400 12px/1.65 Arial,sans-serif}
+.nws-field{display:block;margin:0 0 17px}.nws-field>span{display:block;margin:0 0 8px;color:#d8dde5;font:700 10px/1 Arial,sans-serif;letter-spacing:.08em;text-transform:uppercase}.nws-field input,.nws-field textarea{width:100%;box-sizing:border-box;border:1px solid #343d49;border-radius:0;background:#090d12;color:#eef1f5;padding:12px 13px;outline:none;font:400 12px/1.5 Arial,sans-serif}.nws-field input:focus,.nws-field textarea:focus{border-color:var(--nw-purple);box-shadow:0 0 0 1px color-mix(in srgb,var(--nw-purple) 30%,transparent)}.nws-field textarea{min-height:155px;resize:vertical}.nws-field input::placeholder,.nws-field textarea::placeholder{color:#657080}
+.nws-anon-row{display:flex;align-items:flex-start;gap:11px;padding:14px;border:1px solid #323b47;background:#111720;margin:2px 0 16px;cursor:pointer}.nws-anon-row input{width:16px;height:16px;accent-color:var(--nw-purple);margin:1px 0 0;flex:0 0 auto}.nws-anon-row strong{display:block;color:#e6eaf0;font:700 11px/1.3 Arial,sans-serif}.nws-anon-row small{display:block;margin-top:5px;color:#8792a0;font:400 10px/1.5 Arial,sans-serif}
+.nws-upload{display:block;border:1px dashed #4a5564;background:#0b1016;padding:15px;color:#dbe0e8;cursor:pointer}.nws-upload:hover{border-color:var(--nw-purple)}.nws-upload input{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}.nws-upload strong{display:block;font:700 11px/1.3 Arial,sans-serif}.nws-upload small{display:block;margin-top:5px;color:#788594;font:400 10px/1.5 Arial,sans-serif}.nws-file-list{display:grid;gap:6px;margin-top:8px}.nws-file-item{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:8px 9px;border:1px solid #29323e;background:#111720;color:#b9c2ce;font:400 10px/1.4 Arial,sans-serif}.nws-file-remove{border:0;background:none;color:#e28a8a;cursor:pointer;font:700 10px/1 Arial,sans-serif}
+.nws-submit-row{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:19px}.nws-submit{border:1px solid var(--nw-purple);border-radius:0;background:var(--nw-purple);color:#fff;padding:13px 17px;cursor:pointer;font:800 10px/1 Arial,sans-serif;letter-spacing:.1em;text-transform:uppercase}.nws-submit:hover{filter:brightness(1.1)}.nws-submit:disabled{opacity:.55;cursor:wait}.nws-feedback{margin:0;color:#9ba5b2;font:400 11px/1.5 Arial,sans-serif}.nws-feedback[data-state="error"]{color:#ef9a9a}.nws-feedback[data-state="success"]{color:#9dd6b0}
+.nws-guide-card{position:sticky;top:20px}.nws-guide-label{color:var(--nw-purple);font:800 9px/1 Arial,sans-serif;letter-spacing:.17em}.nws-guide-card h2{margin:12px 0 9px;color:#e9edf3;font:700 16px/1.2 Arial,sans-serif}.nws-guide-card p{margin:0;color:#8792a0;font:400 11px/1.7 Arial,sans-serif}.nws-guide-list{display:grid;gap:11px;margin:18px 0 0;padding:0;list-style:none}.nws-guide-list li{display:flex;gap:9px;color:#aab3bf;font:400 10px/1.5 Arial,sans-serif}.nws-guide-list b{color:var(--nw-purple);font:800 9px/1.5 Arial,sans-serif}
+.nws-success-card{padding:clamp(25px,5vw,48px);border:1px solid #34404e;background:#10161e;text-align:left}.nws-success-mark{display:grid;place-items:center;width:46px;height:46px;border:1px solid #49745a;background:#112019;color:#9ad2ac;font:700 23px/1 Arial,sans-serif}.nws-success-card h1{margin:22px 0 9px;color:#f3f5f8;font:800 clamp(29px,5vw,44px)/1.05 Arial,sans-serif;letter-spacing:-.05em}.nws-success-card p{max-width:560px;color:#9aa5b3;font:400 12px/1.7 Arial,sans-serif}.nws-ticket-reference{display:inline-block;margin:13px 0 20px;padding:11px 13px;border:1px solid #394454;background:#0a1017;color:#dcdfe6;font:800 14px/1 monospace;letter-spacing:.08em}
+@media(max-width:900px){.nws-category-grid{grid-template-columns:1fr}.nws-category-card{display:grid;grid-template-columns:minmax(180px,.7fr) minmax(0,1.3fr)}.nws-category-top{border-bottom:0;border-right:1px solid #272e38}.nws-form-layout{grid-template-columns:1fr}.nws-guide-card{position:static}.nws-hero{grid-template-columns:1fr;gap:18px}}
+@media(max-width:600px){.nws-shell{width:calc(100% - 28px);padding:14px 0 40px}.nws-top{align-items:flex-start}.nws-crumb{padding-top:9px;font-size:8px}.nws-hero{margin:28px 0 25px;padding:22px 18px}.nws-category-card{display:block}.nws-category-top{border-right:0;border-bottom:1px solid #272e38}.nws-section-heading{align-items:flex-start;flex-direction:column}.nws-form-card,.nws-guide-card{padding:17px}.nws-form-top{align-items:flex-start;flex-direction:column}.nws-form-view,.nws-success-view{margin-top:22px}}
+@media(prefers-reduced-motion:reduce){.northwork-support-page,.nws-category-card,.nws-issue-tile{transition:none}}
+
 </style>
 </head>
 <body>
@@ -2780,6 +2813,7 @@ button, input, select, textarea { max-width: 100%; }
             <button class="profile-menu-item" id="profile-account-open" type="button" role="menuitem">Account</button>
             <button class="profile-menu-item" id="profile-wallet-open" type="button" role="menuitem">Wallet</button>
             <button class="profile-menu-item profile-menu-chat" id="profile-chat-open" type="button" role="menuitem">Chat <span class="profile-chat-unread" id="profile-chat-unread-count" hidden>0</span></button>
+            <button class="profile-menu-item" id="profile-support-open" type="button" role="menuitem">Support</button>
             <button class="profile-menu-item" id="profile-settings-open" type="button" role="menuitem">Settings</button>
             <div class="profile-menu-divider"></div>
             <button class="profile-menu-item logout" id="profile-logout" type="button" role="menuitem">Log out</button>
@@ -2958,6 +2992,81 @@ button, input, select, textarea { max-width: 100%; }
   </section>
 
 
+  <section class="northwork-support-page" id="northwork-support-page" aria-label="NWRK Support" aria-hidden="true">
+    <div class="nws-shell">
+      <header class="nws-top">
+        <button class="nws-back" id="nws-support-back" type="button">← Back to Northwork</button>
+        <div class="nws-crumb"><span>NORTHWORK</span><i>/</i><strong>SUPPORT</strong></div>
+      </header>
+      <div id="nws-category-view">
+        <section class="nws-hero">
+          <div>
+            <span class="nws-eyebrow">NWRK / SUPPORT DESK</span>
+            <h1>NWRK Support<span>WE'RE HERE TO HELP.</span></h1>
+            <div class="nws-hero-meta"><span class="nws-meta-chip">ISSUE INTAKE</span><span class="nws-meta-chip">PRIVATE STAFF TICKETS</span><span class="nws-meta-chip">NORTHWORK COMMUNITY</span></div>
+          </div>
+          <p class="nws-hero-copy">Choose the area that best matches what happened. Every option opens a focused report so the team gets the right information from the start.</p>
+        </section>
+        <div class="nws-section-heading"><div><h2>What do you need help with?</h2><p>Select an issue to open its report form.</p></div><span>SELECT A CATEGORY / 03</span></div>
+        <div class="nws-category-grid">
+          <section class="nws-category-card" aria-label="Game issues">
+            <header class="nws-category-top"><div><span class="nws-category-code">GME / 01</span><h3>Game Issues</h3><p>Gameplay, experiences and player conduct</p></div><span class="nws-category-number">01</span></header>
+            <div class="nws-issue-list">
+              <button class="nws-issue-tile" type="button" data-support-issue="game-bug"><span>Report a bug<small>Broken features, glitches or errors</small></span><span class="nws-issue-arrow">↗</span></button>
+              <button class="nws-issue-tile" type="button" data-support-issue="game-player-behaviour"><span>Report person behaviour<small>Harassment, exploiting or disruptive conduct</small></span><span class="nws-issue-arrow">↗</span></button>
+              <button class="nws-issue-tile" type="button" data-support-issue="game-exploit"><span>Exploiting / cheating<small>Unfair advantages or suspicious activity</small></span><span class="nws-issue-arrow">↗</span></button>
+              <button class="nws-issue-tile" type="button" data-support-issue="game-technical"><span>Game not working<small>Loading problems or technical issues</small></span><span class="nws-issue-arrow">↗</span></button>
+            </div>
+          </section>
+          <section class="nws-category-card" aria-label="Server issues">
+            <header class="nws-category-top"><div><span class="nws-category-code">SRV / 02</span><h3>Server Issues</h3><p>Northwork community and moderation</p></div><span class="nws-category-number">02</span></header>
+            <div class="nws-issue-list">
+              <button class="nws-issue-tile" type="button" data-support-issue="server-rule-break"><span>Person breaking a rule<small>Report a member or provide evidence</small></span><span class="nws-issue-arrow">↗</span></button>
+              <button class="nws-issue-tile" type="button" data-support-issue="server-inappropriate"><span>Inappropriate content<small>Names, messages, images or links</small></span><span class="nws-issue-arrow">↗</span></button>
+              <button class="nws-issue-tile" type="button" data-support-issue="server-bot"><span>Bot malfunction<small>Commands, automation or bot errors</small></span><span class="nws-issue-arrow">↗</span></button>
+              <button class="nws-issue-tile" type="button" data-support-issue="server-technical"><span>Server problem<small>Channels, roles or Discord server access</small></span><span class="nws-issue-arrow">↗</span></button>
+            </div>
+          </section>
+          <section class="nws-category-card" aria-label="Account issues">
+            <header class="nws-category-top"><div><span class="nws-category-code">ACC / 03</span><h3>Account Issues</h3><p>Sign-in, profile and Northwork Chat</p></div><span class="nws-category-number">03</span></header>
+            <div class="nws-issue-list">
+              <button class="nws-issue-tile" type="button" data-support-issue="account-password"><span>Can't reset password<small>Password email or reset link problems</small></span><span class="nws-issue-arrow">↗</span></button>
+              <button class="nws-issue-tile" type="button" data-support-issue="account-email"><span>Can't reset email<small>Email change or confirmation problems</small></span><span class="nws-issue-arrow">↗</span></button>
+              <button class="nws-issue-tile" type="button" data-support-issue="account-history"><span>Chat history wiped<small>Missing conversations or messages</small></span><span class="nws-issue-arrow">↗</span></button>
+              <button class="nws-issue-tile" type="button" data-support-issue="account-access"><span>Can't access my account<small>Login or account access issues</small></span><span class="nws-issue-arrow">↗</span></button>
+              <button class="nws-issue-tile" type="button" data-support-issue="account-profile"><span>Profile / account data<small>Profile details or saved information</small></span><span class="nws-issue-arrow">↗</span></button>
+            </div>
+          </section>
+        </div>
+        <div class="nws-bottom-note"><strong>BEFORE YOU SUBMIT</strong><span>Include the steps you took, what you expected to happen, and what actually happened. For reports about another person, include their username and when the incident occurred. Avoid sharing passwords or private login codes.</span></div>
+      </div>
+
+      <div class="nws-form-view" id="nws-issue-view" hidden>
+        <div class="nws-form-top"><button class="nws-back" id="nws-back-to-categories" type="button">← All support options</button><span class="nws-form-id">NWRK / REPORT INTAKE</span></div>
+        <div class="nws-form-layout">
+          <form class="nws-form-card" id="nws-support-form">
+            <span class="nws-form-category" id="nws-issue-category">GAME ISSUES / GME-01</span>
+            <h1 id="nws-issue-title">Report a bug</h1>
+            <p class="nws-form-intro" id="nws-issue-description">Tell us what happened so the team can investigate.</p>
+            <label class="nws-field"><span>Explain the issue</span><textarea id="nws-support-details" minlength="20" maxlength="4000" required placeholder="Describe what happened, where it happened, and the steps to reproduce it..."></textarea></label>
+            <div id="nws-identity-fields">
+              <label class="nws-field"><span>Discord username <small>(optional)</small></span><input id="nws-support-discord" type="text" maxlength="64" autocomplete="off" placeholder="username or @username"></label>
+              <label class="nws-field"><span>Person / account involved <small>(optional)</small></span><input id="nws-support-reported-person" type="text" maxlength="100" autocomplete="off" placeholder="Username, display name or user ID"></label>
+            </div>
+            <label class="nws-anon-row"><input id="nws-support-anonymous" type="checkbox"><span><strong>Submit anonymously</strong><small>Your Northwork profile name and Discord username will not be included in the ticket. The team won't be able to identify your Northwork account from the report.</small></span></label>
+            <div class="nws-field"><span>Attachments / proof <small>(optional)</small></span><label class="nws-upload"><input id="nws-support-files" type="file" multiple accept="image/png,image/jpeg,image/webp,image/gif,application/pdf,text/plain,video/mp4"><strong>＋ Add screenshots or files</strong><small>Up to 4 files · 3 MB each · PNG, JPG, WEBP, GIF, PDF, TXT or MP4</small></label><div class="nws-file-list" id="nws-support-file-list"></div></div>
+            <input id="nws-support-honeypot" type="text" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-10000px;width:1px;height:1px;opacity:0">
+            <div class="nws-submit-row"><button class="nws-submit" id="nws-support-submit" type="submit">Submit report ↗</button><p class="nws-feedback" id="nws-support-feedback" role="status" aria-live="polite"></p></div>
+          </form>
+          <aside class="nws-guide-card"><span class="nws-guide-label">NWRK / REPORT GUIDE</span><h2>Help us understand it.</h2><p>Your report will be delivered to a private Northwork staff ticket. Add enough detail for the team to investigate without needing to guess.</p><ul class="nws-guide-list"><li><b>01</b><span>Give a clear timeline and explain what you were doing.</span></li><li><b>02</b><span>Attach screenshots, video or other relevant proof.</span></li><li><b>03</b><span>Never include passwords, recovery codes or payment details.</span></li><li><b>04</b><span>Anonymous reports cannot be linked back to your Northwork profile.</span></li></ul></aside>
+        </div>
+      </div>
+
+      <div class="nws-success-view" id="nws-support-success" hidden>
+        <div class="nws-success-card"><span class="nws-success-mark">✓</span><span class="nws-eyebrow" style="margin-top:22px">REPORT RECEIVED / NWRK SUPPORT</span><h1>Your report is in the queue.</h1><p>A private ticket has been created for the Northwork team. Keep this reference in case you need to mention the report later.</p><div class="nws-ticket-reference" id="nws-support-ticket-reference">NWRK-000000</div><div class="nws-submit-row"><button class="nws-submit" id="nws-support-new-report" type="button">Submit another report</button><button class="nws-back" id="nws-support-done" type="button">Back to Northwork</button></div></div>
+      </div>
+    </div>
+  </section>
 
   <section class="northwork-chat-page" id="northwork-chat-page" aria-label="Northwork Chat" aria-hidden="true">
     <div class="northwork-chat-shell">
@@ -3756,7 +3865,19 @@ button, input, select, textarea { max-width: 100%; }
     const accountPageBack = document.getElementById("account-page-back");
     const walletPage = document.getElementById("northwork-wallet-page");
     const walletPageBack = document.getElementById("wallet-page-back");
+    const supportPage = document.getElementById("northwork-support-page");
+    const supportCategoryView = document.getElementById("nws-category-view");
+    const supportIssueView = document.getElementById("nws-issue-view");
+    const supportSuccessView = document.getElementById("nws-support-success");
+    const supportForm = document.getElementById("nws-support-form");
+    const supportFileInput = document.getElementById("nws-support-files");
+    const supportFileList = document.getElementById("nws-support-file-list");
     const chatPage = document.getElementById("northwork-chat-page");
+    // Replace this public URL with the HTTPS address assigned to the Wispbyte bot API.
+    // Example shape: https://your-public-wispbyte-host.example
+    const NORTHWORK_SUPPORT_API_BASE = (window.NORTHWORK_SUPPORT_API_BASE || "https://YOUR-WISPBYTE-HTTPS-ADDRESS").replace(/\/+$/, "");
+    let activeNorthworkSupportIssue = null;
+    let selectedNorthworkSupportFiles = [];
     const editorBackdrop = document.getElementById("profile-editor-backdrop");
     let northworkChatItems = [];
     let northworkChatActiveConversationId = null;
@@ -4088,7 +4209,7 @@ button, input, select, textarea { max-width: 100%; }
     }
 
     function updateNorthworkOverlayScrollLock() {
-      const overlayOpen = [settingsPage, accountPage, walletPage, chatPage].some(page => page?.classList.contains("open"));
+      const overlayOpen = [settingsPage, accountPage, walletPage, supportPage, chatPage].some(page => page?.classList.contains("open"));
       document.documentElement.classList.toggle("northwork-overlay-open", overlayOpen);
       document.body.classList.toggle("northwork-overlay-open", overlayOpen);
     }
@@ -4159,6 +4280,209 @@ button, input, select, textarea { max-width: 100%; }
       updateNorthworkOverlayScrollLock();
       if (!accountPage?.classList.contains("open") && !settingsPage?.classList.contains("open")) document.title = "Northwork";
     }
+    const NORTHWORK_SUPPORT_ISSUES = {
+      "game-bug": { category: "Game Issues", code: "GME-01", title: "Report a bug", description: "Tell us what broke, which Northwork game or experience it happened in, and what you expected to happen.", placeholder: "Which game were you playing? What happened? Include the steps to reproduce the bug..." },
+      "game-player-behaviour": { category: "Game Issues", code: "GME-02", title: "Report person behaviour", description: "Report disruptive or harmful behaviour in a Northwork game. Include the player's username and when it happened.", placeholder: "Describe the behaviour, the game, the player's username, and when it happened..." },
+      "game-exploit": { category: "Game Issues", code: "GME-03", title: "Exploiting / cheating", description: "Share what you observed and attach proof where possible. Do not confront or harass the person yourself.", placeholder: "What did you observe? Which game/server was it in? Include usernames and timestamps..." },
+      "game-technical": { category: "Game Issues", code: "GME-04", title: "Game not working", description: "Use this for loading failures, broken game access or other technical issues.", placeholder: "Which game? What device/browser were you using? What error or behaviour appeared?" },
+      "server-rule-break": { category: "Server Issues", code: "SRV-01", title: "Person breaking a rule", description: "Tell us which rule may have been broken and where the incident took place.", placeholder: "Describe what happened, who was involved, where it happened, and when..." },
+      "server-inappropriate": { category: "Server Issues", code: "SRV-02", title: "Inappropriate content", description: "Report inappropriate names, messages, images, links or other content in the Northwork community.", placeholder: "Where is the content? Describe it and include the message, channel or user ID if available..." },
+      "server-bot": { category: "Server Issues", code: "SRV-03", title: "Bot malfunction", description: "Report a Northwork bot command or automation that is failing, behaving unexpectedly or going offline.", placeholder: "Which bot or command? What did you expect, what happened instead, and when?" },
+      "server-technical": { category: "Server Issues", code: "SRV-04", title: "Server problem", description: "Use this for issues involving server channels, roles, access or other Discord community features.", placeholder: "Which channel, role or server feature is affected? What happens when you use it?" },
+      "account-password": { category: "Account Issues", code: "ACC-01", title: "Can't reset password", description: "Tell us what happens when you request or open a password reset email. Never send your password or reset code.", placeholder: "When did you request the reset? Did the email arrive? What error appears when you open the link?" },
+      "account-email": { category: "Account Issues", code: "ACC-02", title: "Can't reset email", description: "Describe the email change or confirmation problem. Do not include private verification codes.", placeholder: "What happens when you request the email change? Does the confirmation email arrive?" },
+      "account-history": { category: "Account Issues", code: "ACC-03", title: "Chat history wiped", description: "Tell us which conversations or messages are missing and approximately when you last saw them.", placeholder: "Are all chats missing or only one conversation? When did you last see the messages?" },
+      "account-access": { category: "Account Issues", code: "ACC-04", title: "Can't access my account", description: "Use this for login failures or account access problems. Never include your password.", placeholder: "What happens when you try to log in? Include the exact error and device/browser..." },
+      "account-profile": { category: "Account Issues", code: "ACC-05", title: "Profile / account data", description: "Report incorrect profile details, missing profile information or other account data problems.", placeholder: "Which profile information is incorrect or missing? When did you notice it?" }
+    };
+
+    function openNorthworkSupport() {
+      if (!activeProfileUser || !supportPage) return;
+      closeProfileMenu();
+      supportCategoryView.hidden = false;
+      supportIssueView.hidden = true;
+      supportSuccessView.hidden = true;
+      selectedNorthworkSupportFiles = [];
+      renderNorthworkSupportFiles();
+      supportPage.classList.add("open");
+      supportPage.setAttribute("aria-hidden", "false");
+      updateNorthworkOverlayScrollLock();
+      document.title = "NWRK Support | Northwork";
+    }
+
+    function closeNorthworkSupport() {
+      supportPage?.classList.remove("open");
+      supportPage?.setAttribute("aria-hidden", "true");
+      updateNorthworkOverlayScrollLock();
+      if (!accountPage?.classList.contains("open") && !settingsPage?.classList.contains("open") && !walletPage?.classList.contains("open")) document.title = "Northwork";
+    }
+
+    function chooseNorthworkSupportIssue(key) {
+      const issue = NORTHWORK_SUPPORT_ISSUES[key];
+      if (!issue) return;
+      activeNorthworkSupportIssue = { key, ...issue };
+      supportCategoryView.hidden = true;
+      supportSuccessView.hidden = true;
+      supportIssueView.hidden = false;
+      document.getElementById("nws-issue-category").textContent = `${issue.category.toUpperCase()} / ${issue.code}`;
+      document.getElementById("nws-issue-title").textContent = issue.title;
+      document.getElementById("nws-issue-description").textContent = issue.description;
+      document.getElementById("nws-support-details").placeholder = issue.placeholder;
+      document.getElementById("nws-support-feedback").textContent = "";
+      document.getElementById("nws-support-feedback").dataset.state = "";
+      supportForm.reset();
+      document.getElementById("nws-identity-fields").hidden = false;
+      selectedNorthworkSupportFiles = [];
+      renderNorthworkSupportFiles();
+      supportIssueView.scrollIntoView({ block: "start" });
+    }
+
+    function renderNorthworkSupportFiles() {
+      if (!supportFileList) return;
+      supportFileList.replaceChildren();
+      selectedNorthworkSupportFiles.forEach((file, index) => {
+        const row = document.createElement("div");
+        row.className = "nws-file-item";
+        const name = document.createElement("span");
+        name.textContent = `${file.name} · ${(file.size / 1024 / 1024).toFixed(2)} MB`;
+        const remove = document.createElement("button");
+        remove.type = "button";
+        remove.className = "nws-file-remove";
+        remove.dataset.removeSupportFile = String(index);
+        remove.textContent = "REMOVE";
+        row.append(name, remove);
+        supportFileList.appendChild(row);
+      });
+    }
+
+    function readNorthworkSupportFile(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => {
+          const result = String(reader.result || "");
+          const comma = result.indexOf(",");
+          if (comma < 0) return reject(new Error(`Couldn't read ${file.name}.`));
+          resolve({ name: file.name, type: file.type || "application/octet-stream", size: file.size, data: result.slice(comma + 1) });
+        };
+        reader.onerror = () => reject(new Error(`Couldn't read ${file.name}.`));
+        reader.readAsDataURL(file);
+      });
+    }
+
+    supportPage?.addEventListener("click", event => {
+      const issueButton = event.target.closest("[data-support-issue]");
+      if (issueButton) chooseNorthworkSupportIssue(issueButton.dataset.supportIssue);
+      const removeButton = event.target.closest("[data-remove-support-file]");
+      if (removeButton) {
+        selectedNorthworkSupportFiles.splice(Number(removeButton.dataset.removeSupportFile), 1);
+        renderNorthworkSupportFiles();
+        if (supportFileInput) supportFileInput.value = "";
+      }
+    });
+
+    supportFileInput?.addEventListener("change", () => {
+      const incoming = Array.from(supportFileInput.files || []);
+      const allowed = new Set(["image/png", "image/jpeg", "image/webp", "image/gif", "application/pdf", "text/plain", "video/mp4"]);
+      const already = selectedNorthworkSupportFiles.length;
+      const accepted = [];
+      let error = "";
+      for (const file of incoming) {
+        if (already + accepted.length >= 4) { error = "You can attach up to 4 files."; break; }
+        if (!allowed.has(file.type)) { error = `${file.name} has an unsupported file type.`; continue; }
+        if (file.size > 3 * 1024 * 1024) { error = `${file.name} is larger than 3 MB.`; continue; }
+        accepted.push(file);
+      }
+      selectedNorthworkSupportFiles = [...selectedNorthworkSupportFiles, ...accepted];
+      renderNorthworkSupportFiles();
+      const feedback = document.getElementById("nws-support-feedback");
+      if (error) { feedback.textContent = error; feedback.dataset.state = "error"; }
+      else { feedback.textContent = ""; feedback.dataset.state = ""; }
+      supportFileInput.value = "";
+    });
+
+    document.getElementById("nws-support-anonymous")?.addEventListener("change", event => {
+      const fields = document.getElementById("nws-identity-fields");
+      if (fields) fields.hidden = event.target.checked;
+      if (event.target.checked) {
+        document.getElementById("nws-support-discord").value = "";
+        document.getElementById("nws-support-reported-person").value = "";
+      }
+    });
+
+    supportForm?.addEventListener("submit", async event => {
+      event.preventDefault();
+      const feedback = document.getElementById("nws-support-feedback");
+      const submitButton = document.getElementById("nws-support-submit");
+      const details = document.getElementById("nws-support-details").value.trim();
+      const anonymous = document.getElementById("nws-support-anonymous").checked;
+      if (!activeProfileUser || !supabaseClient) { feedback.textContent = "Please sign in to submit a support report."; feedback.dataset.state = "error"; return; }
+      if (!activeNorthworkSupportIssue) { feedback.textContent = "Choose a support issue first."; feedback.dataset.state = "error"; return; }
+      if (details.length < 20) { feedback.textContent = "Please add at least 20 characters so the team can understand the issue."; feedback.dataset.state = "error"; return; }
+      if (!NORTHWORK_SUPPORT_API_BASE || NORTHWORK_SUPPORT_API_BASE.includes("YOUR-WISPBYTE-HTTPS-ADDRESS")) { feedback.textContent = "Support is not connected yet. The Northwork bot's HTTPS API address needs to be added to the site configuration."; feedback.dataset.state = "error"; return; }
+      if (selectedNorthworkSupportFiles.reduce((total, file) => total + file.size, 0) > 8 * 1024 * 1024) { feedback.textContent = "The combined attachment size must be 8 MB or less."; feedback.dataset.state = "error"; return; }
+      submitButton.disabled = true;
+      submitButton.textContent = "Sending report…";
+      feedback.textContent = "Preparing your report and attachments…";
+      feedback.dataset.state = "";
+      try {
+        const { data: sessionData, error: sessionError } = await supabaseClient.auth.getSession();
+        if (sessionError) throw sessionError;
+        const accessToken = sessionData?.session?.access_token;
+        if (!accessToken) throw new Error("Your sign-in session expired. Please sign in again.");
+        const attachments = await Promise.all(selectedNorthworkSupportFiles.map(readNorthworkSupportFile));
+        const northworkUsername = anonymous ? "" : String(ownProfileData?.username || activeProfileUser.user_metadata?.username || "").slice(0, 24);
+        const displayName = anonymous ? "" : String(ownProfileData?.display_name || activeProfileUser.user_metadata?.display_name || "Northwork member").slice(0, 32);
+        const body = {
+          issueKey: activeNorthworkSupportIssue.key,
+          details,
+          anonymous,
+          discordUsername: anonymous ? "" : document.getElementById("nws-support-discord").value.trim().slice(0, 64),
+          reportedPerson: anonymous ? "" : document.getElementById("nws-support-reported-person").value.trim().slice(0, 100),
+          northworkUsername,
+          displayName,
+          contactWebsite: document.getElementById("nws-support-honeypot").value,
+          attachments
+        };
+        const response = await fetch(`${NORTHWORK_SUPPORT_API_BASE}/support`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json", "Authorization": `Bearer ${accessToken}` },
+          body: JSON.stringify(body)
+        });
+        const result = await response.json().catch(() => ({}));
+        if (!response.ok || !result.success) throw new Error(result.message || `Support server returned HTTP ${response.status}.`);
+        document.getElementById("nws-support-ticket-reference").textContent = result.ticket || "NWRK-RECEIVED";
+        supportIssueView.hidden = true;
+        supportSuccessView.hidden = false;
+        supportSuccessView.scrollIntoView({ block: "start" });
+        supportForm.reset();
+        document.getElementById("nws-identity-fields").hidden = false;
+        selectedNorthworkSupportFiles = [];
+        renderNorthworkSupportFiles();
+      } catch (error) {
+        console.error("Northwork support submission failed:", error);
+        feedback.textContent = error.message || "Couldn't submit your report. Please try again.";
+        feedback.dataset.state = "error";
+      } finally {
+        submitButton.disabled = false;
+        submitButton.textContent = "Submit report ↗";
+      }
+    });
+
+    document.getElementById("nws-support-back")?.addEventListener("click", closeNorthworkSupport);
+    document.getElementById("nws-back-to-categories")?.addEventListener("click", () => {
+      supportIssueView.hidden = true;
+      supportCategoryView.hidden = false;
+      selectedNorthworkSupportFiles = [];
+      renderNorthworkSupportFiles();
+    });
+    document.getElementById("nws-support-new-report")?.addEventListener("click", () => {
+      supportSuccessView.hidden = true;
+      supportCategoryView.hidden = false;
+      selectedNorthworkSupportFiles = [];
+      renderNorthworkSupportFiles();
+    });
+    document.getElementById("nws-support-done")?.addEventListener("click", closeNorthworkSupport);
+
     function openNorthworkSettings() {
       if (!activeProfileUser || !settingsPage) return;
       closeProfileMenu();
@@ -4206,7 +4530,7 @@ button, input, select, textarea { max-width: 100%; }
     const northworkGifPickerResults = document.getElementById("northwork-gif-picker-results");
     // KLIPY app key is used by the public client for GIF search. It is not a Supabase/server secret.
     // Create a test key at https://partner.klipy.com/ and paste it here.
-    const NORTHWORK_KLIPY_APP_KEY = "hg9TOZZbELFkjEbCKID9Z5BOCORoxYZ8rL2EJL34QOWtSj5CvzmbeKeAP52qyTVF";
+    const NORTHWORK_KLIPY_APP_KEY = "PASTE_KLIPY_APP_KEY_HERE";
     // Keep NWGIF1 so messages sent before this provider switch continue to load.
     const NORTHWORK_GIF_MESSAGE_PREFIX = "NWGIF1:";
     // Public VAPID key: generate a key pair using `npx web-push generate-vapid-keys`.
@@ -5507,6 +5831,7 @@ button, input, select, textarea { max-width: 100%; }
     document.getElementById("profile-account-open")?.addEventListener("click", openNorthworkAccount);
     document.getElementById("profile-wallet-open")?.addEventListener("click", openNorthworkWallet);
     document.getElementById("profile-chat-open")?.addEventListener("click", openNorthworkChat);
+    document.getElementById("profile-support-open")?.addEventListener("click", openNorthworkSupport);
     document.getElementById("profile-settings-open")?.addEventListener("click", openNorthworkSettings);
     document.getElementById("profile-edit-open")?.addEventListener("click", openProfileEditor);
     document.getElementById("profile-edit-close")?.addEventListener("click", closeProfileEditor);
@@ -5619,7 +5944,7 @@ button, input, select, textarea { max-width: 100%; }
     });
     document.addEventListener("click", (event) => { if (!event.target.closest("#profile-menu-wrap")) closeProfileMenu(); });
     document.addEventListener("keydown", (event) => {
-      if (event.key === "Escape") { closeNorthworkFollowList(); closeProfileMenu(); closeNorthworkSettings(); closeNorthworkWallet(); closeNorthworkChat(); if (editorBackdrop?.classList.contains("open")) closeProfileEditor(); else if (accountPage?.classList.contains("open")) closeNorthworkAccount(true); }
+      if (event.key === "Escape") { closeNorthworkFollowList(); closeProfileMenu(); closeNorthworkSettings(); closeNorthworkWallet(); closeNorthworkSupport(); closeNorthworkChat(); if (editorBackdrop?.classList.contains("open")) closeProfileEditor(); else if (accountPage?.classList.contains("open")) closeNorthworkAccount(true); }
     });
     applyNorthworkPreferences();
     document.getElementById("profile-logout")?.addEventListener("click", async () => {
