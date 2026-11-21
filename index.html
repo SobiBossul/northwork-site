@@ -2871,6 +2871,71 @@ button, input, select, textarea { max-width: 100%; }
 @media(max-width:760px){.nws-hero-refined{grid-template-columns:1fr;gap:16px}.nws-category-grid-refined{grid-template-columns:1fr}.nws-collaboration-card{grid-template-columns:1fr}.nws-collaboration-action{justify-items:stretch}.nws-collaboration-action .nws-category-number{justify-self:end}.nws-collab-fields-grid{grid-template-columns:1fr}}
 </style>
 
+
+<style id="northwork-collaboration-and-support-polish">
+/* Collaboration form: match the Northwork square, dark input system. */
+.northwork-support-page .nws-field input,
+.northwork-support-page .nws-field textarea,
+.northwork-support-page .nws-field select {
+  width:100%; box-sizing:border-box; min-height:42px;
+  border:1px solid #343d49; border-radius:0;
+  background-color:#090d12; color:#eef1f5;
+  padding:11px 13px; outline:none;
+  font:400 12px/1.5 Arial,sans-serif;
+}
+.northwork-support-page .nws-field select {
+  display:block; appearance:none; -webkit-appearance:none;
+  padding-right:40px; color-scheme:dark; cursor:pointer;
+  background-image:linear-gradient(45deg,transparent 50%,#aab4c1 50%),linear-gradient(135deg,#aab4c1 50%,transparent 50%);
+  background-position:calc(100% - 17px) 50%,calc(100% - 12px) 50%;
+  background-size:5px 5px,5px 5px; background-repeat:no-repeat;
+}
+.northwork-support-page .nws-field select:focus,
+.northwork-support-page .nws-field input:focus,
+.northwork-support-page .nws-field textarea:focus {
+  border-color:var(--nw-purple);
+  box-shadow:0 0 0 1px color-mix(in srgb,var(--nw-purple) 30%,transparent);
+}
+.northwork-support-page .nws-field select:invalid { color:#778392; }
+.northwork-support-page .nws-field select option { background:#0d1219; color:#e8edf3; }
+.nws-field-hint { display:block; margin-top:7px; color:#718092; font:400 10px/1.5 Arial,sans-serif; }
+
+/* Support desk: a compact service panel, not an oversized landing-page banner. */
+.nws-support-intro-card {
+  display:grid; grid-template-columns:minmax(0,1.15fr) minmax(280px,.85fr);
+  gap:28px; align-items:stretch; margin:30px 0 32px; padding:0;
+  border:1px solid #2d3744; border-top:2px solid var(--nw-purple);
+  background:#0d1219; background-image:none; overflow:hidden;
+}
+.nws-support-intro-card:after { display:none; }
+.nws-support-intro-main { min-width:0; padding:25px 27px 23px; }
+.nws-support-intro-kicker { display:flex; justify-content:space-between; align-items:center; gap:16px; flex-wrap:wrap; margin-bottom:15px; }
+.nws-support-intro-kicker .nws-eyebrow { margin:0; color:var(--nw-purple); }
+.nws-support-reference { color:#687588; font:700 8px/1 Arial,sans-serif; letter-spacing:.14em; }
+.nws-support-intro-card h1 { margin:0; color:#f1f3f6; font:800 clamp(34px,4.5vw,49px)/1 Arial,sans-serif; letter-spacing:-.055em; }
+.nws-support-intro-card h1 span { display:block; margin-top:9px; color:#9ca7b5; font:500 14px/1.45 Arial,sans-serif; letter-spacing:0; }
+.nws-support-intro-copy { max-width:560px; margin:15px 0 0; color:#a0aab8; font:400 12px/1.7 Arial,sans-serif; }
+.nws-support-intro-card .nws-hero-meta { gap:6px; margin-top:17px; }
+.nws-support-intro-card .nws-meta-chip { padding:6px 8px; border-color:#2e3947; background:#101721; color:#aeb8c5; font-size:8px; }
+.nws-support-how { display:flex; flex-direction:column; justify-content:center; padding:20px 23px; border-left:1px solid #293340; background:#101720; }
+.nws-support-how-heading { display:flex; justify-content:space-between; align-items:center; gap:10px; padding-bottom:11px; border-bottom:1px solid #2a3441; color:#c7d0db; font:800 8px/1 Arial,sans-serif; letter-spacing:.15em; }
+.nws-support-how-heading span+span { color:#738095; }
+.nws-support-step { display:flex; align-items:flex-start; gap:12px; padding:12px 0; border-bottom:1px solid #242e3a; }
+.nws-support-step:last-child { padding-bottom:0; border-bottom:0; }
+.nws-support-step>b { flex:0 0 26px; color:var(--nw-purple); font:800 11px/1.2 Arial,sans-serif; }
+.nws-support-step strong { display:block; color:#e6ebf1; font:700 11px/1.3 Arial,sans-serif; }
+.nws-support-step small { display:block; margin-top:3px; color:#7e8b9b; font:400 10px/1.4 Arial,sans-serif; }
+@media(max-width:760px) {
+  .nws-support-intro-card { grid-template-columns:1fr; gap:0; margin:22px 0 27px; }
+  .nws-support-intro-main { padding:21px 19px 19px; }
+  .nws-support-how { padding:17px 19px; border-left:0; border-top:1px solid #293340; }
+  .nws-support-intro-card h1 { font-size:clamp(32px,9vw,43px); }
+}
+@media(prefers-reduced-motion:reduce) {
+  .nws-support-intro-card, .nws-support-intro-card * { transition:none !important; }
+}
+</style>
+
 </head>
 <body>
   <header class="topbar">
@@ -3091,13 +3156,19 @@ button, input, select, textarea { max-width: 100%; }
         <div class="nws-crumb"><span>NORTHWORK</span><i>/</i><strong>SUPPORT</strong></div>
       </header>
       <div id="nws-category-view">
-        <section class="nws-hero nws-hero-refined">
-          <div class="nws-hero-title-block">
-            <span class="nws-eyebrow">NORTHWORK / MEMBER SERVICES</span>
-            <h1>NWRK Support<span>Tell us what happened.</span></h1>
-            <div class="nws-hero-meta"><span class="nws-meta-chip">PRIVATE TICKETS</span><span class="nws-meta-chip">DIRECT STAFF REPLIES</span><span class="nws-meta-chip">LIVE STATUS</span></div>
+        <section class="nws-hero nws-hero-refined nws-support-intro-card" aria-label="Northwork Support desk">
+          <div class="nws-support-intro-main">
+            <div class="nws-support-intro-kicker"><span class="nws-eyebrow">NORTHWORK / MEMBER DESK</span><span class="nws-support-reference">SUPPORT DESK&nbsp; / &nbsp;01</span></div>
+            <h1>NWRK Support<span>Need a hand? Start here.</span></h1>
+            <p class="nws-support-intro-copy">Pick the topic that fits. Send the details once, then keep the conversation with the team in one place.</p>
+            <div class="nws-hero-meta"><span class="nws-meta-chip">PRIVATE CASES</span><span class="nws-meta-chip">STAFF REPLIES HERE</span><span class="nws-meta-chip">STATUS UPDATES</span></div>
           </div>
-          <p class="nws-hero-copy">Choose a department. Your report opens a private case with the Northwork team, and you can follow the conversation here.</p>
+          <aside class="nws-support-how" aria-label="How support works">
+            <div class="nws-support-how-heading"><span>HOW IT WORKS</span><span>3 STEPS</span></div>
+            <div class="nws-support-step"><b>01</b><span><strong>Choose a topic</strong><small>Game, account, server or moderation.</small></span></div>
+            <div class="nws-support-step"><b>02</b><span><strong>Send the details</strong><small>Add context and attach proof if needed.</small></span></div>
+            <div class="nws-support-step"><b>03</b><span><strong>Follow the case</strong><small>Read and reply to staff from this page.</small></span></div>
+          </aside>
         </section>
 
         <section class="nws-my-tickets" id="nws-my-tickets-section" hidden>
@@ -3167,7 +3238,7 @@ button, input, select, textarea { max-width: 100%; }
             <div class="nws-collab-fields-grid">
               <label class="nws-field"><span>Project / game name</span><input id="nws-collab-project" type="text" maxlength="100" required placeholder="What's the project called?"></label>
               <label class="nws-field"><span>Project website <small>(optional)</small></span><input id="nws-collab-website" type="url" maxlength="300" placeholder="https://yourproject.com"></label>
-              <label class="nws-field"><span>Game link <small>(optional)</small></span><input id="nws-collab-game" type="url" maxlength="300" placeholder="Roblox experience or game link"></label>
+              <label class="nws-field"><span>Game link <small>(optional)</small></span><input id="nws-collab-game" type="url" maxlength="300" inputmode="url" placeholder="https://www.roblox.com/games/1234567890/your-game-name" aria-describedby="nws-collab-game-hint"><small class="nws-field-hint" id="nws-collab-game-hint">Example format: roblox.com/games/ followed by your experience ID and name.</small></label>
               <label class="nws-field"><span>Collaboration type</span><select id="nws-collab-type" required><option value="" selected disabled>Choose a direction</option><option>Game development partnership</option><option>Creative / artwork partnership</option><option>Community partnership</option><option>Promotion / creator partnership</option><option>Technical collaboration</option><option>Other idea</option></select></label>
             </div>
             <label class="nws-field"><span>What is your idea?</span><textarea id="nws-collab-idea" minlength="40" maxlength="3500" required placeholder="Explain what you're building, what makes it interesting, and what a collaboration with Northwork could look like..."></textarea></label>
